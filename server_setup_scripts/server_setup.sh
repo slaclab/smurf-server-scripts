@@ -40,7 +40,7 @@ usermod -g smurf cryo
 mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 
-# Set the data directories persmissions
+# Set the data directories permissions
 chown -R cryo:smurf /data
 
 #########################
@@ -87,7 +87,7 @@ git lfs install
 #########################
 # Network configuration #
 #########################
-# Apply the network configuration to ecch kind of server
+# Apply the network configuration to each kind of server
 echo "Setting network configuration..."
 if [ ${dell_r440+x} ]; then
     . r440_network.sh
