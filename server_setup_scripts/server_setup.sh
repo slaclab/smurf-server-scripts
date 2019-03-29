@@ -22,7 +22,9 @@ apt-get -y install \
     curl \
     gnupg-agent \
     software-properties-common \
-    tree
+    tree \
+    tightvncserver \
+    xfce4
 
 ########################
 # SMURF CONFIGURATIONS #
@@ -38,7 +40,7 @@ usermod -g smurf cryo
 mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 
-# Set the data directories persmissions 
+# Set the data directories persmissions
 chown -R cryo:smurf /data
 
 #########################
@@ -71,7 +73,7 @@ usermod -aG docker cryo
 # Start docker on boot
 systemctl enable docker
 
-# Install docker compose 
+# Install docker compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
@@ -92,3 +94,15 @@ if [ ${dell_r440+x} ]; then
 elif [ ${dell_r330+x} ]; then
     . r330_network.sh
 fi
+
+#####################
+# Setup VNC server  #
+#####################
+
+cat << EOF > /home/cryo/.vnc/xstartup
+#!/bin/bash
+xrdb $HOME/.Xresources
+startxfce4 &
+EOF
+
+
