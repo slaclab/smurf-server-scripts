@@ -1,6 +1,6 @@
 # Server setup script
 
-This scripts sets up a SMuRF server afetr a fresh installation of Ubuntu 18.04.
+This scripts sets up a SMuRF server after a fresh installation of Ubuntu 18.04.
 
 ## Run the script
 
