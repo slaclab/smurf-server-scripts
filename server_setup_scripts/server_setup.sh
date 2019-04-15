@@ -88,6 +88,10 @@ cat << EOF > /etc/docker/daemon.json
 }
 EOF
 
+# Setup apparmor profile
+cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
+apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+
 ###################
 # INSTALL GIT LFS #
 ###################
