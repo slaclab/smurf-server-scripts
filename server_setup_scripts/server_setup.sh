@@ -78,15 +78,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-
 chmod +x /usr/local/bin/docker-compose
 
 # Setup the logging system in the  daemon configuration
-cat << EOF > /etc/docker/daemon.json
-{
-  "log-driver": "journald",
-  "log-opts":
-  {
-    "env": "DISPLAY,location"
-  }
-}
-EOF
+cp templates/daemon.json /etc/docker/daemon.json
 
 # Setup apparmor profile
 cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
