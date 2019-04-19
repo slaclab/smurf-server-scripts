@@ -26,6 +26,12 @@ apt-get -y install \
     tightvncserver \
     xfce4
 
+#########################
+# SYSTEM CONFIGURATIONS #
+#########################
+# Disable Wayland (which will enable Xorg display server instead)
+sed -i -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
+
 ########################
 # SMURF CONFIGURATIONS #
 ########################
