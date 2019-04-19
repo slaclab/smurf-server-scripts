@@ -26,6 +26,20 @@ apt-get -y install \
     tightvncserver \
     xfce4
 
+#########################
+# SYSTEM CONFIGURATIONS #
+#########################
+# Enable persistent logs
+echo Storage=persistent >> /etc/systemd/journald.conf
+
+# Disable Wayland (which will enable Xorg display server instead)
+sed -i -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
+
+# GRUB: set timeouts to 5s and disable quit boot
+sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc/default/grub
+sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5\’$’\nGRUB_RECORDFAIL_TIMEOUT=5/g' /etc/default/grub
+update-grub
+
 ########################
 # SMURF CONFIGURATIONS #
 ########################
