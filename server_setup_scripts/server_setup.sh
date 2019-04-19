@@ -29,6 +29,9 @@ apt-get -y install \
 #########################
 # SYSTEM CONFIGURATIONS #
 #########################
+# Enable persistent logs
+echo Storage=persistent >> /etc/systemd/journald.conf
+
 # Disable Wayland (which will enable Xorg display server instead)
 sed -i -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
 
