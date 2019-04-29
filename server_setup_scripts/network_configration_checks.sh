@@ -3,7 +3,7 @@
 echo "Verifiying that the interfaces are present in the server..."
 for interface_name in ${interface_names}
 do
-        if ! ip addr | grep -Fq -Fq "${interface_name}:"
+        if ! ip addr | grep -Fq "${interface_name}:"
         then
             echo "ERROR: Interface '${interface_name}' not found!"
             echo "Aborting..."
@@ -14,7 +14,7 @@ done
 echo "Done!"
 
 echo "Verifying that the interfaces '${interface_names}' are not defined in '${config_file}'..."
-for interface_name in ${interface_names} 
+for interface_name in ${interface_names}
 do
     if grep -Fq "${interface_name}:" ${config_file}
     then
