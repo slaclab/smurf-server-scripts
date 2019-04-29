@@ -18,6 +18,6 @@ echo "    eno2:
       addresses: [192.168.1.1/24,]" >> ${config_file}
 
 echo "Applying configuration to netplay..."
-netplay apply
+netplan apply
 
 echo "Done!"
