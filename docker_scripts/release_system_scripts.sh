@@ -129,13 +129,22 @@ fi
 
 # Create output folders
 target_dir="${release_dir}/slot${slot_number}/${smurf2mce_version}/dev"
-echo "Creating target directory ${target_dir}"
+
+echo "Creating target directory ${target_dir}..."
+
+if [ -d ${target_dir} ]; then
+        echo "ERROR: target directory already exist!"
+        exit 1
+fi
+
 mkdir -p ${target_dir}
+
 if [ $? -ne 0 ]; then
     echo ""
-    echo "ERROR: could not create the target directory ${target_dir}"
+    echo "ERROR: could not create the target directory"
     exit 1
 fi
+
 echo "Done!"
 echo ""
 
