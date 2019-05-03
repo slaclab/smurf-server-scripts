@@ -112,7 +112,7 @@ echo "Done!"
 echo ""
 
 # Generate docker compose file
-cat ${template_dir}/system/docker_compose.yml \
+cat ${template_dir}/docker_compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
         | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
