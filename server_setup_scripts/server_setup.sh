@@ -53,7 +53,11 @@ git lfs install
 # Install this server scripts into the system
 mkdir -p /usr/local/src/smurf-server-scripts
 cp -r . /usr/local/src/smurf-server-scripts/
-export PATH=/usr/local/src/smurf-server-scripts/docker_scripts:${PATH}
+
+touch /etc/profile.d/smurf_config.sh
+cat << EOF > /etc/profile.d/smurf_config.sh
+export PATH=${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
+EOF
 
 echo "Done Installing packages."
 echo
