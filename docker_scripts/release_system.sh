@@ -54,7 +54,7 @@ case ${key} in
     shift
     ;;
     -o|--output-dir)
-    release_top_dir="$2"
+    target_dir="$2"
     shift
     ;;
     -h|--help)
