@@ -1,15 +1,5 @@
 version: '3.4'
 
-# Default configuration for apps without GUI support
-x-app:
-  &default-app
-  volumes:
-  - /data:/data
-  environment:
-  - location=${PWD}
-  tty: true
-  stdin_open: true
-
 # Default configuration for apps with GUI support
 x-gui-app:
   &default-gui-app
