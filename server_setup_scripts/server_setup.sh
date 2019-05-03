@@ -26,6 +26,22 @@ apt-get -y install \
     tightvncserver \
     xfce4
 
+#######################
+# SETUP THE SWAP FILE #
+#######################
+# Create a 16G swap file
+allocate -l 16G /swapfile
+chmod 600 /swapfile
+
+# Activate the swap file
+mkswap /swapfile
+swapon /swapfile
+
+# Update fstab so that the changes are permanents
+cat << EOF > /etc/fstab
+/swapfile       swap            swap    defaults        0       0
+EOF
+
 #########################
 # SYSTEM CONFIGURATIONS #
 #########################
