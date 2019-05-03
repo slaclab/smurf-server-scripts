@@ -50,6 +50,11 @@ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.s
 apt-get -y install git-lfs
 git lfs install
 
+# Install this server scripts into the system
+mkdir -p /usr/local/src/smurf-server-scripts
+cp -r . /usr/local/src/smurf-server-scripts/
+export PATH=/usr/local/src/smurf-server-scripts/docker_scripts:${PATH}
+
 echo "Done Installing packages."
 echo
 
