@@ -1,21 +1,93 @@
 #!/usr/bin/env bash
 
 config_file=/etc/netplan/01-network-manager-all.yaml
-interface_names="enp2s0f0 enp2s0f1"
 
-# Run network configuration checks
-. network_configration_checks.sh
+# Local interface (use to communicate with the ATCA system)
+atca_interface_name="enp2s0f0"
+configure_interafce=1
 
-echo "writting configuration to ${config_file}..."
-echo "    enp2s0f0:
-      dhcp4: no
-      dhcp6: no
-      mtu: 9000
-      addresses: [10.0.1.1/21, ]
-    enp2s0f1:
-      dhcp4: no
-      dhcp6: no
-      addresses: [192.168.1.1/24,]" >> ${config_file}
+echo "Configuring local interface, used for communication with the ATCA blade..."
+echo
+
+echo "Verifying the that the local interface ${atca_interface_name} is present in the server..."
+
+if ! ip addr | grep -Fq "${atca_interface_name}:"; then
+  echo "ERROR: Interface '${atca_interface_name}' not found!"
+  configure_interafce=0
+else
+
+  echo "Interface found."
+  echo
+
+  echo "Verifying that the interfaces '${atca_interface_name}' is not defined in '${config_file}'..."
+  if grep -Fq "${atca_interface_name}:" ${config_file}; then
+      echo "ERROR: Interface '${atca_interface_name}' found in '${config_file}'"
+      configure_interafce=0
+  else
+    echo "Interface not defined."
+  fi
+fi
+
+echo
+
+if ${configure_interafce} -eq 0; then
+  echo "Errors were founds. Interface ${atca_interface_name} will not be configured!"
+else
+  echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
+  cat << EOF >>  ${config_file}
+enp2s0f0:
+  dhcp4: no
+  dhcp6: no
+  mtu: 9000
+  addresses: [10.0.1.1/21, ]
+EOF
+
+  echo "Done!"
+  echo
+fi
+
+# Local interface (used to communicate with the ATCA shelf manager)
+shm_interface_name="enp2s0f1"
+configure_interafce=1
+
+echo "Configuring local interface, used for communication with the ATCA shelfmanager..."
+echo
+
+echo "Verifying the that the local interface ${shm_interface_name} is present in the server..."
+
+if ! ip addr | grep -Fq "${shm_interface_name}:"; then
+  echo "ERROR: Interface '${shm_interface_name}' not found!"
+  configure_interafce=0
+else
+
+  echo "Interface found."
+  echo
+
+  echo "Verifying that the interfaces '${shm_interface_name}' is not defined in '${config_file}'..."
+  if grep -Fq "${shm_interface_name}:" ${config_file}; then
+      echo "ERROR: Interface '${shm_interface_name}' found in '${config_file}'"
+      configure_interafce=0
+  else
+    echo "Interface not defined."
+  fi
+fi
+
+echo
+
+if ${configure_interafce} -eq 0; then
+  echo "Errors were founds. Interface ${shm_interface_name} will not be configured!"
+else
+  echo "Writing configuration to ${config_file} for interface ${shm_interface_name}..."
+  cat << EOF >>  ${config_file}
+enp2s0f1:
+  dhcp4: no
+  dhcp6: no
+  addresses: [192.168.1.1/24,]
+EOF
+
+  echo "Done!"
+  echo
+fi
 
 echo "Applying configuration to netplay..."
 netplan apply
