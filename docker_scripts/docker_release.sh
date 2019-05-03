@@ -4,8 +4,7 @@
 # Definitions #
 ###############
 # Top directory
-# top_dir=/usr/local/src/smurf-server-scripts/docker_scripts
-top_dir=.
+top_dir=/usr/local/src/smurf-server-scripts/docker_scripts
 
 # Path to folder containing the template files
 template_top_dir=${top_dir}/templates
