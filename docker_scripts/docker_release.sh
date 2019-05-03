@@ -4,7 +4,7 @@
 # Definitions #
 ###############
 # Path to folder containing the template files
-template_dir=./templates
+template_dir=/usr/local/src/smurf-server-scripts/docker_scripts/templates
 
 # This script name
 script_name=$(basename $0)
