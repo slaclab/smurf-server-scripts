@@ -104,7 +104,6 @@ fi
 # Now call the application specific script
 case ${app_type} in
     system)
-    echo "SYSTEM"
     . ${top_dir}/release_system.sh ${app_options}
     ;;
     system-dev-fw)
