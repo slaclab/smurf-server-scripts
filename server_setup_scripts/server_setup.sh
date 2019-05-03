@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+########################
+# ASK USER CONFIMATION #
+########################
+echo "This script will setup an SMuRF server right after the OS installation."
+echo "This script should be run juts once, and right after the the OS is installed."
+
+read -p "Are you sure you want to continue? [Y/N]" -r
+echo
+
+if [[ ! ${REPLY} =~ ^[Yy]$ ]]; then
+    echo "Aborting installation..."
+    exit 0
+fi
+
+echo "Starting server configuration..."
+echo
+
 ############################
 # detecting type of server #
 ############################
