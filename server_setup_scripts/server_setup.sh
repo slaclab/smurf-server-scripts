@@ -68,7 +68,7 @@ echo
 echo "- Setting up swap partition..."
 
 # Create a 16G swap file
-allocate -l 16G /swapfile
+fallocate -l 16G /swapfile
 chmod 600 /swapfile
 
 # Activate the swap file
