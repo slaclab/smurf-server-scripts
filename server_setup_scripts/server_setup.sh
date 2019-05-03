@@ -25,6 +25,8 @@ echo
 ####################
 # INSTALL PACKAGES #
 ####################
+echo "- Installing packages..."
+
 apt-get -y update
 apt-get -y install \
     openssh-server \
@@ -43,9 +45,14 @@ apt-get -y install \
     tightvncserver \
     xfce4
 
+echo "Done Installing packages."
+echo
+
 #######################
 # SETUP THE SWAP FILE #
 #######################
+echo "- Setting up swap partition..."
+
 # Create a 16G swap file
 allocate -l 16G /swapfile
 chmod 600 /swapfile
@@ -59,9 +66,14 @@ cat << EOF > /etc/fstab
 /swapfile       swap            swap    defaults        0       0
 EOF
 
+echo "Done setting up swap partition."
+echo
+
 #########################
 # SYSTEM CONFIGURATIONS #
 #########################
+echo "- Applying system configurations..."
+
 # Enable persistent logs
 echo Storage=persistent >> /etc/systemd/journald.conf
 
@@ -73,9 +85,14 @@ sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc
 sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5\’$’\nGRUB_RECORDFAIL_TIMEOUT=5/g' /etc/default/grub
 update-grub
 
+echo "Done applying system configurations."
+echo
+
 ########################
 # SMURF CONFIGURATIONS #
 ########################
+echo "- Applying SMuRF configurations..."
+
 # Create the smurf group.
 groupadd smurf
 
@@ -90,9 +107,13 @@ mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 # Set the data directories permissions
 chown -R cryo:smurf /data
 
+echo "Done applying SMuRF configurations."
+echo
+
 #########################
 # INSTALL DOCKER ENGINE #
 #########################
+echo "- Installing the docker engine..."
 # Add Docker’s official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
@@ -131,6 +152,9 @@ cp templates/daemon.json /etc/docker/daemon.json
 cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
 apparmor_parser -r -W /etc/apparmor.d/docker-smurf
 
+echo "Done installing the docker engine"
+echo
+
 ###################
 # INSTALL GIT LFS #
 ###################
@@ -149,12 +173,27 @@ elif [ ${dell_r330+x} ]; then
     . r330_network.sh
 fi
 
+echo "Done setting network configurations."
+echo
+
 #####################
 # SETUP VNC SERVER  #
 #####################
+echo "- Setting up the VNC server..."
 
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
 xrdb $HOME/.Xresources
 startxfce4 &
 EOF
+
+echo "Done setting up the VNC server."
+echo
+
+######################
+# SHOW FINAL MESSAGE #
+######################
+echo
+echo "Server configuration finished successfully!"
+echo "Please reboot the server so all changes take effect."
+echo
