@@ -45,6 +45,11 @@ apt-get -y install \
     tightvncserver \
     xfce4
 
+# Install it lfs
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+apt-get -y install git-lfs
+git lfs install
+
 echo "Done Installing packages."
 echo
 
@@ -154,13 +159,6 @@ apparmor_parser -r -W /etc/apparmor.d/docker-smurf
 
 echo "Done installing the docker engine"
 echo
-
-###################
-# INSTALL GIT LFS #
-###################
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-apt-get -y install git-lfs
-git lfs install
 
 #########################
 # NETWORK CONFIGURATION #
