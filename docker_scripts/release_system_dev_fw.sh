@@ -89,7 +89,7 @@ if [ -z ${pysmurf_version+x} ]; then
 fi
 
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_dir}/slot${slot_number}/dev_fw/${smurf2mce_base_version}
+    target_dir=${release_top_default_dir}/slot${slot_number}/dev_fw/${smurf2mce_base_version}
 fi
 
 # Verify is target directory already exist
