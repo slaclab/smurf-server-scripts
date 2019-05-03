@@ -3,14 +3,15 @@
 ###############
 # Definitions #
 ###############
+# Top directory
+# top_dir=/usr/local/src/smurf-server-scripts/docker_scripts
+top_dir=.
+
 # Path to folder containing the template files
-template_dir=/usr/local/src/smurf-server-scripts/docker_scripts/templates
+template_top_dir=${top_dir}/templates
 
 # This script name
 script_name=$(basename $0)
-
-# Default release output directory
-release_default_dir="/home/cryo/docker/smurf"
 
 ########################
 # Function definitions #
@@ -19,16 +20,16 @@ release_default_dir="/home/cryo/docker/smurf"
 # Usage message
 usage()
 {
-    echo "Release a new set of scripts to run a full system"
+    echo "Release a new set of scripts to run an specified system based on dockers."
     echo ""
-    echo "usage: ${script_name} -N|--slot <slot_number> -s|--smurf2mce-version <smurf2mce_version>"
-    echo "                      -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>]"
-    echo "                      [-h|--help]"
-    echo "    -N|--slot              <slot_number>       : ATCA crate slot number."
-    echo "    -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image"
-    echo "    -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image"
-    echo "    -o|--output-dir        <output_dir>        : Directory where to release the scripts. Defaults to ${release_default_dir}"
-    echo "    -h|--help                                  : Show this message"
+    echo "usage: ${script_name} -t|--type <application_type> [-h|--help]"
+    echo "    -t|--type              <application_type>  : Type of application to install. Options are:"
+    echo "                                                 - system        = Full system (stable version)."
+    echo "                                                 - system-dev-fw = Full system (with a development version of FW)."
+    echo "                                                 - system-dev-sw = Full system with a development version of SW and FW."
+    echo "                                                 - pysmurf-dev   = A stand-alone version of pysmurf, in development mode."
+    echo "                                                 - utils         = A utility system."
+    echo "    -h|--help                                  : Show help message for each application type."
     echo ""
     exit $1
 }
@@ -64,114 +65,62 @@ copy_template()
 # Main body #
 #############
 
+app_options=""
 # Verify inputs arguments
 while [[ $# -gt 0 ]]
 do
 key="$1"
 
 case ${key} in
-    -N|--slot)
-    slot_number="$2"
-    shift
-    ;;
-    -s|--smurf2mce-version)
-    smurf2mce_version="$2"
-    shift
-    ;;
-    -p|--pysmurf_version)
-    pysmurf_version="$2"
-    shift
-    ;;
-    -o|--output-dir)
-    release_dir="$2"
+    -t|--type)
+    app_type="$2"
     shift
     ;;
     -h|--help)
-    usage 0
+    show_help=1
+    app_options="${app_options} ${key}"
     ;;
     *)
-    echo "Unknown argument"
-    usage 1
+    app_options="${app_options} ${key}"
     ;;
 esac
 shift
 done
 
 # Verify parameters
-if [ -z ${slot_number+x} ]; then
-        echo "ERROR: Slot number not defined!"
+if [ -z ${app_type+x} ]; then
+
+        # Show usage message when argument '-h' was used
+        # without defining an application type
+        if [ ! -z ${show_help} ]; then
+            usage 0
+        fi
+
+        echo "ERROR: Must specified the application type!"
         echo ""
         usage 1
 fi
 
-if [ -z ${smurf2mce_version+x} ]; then
-        echo "ERROR: smurf2mce version not defined!"
-        echo ""
-        usage 1
-fi
-
-if [ -z ${pysmurf_version+x} ]; then
-        echo "ERROR: pysmurf version not defined!"
-        echo ""
-        usage 1
-fi
-
-if [ -z ${release_dir+x} ]; then
-        release_dir=${release_default_dir}
-fi
-if [ -d ${release_dir} ]; then
-        echo "Release directory set to: ${release_dir}"
-        echo ""
-else
-        echo "ERROR: Release directory ${release_dir} does not exist!"
-        exit 1
-fi
-
-# Create output folders
-target_dir="${release_dir}/slot${slot_number}/${smurf2mce_version}/dev"
-
-echo "Creating target directory ${target_dir}..."
-
-if [ -d ${target_dir} ]; then
-        echo "ERROR: target directory already exist!"
-        exit 1
-fi
-
-mkdir -p ${target_dir}
-
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "ERROR: could not create the target directory"
-    exit 1
-fi
-
-echo "Done!"
-echo ""
-
-# Generate docker compose file
-cat ${template_dir}/docker_compose.yml \
-        | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
-        | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
-        | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
-        > ${target_dir}/docker_compose.yml
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "ERROR: Could not create ${target_dir}/docker_compose.yml"
-    exit 1
-fi
-
-# Create run script
-copy_template "run.sh"
-
-# create stop script
-copy_template "stop.sh"
-
-# Create env file
-copy_template "env" ".env"
-
-# Print final report
-echo ""
-echo "All Done!"
-echo "Script released to ${target_dir}"
-echo "Remember to create a \"fw\" directory and placed you fw related files in there"
-echo ""
+# Now call the application specific script
+case ${app_type} in
+    system)
+    echo "SYSTEM"
+    . ${top_dir}/release_system.sh ${app_options}
+    ;;
+    system-dev-fw)
+    . ${top_dir}/release_system_dev_fw.sh ${app_options}
+    ;;
+    system-dev-sw)
+    . ${top_dir}/release_system_dev_sw.sh ${app_options}
+    ;;
+    pysmurf-dev)
+    . ${top_dir}/release_pysmurf_dev.sh ${app_options}
+    ;;
+    utils)
+    . ${top_dir}/release_utils.sh ${app_options}
+    ;;
+    *)
+    echo "ERROR: Invalid application type!"
+    usage 1
+    ;;
+esac

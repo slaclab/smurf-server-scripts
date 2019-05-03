@@ -1,15 +1,5 @@
 version: '3.4'
 
-# Default configuration for apps without GUI support
-x-app:
-  &default-app
-  volumes:
-  - /data:/data
-  environment:
-  - location=${PWD}
-  tty: true
-  stdin_open: true
-
 # Default configuration for apps with GUI support
 x-gui-app:
   &default-gui-app
@@ -20,6 +10,9 @@ x-gui-app:
   - DISPLAY
   - EPICS_CA_ADDR_LIST=172.17.255.255
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  volumes:
+  - /data:/data
+  - /home/${user_name}:/home/${user_name}
   security_opt:
   - "apparmor=docker-smurf"
   tty: true
@@ -28,13 +21,9 @@ x-gui-app:
 services:
   smurf_server_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/smurf2mce-base:%%SMURF2MCE_BASE_VERSION%%
+    image: tidair/smurf2mce:%%SMURF2MCE_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
-    volumes:
-    - /data:/data
-    - /home/${user_name}:/home/${user_name}
-    - ${PWD}/fw:/tmp/fw
-    command: start_server.sh -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% -c eth-rssi-interleaved -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
+    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% -c eth-rssi-interleaved -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
     logging:
       options:
         tag: smurf_server
@@ -42,9 +31,6 @@ services:
     <<: *default-gui-app
     image: tidair/pysmurf:%%PYSMURF_VERSION%%
     container_name: pysmurf_s%%SLOT_NUMBER%%
-    volumes:
-    - /data:/data
-    - /home/${user_name}:/home/${user_name}
     command: --epics smurf_server_s%%SLOT_NUMBER%%
     logging:
       options:
