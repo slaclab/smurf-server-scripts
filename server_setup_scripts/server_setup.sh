@@ -18,12 +18,12 @@ echo "Starting server configuration..."
 echo
 
 ############################
-# detecting type of server #
+# DETECTING TYPE OF SERVER #
 ############################
 . server_type.sh
 
 ####################
-# Install packages #
+# INSTALL PACKAGES #
 ####################
 apt-get -y update
 apt-get -y install \
@@ -139,7 +139,7 @@ apt-get -y install git-lfs
 git lfs install
 
 #########################
-# Network configuration #
+# NETWORK CONFIGURATION #
 #########################
 # Apply the network configuration to each kind of server
 echo "Setting network configuration..."
@@ -150,7 +150,7 @@ elif [ ${dell_r330+x} ]; then
 fi
 
 #####################
-# Setup VNC server  #
+# SETUP VNC SERVER  #
 #####################
 
 cat << EOF > /home/cryo/.vnc/xstartup
