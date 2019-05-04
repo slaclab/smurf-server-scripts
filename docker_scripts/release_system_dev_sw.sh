@@ -19,19 +19,22 @@ smurf2me_git_repo=http://github.com/slaclab/smurf2mce.git
 # Usage message
 usage()
 {
-    echo "Release a new system for SW development. Includes a smurf server and pysmurf."
-    echo "The SMuRF server uses a user provided SW version, located in the 'smurf2mce' folder. This script will clone the master branch from github."
+    echo "Release a new system for SW development. Includes a SMuRF server and pysmurf."
+    echo "The SMuRF server uses a user provided SW version, located in the 'smurf2mce' folder."
+    echo "This script will clone the master branch from github."
     echo "The SMuRF server uses an user provided FW version, located in the 'fw' folder."
-    echo ""
+    echo
     echo "usage: ${script_name} -t system-dev-sw -N|--slot <slot_number> -s|--smurf2mce-version <smurf2mce_version>"
-    echo "                      -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>]"
-    echo "                      [-h|--help]"
-    echo "    -N|--slot                   <slot_number>            : ATCA crate slot number."
-    echo "    -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image (used only as a base image; smurf2mce will be overwritten by the local copy)."
-    echo "    -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image"
-    echo "    -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to ${release_top_default_dir}/<slot_number>/dev_sw/<smurf2mce_base_version>"
-    echo "    -h|--help                                            : Show this message"
-    echo ""
+    echo "                         -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo
+    echo "  -N|--slot                   <slot_number>            : ATCA crate slot number."
+    echo "  -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base"
+    echo "                                                         image; smurf2mce will be overwritten by the local copy."
+    echo "  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image"
+    echo "  -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to"
+    echo "                                                         ${release_top_default_dir}/<slot_number>/dev_sw/<smurf2mce_base_version>"
+    echo "  -h|--help                                            : Show this message"
+    echo
     exit $1
 }
 
