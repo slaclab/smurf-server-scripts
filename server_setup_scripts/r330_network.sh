@@ -30,7 +30,7 @@ fi
 
 echo
 
-if ${configure_interafce} -eq 0; then
+if [ ${configure_interafce} -eq 0 ]; then
   echo "Errors were founds. Interface ${atca_interface_name} will not be configured!"
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
@@ -74,7 +74,7 @@ fi
 
 echo
 
-if ${configure_interafce} -eq 0; then
+if [ ${configure_interafce} -eq 0 ]; then
   echo "Errors were founds. Interface ${shm_interface_name} will not be configured!"
 else
   echo "Writing configuration to ${config_file} for interface ${shm_interface_name}..."
