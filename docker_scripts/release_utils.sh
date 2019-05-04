@@ -20,10 +20,10 @@ usage()
     echo
     echo "usage: ${script_name} -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -v|--version    <smurf-base_version> : Version of the smurf-base docker image"
+    echo "  -v|--version    <smurf-base_version> : Version of the smurf-base docker image."
     echo "  -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to"
     echo "                                         ${release_top_default_dir}"
-    echo "  -h|--help                            : Show this message"
+    echo "  -h|--help                            : Show this message."
     echo
     exit $1
 }
