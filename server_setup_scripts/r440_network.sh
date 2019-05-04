@@ -43,8 +43,9 @@ else
 EOF
 
   echo "Done!"
-  echo
 fi
+
+echo
 
 # Look for the USB-Ethernet interface which name is not fixed.
 # (used to communicate with the ATCA shelf manager)
@@ -74,7 +75,7 @@ fi
 echo
 
 if [ ${configure_interafce} -eq 0 ]; then
-  echo "Interface ${usb_interface_name} will not be configured!"
+  echo "Error were found. Interface ${usb_interface_name} will not be configured!"
 else
   echo "writting configuration to ${config_file} for interface ${usb_interface_name}..."
   cat << EOF >>  ${config_file}
@@ -85,9 +86,9 @@ else
 EOF
 
   echo "Done!"
-  echo
 fi
 
+echo
 
 echo "Applying configuration to netplay..."
 netplan apply

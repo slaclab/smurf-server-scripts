@@ -43,8 +43,9 @@ else
 EOF
 
   echo "Done!"
-  echo
 fi
+
+echo
 
 # Local interface (used to communicate with the ATCA shelf manager)
 shm_interface_name="enp2s0f1"
@@ -86,8 +87,9 @@ else
 EOF
 
   echo "Done!"
-  echo
 fi
+
+echo
 
 echo "Applying configuration to netplay..."
 netplan apply
