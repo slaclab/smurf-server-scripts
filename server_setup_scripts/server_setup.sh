@@ -174,7 +174,7 @@ echo
 # NETWORK CONFIGURATION #
 #########################
 # Apply the network configuration to each kind of server
-echo "Setting network configuration..."
+echo "- Setting network configuration..."
 if [ ${dell_r440+x} ]; then
     . r440_network.sh
 elif [ ${dell_r330+x} ]; then
