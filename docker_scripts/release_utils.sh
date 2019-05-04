@@ -16,7 +16,7 @@ template_dir=${template_top_dir}/utils
 # Usage message
 usage()
 {
-    echo "Release an utility system."
+    echo "Release an utility application."
     echo
     echo "usage: ${script_name} -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo

@@ -19,7 +19,7 @@ pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
 # Usage message
 usage()
 {
-    echo "Release a stand alone pysmurf system in development mode."
+    echo "Release a stand alone pysmurf application in development mode."
     echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder."
     echo "This script will clone the master branch from github."
     echo
