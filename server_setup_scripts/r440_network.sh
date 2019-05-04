@@ -30,7 +30,7 @@ fi
 
 echo
 
-if ${configure_interafce} -eq 0; then
+if [ ${configure_interafce} -eq 0 ]; then
   echo "Errors were founds. Interface ${atca_interface_name} will not be configured!"
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
@@ -73,7 +73,7 @@ fi
 
 echo
 
-if ${configure_interafce} -eq 0; then
+if [ ${configure_interafce} -eq 0 ]; then
   echo "Interface ${usb_interface_name} will not be configured!"
 else
   echo "writting configuration to ${config_file} for interface ${usb_interface_name}..."
