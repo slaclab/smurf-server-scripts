@@ -81,7 +81,7 @@ else
     ${usb_interface_name}:
       dhcp4: no
       dhcp6: no
-      addresses: [192.168.1.1/24,]" >> ${config_file}
+      addresses: [192.168.1.1/24,]
 EOF
 
   echo "Done!"
