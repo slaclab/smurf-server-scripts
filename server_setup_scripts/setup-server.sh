@@ -205,9 +205,8 @@ echo
 if [ ${dell_r440+x} ]; then
     echo "- Installing PCIe KCU1500 card kernel driver..."
 
-    mkdir /lib/modules/`uname -r`/kernel/drivers/pci/datadev/
-    cp ./kernel_drivers/datadev/datadev.ko /lib/modules/`uname -r`/kernel/drivers/pci/datadev
-
+    cp ./kernel_drivers/datadev/datadev.ko /lib/modules/`uname -r`/kernel/drivers/pci/
+    depmod
     echo "datadev.ko" >> /etc/modules
 
     echo "Done installing PCIe card kenel driver."
