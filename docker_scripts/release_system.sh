@@ -22,11 +22,11 @@ usage()
     echo "                         -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo
     echo "  -N|--slot              <slot_number>       : ATCA crate slot number."
-    echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image"
-    echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image"
+    echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
+    echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image."
     echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
     echo "                                               ${release_top_default_dir}/<slot_number>/stable/<smurf2mce_version>"
-    echo "  -h|--help                                  : Show this message"
+    echo "  -h|--help                                  : Show this message."
     echo
     exit $1
 }
