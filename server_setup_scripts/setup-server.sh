@@ -77,7 +77,7 @@ mkswap /swapfile
 swapon /swapfile
 
 # Update fstab so that the changes are permanents
-cat << EOF > /etc/fstab
+cat << EOF >> /etc/fstab
 /swapfile       swap            swap    defaults        0       0
 EOF
 
