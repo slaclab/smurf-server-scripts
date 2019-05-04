@@ -35,11 +35,11 @@ if [ ${configure_interafce} -eq 0 ]; then
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
   cat << EOF >>  ${config_file}
-eno2:
-  dhcp4: no
-  dhcp6: no
-  mtu: 9000
-  addresses: [10.0.1.1/21, ]
+    eno2:
+      dhcp4: no
+      dhcp6: no
+      mtu: 9000
+      addresses: [10.0.1.1/21, ]
 EOF
 
   echo "Done!"
@@ -78,10 +78,10 @@ if [ ${configure_interafce} -eq 0 ]; then
 else
   echo "writting configuration to ${config_file} for interface ${usb_interface_name}..."
   cat << EOF >>  ${config_file}
-${usb_interface_name}:
-  dhcp4: no
-  dhcp6: no
-  addresses: [192.168.1.1/24,]" >> ${config_file}
+    ${usb_interface_name}:
+      dhcp4: no
+      dhcp6: no
+      addresses: [192.168.1.1/24,]" >> ${config_file}
 EOF
 
   echo "Done!"

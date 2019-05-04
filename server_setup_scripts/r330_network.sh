@@ -35,11 +35,11 @@ if ${configure_interafce} -eq 0; then
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
   cat << EOF >>  ${config_file}
-enp2s0f0:
-  dhcp4: no
-  dhcp6: no
-  mtu: 9000
-  addresses: [10.0.1.1/21, ]
+    enp2s0f0:
+      dhcp4: no
+      dhcp6: no
+      mtu: 9000
+      addresses: [10.0.1.1/21, ]
 EOF
 
   echo "Done!"
@@ -79,10 +79,10 @@ if ${configure_interafce} -eq 0; then
 else
   echo "Writing configuration to ${config_file} for interface ${shm_interface_name}..."
   cat << EOF >>  ${config_file}
-enp2s0f1:
-  dhcp4: no
-  dhcp6: no
-  addresses: [192.168.1.1/24,]
+    enp2s0f1:
+      dhcp4: no
+      dhcp6: no
+      addresses: [192.168.1.1/24,]
 EOF
 
   echo "Done!"
