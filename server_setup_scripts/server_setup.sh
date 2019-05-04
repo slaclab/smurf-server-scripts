@@ -5,6 +5,7 @@
 ########################
 echo "This script will setup an SMuRF server right after the OS installation."
 echo "This script should be run juts once, and right after the the OS is installed."
+echo "Note: You must execute this script with root privileges."
 
 read -p "Are you sure you want to continue? [Y/N]" -r
 echo
