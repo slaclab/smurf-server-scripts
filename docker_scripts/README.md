@@ -58,7 +58,7 @@ release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce
 
 ### Full system, for Software development
 
-A development system is formed by a SMuRF server and pysmurf. For software development systems, the SMuRF server contains a smurf2mce application provided by the user in a folder called **smurf2mce** in the release folder. The release script will do a clone of the master branch of the smurf2mce git repository. Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+A development system is formed by a SMuRF server and pysmurf. For software development systems, the SMuRF server contains a smurf2mce application provided by the user in a folder called **smurf2mce** in the release folder. The release script will do a clone of the master branch of the [smurf2mce git repository](https://github.com/slaclab/smurf2mce). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
 The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2mce-base-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
 
@@ -79,7 +79,7 @@ release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce
 
 ### Pysmurf application, in development mode
 
-A pysmurf application in development mode, consist only on pysmurf. It contains a pysmurf application provided by the user in a folder called **pysmurf** in the release folder.
+A pysmurf application in development mode, consist only on pysmurf. It contains a pysmurf application provided by the user in a folder called **pysmurf** in the release folder. The release script will do a clone of the master branch of the [pysmurf git repository](https://github.com/slaclab/pysmurf).
 
 Pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
 
