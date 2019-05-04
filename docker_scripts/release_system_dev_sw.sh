@@ -30,10 +30,10 @@ usage()
     echo "  -N|--slot                   <slot_number>            : ATCA crate slot number."
     echo "  -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base"
     echo "                                                         image; smurf2mce will be overwritten by the local copy."
-    echo "  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image"
+    echo "  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image."
     echo "  -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to"
-    echo "                                                         ${release_top_default_dir}/<slot_number>/dev_sw/<smurf2mce_base_version>"
-    echo "  -h|--help                                            : Show this message"
+    echo "                                                         ${release_top_default_dir}/<slot_number>/dev_sw/<smurf2mce-base_version>"
+    echo "  -h|--help                                            : Show this message."
     echo
     exit $1
 }
