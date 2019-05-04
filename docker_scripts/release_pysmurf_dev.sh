@@ -30,7 +30,7 @@ usage()
     echo "                                           image; pysmurf will be overwritten by the local copy."
     echo "  -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to"
     echo "                                           ${release_top_default_dir}"
-    echo "  -h|--help                              : Show this message"
+    echo "  -h|--help                              : Show this message."
     echo
     exit $1
 }
