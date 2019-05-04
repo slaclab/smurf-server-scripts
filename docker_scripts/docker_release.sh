@@ -12,6 +12,9 @@ template_top_dir=${top_dir}/templates
 # This script name
 script_name=$(basename $0)
 
+# Script version
+version=$(cd ${top_dir} && git describe --tags --always --dirty)
+
 ########################
 # Function definitions #
 ########################
@@ -20,6 +23,7 @@ script_name=$(basename $0)
 usage()
 {
     echo "Release a new set of scripts to run an specified system based on dockers."
+    echo "Version: ${version}"
     echo
     echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
     echo
