@@ -24,7 +24,7 @@ usage()
     echo "This script will clone the master branch from github."
     echo "The SMuRF server uses an user provided FW version, located in the 'fw' folder."
     echo
-    echo "usage: ${script_name} -t system-dev-sw -N|--slot <slot_number> -s|--smurf2mce-version <smurf2mce_version>"
+    echo "usage: ${script_name} -t system-dev-sw -N|--slot <slot_number> -s|--smurf2mce-base-version <smurf2mce-base_version>"
     echo "                         -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo
     echo "  -N|--slot                   <slot_number>            : ATCA crate slot number."
