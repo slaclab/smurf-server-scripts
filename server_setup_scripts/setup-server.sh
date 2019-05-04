@@ -198,6 +198,21 @@ EOF
 echo "Done setting up the VNC server."
 echo
 
+############################
+# INSTALL PCIE CARD DRIVER #
+############################
+# Install the kernel driver only on R440 servers
+if [ ${dell_r440+x} ]; then
+    echo "- Installing PCIe KCU1500 card kernel driver..."
+
+    mkdir /lib/modules/`uname -r`/kernel/drivers/pci/datadev/
+    cp ./kernel_drivers/datadev/datadev.ko /lib/modules/`uname -r`/kernel/drivers/pci/datadev
+
+    echo "datadev.ko" >> /etc/modules
+
+    echo "Done installing PCIe card kenel driver."
+fi
+
 ######################
 # SHOW FINAL MESSAGE #
 ######################
