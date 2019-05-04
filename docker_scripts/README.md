@@ -4,6 +4,10 @@
 
 This scripts are used to release a set of files necessary to run SMuRF system based on dockers.
 
+## Installation
+
+This script will be installed by the `setup-server.sh` script when setting up a new server. It will installed under `/usr/local/src/smurf-server-scripts/docker_scripts`, and that path is added to the `PATH` so that this script can be called from any location.
+
 ## Usage
 
 To release a new system, run:
