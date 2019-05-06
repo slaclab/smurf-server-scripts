@@ -56,7 +56,7 @@ cp -r ../../smurf-server-scripts /usr/local/src/
 
 touch /etc/profile.d/smurf_config.sh
 cat << EOF > /etc/profile.d/smurf_config.sh
-export PATH=${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
+export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
 EOF
 
 echo "Done Installing packages."
