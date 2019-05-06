@@ -68,8 +68,8 @@ echo
 echo "- Setting up swap partition..."
 
 # Delete default swap partition
-swap off -a
-lvremove /dev/mapper/ubuntu--vg-swap_1
+swapoff -a
+lvremove -y /dev/mapper/ubuntu--vg-swap_1
 
 # Extend root partition to take the free space
 lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
