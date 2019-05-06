@@ -4,13 +4,16 @@
 # Definitions #
 ###############
 # Top directory
-top_dir=/usr/local/src/smurf-server-scripts/docker_scripts
+top_dir=$(dirname -- "$(readlink -f $0)")
 
 # Path to folder containing the template files
 template_top_dir=${top_dir}/templates
 
 # This script name
 script_name=$(basename $0)
+
+# Script version
+version=$(cd ${top_dir} && git describe --tags --always --dirty)
 
 ########################
 # Function definitions #
@@ -20,16 +23,18 @@ script_name=$(basename $0)
 usage()
 {
     echo "Release a new set of scripts to run an specified system based on dockers."
-    echo ""
-    echo "usage: ${script_name} -t|--type <application_type> [-h|--help]"
-    echo "    -t|--type              <application_type>  : Type of application to install. Options are:"
-    echo "                                                 - system        = Full system (stable version)."
-    echo "                                                 - system-dev-fw = Full system (with a development version of FW)."
-    echo "                                                 - system-dev-sw = Full system with a development version of SW and FW."
-    echo "                                                 - pysmurf-dev   = A stand-alone version of pysmurf, in development mode."
-    echo "                                                 - utils         = A utility system."
-    echo "    -h|--help                                  : Show help message for each application type."
-    echo ""
+    echo "Version: ${version}"
+    echo
+    echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
+    echo
+    echo "  -t|--type <app_type> : Type of application to install. Options are:"
+    echo "                         - system        = Full system (stable version)."
+    echo "                         - system-dev-fw = Full system (with a development version of FW)."
+    echo "                         - system-dev-sw = Full system with a development version of SW and FW."
+    echo "                         - pysmurf-dev   = A stand-alone version of pysmurf, in development mode."
+    echo "                         - utils         = A utility system."
+    echo "  -h|--help            : Show help message for each application type."
+    echo
     exit $1
 }
 

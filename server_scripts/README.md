@@ -7,5 +7,5 @@ This scripts sets up a SMuRF server after a fresh installation of Ubuntu 18.04.
 After a fresh installation of Ubuntu 18.04, run:
 
 ```
-sudo ./server_setup.sh
+sudo ./setup-server.sh
 ```

@@ -19,15 +19,19 @@ pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
 # Usage message
 usage()
 {
-    echo "Release a stand alone pysmurf system in development mode."
-    echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder. This script will clone the master branch from github."
+    echo "Release a stand alone pysmurf application in development mode."
+    echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder."
+    echo "This script will clone the master branch from github."
     echo
-    echo "usage: ${script_name} -t pysmurf-dev -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>"
+    echo "                         [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "    -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image (used only as a base image; pysmurf will be overwritten by the local copy)."
-    echo "    -o|--output-dir        <output_dir>        : Directory where to release the scripts. Defaults to ${release_top_default_dir}"
-    echo "    -h|--help                                  : Show this message"
-    echo ""
+    echo "  -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
+    echo "                                           image; pysmurf will be overwritten by the local copy."
+    echo "  -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to"
+    echo "                                           ${release_top_default_dir}"
+    echo "  -h|--help                              : Show this message."
+    echo
     exit $1
 }
 

@@ -208,6 +208,20 @@ sudo chown -R cryo:smurf  /home/cryo/.vnc/
 echo "Done setting up the VNC server."
 echo
 
+############################
+# INSTALL PCIE CARD DRIVER #
+############################
+# Install the kernel driver only on R440 servers
+if [ ${dell_r440+x} ]; then
+    echo "- Installing PCIe KCU1500 card kernel driver..."
+
+    cp ./kernel_drivers/datadev/datadev.ko /lib/modules/`uname -r`/kernel/drivers/pci/
+    depmod
+    echo "datadev.ko" >> /etc/modules
+
+    echo "Done installing PCIe card kernel driver."
+fi
+
 ######################
 # SHOW FINAL MESSAGE #
 ######################
