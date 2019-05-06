@@ -194,12 +194,16 @@ echo
 #####################
 echo "- Setting up the VNC server..."
 
+# Create the xstartup file
 mkdir /home/cryo/.vnc
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
 xrdb $HOME/.Xresources
 startxfce4 &
 EOF
+
+# Change folder and files permissions
+sudo chown -R cryo:smurf  /home/cryo/.vnc/
 
 echo "Done setting up the VNC server."
 echo
