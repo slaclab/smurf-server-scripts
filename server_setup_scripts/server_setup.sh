@@ -52,8 +52,7 @@ apt-get -y install git-lfs
 git lfs install
 
 # Install this server scripts into the system
-mkdir -p /usr/local/src/smurf-server-scripts
-cp -r . /usr/local/src/smurf-server-scripts/
+cp -r ../smurf-server-scripts /usr/local/src/
 
 touch /etc/profile.d/smurf_config.sh
 cat << EOF > /etc/profile.d/smurf_config.sh
