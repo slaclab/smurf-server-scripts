@@ -67,6 +67,14 @@ echo
 #######################
 echo "- Setting up swap partition..."
 
+# Delete default swap partition
+swap off -a
+lvremove /dev/mapper/ubuntu--vg-swap_1
+
+# Extend root partition to take the free space
+lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
+resize2fs /dev/mapper/ubuntu--vg-root
+
 # Create a 16G swap file
 fallocate -l 16G /swapfile
 chmod 600 /swapfile
@@ -76,9 +84,7 @@ mkswap /swapfile
 swapon /swapfile
 
 # Update fstab so that the changes are permanents
-cat << EOF > /etc/fstab
-/swapfile       swap            swap    defaults        0       0
-EOF
+sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
 
 echo "Done setting up swap partition."
 echo
