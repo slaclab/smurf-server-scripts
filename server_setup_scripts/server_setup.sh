@@ -194,6 +194,7 @@ echo
 #####################
 echo "- Setting up the VNC server..."
 
+mkdr /home/cryo/.vnc
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
 xrdb $HOME/.Xresources
