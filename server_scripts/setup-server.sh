@@ -54,6 +54,7 @@ git lfs install
 # Install this server scripts into the system
 cp -r ../../smurf-server-scripts /usr/local/src/
 
+# Create smurf bash profile file and add the docker scripts to PATH
 touch /etc/profile.d/smurf_config.sh
 cat << EOF > /etc/profile.d/smurf_config.sh
 export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
@@ -215,9 +216,14 @@ echo
 if [ ${dell_r440+x} ]; then
     echo "- Installing PCIe KCU1500 card kernel driver..."
 
-    cp ./kernel_drivers/datadev/datadev.ko /lib/modules/`uname -r`/kernel/drivers/pci/
-    depmod
-    echo "datadev.ko" >> /etc/modules
+    # Copy the kernel module and scripts.
+    cp -r ./kernel_drivers/datadev /usr/local/src/
+
+    # Let the cryo user to run the install and remove modules without password, so it can be scripted
+    echo 'cryo ALL=(root) NOPASSWD: /usr/local/src/datadev/install-module.sh, /usr/local/src/datadev/remove-module.sh' | sudo EDITOR='tee -a' visudo
+
+    # Run the install module script after login
+    echo "sudo /usr/local/src/datadev/install-module.sh" >> /etc/profile.d/smurf_config.sh
 
     echo "Done installing PCIe card kernel driver."
 fi
