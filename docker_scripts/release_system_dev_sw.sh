@@ -120,14 +120,14 @@ echo "Done!"
 echo ""
 
 # Generate docker compose file
-cat ${template_dir}/docker_compose.yml \
+cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
         | sed s/%%SMURF2MCE_BASE_VERSION%%/${smurf2mce_base_version}/g \
         > ${target_dir}/docker_compose.yml
 if [ $? -ne 0 ]; then
     echo ""
-    echo "ERROR: Could not create ${target_dir}/docker_compose.yml"
+    echo "ERROR: Could not create ${target_dir}/docker-compose.yml"
     exit 1
 fi
 
