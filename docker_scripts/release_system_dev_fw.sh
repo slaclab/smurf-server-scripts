@@ -6,9 +6,6 @@
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
-# Template directory for this application
-template_dir=${template_top_dir}/system-dev-fw
-
 ########################
 # Function definitions #
 ########################
@@ -112,7 +109,9 @@ fi
 echo "Done!"
 echo ""
 
-# Generate docker compose file
+# Generate file specific to this type of application
+template_dir=${template_top_dir}/system-dev-fw
+
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
@@ -124,13 +123,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Create run script
+# Generate file common to other type of application
+template_dir=${template_top_dir}/common
+
 copy_template "run.sh"
-
-# create stop script
 copy_template "stop.sh"
-
-# Create env file
 copy_template "env" ".env"
 
 # Create fw directory
