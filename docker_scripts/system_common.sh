@@ -31,6 +31,7 @@ usage()
     echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
     echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image."
     echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
+    echo "  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "                                               ${release_top_default_dir}/<slot_number>/stable/<smurf2mce_version>"
     echo "  -h|--help                                  : Show this message."
     echo
@@ -41,6 +42,9 @@ usage()
 #############
 # Main body #
 #############
+
+# Default values
+comm_type='eth'
 
 # Verify inputs arguments
 while [[ $# -gt 0 ]]
@@ -62,6 +66,10 @@ case ${key} in
     ;;
     -o|--output-dir)
     target_dir="$2"
+    shift
+    ;;
+    -c|--comm-type)
+    comm_type="$2"
     shift
     ;;
     -h|--help)
@@ -94,6 +102,20 @@ if [ -z ${pysmurf_version+x} ]; then
         usage 1
 fi
 
+case ${comm_type} in
+    eth)
+    comm_args="-c eth-rssi-interleaved"
+    ;;
+    pcie)
+    comm_args="-c pcie-rssi-interleaved -l $((slot_number-2))"
+    ;;
+    *)
+    echo "ERROR: Invalid communication type!"
+    echo
+    usage 1
+    ;;
+esac
+
 if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}/slot${slot_number}/stable/${smurf2mce_version}
 fi
@@ -125,6 +147,7 @@ cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
         | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
+        | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
         > ${target_dir}/docker-compose.yml
 if [ $? -ne 0 ]; then
     echo ""

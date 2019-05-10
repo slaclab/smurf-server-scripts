@@ -23,7 +23,7 @@ services:
     <<: *default-gui-app
     image: tidair/smurf2mce:%%SMURF2MCE_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
-    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% -c eth-rssi-interleaved -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
+    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
     logging:
       options:
         tag: smurf_server
