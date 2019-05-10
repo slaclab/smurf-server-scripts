@@ -116,7 +116,7 @@ cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
         | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
-        > ${target_dir}/docker_compose.yml
+        > ${target_dir}/docker-compose.yml
 if [ $? -ne 0 ]; then
     echo ""
     echo "ERROR: Could not create ${target_dir}/docker-compose.yml"
