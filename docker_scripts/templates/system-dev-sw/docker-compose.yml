@@ -18,7 +18,7 @@ x-gui-app:
 services:
   smurf_server_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/smurf2mce-base:%%SMURF2MCE_BASE_VERSION%%
+    image: tidair/smurf2mce-base:%%SMURF2MCE_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data
