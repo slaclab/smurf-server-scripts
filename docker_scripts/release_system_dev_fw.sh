@@ -12,7 +12,11 @@
 usage_header()
 {
     echo "Release a new system for FW development. Includes a SMuRF server and pysmurf."
-    echo "The SMuRF server uses an user provided FW version, located in the 'fw' folder."
+    echo
+    echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
+    echo
+    echo "Note: The docker image used for the 'smurf2mce' server is 'tidait/smurf2mce-base'"
+    echo "and the docker image used for 'pysmurf' is 'tidair/pysmurf'."
     echo
 }
 

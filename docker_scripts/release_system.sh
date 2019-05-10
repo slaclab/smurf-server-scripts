@@ -13,6 +13,9 @@ usage_header()
 {
     echo "Release a new stable system. Includes a SMuRF server and pysmurf."
     echo
+    echo "Note: The docker image used for the 'smurf2mce' server is 'tidait/smurf2mce'"
+    echo "and the docker image used for 'pysmurf' is 'tidair/pysmurf'."
+    echo
 }
 
 
