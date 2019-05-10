@@ -4,6 +4,9 @@
 # Definitions #
 ###############
 
+# Prefix use in the default target release directory
+target_dir_prefix=dev_fw
+
 ########################
 # Function definitions #
 ########################

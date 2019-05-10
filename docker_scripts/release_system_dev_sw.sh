@@ -6,6 +6,9 @@
 # smurf2mce git repository
 smurf2me_git_repo=http://github.com/slaclab/smurf2mce.git
 
+# Prefix use in the default target release directory
+target_dir_prefix=dev_sw
+
 ########################
 # Function definitions #
 ########################
