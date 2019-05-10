@@ -146,6 +146,9 @@ copy_template "run.sh"
 copy_template "stop.sh"
 copy_template "env" ".env"
 
+chmod +x ${target_dir}/run.sh
+chmod +x ${target_dir}/stop.sh
+
 # Create fw directory
 mkdir -p ${target_dir}/fw
 
