@@ -30,8 +30,8 @@ usage()
     echo "  -N|--slot              <slot_number>       : ATCA crate slot number (2-7)."
     echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
     echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image."
-    echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
     echo "  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
+    echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
     echo "                                               ${release_top_default_dir}/<slot_number>/stable/<smurf2mce_version>"
     echo "  -h|--help                                  : Show this message."
     echo
