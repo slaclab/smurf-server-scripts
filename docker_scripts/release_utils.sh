@@ -99,6 +99,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Mark the script as executable
+chmod +x ${target_dir}/run.sh
+
 # Make shared folder
 mkdir -p ${target_dir}/shared
 

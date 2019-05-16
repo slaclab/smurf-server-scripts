@@ -105,6 +105,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Mark the script as executable
+chmod +x ${target_dir}/run.sh
+
 # Clone pysmurf (master branch) in the target directory
 git clone ${pysmurf_git_repo} ${target_dir}/pysmurf
 
