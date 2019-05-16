@@ -43,6 +43,7 @@ apt-get -y install \
     gnupg-agent \
     software-properties-common \
     tree \
+    ipmitool \
     tightvncserver \
     xfce4
 
