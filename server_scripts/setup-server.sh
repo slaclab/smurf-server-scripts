@@ -61,6 +61,9 @@ cat << EOF > /etc/profile.d/smurf_config.sh
 export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
 EOF
 
+# Prevent the kernel version to be automatically updated
+sudo apt-mark hold `uname -r`
+
 echo "Done Installing packages."
 echo
 
