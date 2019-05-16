@@ -188,6 +188,12 @@ elif [ ${dell_r330+x} ]; then
     . r330_network.sh
 fi
 
+# Add the shm-smrf-sp01 node name to ip address map entry
+cat << EOF >> /etc/hosts
+# ATCA shelfmanager
+192.168.1.2     shm-smrf-sp01
+EOF
+
 echo "Done setting network configurations."
 echo
 
