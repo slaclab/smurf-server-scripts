@@ -4,7 +4,7 @@
 # Definitions #
 ###############
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/utils/dev"
+release_top_default_dir="/home/cryo/docker/utils"
 
 # Template directory for this application
 template_dir=${template_top_dir}/utils
