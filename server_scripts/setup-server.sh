@@ -226,17 +226,23 @@ echo
 if [ ${dell_r440+x} ]; then
     echo "- Installing PCIe KCU1500 card kernel driver (datadev)..."
 
+    # Driver version
+    datadev_version=v5.4.0
+
+    # Install directory
+    datadev_install_dir=/usr/local/src/datadev/${datadev_version}
+
     # Create target folder
-    mkdir -p /usr/local/src/datadev
+    mkdir -p ${datadev_install_dir}
 
     # Copy the kernel module scripts
-    cp -r ./kernel_drivers/datadev_scripts/* /usr/local/src/datadev/
+    cp -r ./kernel_drivers/datadev_scripts/* ${datadev_install_dir}/
 
     # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    echo 'cryo ALL=(root) NOPASSWD: /usr/local/src/datadev/install-module.sh, /usr/local/src/datadev/remove-module.sh' | sudo EDITOR='tee -a' visudo
+    echo 'cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh' | sudo EDITOR='tee -a' visudo
 
     # Run the install module script after login
-    echo "sudo /usr/local/src/datadev/install-module.sh" >> /etc/profile.d/smurf_config.sh
+    echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
 
     # Build the kernel module from source
     git clone https://github.com/slaclab/aes-stream-drivers.git -b v5.4.0
@@ -250,7 +256,7 @@ if [ ${dell_r440+x} ]; then
         echo "It will not be installed"
         echo
     else
-        cp datadev.ko /usr/local/src/datadev/
+        cp datadev.ko ${datadev_install_dir}/
     fi
     cd -
 
