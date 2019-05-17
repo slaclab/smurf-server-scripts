@@ -113,7 +113,7 @@ case ${comm_type} in
     comm_args="-c eth-rssi-interleaved"
     ;;
     pcie)
-    comm_args="-c pcie-rssi-interleaved -l $((slot_number-2))"
+    comm_args="-c pcie-rssi-interleaved"
     ;;
     *)
     echo "ERROR: Invalid communication type!"
