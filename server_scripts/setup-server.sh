@@ -232,7 +232,7 @@ if [ ${dell_r440+x} ]; then
     # Install directory
     datadev_install_dir=/usr/local/src/datadev/${datadev_version}
 
-    # Create target folder
+    # Create Install directory
     mkdir -p ${datadev_install_dir}
 
     # Copy the kernel module scripts
@@ -249,7 +249,7 @@ if [ ${dell_r440+x} ]; then
     cd aes-stream-drivers/data_dev/driver
     make
     # Verify if the kernel module was built successfully. If so, copy the resulting
-    # kernel module to the target location
+    # kernel module to the install directory
     if [ $? -ne 0 ]; then
         echo
         echo "ERROR: Could not build the kernel module!"
