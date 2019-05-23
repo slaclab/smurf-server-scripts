@@ -104,7 +104,6 @@ copy_template "run.sh"
 template_dir=${template_top_dir}/common
 
 copy_template "stop.sh"
-copy_template "env" ".env"
 
 # Mark the scripts as executable
 chmod +x ${target_dir}/run.sh
