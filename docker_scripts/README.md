@@ -104,7 +104,7 @@ release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>"
 
 A utility application contains tools useful on SMuRF system.
 
-It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker)
+It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 
 To release an utility application, use **type = utils**, with the following arguments:
 
@@ -115,4 +115,21 @@ release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <o
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
                                          /home/cryo/docker/utils/dev
   -h|--help                            : Show this message.
+```
+
+### TPG IOC
+
+A Timing Pattern Generator (TPG) IOC.
+
+It runs in the [smurf-tpg-ioc docker](https://github.com/slaclab/smurf-tpg-ioc-docker).
+
+To release a TPG IOCm use **type = tpg**, with the following arguments:
+
+```
+release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]"
+
+  -v|--version    <smurf-tpg_version> : Version of the smurf-tpg-ioc docker image.
+  -o|--output-dir <output_dir>        : Directory where to release the scripts. Defaults to
+                                        /home/cryo/docker/utils/dev
+  -h|--help                           : Show this message.
 ```

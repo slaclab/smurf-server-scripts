@@ -28,11 +28,12 @@ usage()
     echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
     echo
     echo "  -t|--type <app_type> : Type of application to install. Options are:"
-    echo "                         - system        = Full system (stable version)."
-    echo "                         - system-dev-fw = Full system (with a development version of FW)."
-    echo "                         - system-dev-sw = Full system with a development version of SW and FW."
-    echo "                         - pysmurf-dev   = A stand-alone version of pysmurf, in development mode."
-    echo "                         - utils         = A utility system."
+    echo "                         - system        : Full system (stable version)."
+    echo "                         - system-dev-fw : Full system (with a development version of FW)."
+    echo "                         - system-dev-sw : Full system with a development version of SW and FW."
+    echo "                         - pysmurf-dev   : A stand-alone version of pysmurf, in development mode."
+    echo "                         - utils         : A utility system."
+    echo "                         - tpg           : A TPG IOC."
     echo "  -h|--help            : Show help message for each application type."
     echo
     exit $1
@@ -121,6 +122,9 @@ case ${app_type} in
     ;;
     utils)
     . ${top_dir}/release_utils.sh ${app_options}
+    ;;
+    tpg)
+    . ${top_dir}/release_tpg.sh ${app_options}
     ;;
     *)
     echo "ERROR: Invalid application type!"
