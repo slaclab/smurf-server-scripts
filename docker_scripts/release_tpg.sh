@@ -100,6 +100,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Generate file common to other type of application
+template_dir=${template_top_dir}/common
+
 copy_template "run.sh"
 copy_template "stop.sh"
 copy_template "env" ".env"
