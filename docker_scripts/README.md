@@ -33,11 +33,12 @@ release-docker.sh -t|--type system -N|--slot <slot_number> -s|--smurf2mce-versio
                   -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]
 
   -N|--slot              <slot_number>       : ATCA crate slot number.
-  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image
-  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image
+  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
+  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image.
+  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
-                                               /home/cryo/docker/smurf/<slot_number>/stable/<smurf2mce_version>
-  -h|--help                                  : Show this message
+                                               /home/cryo/docker/smurf/<slot_number>/stable/<smurf2mce_version>.
+  -h|--help                                  : Show this message.
 ```
 
 ### Full system, for Firmware development
@@ -55,8 +56,9 @@ release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce
   -N|--slot                   <slot_number>            : ATCA crate slot number.
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/<slot_number>/dev_fw/<smurf2mce_base_version>
+                                                         /home/cryo/docker/smurf/<slot_number>/dev_fw/<smurf2mce_base_version>.
   -h|--help                                            : Show this message.
 ```
 
@@ -76,10 +78,13 @@ release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/<slot_number>/dev_sw/<smurf2mce-base_version>
-  -h|--help                                            : Show this message
+                                                         /home/cryo/docker/smurf/<slot_number>/dev_sw/<smurf2mce-base_version>.
+  -h|--help                                            : Show this message.
 ```
+
+When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, edit the `docker-compose.yml` file, commenting out the `command:` line under the `smurf_server` section and start the container; in this way the container will run in bash script. Once started, attach to the container, go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and build it. Then exit and stop the container and revert the changes made to the `docker-compose.yml` file. You will need to repeat this steps every time you made changes to the C++ code; not necesary when making changes to the python code.
 
 ### Pysmurf application, in development mode
 
@@ -93,10 +98,10 @@ To release a pysmurf development application, use **type = pysmurf-dev**, with t
 release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>"
                   [-o|--output-dir <output_dir>] [-h|--help]"
 
-  -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base
+  -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
                                            image; pysmurf will be overwritten by the local copy.
   -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to
-                                           /home/cryo/docker/pysmurf/dev
+                                           /home/cryo/docker/pysmurf/dev.
   -h|--help                              : Show this message.
 ```
 
@@ -113,7 +118,7 @@ release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <o
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
-                                         /home/cryo/docker/utils/dev
+                                         /home/cryo/docker/utils.
   -h|--help                            : Show this message.
 ```
 
@@ -130,6 +135,6 @@ release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir
 
   -v|--version    <smurf-tpg_version> : Version of the smurf-tpg-ioc docker image.
   -o|--output-dir <output_dir>        : Directory where to release the scripts. Defaults to
-                                        /home/cryo/docker/utils/dev
+                                        /home/cryo/docker/tpg.
   -h|--help                           : Show this message.
 ```
