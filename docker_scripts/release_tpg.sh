@@ -98,11 +98,11 @@ if [ $? -ne 0 ]; then
     echo "ERROR: Could not create ${target_dir}/docker-compose.yml"
     exit 1
 fi
+copy_template "run.sh"
 
 # Generate file common to other type of application
 template_dir=${template_top_dir}/common
 
-copy_template "run.sh"
 copy_template "stop.sh"
 copy_template "env" ".env"
 
