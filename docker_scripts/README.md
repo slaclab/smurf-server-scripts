@@ -95,7 +95,7 @@ Pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-dock
 To release a pysmurf development application, use **type = pysmurf-dev**, with the following arguments:
 
 ```
-release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>"
+release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
                   [-o|--output-dir <output_dir>] [-h|--help]"
 
   -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
@@ -114,7 +114,7 @@ It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 To release an utility application, use **type = utils**, with the following arguments:
 
 ```
-release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]"
+release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
@@ -131,10 +131,27 @@ It runs in the [smurf-tpg-ioc docker](https://github.com/slaclab/smurf-tpg-ioc-d
 To release a TPG IOCm use **type = tpg**, with the following arguments:
 
 ```
-release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]"
+release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]
 
-  -v|--version    <smurf-tpg_version> : Version of the smurf-tpg-ioc docker image.
-  -o|--output-dir <output_dir>        : Directory where to release the scripts. Defaults to
-                                        /home/cryo/docker/tpg.
-  -h|--help                           : Show this message.
+  -v|--version    <smurf-version> : Version of the smurf-tpg-ioc docker image.
+  -o|--output-dir <output_dir>    : Directory where to release the scripts. Defaults to
+                                    /home/cryo/docker/tpg.
+  -h|--help                       : Show this message.
+```
+
+### PCIe utility application
+
+A application with utilities related to the SMuRF PCIe card.
+
+It runs in the [smurf-pcie docker](https://github.com/slaclab/smurf-pcie-docker).
+
+To release as PCIe utility application use **type = pcie**, with the following arguments:
+
+```
+release-docker.sh -t pcie -v|--version <version> [-o|--output-dir <output_dir>] [-h|--help]
+
+  -v|--version    <version>    : Version of the smurf-pcie docker image.
+  -o|--output-dir <output_dir> : Directory where to release the scripts. Defaults to
+                                 ${release_top_default_dir}
+  -h|--help                    : Show this message.
 ```

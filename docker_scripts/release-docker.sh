@@ -34,6 +34,7 @@ usage()
     echo "                         - pysmurf-dev   : A stand-alone version of pysmurf, in development mode."
     echo "                         - utils         : A utility system."
     echo "                         - tpg           : A TPG IOC."
+    echo "                         - pcie          : A PCIe utility application."
     echo "  -h|--help            : Show help message for each application type."
     echo
     exit $1
@@ -125,6 +126,9 @@ case ${app_type} in
     ;;
     tpg)
     . ${top_dir}/release_tpg.sh ${app_options}
+    ;;
+    pcie)
+    . ${top_dir}/release_pcie.sh ${app_options}
     ;;
     *)
     echo "ERROR: Invalid application type!"
