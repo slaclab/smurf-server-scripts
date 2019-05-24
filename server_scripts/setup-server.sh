@@ -245,7 +245,7 @@ if [ ${dell_r440+x} ]; then
     echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
 
     # Build the kernel module from source
-    git clone https://github.com/slaclab/aes-stream-drivers.git -b v5.4.0
+    git clone https://github.com/slaclab/aes-stream-drivers.git -b ${datadev_version}
     cd aes-stream-drivers/data_dev/driver
     make
     # Verify if the kernel module was built successfully. If so, copy the resulting
