@@ -3,7 +3,7 @@
 user="cryo"
 
 docker run -it --rm  \
-  --log-opt tag=smurf-pcie \
+  --log-opt tag=smurf_pcie \
   --security-opt "apparmor=docker-smurf" \
   -u $(id -u ${user}):$(id -g ${user}) \
   --net host \
