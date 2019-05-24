@@ -15,4 +15,4 @@ docker run -it --rm  \
   -v /home/${user}:/home/${user} \
   -v /data:/data \
   -v ${PWD}/shared:/shared \
-  tidair/smurf-base:%%SMURF_BASE_VERSION%%
+  tidair/smurf-base:%%SMURF_BASE_VERSION%% $1
