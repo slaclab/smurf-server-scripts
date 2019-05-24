@@ -239,7 +239,7 @@ if [ ${dell_r440+x} ]; then
     cat ./kernel_drivers/datadev_scripts/install-module.sh \
         | sed s/%%VERSION%%/${datadev_version}/g \
         > ${datadev_install_dir}/install-module.sh
-
+    chmod +x ${datadev_install_dir}/install-module.sh
     cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
 
     # Let the cryo user to run the install and remove modules without password, so it can be scripted
