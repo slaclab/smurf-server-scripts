@@ -9,7 +9,7 @@ docker run -it --rm  \
   -e EPICS_CA_AUTO_ADDR_LIST=NO \
   -e EPICS_CA_ADDR_LIST=172.17.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \
-  -e DISPLAY=${DISPLAY} \
+  -e DISPLAY \
   -e location=${PWD} \
   -v /etc/group:/etc/group:ro \
   -v /home/${user}:/home/${user} \

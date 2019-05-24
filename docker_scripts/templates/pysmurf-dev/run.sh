@@ -7,7 +7,7 @@ docker run -it --rm  \
   --security-opt apparmor=docker-smurf \
   -u $(id -u ${user}):$(id -g ${user}) \
   --net host \
-  -e DISPLAY=${DISPLAY} \
+  -e DISPLAY \
   -e location=${PWD} \
   -e EPICS_CA_ADDR_LIST=172.17.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \

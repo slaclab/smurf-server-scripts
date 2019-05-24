@@ -7,7 +7,7 @@ docker run -it --rm  \
   --security-opt "apparmor=docker-smurf" \
   -u $(id -u ${user}):$(id -g ${user}) \
   --net host \
-  -e DISPLAY=${DISPLAY} \
+  -e DISPLAY \
   -e location=${PWD} \
   -v /home/${user}:/home/${user} \
   -v /data:/data \
