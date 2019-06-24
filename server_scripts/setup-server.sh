@@ -177,6 +177,14 @@ cp templates/daemon.json /etc/docker/daemon.json
 cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
 apparmor_parser -r -W /etc/apparmor.d/docker-smurf
 
+# Disable NetworkManager from managing the docker0 bridge interface
+cat << EOF >> /etc/NetworkManager/NetworkManager.conf
+
+[keyfile]
+unmanaged-devices=interface-name:docker0
+EOF
+systemctl restart network-manager.service
+
 echo "Done installing the docker engine"
 echo
 
