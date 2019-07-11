@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-config_file=/etc/netplan/01-network-manager-all.yaml
-
 # Local interface (use to communicate with the ATCA system)
 atca_interface_name="eno2"
 configure_interafce=1
+config_file=/etc/netplan/atca.yaml
 
 echo "Configuring local interface, used for communication with the ATCA blade..."
 echo
@@ -20,7 +19,7 @@ else
   echo
 
   echo "Verifying that the interfaces '${atca_interface_name}' is not defined in '${config_file}'..."
-  if grep -Fq "${atca_interface_name}:" ${config_file}; then
+  if grep -Fq "${atca_interface_name}:" ${config_file} 2&> /dev/null ; then
       echo "ERROR: Interface '${atca_interface_name}' found in '${config_file}'"
       configure_interafce=0
   else
@@ -35,6 +34,10 @@ if [ ${configure_interafce} -eq 0 ]; then
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
   cat << EOF >>  ${config_file}
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
     eno2:
       dhcp4: no
       dhcp6: no
@@ -51,6 +54,7 @@ echo
 # (used to communicate with the ATCA shelf manager)
 usb_interface_name=$(ip addr | grep -Po '^[0-9][0-9]*:.*\Kenx[^:][^:]*')
 configure_interafce=1
+config_file=/etc/netplan/management.yaml
 
 echo "Configuring USB interface, used for communication with the ATCA shelfmanager..."
 
@@ -61,7 +65,7 @@ if [ "${usb_interface_name}" ]; then
   echo
 
   echo "Verifying that the interfaces '${usb_interface_name}' is not defined in '${config_file}'..."
-  if grep -Fq "${usb_interface_name}:" ${config_file}; then
+  if grep -Fq "${usb_interface_name}:" ${config_file} 2&> /dev/null ; then
       echo "ERROR: Interface '${usb_interface_name}' found in '${config_file}'"
       configure_interafce=0
   else
@@ -79,6 +83,10 @@ if [ ${configure_interafce} -eq 0 ]; then
 else
   echo "writting configuration to ${config_file} for interface ${usb_interface_name}..."
   cat << EOF >>  ${config_file}
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
     ${usb_interface_name}:
       dhcp4: no
       dhcp6: no
