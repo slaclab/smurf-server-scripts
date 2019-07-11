@@ -26,7 +26,10 @@ echo
 ####################
 # INSTALL PACKAGES #
 ####################
-echo "- Installing packages..."
+echo "##############################"
+echo "### Installing packages... ###"
+echo "##############################"
+echo
 
 apt-get -y update
 apt-get -y install \
@@ -65,13 +68,19 @@ EOF
 # Prevent the kernel version to be automatically updated
 sudo apt-mark hold `uname -r`
 
-echo "Done Installing packages."
+echo
+echo "#################################"
+echo "### Done Installing packages. ###"
+echo "#################################"
 echo
 
 #######################
 # SETUP THE SWAP FILE #
 #######################
-echo "- Setting up swap partition..."
+echo "####################################"
+echo "### Setting up swap partition... ###"
+echo "####################################"
+echo
 
 # Delete default swap partition
 swapoff -a
@@ -92,13 +101,19 @@ swapon /swapfile
 # Update fstab so that the changes are permanents
 sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
 
-echo "Done setting up swap partition."
+echo
+echo "#######################################"
+echo "### Done setting up swap partition. ###"
+echo "#######################################"
 echo
 
 #########################
 # SYSTEM CONFIGURATIONS #
 #########################
-echo "- Applying system configurations..."
+echo "#########################################"
+echo "### Applying system configurations... ###"
+echo "#########################################"
+echo
 
 # Enable persistent logs
 echo Storage=persistent >> /etc/systemd/journald.conf
@@ -111,13 +126,19 @@ sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc
 sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5\'$'\nGRUB_RECORDFAIL_TIMEOUT=5/g' /etc/default/grub
 update-grub
 
-echo "Done applying system configurations."
+echo
+echo "############################################"
+echo "### Done applying system configurations. ###"
+echo "############################################"
 echo
 
 ########################
 # SMURF CONFIGURATIONS #
 ########################
-echo "- Applying SMuRF configurations..."
+echo "########################################"
+echo "### Applying SMuRF configurations... ###"
+echo "########################################"
+echo
 
 # Create the smurf group.
 groupadd smurf
@@ -133,13 +154,20 @@ mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 # Set the data directories permissions
 chown -R cryo:smurf /data
 
-echo "Done applying SMuRF configurations."
+echo
+echo "###########################################"
+echo "### Done applying SMuRF configurations. ###"
+echo "###########################################"
 echo
 
 #########################
 # INSTALL DOCKER ENGINE #
 #########################
-echo "- Installing the docker engine..."
+echo "#######################################"
+echo "### Installing the docker engine... ###"
+echo "#######################################"
+echo
+
 # Add Docker’s official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
@@ -186,14 +214,21 @@ unmanaged-devices=interface-name:docker0
 EOF
 systemctl restart network-manager.service
 
-echo "Done installing the docker engine"
+echo
+echo "#########################################"
+echo "### Done installing the docker engine ###"
+echo "#########################################"
 echo
 
 #########################
 # NETWORK CONFIGURATION #
 #########################
+echo "########################################"
+echo "### Setting network configuration... ###"
+echo "########################################"
+echo
+
 # Apply the network configuration to each kind of server
-echo "- Setting network configuration..."
 if [ ${dell_r440+x} ]; then
     . r440_network.sh
 elif [ ${dell_r330+x} ]; then
@@ -206,13 +241,19 @@ cat << EOF >> /etc/hosts
 192.168.1.2     shm-smrf-sp01
 EOF
 
-echo "Done setting network configurations."
+echo
+echo "############################################"
+echo "### Done setting network configurations. ###"
+echo "############################################"
 echo
 
 #####################
 # SETUP VNC SERVER  #
 #####################
-echo "- Setting up the VNC server..."
+echo "####################################"
+echo "### Setting up the VNC server... ###"
+echo "####################################"
+echo
 
 # Create the xstartup file
 mkdir /home/cryo/.vnc
@@ -225,7 +266,10 @@ EOF
 # Change folder and files permissions
 sudo chown -R cryo:smurf  /home/cryo/.vnc/
 
-echo "Done setting up the VNC server."
+echo
+echo "#######################################"
+echo "### Done setting up the VNC server. ###"
+echo "#######################################"
 echo
 
 ############################
@@ -233,7 +277,9 @@ echo
 ############################
 # Install the kernel driver only on R440 servers
 if [ ${dell_r440+x} ]; then
-    echo "- Installing PCIe KCU1500 card kernel driver (datadev)..."
+    echo "###############################################################"
+    echo "### Installing PCIe KCU1500 card kernel driver (datadev)... ###"
+    echo "###############################################################"
 
     # Driver version
     datadev_version=v5.4.0
@@ -273,7 +319,10 @@ if [ ${dell_r440+x} ]; then
     fi
     cd -
 
-    echo "Done installing PCIe card kernel driver."
+    echo
+    echo "################################################"
+    echo "### Done installing PCIe card kernel driver. ###"
+    echo "################################################"
     echo
 fi
 
