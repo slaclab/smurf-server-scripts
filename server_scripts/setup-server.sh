@@ -44,6 +44,7 @@ apt-get -y install \
     software-properties-common \
     tree \
     ipmitool \
+    screen \
     tightvncserver \
     xfce4
 
