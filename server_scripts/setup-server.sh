@@ -251,7 +251,7 @@ if [ ${dell_r440+x} ]; then
     cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
 
     # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    echo 'cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh' | sudo EDITOR='tee -a' visudo
+    echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
 
     # Run the install module script after login
     echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
