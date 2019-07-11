@@ -68,10 +68,9 @@ git lfs install
 cp -r ../../smurf-server-scripts /usr/local/src/
 
 # Create smurf bash profile file and add the docker scripts to PATH
-touch /etc/profile.d/smurf_config.sh
-cat << EOF > /etc/profile.d/smurf_config.sh
-export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
-EOF
+if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh ; then
+    echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
+fi
 
 # Prevent the kernel version to be automatically updated
 sudo apt-mark hold `uname -r`
@@ -85,34 +84,43 @@ echo
 #######################
 # SETUP THE SWAP FILE #
 #######################
-echo "####################################"
-echo "### Setting up swap partition... ###"
-echo "####################################"
+echo "###############################"
+echo "### Setting up swap file... ###"
+echo "###############################"
 echo
 
-# Delete default swap partition
-swapoff -a
-lvremove -y /dev/mapper/ubuntu--vg-swap_1
+# Check if the swap partition exist. If not,
+# then we have already done this.
+if [ -e /dev/mapper/ubuntu--vg-swap_1 ]; then
+    echo "Removing swap partition and creating swap file..."
+    # Delete default swap partition
+    swapoff -a
+    lvremove -y /dev/mapper/ubuntu--vg-swap_1
 
-# Extend root partition to take the free space
-lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
-resize2fs /dev/mapper/ubuntu--vg-root
+    # Extend root partition to take the free space
+    lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
+    resize2fs /dev/mapper/ubuntu--vg-root
 
-# Create a 16G swap file
-fallocate -l 16G /swapfile
-chmod 600 /swapfile
+    # Create a 16G swap file
+    fallocate -l 16G /swapfile
+    chmod 600 /swapfile
 
-# Activate the swap file
-mkswap /swapfile
-swapon /swapfile
+    # Activate the swap file
+    mkswap /swapfile
+    swapon /swapfile
 
-# Update fstab so that the changes are permanents
-sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
+    # Update fstab so that the changes are permanents
+    sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
+
+    echo "Done!"
+else
+    echo "The swap partition does not exit."
+fi
 
 echo
-echo "#######################################"
-echo "### Done setting up swap partition. ###"
-echo "#######################################"
+echo "##################################"
+echo "### Done setting up swap file. ###"
+echo "##################################"
 echo
 
 #########################
@@ -124,14 +132,19 @@ echo "#########################################"
 echo
 
 # Enable persistent logs
-echo Storage=persistent >> /etc/systemd/journald.conf
+if ! grep -Fq "Storage=persistent" /etc/systemd/journald.conf ; then
+    echo Storage=persistent >> /etc/systemd/journald.conf
+fi
 
 # Disable Wayland (which will enable Xorg display server instead)
 sed -i -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
 
 # GRUB: set timeouts to 5s and disable quit boot
 sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc/default/grub
-sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5\'$'\nGRUB_RECORDFAIL_TIMEOUT=5/g' /etc/default/grub
+sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5/g' /etc/default/grub
+if ! grep -q ^GRUB_RECORDFAIL_TIMEOUT=.* /etc/default/grub ; then
+    echo "GRUB_RECORDFAIL_TIMEOUT=5" >> /etc/default/grub
+fi
 update-grub
 
 echo
@@ -244,10 +257,12 @@ elif [ ${dell_r330+x} ]; then
 fi
 
 # Add the shm-smrf-sp01 node name to ip address map entry
-cat << EOF >> /etc/hosts
+if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
+    cat << EOF >> /etc/hosts
 # ATCA shelfmanager
 192.168.1.2     shm-smrf-sp01
 EOF
+fi
 
 echo
 echo "############################################"
@@ -306,10 +321,14 @@ if [ ${dell_r440+x} ]; then
     cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
 
     # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
+    if ! grep -Fq "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" /etc/sudoers ; then
+        echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
+    fi
 
     # Run the install module script after login
-    echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
+    if ! grep -Fq "sudo ${datadev_install_dir}/install-module.sh" /etc/profile.d/smurf_config.sh ; then
+        echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
+    fi
 
     # Build the kernel module from source
     git clone https://github.com/slaclab/aes-stream-drivers.git -b ${datadev_version}
