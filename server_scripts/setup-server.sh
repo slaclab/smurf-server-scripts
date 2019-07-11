@@ -15,6 +15,14 @@ if [[ ! ${REPLY} =~ ^[Yy]$ ]]; then
     exit 0
 fi
 
+# Redirect stdout into a named pipe running tee, so that
+# all the output messages goes to a log file as well.
+# The -i option is used to avoid signal interrupt from
+# disrupting stdout in the script.
+# Redirect stderr as well to the log file.
+exec > >(tee -i server_setup.log)
+exec 2>&1
+
 echo "Starting server configuration..."
 echo
 
