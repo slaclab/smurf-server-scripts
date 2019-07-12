@@ -101,5 +101,6 @@ echo
 
 echo "Applying configuration to netplay..."
 netplan apply
+sleep 5
 
 echo "Done!"
