@@ -18,12 +18,12 @@ usage()
 {
     echo "Release a PCIe utility application."
     echo
-    echo "usage: ${script_name} -t pcie -v|--version <version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -v|--version    <version>    : Version of the smurf-pcie docker image."
-    echo "  -o|--output-dir <output_dir> : Directory where to release the scripts. Defaults to"
-    echo "                                 ${release_top_default_dir}"
-    echo "  -h|--help                    : Show this message."
+    echo "  -v|--version    <pcie_version> : Version of the smurf-pcie docker image."
+    echo "  -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to"
+    echo "                                   ${release_top_default_dir}"
+    echo "  -h|--help                      : Show this message."
     echo
     exit $1
 }
@@ -40,7 +40,7 @@ key="$1"
 
 case ${key} in
     -v|--version)
-    version="$2"
+    pcie_version="$2"
     shift
     ;;
     -o|--output-dir)
@@ -59,8 +59,8 @@ shift
 done
 
 # Verify parameters
-if [ -z ${version+x} ]; then
-        echo "ERROR: version not defined!"
+if [ -z ${pcie_version+x} ]; then
+        echo "ERROR: smurf-pcie version not defined!"
         echo ""
         usage 1
 fi
@@ -91,7 +91,7 @@ echo ""
 
 # Generate the run script
 cat ${template_dir}/run.sh \
-        | sed s/%%VERSION%%/${version}/g \
+        | sed s/%%VERSION%%/${pcie_version}/g \
         > ${target_dir}/run.sh
 if [ $? -ne 0 ]; then
     echo ""
