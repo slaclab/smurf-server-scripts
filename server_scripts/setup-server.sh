@@ -20,10 +20,11 @@ fi
 # The -i option is used to avoid signal interrupt from
 # disrupting stdout in the script.
 # Redirect stderr as well to the log file.
-exec > >(tee -i server_setup.log)
+exec > >(tee -ia server_setup.log)
 exec 2>&1
 
 echo "Starting server configuration..."
+date
 echo
 
 ############################
