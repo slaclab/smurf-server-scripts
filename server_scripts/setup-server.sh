@@ -15,7 +15,16 @@ if [[ ! ${REPLY} =~ ^[Yy]$ ]]; then
     exit 0
 fi
 
+# Redirect stdout into a named pipe running tee, so that
+# all the output messages goes to a log file as well.
+# The -i option is used to avoid signal interrupt from
+# disrupting stdout in the script.
+# Redirect stderr as well to the log file.
+exec > >(tee -ia server_setup.log)
+exec 2>&1
+
 echo "Starting server configuration..."
+date
 echo
 
 ############################
@@ -26,7 +35,10 @@ echo
 ####################
 # INSTALL PACKAGES #
 ####################
-echo "- Installing packages..."
+echo "##############################"
+echo "### Installing packages... ###"
+echo "##############################"
+echo
 
 apt-get -y update
 apt-get -y install \
@@ -44,6 +56,7 @@ apt-get -y install \
     software-properties-common \
     tree \
     ipmitool \
+    screen \
     tightvncserver \
     xfce4
 
@@ -56,67 +69,98 @@ git lfs install
 cp -r ../../smurf-server-scripts /usr/local/src/
 
 # Create smurf bash profile file and add the docker scripts to PATH
-touch /etc/profile.d/smurf_config.sh
-cat << EOF > /etc/profile.d/smurf_config.sh
-export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts
-EOF
+if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh ; then
+    echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
+fi
 
 # Prevent the kernel version to be automatically updated
 sudo apt-mark hold `uname -r`
 
-echo "Done Installing packages."
+echo
+echo "#################################"
+echo "### Done Installing packages. ###"
+echo "#################################"
 echo
 
 #######################
 # SETUP THE SWAP FILE #
 #######################
-echo "- Setting up swap partition..."
+echo "###############################"
+echo "### Setting up swap file... ###"
+echo "###############################"
+echo
 
-# Delete default swap partition
-swapoff -a
-lvremove -y /dev/mapper/ubuntu--vg-swap_1
+# Check if the swap partition exist. If not,
+# then we have already done this.
+if [ -e /dev/mapper/ubuntu--vg-swap_1 ]; then
+    echo "Removing swap partition and creating swap file..."
+    # Delete default swap partition
+    swapoff -a
+    lvremove -y /dev/mapper/ubuntu--vg-swap_1
 
-# Extend root partition to take the free space
-lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
-resize2fs /dev/mapper/ubuntu--vg-root
+    # Extend root partition to take the free space
+    lvextend /dev/mapper/ubuntu--vg-root /dev/sda2
+    resize2fs /dev/mapper/ubuntu--vg-root
 
-# Create a 16G swap file
-fallocate -l 16G /swapfile
-chmod 600 /swapfile
+    # Create a 16G swap file
+    fallocate -l 16G /swapfile
+    chmod 600 /swapfile
 
-# Activate the swap file
-mkswap /swapfile
-swapon /swapfile
+    # Activate the swap file
+    mkswap /swapfile
+    swapon /swapfile
 
-# Update fstab so that the changes are permanents
-sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
+    # Update fstab so that the changes are permanents
+    sed -i -e 's|^/dev/mapper/ubuntu--vg-swap_1.*|/swapfile       swap            swap    defaults        0       0|g' /etc/fstab
 
-echo "Done setting up swap partition."
+    echo "Done!"
+else
+    echo "The swap partition does not exit."
+fi
+
+echo
+echo "##################################"
+echo "### Done setting up swap file. ###"
+echo "##################################"
 echo
 
 #########################
 # SYSTEM CONFIGURATIONS #
 #########################
-echo "- Applying system configurations..."
+echo "#########################################"
+echo "### Applying system configurations... ###"
+echo "#########################################"
+echo
 
 # Enable persistent logs
-echo Storage=persistent >> /etc/systemd/journald.conf
+if ! grep -Fq "Storage=persistent" /etc/systemd/journald.conf ; then
+    echo Storage=persistent >> /etc/systemd/journald.conf
+fi
 
 # Disable Wayland (which will enable Xorg display server instead)
 sed -i -e 's/#WaylandEnable=false/WaylandEnable=false/g' /etc/gdm3/custom.conf
 
 # GRUB: set timeouts to 5s and disable quit boot
 sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc/default/grub
-sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5\'$'\nGRUB_RECORDFAIL_TIMEOUT=5/g' /etc/default/grub
+sed -i -e 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=5/g' /etc/default/grub
+if ! grep -q ^GRUB_RECORDFAIL_TIMEOUT=.* /etc/default/grub ; then
+    echo "GRUB_RECORDFAIL_TIMEOUT=5" >> /etc/default/grub
+fi
 update-grub
 
-echo "Done applying system configurations."
+echo
+echo "############################################"
+echo "### Done applying system configurations. ###"
+echo "############################################"
 echo
 
 ########################
 # SMURF CONFIGURATIONS #
 ########################
-echo "- Applying SMuRF configurations..."
+echo "########################################"
+echo "### Applying SMuRF configurations... ###"
+echo "########################################"
+echo
 
 # Create the smurf group.
 groupadd smurf
@@ -132,67 +176,88 @@ mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 # Set the data directories permissions
 chown -R cryo:smurf /data
 
-echo "Done applying SMuRF configurations."
+echo
+echo "###########################################"
+echo "### Done applying SMuRF configurations. ###"
+echo "###########################################"
 echo
 
 #########################
 # INSTALL DOCKER ENGINE #
 #########################
-echo "- Installing the docker engine..."
-# Add Docker’s official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+echo "#######################################"
+echo "### Installing the docker engine... ###"
+echo "#######################################"
+echo
 
-# Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
-apt-key fingerprint 0EBFCD88
+if which docker > /dev/null; then
+    echo "Docker is already installed in the system:"
+    docker --version
+    docker-compose --version
+else
+    # Add Docker’s official GPG key
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
-# Set up the stable repository
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+    # Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+    apt-key fingerprint 0EBFCD88
 
-# Update the apt package index.
-apt-get update
+    # Set up the stable repository
+    add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
 
-# Install the latest version of Docker CE and containerd
-apt-get -y install docker-ce docker-ce-cli containerd.io
+    # Update the apt package index.
+    apt-get update
 
-# Create the docker group.
-groupadd docker
+    # Install the latest version of Docker CE and containerd
+    apt-get -y install docker-ce docker-ce-cli containerd.io
 
-# Add the cryo user to the docker group
-usermod -aG docker cryo
+    # Create the docker group.
+    groupadd docker
 
-# Start docker on boot
-systemctl enable docker
+    # Add the cryo user to the docker group
+    usermod -aG docker cryo
 
-# Install docker compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+    # Start docker on boot
+    systemctl enable docker
 
-# Setup the logging system in the  daemon configuration
-cp templates/daemon.json /etc/docker/daemon.json
+    # Install docker compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
-# Setup apparmor profile
-cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
-apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+    # Setup the logging system in the  daemon configuration
+    cp templates/daemon.json /etc/docker/daemon.json
 
-# Disable NetworkManager from managing the docker0 bridge interface
-cat << EOF >> /etc/NetworkManager/NetworkManager.conf
+    # Setup apparmor profile
+    cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
+    apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+
+    # Disable NetworkManager from managing the docker0 bridge interface
+    cat << EOF >> /etc/NetworkManager/NetworkManager.conf
 
 [keyfile]
 unmanaged-devices=interface-name:docker0
 EOF
-systemctl restart network-manager.service
 
-echo "Done installing the docker engine"
+    systemctl restart network-manager.service
+fi
+
+echo
+echo "#########################################"
+echo "### Done installing the docker engine ###"
+echo "#########################################"
 echo
 
 #########################
 # NETWORK CONFIGURATION #
 #########################
+echo "########################################"
+echo "### Setting network configuration... ###"
+echo "########################################"
+echo
+
 # Apply the network configuration to each kind of server
-echo "- Setting network configuration..."
 if [ ${dell_r440+x} ]; then
     . r440_network.sh
 elif [ ${dell_r330+x} ]; then
@@ -200,18 +265,26 @@ elif [ ${dell_r330+x} ]; then
 fi
 
 # Add the shm-smrf-sp01 node name to ip address map entry
-cat << EOF >> /etc/hosts
+if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
+    cat << EOF >> /etc/hosts
 # ATCA shelfmanager
 192.168.1.2     shm-smrf-sp01
 EOF
+fi
 
-echo "Done setting network configurations."
+echo
+echo "############################################"
+echo "### Done setting network configurations. ###"
+echo "############################################"
 echo
 
 #####################
 # SETUP VNC SERVER  #
 #####################
-echo "- Setting up the VNC server..."
+echo "####################################"
+echo "### Setting up the VNC server... ###"
+echo "####################################"
+echo
 
 # Create the xstartup file
 mkdir /home/cryo/.vnc
@@ -224,7 +297,10 @@ EOF
 # Change folder and files permissions
 sudo chown -R cryo:smurf  /home/cryo/.vnc/
 
-echo "Done setting up the VNC server."
+echo
+echo "#######################################"
+echo "### Done setting up the VNC server. ###"
+echo "#######################################"
 echo
 
 ############################
@@ -232,7 +308,9 @@ echo
 ############################
 # Install the kernel driver only on R440 servers
 if [ ${dell_r440+x} ]; then
-    echo "- Installing PCIe KCU1500 card kernel driver (datadev)..."
+    echo "###############################################################"
+    echo "### Installing PCIe KCU1500 card kernel driver (datadev)... ###"
+    echo "###############################################################"
 
     # Driver version
     datadev_version=v5.4.0
@@ -251,10 +329,14 @@ if [ ${dell_r440+x} ]; then
     cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
 
     # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    echo 'cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh' | sudo EDITOR='tee -a' visudo
+    if ! grep -Fq "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" /etc/sudoers ; then
+        echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
+    fi
 
     # Run the install module script after login
-    echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
+    if ! grep -Fq "sudo ${datadev_install_dir}/install-module.sh" /etc/profile.d/smurf_config.sh ; then
+        echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
+    fi
 
     # Build the kernel module from source
     git clone https://github.com/slaclab/aes-stream-drivers.git -b ${datadev_version}
@@ -272,7 +354,10 @@ if [ ${dell_r440+x} ]; then
     fi
     cd -
 
-    echo "Done installing PCIe card kernel driver."
+    echo
+    echo "################################################"
+    echo "### Done installing PCIe card kernel driver. ###"
+    echo "################################################"
     echo
 fi
 
