@@ -23,14 +23,14 @@ usage()
     echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder."
     echo "This script will clone the master branch from github."
     echo
-    echo "usage: ${script_name} -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>"
+    echo "usage: ${script_name} -t pysmurf-dev -v|--version <pysmurf_version>"
     echo "                         [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
-    echo "                                           image; pysmurf will be overwritten by the local copy."
-    echo "  -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to"
-    echo "                                           ${release_top_default_dir}"
-    echo "  -h|--help                              : Show this message."
+    echo "  -v|--version    <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
+    echo "                                      image; pysmurf will be overwritten by the local copy."
+    echo "  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to"
+    echo "                                      ${release_top_default_dir}"
+    echo "  -h|--help                         : Show this message."
     echo
     exit $1
 }
@@ -45,7 +45,7 @@ do
 key="$1"
 
 case ${key} in
-    -p|--pysmurf_version)
+    -v|--version)
     pysmurf_version="$2"
     shift
     ;;
