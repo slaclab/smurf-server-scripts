@@ -190,51 +190,58 @@ echo "### Installing the docker engine... ###"
 echo "#######################################"
 echo
 
-# Add Docker’s official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+if which docker > /dev/null; then
+    echo "Docker is already installed in the system:"
+    docker --version
+    docker-compose --version
+else
+    # Add Docker’s official GPG key
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
-# Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
-apt-key fingerprint 0EBFCD88
+    # Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+    apt-key fingerprint 0EBFCD88
 
-# Set up the stable repository
-add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+    # Set up the stable repository
+    add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
 
-# Update the apt package index.
-apt-get update
+    # Update the apt package index.
+    apt-get update
 
-# Install the latest version of Docker CE and containerd
-apt-get -y install docker-ce docker-ce-cli containerd.io
+    # Install the latest version of Docker CE and containerd
+    apt-get -y install docker-ce docker-ce-cli containerd.io
 
-# Create the docker group.
-groupadd docker
+    # Create the docker group.
+    groupadd docker
 
-# Add the cryo user to the docker group
-usermod -aG docker cryo
+    # Add the cryo user to the docker group
+    usermod -aG docker cryo
 
-# Start docker on boot
-systemctl enable docker
+    # Start docker on boot
+    systemctl enable docker
 
-# Install docker compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+    # Install docker compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
-# Setup the logging system in the  daemon configuration
-cp templates/daemon.json /etc/docker/daemon.json
+    # Setup the logging system in the  daemon configuration
+    cp templates/daemon.json /etc/docker/daemon.json
 
-# Setup apparmor profile
-cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
-apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+    # Setup apparmor profile
+    cp templates/smurf-apparmor-profile /etc/apparmor.d/docker-smurf
+    apparmor_parser -r -W /etc/apparmor.d/docker-smurf
 
-# Disable NetworkManager from managing the docker0 bridge interface
-cat << EOF >> /etc/NetworkManager/NetworkManager.conf
+    # Disable NetworkManager from managing the docker0 bridge interface
+    cat << EOF >> /etc/NetworkManager/NetworkManager.conf
 
 [keyfile]
 unmanaged-devices=interface-name:docker0
 EOF
-systemctl restart network-manager.service
+
+    systemctl restart network-manager.service
+fi
 
 echo
 echo "#########################################"
