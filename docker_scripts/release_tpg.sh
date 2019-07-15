@@ -99,10 +99,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 copy_template "run.sh"
-
-# Generate file common to other type of application
-template_dir=${template_top_dir}/common
-
 copy_template "stop.sh"
 
 # Mark the scripts as executable
