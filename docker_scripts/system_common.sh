@@ -24,15 +24,14 @@ release_top_default_dir="/home/cryo/docker/smurf"
 usage()
 {
     usage_header
-    echo "usage: ${script_name} -t system -N|--slot <slot_number> -s|--smurf2mce-version <smurf2mce_version>"
-    echo "                         -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t system -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>"
+    echo "                         [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -N|--slot              <slot_number>       : ATCA crate slot number (2-7)."
     echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
     echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image."
     echo "  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
-    echo "                                               ${release_top_default_dir}/<slot_number>/${target_dir_prefix}/<smurf2mce_version>"
+    echo "                                               ${release_top_default_dir}/${target_dir_prefix}/<smurf2mce_version>"
     echo "  -h|--help                                  : Show this message."
     echo
     exit $1
@@ -52,10 +51,6 @@ do
 key="$1"
 
 case ${key} in
-    -N|--slot)
-    slot_number="$2"
-    shift
-    ;;
     -s|--smurf2mce-version)
     smurf2mce_version="$2"
     shift
@@ -84,18 +79,6 @@ shift
 done
 
 # Verify parameters
-if [ -z ${slot_number+x} ]; then
-        echo "ERROR: Slot number not defined!"
-        echo ""
-        usage 1
-fi
-
-if [[ (${slot_number} < 2) || (${slot_number} > 7) ]]; then
-    echo "Invalid slot number. Must be a number between 2 and 7."
-    echo
-    usage 1
-fi
-
 if [ -z ${smurf2mce_version+x} ]; then
         echo "ERROR: smurf2mce version not defined!"
         echo ""
@@ -123,7 +106,7 @@ case ${comm_type} in
 esac
 
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/slot${slot_number}/${target_dir_prefix}/${smurf2mce_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${smurf2mce_version}
 fi
 
 # Verify is target directory already exist
@@ -150,7 +133,6 @@ echo ""
 template_dir=${template_top_dir}/${app_type}
 
 cat ${template_dir}/docker-compose.yml \
-        | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
         | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
@@ -164,15 +146,8 @@ fi
 # Generate file common to other type of application
 template_dir=${template_top_dir}/common
 
-cat ${template_dir}/docker-compose.pcie.yml \
-        | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
-        > ${target_dir}/docker-compose.pcie.yml
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "ERROR: Could not create ${target_dir}/docker-compose.pcie.yml"
-    exit 1
-fi
-
+copy_template "docker-compose.pcie.yml"
+copy_template "base.sh"
 copy_template "run.sh"
 copy_template "stop.sh"
 copy_template "env" ".env"

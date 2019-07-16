@@ -18,22 +18,52 @@ x-gui-app:
   tty: true
   stdin_open: true
 
+# Default SMuRF server configuration
+x-smurf-server:
+  &smurf-server
+  <<: *default-gui-app
+  image: tidair/smurf2mce:%%SMURF2MCE_VERSION%%
+  container_name: smurf_server_s${slot}
+  command: -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%%
+  logging:
+    options:
+      tag: smurf_server
+
+# Default PySMuRF configuration
+x-pysmurf:
+  &pysmurf
+  <<: *default-gui-app
+  image: tidair/pysmurf:%%PYSMURF_VERSION%%
+  container_name: pysmurf_s${slot}
+  command: --epics smurf_server_s${slot}
+  logging:
+    options:
+      tag: pysmurf
+  depends_on:
+  - smurf_server_s${slot}
+
 services:
-  smurf_server_s%%SLOT_NUMBER%%:
-    <<: *default-gui-app
-    image: tidair/smurf2mce:%%SMURF2MCE_VERSION%%
-    container_name: smurf_server_s%%SLOT_NUMBER%%
-    command: -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%%
-    logging:
-      options:
-        tag: smurf_server
-  pysmurf_s%%SLOT_NUMBER%%:
-    <<: *default-gui-app
-    image: tidair/pysmurf:%%PYSMURF_VERSION%%
-    container_name: pysmurf_s%%SLOT_NUMBER%%
-    command: --epics smurf_server_s%%SLOT_NUMBER%%
-    logging:
-      options:
-        tag: pysmurf
-    depends_on:
-    - smurf_server_s%%SLOT_NUMBER%%
+  smurf_server_s2:
+    <<: *smurf-server
+  smurf_server_s3:
+    <<: *smurf-server
+  smurf_server_s4:
+    <<: *smurf-server
+  smurf_server_s5:
+    <<: *smurf-server
+  smurf_server_s6:
+    <<: *smurf-server
+  smurf_server_s7:
+    <<: *smurf-server
+  pysmurf_s2:
+    <<: *pysmurf
+  pysmurf_s3:
+    <<: *pysmurf
+  pysmurf_s4:
+    <<: *pysmurf
+  pysmurf_s5:
+    <<: *pysmurf
+  pysmurf_s6:
+    <<: *pysmurf
+  pysmurf_s7:
+    <<: *pysmurf
