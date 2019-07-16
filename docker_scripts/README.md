@@ -29,15 +29,14 @@ The server runs in the [smur2mce docker](https://github.com/slaclab/smurf2mce-do
 To release an stable system, use **type = system**, with the following arguments:
 
 ```
-release-docker.sh -t|--type system -N|--slot <slot_number> -s|--smurf2mce-version <smurf2mce_version>
-                  -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t|--type system -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>
+                  [-o|--output-dir <output_dir>] [-h|--help]
 
-  -N|--slot              <slot_number>       : ATCA crate slot number.
   -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
   -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
-                                               /home/cryo/docker/smurf/<slot_number>/stable/<smurf2mce_version>.
+                                               /home/cryo/docker/smurf/stable/<smurf2mce_version>.
   -h|--help                                  : Show this message.
 ```
 
@@ -50,15 +49,14 @@ The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2m
 To release a firmware development system, use **type = system-dev-fw**, with the following arguments:
 
 ```
-release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce-base-version <smurf2mce-base_version>
-                  -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+                  [-o|--output-dir <output_dir>] [-h|--help]
 
-  -N|--slot                   <slot_number>            : ATCA crate slot number.
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/<slot_number>/dev_fw/<smurf2mce_base_version>.
+                                                         /home/cryo/docker/smurf/dev_fw/<smurf2mce_base_version>.
   -h|--help                                            : Show this message.
 ```
 
@@ -71,16 +69,15 @@ The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2m
 To release a software development system, use **type = system-dev-sw**, with the following arguments:
 
 ```
-release-docker.sh -t|--type system-dev-fw -N|--slot <slot_number> -s|--smurf2mce-base-version <smurf2mce-base_version>
-                  -p|--pysmurf_version <pysmurf_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+                  [-o|--output-dir <output_dir>] [-h|--help]
 
-  -N|--slot                   <slot_number>            : ATCA crate slot number.
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/<slot_number>/dev_sw/<smurf2mce-base_version>.
+                                                         /home/cryo/docker/smurf/dev_sw/<smurf2mce-base_version>.
   -h|--help                                            : Show this message.
 ```
 
