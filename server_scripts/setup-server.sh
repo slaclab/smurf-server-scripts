@@ -295,6 +295,9 @@ xrdb $HOME/.Xresources
 startxfce4 &
 EOF
 
+# Make the script executable
+chmod +x /home/cryo/.vnc/xstartup
+
 # Change folder and files permissions
 sudo chown -R cryo:smurf  /home/cryo/.vnc/
 
