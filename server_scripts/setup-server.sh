@@ -58,7 +58,8 @@ apt-get -y install \
     ipmitool \
     screen \
     tightvncserver \
-    xfce4
+    xfce4 \
+    xfce4-goodies
 
 # Install it lfs
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
@@ -293,6 +294,9 @@ cat << EOF > /home/cryo/.vnc/xstartup
 xrdb $HOME/.Xresources
 startxfce4 &
 EOF
+
+# Make the script executable
+chmod +x /home/cryo/.vnc/xstartup
 
 # Change folder and files permissions
 sudo chown -R cryo:smurf  /home/cryo/.vnc/
