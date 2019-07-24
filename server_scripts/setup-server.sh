@@ -58,7 +58,8 @@ apt-get -y install \
     ipmitool \
     screen \
     tightvncserver \
-    xfce4
+    xfce4 \
+    xfce4-goodies
 
 # Install it lfs
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
