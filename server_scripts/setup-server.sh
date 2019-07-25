@@ -291,7 +291,9 @@ echo
 mkdir /home/cryo/.vnc
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
-xrdb $HOME/.Xresources
+
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
 startxfce4 &
 EOF
 
