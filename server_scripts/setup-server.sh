@@ -74,8 +74,8 @@ if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_s
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
 fi
 
-# Prevent the kernel version to be automatically updated
-sudo apt-mark hold `uname -r`
+# Disable automatic system updates
+sed -i -e 's|APT::Periodic::Update-Package-Lists ".*";|APT::Periodic::Update-Package-Lists "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
 
 echo
 echo "#################################"
