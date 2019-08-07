@@ -76,6 +76,7 @@ fi
 
 # Disable automatic system updates
 sed -i -e 's|APT::Periodic::Update-Package-Lists ".*";|APT::Periodic::Update-Package-Lists "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
+sed -i -e 's|APT::Periodic::Unattended-Upgrade ".*";|APT::Periodic::Unattended-Upgrade "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
 
 echo
 echo "#################################"
