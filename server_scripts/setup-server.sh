@@ -70,7 +70,7 @@ git lfs install
 cp -r ../../smurf-server-scripts /usr/local/src/
 
 # Create smurf bash profile file and add the docker scripts to PATH
-if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh ; then
+if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
 fi
 
