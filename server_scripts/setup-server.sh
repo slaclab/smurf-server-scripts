@@ -266,6 +266,20 @@ elif [ ${dell_r330+x} ]; then
     . r330_network.sh
 fi
 
+echo
+echo "############################################"
+echo "### Done setting network configurations. ###"
+echo "############################################"
+echo
+
+#######
+# SSH #
+#######
+echo "#########################"
+echo "### Setting up SSH... ###"
+echo "#########################"
+echo
+
 # Add the shm-smrf-sp01 node name to ip address map entry
 if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
     cat << EOF >> /etc/hosts
@@ -291,9 +305,9 @@ Host shm-smrf-sp01 cswh-smrf-sp01
 EOF
 
 echo
-echo "############################################"
-echo "### Done setting network configurations. ###"
-echo "############################################"
+echo "#########################"
+echo "### Done setting SSH. ###"
+echo "#########################"
 echo
 
 #####################
