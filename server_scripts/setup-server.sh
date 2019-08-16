@@ -285,9 +285,17 @@ if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
     cat << EOF >> /etc/hosts
 # ATCA shelfmanager
 192.168.1.2     shm-smrf-sp01
+EOF
+fi
+
+# Add the cswh-smrf-sp01 node name to ip address map entry
+if ! grep -Fq cswh-smrf-sp01 /etc/hosts ; then
+    cat << EOF >> /etc/hosts
+# ATCA switch
 10.0.1.101      cswh-smrf-sp01
 EOF
 fi
+
 
 # Create the ssh configuration directory for the cryo user
 su cryo -c "mkdir /home/cryo/.ssh"
