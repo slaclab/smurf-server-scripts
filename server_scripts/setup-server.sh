@@ -271,6 +271,7 @@ if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
     cat << EOF >> /etc/hosts
 # ATCA shelfmanager
 192.168.1.2     shm-smrf-sp01
+10.0.1.101      cswh-smrf-sp01
 EOF
 fi
 
