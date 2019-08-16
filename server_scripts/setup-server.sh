@@ -70,12 +70,13 @@ git lfs install
 cp -r ../../smurf-server-scripts /usr/local/src/
 
 # Create smurf bash profile file and add the docker scripts to PATH
-if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh ; then
+if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
 fi
 
-# Prevent the kernel version to be automatically updated
-sudo apt-mark hold `uname -r`
+# Disable automatic system updates
+sed -i -e 's|APT::Periodic::Update-Package-Lists ".*";|APT::Periodic::Update-Package-Lists "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
+sed -i -e 's|APT::Periodic::Unattended-Upgrade ".*";|APT::Periodic::Unattended-Upgrade "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
 
 echo
 echo "#################################"
