@@ -275,8 +275,20 @@ if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
 EOF
 fi
 
+# Create the ssh configuration directory for the cryo user
+su cryo -c "mkdir /home/cryo/.ssh"
+
 # Generate ssh keys for the cryo user
 su cryo -c 'ssh-keygen -t rsa  -N "" -f /home/cryo/.ssh/id_rsa'
+
+# Add the ATCA shelfmanager and switch host information
+# to the ssh configuration file
+su cryo -c 'touch /home/cryo/.ssh/config'
+cat << EOF >> /home/cryo/.ssh/config
+Host shm-smrf-sp01 cswh-smrf-sp01
+     User root
+     ForwardX11 no
+EOF
 
 echo
 echo "############################################"
