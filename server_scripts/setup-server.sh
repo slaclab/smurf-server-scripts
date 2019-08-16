@@ -266,6 +266,20 @@ elif [ ${dell_r330+x} ]; then
     . r330_network.sh
 fi
 
+echo
+echo "############################################"
+echo "### Done setting network configurations. ###"
+echo "############################################"
+echo
+
+#######
+# SSH #
+#######
+echo "#########################"
+echo "### Setting up SSH... ###"
+echo "#########################"
+echo
+
 # Add the shm-smrf-sp01 node name to ip address map entry
 if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
     cat << EOF >> /etc/hosts
@@ -274,10 +288,51 @@ if ! grep -Fq shm-smrf-sp01 /etc/hosts ; then
 EOF
 fi
 
+# Add the cswh-smrf-sp01 node name to ip address map entry
+if ! grep -Fq cswh-smrf-sp01 /etc/hosts ; then
+    cat << EOF >> /etc/hosts
+# ATCA switch
+10.0.1.101      cswh-smrf-sp01
+EOF
+fi
+
+# Create the ssh configuration directory for the cryo user
+mkdir -p /home/cryo/.ssh
+
+# Generate ssh keys for the cryo user (if it doesn't exist)
+if [ ! -e /home/cryo/.ssh/id_rsa ]; then
+    su cryo -c 'ssh-keygen -t rsa  -N "" -f /home/cryo/.ssh/id_rsa'
+fi
+
+# Add the ATCA shelfmanager host information to the ssh configuration
+# file (if it doesn't exist already)
+if ! grep -Fq shm-smrf-sp01 /home/cryo/.ssh/config 2> /dev/null; then
+    cat << EOF >> /home/cryo/.ssh/config
+Host shm-smrf-sp01
+     User root
+     ForwardX11 no
+
+EOF
+fi
+
+# Add the ATCA switch host information to the ssh configuration
+# file (if it doesn't exist already)
+if ! grep -Fq cswh-smrf-sp01 /home/cryo/.ssh/config 2> /dev/null; then
+    cat << EOF >> /home/cryo/.ssh/config
+Host cswh-smrf-sp01
+     User root
+     ForwardX11 no
+
+EOF
+fi
+
+# Change folder and files permissions
+sudo chown -R cryo:smurf  /home/cryo/.ssh/
+
 echo
-echo "############################################"
-echo "### Done setting network configurations. ###"
-echo "############################################"
+echo "#########################"
+echo "### Done setting SSH. ###"
+echo "#########################"
 echo
 
 #####################
