@@ -150,6 +150,9 @@ if ! grep -q ^GRUB_RECORDFAIL_TIMEOUT=.* /etc/default/grub ; then
 fi
 update-grub
 
+# Generate ssh keys for the cryo user
+su cryo -c 'ssh-keygen -t rsa  -N "" -f /home/cryo/.ssh/id_rsa'
+
 echo
 echo "############################################"
 echo "### Done applying system configurations. ###"
