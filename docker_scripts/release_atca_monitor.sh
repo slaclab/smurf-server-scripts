@@ -18,9 +18,9 @@ usage()
 {
     echo "Release an ATCA monitor application."
     echo
-    echo "usage: ${script_name} -t atca-monitor -v|--version <atca_monitor_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -v|--version    <atca_monitor_version> : Version of the smurf-atca-monitor docker image."
+    echo "  -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image."
     echo "  -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to"
     echo "                                           ${release_top_default_dir}"
     echo "  -h|--help                              : Show this message."
