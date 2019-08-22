@@ -35,6 +35,7 @@ usage()
     echo "                         - utils         : A utility system."
     echo "                         - tpg           : A TPG IOC."
     echo "                         - pcie          : A PCIe utility application."
+    echo "                         - atca-monitor  : An ATCA monitor application."
     echo "  -h|--help            : Show help message for each application type."
     echo
     exit $1
@@ -129,6 +130,9 @@ case ${app_type} in
     ;;
     pcie)
     . ${top_dir}/release_pcie.sh ${app_options}
+    ;;
+    atca-monitor)
+    . ${top_dir}/release_atca_monitor.sh ${app_options}
     ;;
     *)
     echo "ERROR: Invalid application type!"
