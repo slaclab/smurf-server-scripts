@@ -54,7 +54,7 @@ release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
-  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
                                                          /home/cryo/docker/smurf/dev_fw/<smurf2mce_base_version>.
   -h|--help                                            : Show this message.
@@ -75,7 +75,7 @@ release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
-  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
                                                          /home/cryo/docker/smurf/dev_sw/<smurf2mce-base_version>.
   -h|--help                                            : Show this message.
@@ -104,7 +104,7 @@ release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
 
 ### Utility application
 
-A utility application contains tools useful on SMuRF system.
+An utility application contains tools useful on SMuRF system.
 
 It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 
@@ -130,7 +130,7 @@ To release a TPG IOCm use **type = tpg**, with the following arguments:
 ```
 release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]
 
-  -v|--version    <smurf-version> : Version of the smurf-tpg-ioc docker image.
+  -v|--version    <tpg_version>   : Version of the smurf-tpg-ioc docker image.
   -o|--output-dir <output_dir>    : Directory where to release the scripts. Defaults to
                                     /home/cryo/docker/tpg.
   -h|--help                       : Show this message.
@@ -138,17 +138,38 @@ release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir
 
 ### PCIe utility application
 
-A application with utilities related to the SMuRF PCIe card.
+An application with utilities related to the SMuRF PCIe card.
 
 It runs in the [smurf-pcie docker](https://github.com/slaclab/smurf-pcie-docker).
 
-To release as PCIe utility application use **type = pcie**, with the following arguments:
+To release a PCIe utility application use **type = pcie**, with the following arguments:
 
 ```
-release-docker.sh -t pcie -v|--version <version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-h|--help]
 
-  -v|--version    <version>    : Version of the smurf-pcie docker image.
-  -o|--output-dir <output_dir> : Directory where to release the scripts. Defaults to
-                                 ${release_top_default_dir}
-  -h|--help                    : Show this message.
+  -v|--version    <pcie_version> : Version of the smurf-pcie docker image.
+  -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to
+                                   /home/cryo/docker/pcie
+  -h|--help                      : Show this message.
 ```
+
+### ATCA monitor application
+
+A PyRogue-based application used to monitor an entire ATCA crate.
+
+It runs the [smurf-atca-monitor docker](https://github.com/slaclab/smurf-atca-monitor).
+
+To release an ATCA monitor application use **type = atca-monitor**, with the following arguments:
+
+```
+release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>] [-h|--help]
+
+  -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image.
+  -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to
+                                           /home/cryo/docker/atca-monitor
+  -h|--help                              : Show this message.
+```
+
+
+
+
