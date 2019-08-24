@@ -191,7 +191,7 @@ fi
 copy_template "run.sh"
 copy_template "stop.sh"
 # Copy the base.sh common script only when the slot number is not defined
-if [ ! -z ${slot_number+x} ]; then
+if [ -z ${slot_number+x} ]; then
     copy_template "base.sh"
 fi
 
