@@ -42,8 +42,8 @@ release-docker.sh -t|--type system -s|--smurf2mce-version <smurf2mce_version> -p
 ```
 
 The slot number is optional:
-- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
-- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 ### Full system, for Firmware development
 
@@ -67,8 +67,8 @@ release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce
 ```
 
 The slot number is optional:
-- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
-- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 ### Full system, for Software development
 
@@ -93,8 +93,8 @@ release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce
 ```
 
 The slot number is optional:
-- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
-- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, edit the `docker-compose.yml` file, commenting out the `command:` line under the `smurf_server` section and start the container; in this way the container will run in bash script. Once started, attach to the container, go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and build it. Then exit and stop the container and revert the changes made to the `docker-compose.yml` file. You will need to repeat this steps every time you made changes to the C++ code; not necesary when making changes to the python code.
 
