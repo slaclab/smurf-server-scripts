@@ -225,7 +225,7 @@ else
     systemctl enable docker
 
     # Install docker compose
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
 
     # Setup the logging system in the  daemon configuration
@@ -322,7 +322,7 @@ EOF
 fi
 
 # Change folder and files permissions
-sudo chown -R cryo:smurf  /home/cryo/.ssh/
+chown -R cryo:smurf  /home/cryo/.ssh/
 
 # Generate ssh keys for the cryo user (if it doesn't exist)
 if [ ! -e /home/cryo/.ssh/id_rsa ]; then
@@ -357,7 +357,7 @@ EOF
 chmod +x /home/cryo/.vnc/xstartup
 
 # Change folder and files permissions
-sudo chown -R cryo:smurf  /home/cryo/.vnc/
+chown -R cryo:smurf  /home/cryo/.vnc/
 
 echo
 echo "#######################################"
