@@ -62,7 +62,7 @@ apt-get -y install \
     xfce4-goodies
 
 # Install it lfs
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 apt-get -y install git-lfs
 git lfs install
 
@@ -199,7 +199,7 @@ if which docker > /dev/null; then
     docker-compose --version
 else
     # Add Docker’s official GPG key
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+    curl -fsSL --retry-connrefused --retry 5  https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
     # Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
     apt-key fingerprint 0EBFCD88
@@ -226,8 +226,12 @@ else
     systemctl enable docker
 
     # Install docker compose
-    curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    chmod +x /usr/local/bin/docker-compose
+    curl -fsSL --retry-connrefused --retry 5 "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Failed to install docker-compose!"
+    else
+        chmod +x /usr/local/bin/docker-compose
+    fi
 
     # Setup the logging system in the  daemon configuration
     cp templates/daemon.json /etc/docker/daemon.json
