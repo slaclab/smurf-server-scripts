@@ -30,15 +30,20 @@ To release an stable system, use **type = system**, with the following arguments
 
 ```
 release-docker.sh -t|--type system -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>
-                  [-o|--output-dir <output_dir>] [-h|--help]
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
   -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
-                                               /home/cryo/docker/smurf/stable/<smurf2mce_version>.
+                                               /home/cryo/docker/smurf/stable/<slot_number>/<smurf2mce_version>.
   -h|--help                                  : Show this message.
 ```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 ### Full system, for Firmware development
 
@@ -50,15 +55,20 @@ To release a firmware development system, use **type = system-dev-fw**, with the
 
 ```
 release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
-                  [-o|--output-dir <output_dir>] [-h|--help]
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/dev_fw/<smurf2mce_base_version>.
+                                                         /home/cryo/docker/smurf/dev_fw/<slot_number>/<smurf2mce_base_version>.
   -h|--help                                            : Show this message.
 ```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 ### Full system, for Software development
 
@@ -70,16 +80,21 @@ To release a software development system, use **type = system-dev-sw**, with the
 
 ```
 release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
-                  [-o|--output-dir <output_dir>] [-h|--help]
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
   -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
-                                                         /home/cryo/docker/smurf/dev_sw/<smurf2mce-base_version>.
+                                                         /home/cryo/docker/smurf/dev_sw/<slot_number>/<smurf2mce-base_version>.
   -h|--help                                            : Show this message.
 ```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply bu running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run in any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
 When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, edit the `docker-compose.yml` file, commenting out the `command:` line under the `smurf_server` section and start the container; in this way the container will run in bash script. Once started, attach to the container, go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and build it. Then exit and stop the container and revert the changes made to the `docker-compose.yml` file. You will need to repeat this steps every time you made changes to the C++ code; not necesary when making changes to the python code.
 
