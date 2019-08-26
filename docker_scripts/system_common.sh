@@ -32,7 +32,7 @@ usage()
     echo "  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "  -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional)."
     echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
-    echo "                                               ${release_top_default_dir}/<slot_number>/${target_dir_prefix}/<smurf2mce_version>"
+    echo "                                               ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<smurf2mce_version>"
     echo "  -h|--help                                  : Show this message."
     echo
     exit $1
@@ -137,7 +137,7 @@ fi
 
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${slot_prefix}/${target_dir_prefix}/${smurf2mce_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${smurf2mce_version}
 fi
 
 # Verify is target directory already exist
