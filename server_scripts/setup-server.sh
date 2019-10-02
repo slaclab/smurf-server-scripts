@@ -340,6 +340,36 @@ echo "### Done setting SSH. ###"
 echo "#########################"
 echo
 
+#######
+# UFW #
+#######
+echo "#########################"
+echo "### Setting up UFW... ###"
+echo "#########################"
+echo
+
+# Enable the Uncomplicated Firewall program
+ufw --force enable
+
+# Allow ssh connections
+ufw allow ssh
+
+# Open port needed by docker swarm
+ufw allow 2376/tcp
+ufw allow 2377/tcp
+ufw allow 7946/tcp
+ufw allow 7946/udp
+ufw allow 4789/udp
+
+# Reload the new rules
+ufw reload
+
+echo
+echo "#########################"
+echo "### Done setting UFW. ###"
+echo "#########################"
+echo
+
 #####################
 # SETUP VNC SERVER  #
 #####################
