@@ -79,7 +79,7 @@ The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2m
 To release a software development system, use **type = system-dev-sw**, with the following arguments:
 
 ```
-release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+release-docker.sh -t|--type system-dev-sw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
