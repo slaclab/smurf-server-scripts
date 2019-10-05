@@ -26,7 +26,7 @@ x-smurf-server:
   - /home/${user_name}:/home/${user_name}
   - ${PWD}/fw:/tmp/fw
   - ${PWD}/smurf2mce:/usr/local/src/smurf2mce
-  command: start_server.sh -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
+  #command: start_server.sh -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
   logging:
     options:
       tag: smurf_server

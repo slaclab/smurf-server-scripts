@@ -96,7 +96,21 @@ The slot number is optional:
 - If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
 - On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
-When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, edit the `docker-compose.yml` file, commenting out the `command:` line under the `smurf_server` section and start the container; in this way the container will run in bash script. Once started, attach to the container, go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and build it. Then exit and stop the container and revert the changes made to the `docker-compose.yml` file. You will need to repeat this steps every time you made changes to the C++ code; not necesary when making changes to the python code.
+In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the smurf2mce pyrogue server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
+
+When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and make a clean build:
+
+```
+rm -rf build
+mkdir build
+cd build
+cmake ..
+make
+```
+
+You can now start the server using the `start_server.sh` script with the appropriate parameters (you can run the command with the same arguments defined in the `docker-compose.yml` file for example).
+
+You will need to compile the code every time you make changes to the C++ code. On the other hand, you don't need to compile when changing python code.
 
 ### Pysmurf application, in development mode
 
