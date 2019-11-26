@@ -57,7 +57,8 @@ apt-get -y install \
     tree \
     ipmitool \
     screen \
-    tightvncserver \
+    tigervnc-standalone-server \
+    tigervnc-viewer \
     xfce4 \
     xfce4-goodies
 
