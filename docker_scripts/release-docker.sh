@@ -28,6 +28,9 @@ usage()
     echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
     echo
     echo "  -t|--type <app_type> : Type of application to install. Options are:"
+    echo "                         - system         : Full system (stable version) [pysmurf/rogue v4]."
+    echo "                         - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4]."
+    echo "                         - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4]."
     echo "                         - system3        : Full system (stable version) [smurf2mce/rogue v3]."
     echo "                         - system3-dev-fw : Full system (with a development version of FW) [smurf2mce/rogue v3]."
     echo "                         - system3-dev-sw : Full system with a development version of SW and FW [smurf2mce/rogue v3]."
@@ -110,6 +113,15 @@ fi
 
 # Now call the application specific script
 case ${app_type} in
+    system)
+    . ${top_dir}/release_system.sh ${app_options}
+    ;;
+    system-dev-fw)
+    . ${top_dir}/release_system_dev_fw.sh ${app_options}
+    ;;
+    system-dev-sw)
+    . ${top_dir}/release_system_dev_sw.sh ${app_options}
+    ;;
     system3)
     . ${top_dir}/release_system3.sh ${app_options}
     ;;
