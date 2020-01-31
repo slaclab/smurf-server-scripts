@@ -152,6 +152,13 @@ if ! grep -q ^GRUB_RECORDFAIL_TIMEOUT=.* /etc/default/grub ; then
 fi
 update-grub
 
+# Disable apport, and send core dump to custom location
+sed -i -e 's/^enabled=.*/enabled=0/g' /etc/default/apport
+rm -f /etc/sysctl.d/60-core-pattern.conf
+cat << EOF >> /etc/sysctl.d/60-core-pattern.conf
+kernel.core_pattern = /data/cores/core_%t_%e_%P_%I_%g_%u
+EOF
+
 echo
 echo "############################################"
 echo "### Done applying system configurations. ###"
@@ -174,7 +181,7 @@ usermod -aG smurf cryo
 usermod -g smurf cryo
 
 # Create the data directories
-mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data}
+mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 
 # Set the data directories permissions
