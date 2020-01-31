@@ -26,6 +26,7 @@ services:
     - ${PWD}/fw:/tmp/fw
     - ${PWD}/pysmurf:/usr/local/src/pysmurf
     #command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
+    entrypoint: bash
     logging:
       options:
         tag: smurf_server
