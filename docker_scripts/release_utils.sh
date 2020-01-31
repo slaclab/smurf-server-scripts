@@ -22,7 +22,7 @@ usage()
     echo
     echo "  -v|--version    <smurf-base_version> : Version of the smurf-base docker image."
     echo "  -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to"
-    echo "                                         ${release_top_default_dir}"
+    echo "                                         ${release_top_default_dir}/<smurf-base_version>"
     echo "  -h|--help                            : Show this message."
     echo
     exit $1
@@ -66,7 +66,7 @@ if [ -z ${smurf_base_version+x} ]; then
 fi
 
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}
+    target_dir=${release_top_default_dir}/${smurf_base_version}
 fi
 
 # Verify is target directory already exist

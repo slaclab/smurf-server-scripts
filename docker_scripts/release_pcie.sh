@@ -22,7 +22,7 @@ usage()
     echo
     echo "  -v|--version    <pcie_version> : Version of the smurf-pcie docker image."
     echo "  -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to"
-    echo "                                   ${release_top_default_dir}"
+    echo "                                   ${release_top_default_dir}/<pcie_version>"
     echo "  -h|--help                      : Show this message."
     echo
     exit $1
@@ -66,7 +66,7 @@ if [ -z ${pcie_version+x} ]; then
 fi
 
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}
+    target_dir=${release_top_default_dir}/${pcie_version}
 fi
 
 # Verify is target directory already exist
