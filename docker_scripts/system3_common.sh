@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # This script contains steps common to application types:
-# - system
-# - system-dev-fw
-# - system-dev-sw
+# - system3
+# - system3-dev-fw
+# - system3-dev-sw
 #
 # Each of these application specific release script will call
 # this script, and perform application specific step later.
@@ -177,7 +177,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Generate file common to other type of application
-template_dir=${template_top_dir}/common/${template_prefix}
+template_dir=${template_top_dir}/common3/${template_prefix}
 
 cat ${template_dir}/docker-compose.pcie.yml \
          | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
@@ -195,8 +195,8 @@ if [ -z ${slot_number+x} ]; then
     copy_template "base.sh"
 fi
 
-# Copy the .env file, which is common independelty of the slot selection
-template_dir=${template_top_dir}/common
+# Copy the .env file, which is common independent of the slot selection
+template_dir=${template_top_dir}/common3
 copy_template "env" ".env"
 
 # Mark the scripts as executable
