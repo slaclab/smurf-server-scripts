@@ -15,7 +15,7 @@ target_dir_prefix=dev_fw
 usage_header()
 {
     echo "Release a new system for FW development. Includes a SMuRF server and pysmurf."
-    echo "This SMuRF server is based on the now deprecated smurf2mce app, based on rogue v3."
+    echo "This SMuRF server is based on the now deprecated smurf2mce and rogue v3."
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
@@ -29,7 +29,7 @@ usage_header()
 #############
 
 # Call common release step to all type of application
-. system_common.sh
+. system3_common.sh
 
 # Create fw directory
 mkdir -p ${target_dir}/fw
