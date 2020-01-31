@@ -28,14 +28,14 @@ usage()
     echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
     echo
     echo "  -t|--type <app_type> : Type of application to install. Options are:"
-    echo "                         - system        : Full system (stable version)."
-    echo "                         - system-dev-fw : Full system (with a development version of FW)."
-    echo "                         - system-dev-sw : Full system with a development version of SW and FW."
-    echo "                         - pysmurf-dev   : A stand-alone version of pysmurf, in development mode."
-    echo "                         - utils         : A utility system."
-    echo "                         - tpg           : A TPG IOC."
-    echo "                         - pcie          : A PCIe utility application."
-    echo "                         - atca-monitor  : An ATCA monitor application."
+    echo "                         - system3        : Full system (stable version) [smurf2mce/rogue v3]."
+    echo "                         - system3-dev-fw : Full system (with a development version of FW) [smurf2mce/rogue v3]."
+    echo "                         - system3-dev-sw : Full system with a development version of SW and FW [smurf2mce/rogue v3]."
+    echo "                         - pysmurf-dev    : A stand-alone version of pysmurf, in development mode."
+    echo "                         - utils          : A utility system."
+    echo "                         - tpg            : A TPG IOC."
+    echo "                         - pcie           : A PCIe utility application."
+    echo "                         - atca-monitor   : An ATCA monitor application."
     echo "  -h|--help            : Show help message for each application type."
     echo
     exit $1
@@ -110,14 +110,14 @@ fi
 
 # Now call the application specific script
 case ${app_type} in
-    system)
-    . ${top_dir}/release_system.sh ${app_options}
+    system3)
+    . ${top_dir}/release_system3.sh ${app_options}
     ;;
-    system-dev-fw)
-    . ${top_dir}/release_system_dev_fw.sh ${app_options}
+    system3-dev-fw)
+    . ${top_dir}/release_system3_dev_fw.sh ${app_options}
     ;;
-    system-dev-sw)
-    . ${top_dir}/release_system_dev_sw.sh ${app_options}
+    system3-dev-sw)
+    . ${top_dir}/release_system3_dev_sw.sh ${app_options}
     ;;
     pysmurf-dev)
     . ${top_dir}/release_pysmurf_dev.sh ${app_options}

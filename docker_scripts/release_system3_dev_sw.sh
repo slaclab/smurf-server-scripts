@@ -17,6 +17,7 @@ target_dir_prefix=dev_sw
 usage_header()
 {
     echo "Release a new system for SW development. Includes a SMuRF server and pysmurf."
+    echo "This SMuRF server is based on the now deprecated smurf2mce app, based on rogue v3."
     echo
     echo "This script will clone the master branch of the smurf2mce repository into the local directory"
     echo "'smurf2mce'. The SMuRF server docker image will use this local copy, instead of the one provided"

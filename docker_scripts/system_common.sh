@@ -24,7 +24,7 @@ release_top_default_dir="/home/cryo/docker/smurf"
 usage()
 {
     usage_header
-    echo "usage: ${script_name} -t system -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>"
+    echo "usage: ${script_name} -t ${app_type} -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>"
     echo "                         [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]"
     echo
     echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
