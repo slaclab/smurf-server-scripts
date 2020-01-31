@@ -4,4 +4,3 @@ services:
   smurf_server_s%%SLOT_NUMBER%%:
     devices:
     - /dev/datadev_0
-    - /dev/datadev_1

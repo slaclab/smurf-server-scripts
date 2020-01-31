@@ -14,11 +14,11 @@ target_dir_prefix=stable
 # Usage message
 usage_header()
 {
-    echo "Release a new stable system. Includes both server and client."
-    echo "This SMuRF server is based on pysmurf and rogue v4"
+    echo "Release a new stable system. Includes a SMuRF server and pysmurf."
+    echo "This SMuRF server is based on the now deprecated smurf2mce and rogue v3."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server'"
-    echo "and the docker image used for the client is 'tidair/pysmurf-client'."
+    echo "Note: The docker image used for the 'smurf2mce' server is 'tidait/smurf2mce'"
+    echo "and the docker image used for 'pysmurf' is 'tidair/pysmurf'."
     echo
 }
 
@@ -28,7 +28,7 @@ usage_header()
 #############
 
 # Call common release step to all type of application
-. system_common.sh
+. system3_common.sh
 
 # Print final report
 echo ""

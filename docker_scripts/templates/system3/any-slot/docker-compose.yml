@@ -18,22 +18,22 @@ x-gui-app:
   tty: true
   stdin_open: true
 
-# Default pysmurf server configuration
+# Default SMuRF server configuration
 x-smurf-server:
   &smurf-server
   <<: *default-gui-app
-  image: tidair/pysmurf-server:%%PYSMURF_VERSION%%
+  image: tidair/smurf2mce:%%SMURF2MCE_VERSION%%
   container_name: smurf_server_s${slot}
   command: -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%%
   logging:
     options:
       tag: smurf_server
 
-# Default pysmurf client configuration
+# Default PySMuRF configuration
 x-pysmurf:
   &pysmurf
   <<: *default-gui-app
-  image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
+  image: tidair/pysmurf:%%PYSMURF_VERSION%%
   container_name: pysmurf_s${slot}
   command: --epics smurf_server_s${slot}
   logging:

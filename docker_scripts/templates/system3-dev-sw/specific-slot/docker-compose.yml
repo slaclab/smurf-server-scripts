@@ -18,21 +18,20 @@ x-gui-app:
 services:
   smurf_server_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/pysmurf-server-base:%%PYSMURF_VERSION%%
+    image: tidair/smurf2mce-base:%%SMURF2MCE_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data
     - /home/${user_name}:/home/${user_name}
     - ${PWD}/fw:/tmp/fw
-    - ${PWD}/pysmurf:/usr/local/src/pysmurf
-    #command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
-    entrypoint: bash
+    - ${PWD}/smurf2mce:/usr/local/src/smurf2mce
+    #command: start_server.sh -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
     logging:
       options:
         tag: smurf_server
   pysmurf_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
+    image: tidair/pysmurf:%%PYSMURF_VERSION%%
     container_name: pysmurf_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data

@@ -10,31 +10,36 @@ x-gui-app:
   - DISPLAY
   - EPICS_CA_ADDR_LIST=172.17.255.255
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
-  volumes:
-  - /data:/data
-  - /home/${user_name}:/home/${user_name}
   security_opt:
   - "apparmor=docker-smurf"
   tty: true
   stdin_open: true
 
-# Default pysmurf server configuration
+# Default SMuRF server configuration
 x-smurf-server:
   &smurf-server
   <<: *default-gui-app
-  image: tidair/pysmurf-server:%%PYSMURF_VERSION%%
+  image: tidair/smurf2mce-base:%%SMURF2MCE_VERSION%%
   container_name: smurf_server_s${slot}
-  command: -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%%
+  volumes:
+  - /data:/data
+  - /home/${user_name}:/home/${user_name}
+  - ${PWD}/fw:/tmp/fw
+  - ${PWD}/smurf2mce:/usr/local/src/smurf2mce
+  #command: start_server.sh -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml -f Int16 -b 524288
   logging:
     options:
       tag: smurf_server
 
-# Default pysmurf client configuration
+# Default PySMuRF configuration
 x-pysmurf:
   &pysmurf
   <<: *default-gui-app
-  image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
+  image: tidair/pysmurf:%%PYSMURF_VERSION%%
   container_name: pysmurf_s${slot}
+  volumes:
+  - /data:/data
+  - /home/${user_name}:/home/${user_name}
   command: --epics smurf_server_s${slot}
   logging:
     options:

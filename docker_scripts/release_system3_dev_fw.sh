@@ -14,13 +14,13 @@ target_dir_prefix=dev_fw
 # Usage message header, specific to this type of application
 usage_header()
 {
-    echo "Release a new system for FW development. Includes both server and client."
-    echo "This SMuRF server is based on pysmurf and rogue v4"
+    echo "Release a new system for FW development. Includes a SMuRF server and pysmurf."
+    echo "This SMuRF server is based on the now deprecated smurf2mce and rogue v3."
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base'"
-    echo "and the docker image used for the client is 'tidair/pysmurf-client'."
+    echo "Note: The docker image used for the 'smurf2mce' server is 'tidait/smurf2mce-base'"
+    echo "and the docker image used for 'pysmurf' is 'tidair/pysmurf'."
     echo
 }
 
@@ -29,7 +29,7 @@ usage_header()
 #############
 
 # Call common release step to all type of application
-. system_common.sh
+. system3_common.sh
 
 # Create fw directory
 mkdir -p ${target_dir}/fw

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # This script contains steps common to application types:
-# - system
-# - system-dev-fw
-# - system-dev-sw
+# - system3
+# - system3-dev-fw
+# - system3-dev-sw
 #
 # Each of these application specific release script will call
 # this script, and perform application specific step later.
@@ -24,18 +24,16 @@ release_top_default_dir="/home/cryo/docker/smurf"
 usage()
 {
     usage_header
-    echo "usage: ${script_name} -t ${app_type}"
-    echo "                         -v|--version <pysmurf_version>"
-    echo "                         [-N|--slot <slot_number>]"
-    echo "                         [-o|--output-dir <output_dir>]"
-    echo "                         [-h|--help]"
+    echo "usage: ${script_name} -t ${app_type} -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>"
+    echo "                         [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]"
     echo
-    echo "  -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image."
-    echo "  -c|--comm-type  <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
-    echo "  -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional)."
-    echo "  -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to"
-    echo "                                        ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<pysmurf_version>"
-    echo "  -h|--help                           : Show this message."
+    echo "  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image."
+    echo "  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image."
+    echo "  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
+    echo "  -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional)."
+    echo "  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to"
+    echo "                                               ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<smurf2mce_version>"
+    echo "  -h|--help                                  : Show this message."
     echo
     exit $1
 }
@@ -54,7 +52,11 @@ do
 key="$1"
 
 case ${key} in
-    -v|--version)
+    -s|--smurf2mce-version)
+    smurf2mce_version="$2"
+    shift
+    ;;
+    -p|--pysmurf_version)
     pysmurf_version="$2"
     shift
     ;;
@@ -82,6 +84,12 @@ shift
 done
 
 # Verify parameters
+if [ -z ${smurf2mce_version+x} ]; then
+        echo "ERROR: smurf2mce version not defined!"
+        echo ""
+        usage 1
+fi
+
 if [ -z ${pysmurf_version+x} ]; then
         echo "ERROR: pysmurf version not defined!"
         echo ""
@@ -91,10 +99,10 @@ fi
 # Verify the communication type
 case ${comm_type} in
     eth)
-    comm_args="-c eth"
+    comm_args="-c eth-rssi-interleaved"
     ;;
     pcie)
-    comm_args="-c pcie"
+    comm_args="-c pcie-rssi-interleaved"
     ;;
     *)
     echo "ERROR: Invalid communication type!"
@@ -129,7 +137,7 @@ fi
 
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${pysmurf_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${smurf2mce_version}
 fi
 
 # Verify is target directory already exist
@@ -159,6 +167,7 @@ template_dir=${template_top_dir}/${app_type}/${template_prefix}
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
         | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
+        | sed s/%%SMURF2MCE_VERSION%%/${smurf2mce_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
         > ${target_dir}/docker-compose.yml
 if [ $? -ne 0 ]; then
@@ -168,7 +177,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Generate file common to other type of application
-template_dir=${template_top_dir}/common/${template_prefix}
+template_dir=${template_top_dir}/common3/${template_prefix}
 
 cat ${template_dir}/docker-compose.pcie.yml \
          | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
@@ -187,7 +196,7 @@ if [ -z ${slot_number+x} ]; then
 fi
 
 # Copy the .env file, which is common independent of the slot selection
-template_dir=${template_top_dir}/common
+template_dir=${template_top_dir}/common3
 copy_template "env" ".env"
 
 # Mark the scripts as executable

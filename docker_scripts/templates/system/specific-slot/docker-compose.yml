@@ -10,6 +10,9 @@ x-gui-app:
   - DISPLAY
   - EPICS_CA_ADDR_LIST=172.17.255.255
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  volumes:
+  - /data:/data
+  - /home/${user_name}:/home/${user_name}
   security_opt:
   - "apparmor=docker-smurf"
   tty: true
@@ -18,15 +21,9 @@ x-gui-app:
 services:
   smurf_server_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/pysmurf-server-base:%%PYSMURF_VERSION%%
+    image: tidair/pysmurf-server:%%PYSMURF_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
-    volumes:
-    - /data:/data
-    - /home/${user_name}:/home/${user_name}
-    - ${PWD}/fw:/tmp/fw
-    - ${PWD}/pysmurf:/usr/local/src/pysmurf
-    #command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
-    entrypoint: bash
+    command: -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%%
     logging:
       options:
         tag: smurf_server
@@ -34,9 +31,6 @@ services:
     <<: *default-gui-app
     image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
     container_name: pysmurf_s%%SLOT_NUMBER%%
-    volumes:
-    - /data:/data
-    - /home/${user_name}:/home/${user_name}
     command: --epics smurf_server_s%%SLOT_NUMBER%%
     logging:
       options:
