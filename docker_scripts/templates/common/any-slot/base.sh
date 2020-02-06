@@ -23,6 +23,9 @@ usage()
     echo ""
     echo "usage: ${script_name} [-S|--shelfmanager <shelfmanager_name> -N|--slot <slot_number>]"
     echo "    -N|--slot         <slot_number>       : ATCA crate slot number. Must be used with -S."
+    echo "    -e|--extra-opts   <server_extra_opts> : Extra options to be passed to the pysmurf-server startup script."
+    echo "                                            If passing a option with arguments, or multiple option, wrapped"
+    echo "                                            then with quotes. For example: -e \"--hard-boot -a 10.0.1.102\"."
     echo "    -h|--help                             : Show this message."
     echo ""
     exit 1
@@ -47,6 +50,10 @@ key="$1"
 case ${key} in
     -N|--slot)
     slot="$2"
+    shift
+    ;;
+    -e|--extra-args)
+    extra_args="\"$2\""
     shift
     ;;
     -h|--help)

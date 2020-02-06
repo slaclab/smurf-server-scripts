@@ -26,7 +26,7 @@ x-smurf-server:
   - /home/${user_name}:/home/${user_name}
   - ${PWD}/fw:/tmp/fw
   - ${PWD}/pysmurf:/usr/local/src/pysmurf
-  #command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
+  #command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_args}
   entrypoint: bash
   logging:
     options:
