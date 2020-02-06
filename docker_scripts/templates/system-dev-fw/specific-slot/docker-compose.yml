@@ -24,7 +24,7 @@ services:
     - /data:/data
     - /home/${user_name}:/home/${user_name}
     - ${PWD}/fw:/tmp/fw
-    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
+    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_args}
     logging:
       options:
         tag: smurf_server
