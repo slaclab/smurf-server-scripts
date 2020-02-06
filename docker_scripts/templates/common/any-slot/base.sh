@@ -21,7 +21,7 @@ usage()
 {
     echo "Start a docker container"
     echo ""
-    echo "usage: ${script_name} [-S|--shelfmanager <shelfmanager_name> -N|--slot <slot_number>]"
+    echo "usage: ${script_name} -N|--slot <slot_number> [-e|--extra-opts <server_extra_opts>]"
     echo "    -N|--slot         <slot_number>       : ATCA crate slot number. Must be used with -S."
     echo "    -e|--extra-opts   <server_extra_opts> : Extra options to be passed to the pysmurf-server startup script."
     echo "                                            If passing a option with arguments, or multiple option, wrapped"
