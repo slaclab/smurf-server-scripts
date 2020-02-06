@@ -52,8 +52,8 @@ case ${key} in
     slot="$2"
     shift
     ;;
-    -e|--extra-args)
-    extra_args="\"$2\""
+    -e|--extra-opts)
+    extra_opts="\"$2\""
     shift
     ;;
     -h|--help)

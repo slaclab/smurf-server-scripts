@@ -23,7 +23,7 @@ services:
     <<: *default-gui-app
     image: tidair/pysmurf-server:%%PYSMURF_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
-    command: -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% ${extra_args}
+    command: -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% ${extra_opts}
     logging:
       options:
         tag: smurf_server
