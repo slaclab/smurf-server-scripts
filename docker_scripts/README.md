@@ -45,6 +45,8 @@ The slot number is optional:
 - If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
 - On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
 
+The `run.sh` script accepts options to be passed to the pysmurf-server's startup script, using the option `-e|--extra-opts`. For example, the `--hard-boot` option can be passed to the pysmurf-server by running `run.sh -e --hard-boot`. Multiple options, or options with argument can be passed by wrapping then in quotes, for example: `run.sh -e "--hard-boot -a 10.0.1.101 --disable-bay1"`.
+
 ### Full system, for Firmware development
 
 A development system is formed by a SMuRF server and pysmurf. For firmware development systems, the SMuRF server contains the smurf2mce application, while the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
@@ -69,6 +71,8 @@ release-docker.sh -t|--type system-dev-fw -s|--smurf2mce-base-version <smurf2mce
 The slot number is optional:
 - If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
 - On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+
+The `run.sh` script accepts options to be passed to the pysmurf-server's startup script, using the option `-e|--extra-opts`. For example, the `--hard-boot` option can be passed to the pysmurf-server by running `run.sh -e --hard-boot`. Multiple options, or options with argument can be passed by wrapping then in quotes, for example: `run.sh -e "--hard-boot -a 10.0.1.101 --disable-bay1"`.
 
 ### Full system, for Software development
 
@@ -95,6 +99,8 @@ release-docker.sh -t|--type system-dev-sw -s|--smurf2mce-base-version <smurf2mce
 The slot number is optional:
 - If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
 - On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+
+The `run.sh` script accepts options to be passed to the pysmurf-server's startup script, using the option `-e|--extra-opts`. For example, the `--hard-boot` option can be passed to the pysmurf-server by running `run.sh -e --hard-boot`. Multiple options, or options with argument can be passed by wrapping then in quotes, for example: `run.sh -e "--hard-boot -a 10.0.1.101 --disable-bay1"`.
 
 In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the smurf2mce pyrogue server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
 
