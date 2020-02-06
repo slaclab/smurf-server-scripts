@@ -25,7 +25,7 @@ services:
     - /home/${user_name}:/home/${user_name}
     - ${PWD}/fw:/tmp/fw
     - ${PWD}/pysmurf:/usr/local/src/pysmurf
-    #command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml
+    #command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_opts}
     entrypoint: bash
     logging:
       options:
