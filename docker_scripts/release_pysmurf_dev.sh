@@ -3,18 +3,20 @@
 ###############
 # Definitions #
 ###############
+# pysmurf git repository
+pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
+
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/pysmurf/dev"
 
 # Template directory for this application
 template_dir=${template_top_dir}/pysmurf-dev
 
-# pysmurf github repository
-pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
-
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 usage()
@@ -30,9 +32,19 @@ usage()
     echo "                                      image; pysmurf will be overwritten by the local copy."
     echo "  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to"
     echo "                                      ${release_top_default_dir}"
+    echo "  -l|--list-versions                : Print a list of available versions."
     echo "  -h|--help                         : Show this message."
     echo
     exit $1
+}
+
+# Print a list of all available versions
+print_list_versions()
+{
+    echo "List of available pysmurf_version:"
+    print_git_tags ${pysmurf_git_repo}
+    echo
+    exit 0
 }
 
 #############
@@ -52,6 +64,9 @@ case ${key} in
     -o|--output-dir)
     target_dir="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
     ;;
     -h|--help)
     usage 0

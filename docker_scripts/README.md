@@ -32,17 +32,21 @@ To release an stable system, use **type = system**, with the following arguments
 
 ```
 release-docker.sh -t system
-                  -v|--version <pysmurf_version>
+                  -s|--server-version <pysmurf_server_version>
+                  -p|--client-version <pysmurf_client_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
-  -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image.
-  -c|--comm-type  <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
-  -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional).
-  -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to
-                                        /home/cryo/docker/smurf/stable/<slot_number>/<pysmurf_version>
-  -h|--help                           : Show this message.
+  -s|--server-version <pysmurf_server_version> : Version of the pysmurf-server docker image.
+  -p|--client-version <pysmurf_client_version> : Version of the pysmurf-client docker image.
+  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional).
+  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to
+                                                 /home/cryo/docker/smurf/stable/<slot_number>/<pysmurf_version>
+  -l|--list-versions                           : Print a list of available versions.
+  -h|--help                                    : Show this message.
 ```
 
 The slot number is optional:
@@ -55,7 +59,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 A development system is formed by a pysmurf server and a pysmurf client. For firmware development systems, the pysmurf server contains the pysmurf server application, while the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
-The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
+The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf). As both of these images are released together, the user only needs to specify one version number, which will be used for both images.
 
 To release a firmware development system, use **type = system-dev-fw**, with the following arguments:
 
@@ -64,6 +68,7 @@ release-docker.sh -t system-dev-fw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
   -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image.
@@ -71,6 +76,7 @@ release-docker.sh -t system-dev-fw
   -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to
                                         /home/cryo/docker/smurf/dev_fw/<slot_number>/<pysmurf_version>
+  -l|--list-versions                  : Print a list of available versions.
   -h|--help                           : Show this message.
 ```
 
@@ -82,7 +88,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 #### Full system, for Software development
 
-A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server contains a pysmurf server application provided by the user in a folder called **pysmurf** in the release folder. The release script will do a clone of the `pre-release` branch of the [pysmurf git repository](https://github.com/slaclab/pysmurf). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server uses local copies of both rogue and pysmurf; rogue is located in a folder called **rogue**, and pysmurf is located in a folder called **pysmurf** in the release folder. The release script will do a clone of the `pre-release` branch of both the [rogue git repository](https://github.com/slaclab/rogue) and [pysmurf git repository](https://github.com/slaclab/pysmurf). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
 The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
@@ -93,6 +99,7 @@ release-docker.sh -t system-dev-sw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
   -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image.
@@ -100,6 +107,7 @@ release-docker.sh -t system-dev-sw
   -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to
                                         /home/cryo/docker/smurf/dev_sw/<slot_number>/<pysmurf_version>
+  -l|--list-versions                  : Print a list of available versions.
   -h|--help                           : Show this message.
 ```
 
@@ -111,8 +119,17 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the pysmurf server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
 
-When this container is run for the first time, the freshly cloned version of pysmurf need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
+When this container is run for the first time, the freshly cloned version of rogue and pysmurf need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then:
+- Go to the rogue folder (`/usr/local/src/rogue`) and make a clean build:
+```
+rm -rf build
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+make -j4
+```
 
+- Then, go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
 ```
 rm -rf build
 mkdir build
@@ -140,7 +157,7 @@ release-docker.sh -t|--type system3 -s|--smurf2mce-version <smurf2mce_version> -
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
-  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image.
+  -p|--pysmurf-version   <pysmurf_version>   : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
@@ -165,7 +182,7 @@ release-docker.sh -t|--type system3-dev-fw -s|--smurf2mce-base-version <smurf2mc
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
-  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
@@ -191,7 +208,7 @@ release-docker.sh -t|--type system3-dev-sw -s|--smurf2mce-base-version <smurf2mc
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
-  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
@@ -229,12 +246,13 @@ To release a pysmurf development application, use **type = pysmurf-dev**, with t
 
 ```
 release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
-                  [-o|--output-dir <output_dir>] [-h|--help]"
+                  [-o|--output-dir <output_dir>] [-l|--list-versions] [-h|--help]"
 
   -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
                                            image; pysmurf will be overwritten by the local copy.
   -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to
                                            /home/cryo/docker/pysmurf/dev.
+  -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
 
@@ -247,11 +265,13 @@ It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 To release an utility application, use **type = utils**, with the following arguments:
 
 ```
-release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>]
+                           [-l|--list-versions] [-h|--help]
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
                                          /home/cryo/docker/utils.
+  -l|--list-versions                   : Print a list of available versions.
   -h|--help                            : Show this message.
 ```
 
@@ -264,11 +284,13 @@ It runs in the [smurf-tpg-ioc docker](https://github.com/slaclab/smurf-tpg-ioc-d
 To release a TPG IOCm use **type = tpg**, with the following arguments:
 
 ```
-release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>]
+                         [-l|--list-versions] [-h|--help]
 
   -v|--version    <tpg_version>   : Version of the smurf-tpg-ioc docker image.
   -o|--output-dir <output_dir>    : Directory where to release the scripts. Defaults to
                                     /home/cryo/docker/tpg.
+  -l|--list-versions              : Print a list of available versions.
   -h|--help                       : Show this message.
 ```
 
@@ -281,11 +303,13 @@ It runs in the [smurf-pcie docker](https://github.com/slaclab/smurf-pcie-docker)
 To release a PCIe utility application use **type = pcie**, with the following arguments:
 
 ```
-release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>]
+                          [-l|--list-versions] [-h|--help]
 
   -v|--version    <pcie_version> : Version of the smurf-pcie docker image.
   -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to
-                                   /home/cryo/docker/pcie
+                                   /home/cryo/docker/pcie.
+  -l|--list-versions             : Print a list of available versions.
   -h|--help                      : Show this message.
 ```
 
@@ -298,11 +322,13 @@ It runs the [smurf-atca-monitor docker](https://github.com/slaclab/smurf-atca-mo
 To release an ATCA monitor application use **type = atca-monitor**, with the following arguments:
 
 ```
-release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>]
+                                  [-l|--list-versions] [-h|--help]
 
   -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image.
   -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to
                                            /home/cryo/docker/atca-monitor
+  -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
 

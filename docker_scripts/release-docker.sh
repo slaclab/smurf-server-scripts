@@ -3,6 +3,9 @@
 ###############
 # Definitions #
 ###############
+# smurf server scripts git repository
+server_scripts_git_repo=https://github.com/slaclab/smurf-server-scripts.git
+
 # Top directory
 top_dir=$(dirname -- "$(readlink -f $0)")
 
@@ -18,6 +21,8 @@ version=$(cd ${top_dir} && git describe --tags --always --dirty)
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 usage()
@@ -27,19 +32,22 @@ usage()
     echo
     echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
     echo
-    echo "  -t|--type <app_type> : Type of application to install. Options are:"
-    echo "                         - system         : Full system (stable version) [pysmurf/rogue v4]."
-    echo "                         - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4]."
-    echo "                         - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4]."
-    echo "                         - system3        : Full system (stable version) [smurf2mce/rogue v3]."
-    echo "                         - system3-dev-fw : Full system (with a development version of FW) [smurf2mce/rogue v3]."
-    echo "                         - system3-dev-sw : Full system with a development version of SW and FW [smurf2mce/rogue v3]."
-    echo "                         - pysmurf-dev    : A stand-alone version of pysmurf, in development mode."
-    echo "                         - utils          : A utility system."
-    echo "                         - tpg            : A TPG IOC."
-    echo "                         - pcie           : A PCIe utility application."
-    echo "                         - atca-monitor   : An ATCA monitor application."
-    echo "  -h|--help            : Show help message for each application type."
+    echo "  -t|--type <app_type>   : Type of application to install. Options are:"
+    echo "                           - system         : Full system (stable version) [pysmurf/rogue v4]."
+    echo "                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4]."
+    echo "                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4]."
+    echo "                           - system3        : Full system (stable version) [smurf2mce/rogue v3]."
+    echo "                           - system3-dev-fw : Full system (with a development version of FW) [smurf2mce/rogue v3]."
+    echo "                           - system3-dev-sw : Full system with a development version of SW and FW [smurf2mce/rogue v3]."
+    echo "                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode."
+    echo "                           - utils          : A utility system."
+    echo "                           - tpg            : A TPG IOC."
+    echo "                           - pcie           : A PCIe utility application."
+    echo "                           - atca-monitor   : An ATCA monitor application."
+    echo "  -u|--upgrade [version] : Upgrade these scripts to the specified version. If not version if specified, then the head"
+    echo "                           of the master branch will be used. Note: You will be asked for the sudo password."
+    echo "  -l|--list-versions     : Print a list of available versions."
+    echo "  -h|--help              : Show help message for each application type."
     echo
     exit $1
 }
@@ -71,6 +79,35 @@ copy_template()
         echo ""
 }
 
+# Print a list of all available versions
+print_list_versions()
+{
+    echo "List of available versions:"
+    print_git_tags ${server_scripts_git_repo}
+    echo
+    exit 0
+}
+
+# Update these scripts
+update_scripts()
+{
+    local tag="$1"
+
+    # If not version was specified, user 'master'
+    if [ -z ${tag} ]; then
+        tag="master"
+    fi
+
+    echo "Updating these scripts to '${tag}'..."
+
+    cd ${top_dir}
+    sudo bash -c "git checkout master && git pull && git checkout ${tag}"
+    cd -
+
+    echo "Done!."
+    exit 0
+}
+
 #############
 # Main body #
 #############
@@ -85,6 +122,12 @@ case ${key} in
     -t|--type)
     app_type="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
+    ;;
+    -u|--upgrade)
+    update_scripts "$2"
     ;;
     -h|--help)
     show_help=1

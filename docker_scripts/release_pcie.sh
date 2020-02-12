@@ -3,6 +3,9 @@
 ###############
 # Definitions #
 ###############
+# PCIe docker git repository
+pcie_git_repo=https://github.com/slaclab/smurf-pcie-docker.git
+
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/pcie"
 
@@ -12,22 +15,33 @@ template_dir=${template_top_dir}/pcie
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 usage()
 {
     echo "Release a PCIe utility application."
     echo
-    echo "usage: ${script_name} -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-l|--list-versions] [-h|--help]"
     echo
     echo "  -v|--version    <pcie_version> : Version of the smurf-pcie docker image."
     echo "  -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to"
     echo "                                   ${release_top_default_dir}/<pcie_version>"
+    echo "  -l|--list-versions             : Print a list of available versions."
     echo "  -h|--help                      : Show this message."
     echo
     exit $1
 }
 
+# Print a list of all available versions
+print_list_versions()
+{
+    echo "List of available pcie_version:"
+    print_git_tags ${pcie_git_repo}
+    echo
+    exit 0
+}
 
 #############
 # Main body #
@@ -46,6 +60,9 @@ case ${key} in
     -o|--output-dir)
     target_dir="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
     ;;
     -h|--help)
     usage 0
