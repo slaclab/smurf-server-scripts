@@ -102,10 +102,16 @@ update_scripts()
 
     cd ${top_dir}
     sudo bash -c "git checkout master && git pull && git checkout ${tag}"
+    ret=$?
     cd -
 
-    echo "Done!."
-    exit 0
+    if [ ${ret} == 0 ]; then
+        echo "Done!"
+    else
+        echo "Failed!"
+    fi
+
+    exit ${ret}
 }
 
 #############
