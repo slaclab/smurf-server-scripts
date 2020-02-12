@@ -82,7 +82,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 #### Full system, for Software development
 
-A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server contains a pysmurf server application provided by the user in a folder called **pysmurf** in the release folder. The release script will do a clone of the `pre-release` branch of the [pysmurf git repository](https://github.com/slaclab/pysmurf). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server uses local copies of both rogue and pysmurf; rogue is located in a folder called **rogue**, and pysmurf is located in a folder called **pysmurf** in the release folder. The release script will do a clone of the `pre-release` branch of both the [rogue git repository](https://github.com/slaclab/rogue) and [pysmurf git repository](https://github.com/slaclab/pysmurf). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
 The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
@@ -111,8 +111,17 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the pysmurf server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
 
-When this container is run for the first time, the freshly cloned version of pysmurf need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
+When this container is run for the first time, the freshly cloned version of rogue and pysmurf need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then:
+- Go to the rogue folder (`/usr/local/src/rogue`) and make a clean build:
+```
+rm -rf build
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+make -j4
+```
 
+- Then, go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
 ```
 rm -rf build
 mkdir build
