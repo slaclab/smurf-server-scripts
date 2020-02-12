@@ -45,7 +45,7 @@ usage()
     echo "                           - pcie           : A PCIe utility application."
     echo "                           - atca-monitor   : An ATCA monitor application."
     echo "  -u|--upgrade [version] : Upgrade these scripts to the specified version. If not version if specified, then the head"
-    echo "                           of the master branch will be used."
+    echo "                           of the master branch will be used. Note: You will be asked for the sudo password."
     echo "  -l|--list-versions     : Print a list of available versions."
     echo "  -h|--help              : Show help message for each application type."
     echo
@@ -101,7 +101,7 @@ update_scripts()
     echo "Updating these scripts to '${tag}'..."
 
     cd ${top_dir}
-    sudo bash -c "git pull && git checkout ${tag}"
+    sudo bash -c "git checkout master && git pull && git checkout ${tag}"
     cd -
 
     echo "Done!."
