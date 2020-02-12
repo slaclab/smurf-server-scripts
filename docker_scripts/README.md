@@ -140,7 +140,7 @@ release-docker.sh -t|--type system3 -s|--smurf2mce-version <smurf2mce_version> -
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
-  -p|--pysmurf_version   <pysmurf_version>   : Version of the pysmurf docker image.
+  -p|--pysmurf-version   <pysmurf_version>   : Version of the pysmurf docker image.
   -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
@@ -165,7 +165,7 @@ release-docker.sh -t|--type system3-dev-fw -s|--smurf2mce-base-version <smurf2mc
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
-  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
@@ -191,7 +191,7 @@ release-docker.sh -t|--type system3-dev-sw -s|--smurf2mce-base-version <smurf2mc
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
                                                          image; smurf2mce will be overwritten by the local copy.
-  -p|--pysmurf_version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
   -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
