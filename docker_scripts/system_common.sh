@@ -9,6 +9,11 @@
 # this script, and perform application specific step later.
 # The variable ${app_type} will point to the application type,
 # and the usage_header() function is defined for each one as well.
+#
+# The system application has different options, so that script
+# sets the flag "stable_release" before calling this script. So,
+# int his script, the that flag is used to processed the options
+# accordingly.
 
 ###############
 # Definitions #
@@ -21,25 +26,36 @@ release_top_default_dir="/home/cryo/docker/smurf"
 ########################
 
 # Usage message
+# Development releases need only 1 version, while stable
+# releases need 2 version, the server and the client.
 usage()
 {
     usage_header
     echo "usage: ${script_name} -t ${app_type}"
-    echo "                         -v|--version <pysmurf_version>"
+    if [ -z ${stable_release+x} ]; then
+        echo "                         -v|--version <pysmurf_version>"
+    else
+        echo "                         -s|--server-version <pysmurf_server_version>"
+        echo "                         -p|--client-version <pysmurf_client_version>"
+    fi
     echo "                         [-N|--slot <slot_number>]"
     echo "                         [-o|--output-dir <output_dir>]"
     echo "                         [-h|--help]"
     echo
-    echo "  -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image."
-    echo "  -c|--comm-type  <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
-    echo "  -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional)."
-    echo "  -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to"
-    echo "                                        ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<pysmurf_version>"
-    echo "  -h|--help                           : Show this message."
+    if [ -z ${stable_release+x} ]; then
+        echo "  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images."
+    else
+        echo "  -s|--server-version <pysmurf_server_version> : Version of the pysmurf-server docker image."
+        echo "  -p|--client-version <pysmurf_client_version> : Version of the pysmurf-client docker image."
+    fi
+    echo "  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
+    echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
+    echo "  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to"
+    echo "                                                 ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<pysmurf_version>"
+    echo "  -h|--help                                    : Show this message."
     echo
     exit $1
 }
-
 
 #############
 # Main body #
@@ -54,9 +70,26 @@ do
 key="$1"
 
 case ${key} in
-    -v|--version)
-    pysmurf_version="$2"
-    shift
+    -v|--pysmurf-version)
+    # This option is only valid for development releases
+    if [ -z ${stable_release+x} ]; then
+        pysmurf_version="$2"
+        shift
+    fi
+    ;;
+    -s|--server-version)
+    # This option is only valid for stable releases
+    if [ ! -z ${stable_release+x} ]; then
+        server_version="$2"
+        shift
+    fi
+    ;;
+    -p|--client-version)
+    # This option is only valid for stable releases
+    if [ ! -z ${stable_release+x} ]; then
+        client_version="$2"
+        shift
+    fi
     ;;
     -o|--output-dir)
     target_dir="$2"
@@ -74,7 +107,8 @@ case ${key} in
     usage 0
     ;;
     *)
-    echo "Unknown argument"
+    echo "ERROR: Unknown argument"
+    echo
     usage 1
     ;;
 esac
@@ -82,10 +116,30 @@ shift
 done
 
 # Verify parameters
-if [ -z ${pysmurf_version+x} ]; then
-        echo "ERROR: pysmurf version not defined!"
-        echo ""
-        usage 1
+if [ -z ${stable_release+x} ]; then
+    # For no stable releases, we only need the pysmurf version
+    if [ -z ${pysmurf_version+x} ]; then
+            echo "ERROR: pysmurf version not defined!"
+            echo ""
+            usage 1
+    fi
+
+    # The server and client version are the same in this case
+    server_version=${pysmurf_version}
+    client_version=${pysmurf_version}
+else
+    # For stable releases, we need both the server and the client versions
+    if [ -z ${server_version+x} ]; then
+            echo "ERROR: pysmurf server version not defined!"
+            echo ""
+            usage 1
+    fi
+
+    if [ -z ${client_version+x} ]; then
+            echo "ERROR: pysmurf client version not defined!"
+            echo ""
+            usage 1
+    fi
 fi
 
 # Verify the communication type
@@ -97,6 +151,7 @@ case ${comm_type} in
     comm_args="-c pcie"
     ;;
     *)
+    echo
     echo "ERROR: Invalid communication type!"
     echo
     usage 1
@@ -158,7 +213,8 @@ template_dir=${template_top_dir}/${app_type}/${template_prefix}
 
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
-        | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
+        | sed s/%%SERVER_VERSION%%/${server_version}/g \
+        | sed s/%%CLIENT_VERSION%%/${client_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
         > ${target_dir}/docker-compose.yml
 if [ $? -ne 0 ]; then

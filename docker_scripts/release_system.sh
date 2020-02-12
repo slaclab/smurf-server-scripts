@@ -27,7 +27,9 @@ usage_header()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of application,
+# but in this case set the "stable_release" flag.
+stable_release=1
 . system_common.sh
 
 # Print final report

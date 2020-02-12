@@ -18,7 +18,7 @@ x-gui-app:
 services:
   smurf_server_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/pysmurf-server-base:%%PYSMURF_VERSION%%
+    image: tidair/pysmurf-server-base:%%SERVER_VERSION%%
     container_name: smurf_server_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data
@@ -32,7 +32,7 @@ services:
         tag: smurf_server
   pysmurf_s%%SLOT_NUMBER%%:
     <<: *default-gui-app
-    image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
+    image: tidair/pysmurf-client:%%CLIENT_VERSION%%
     container_name: pysmurf_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data

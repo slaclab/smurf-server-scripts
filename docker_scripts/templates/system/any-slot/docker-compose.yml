@@ -22,7 +22,7 @@ x-gui-app:
 x-smurf-server:
   &smurf-server
   <<: *default-gui-app
-  image: tidair/pysmurf-server:%%PYSMURF_VERSION%%
+  image: tidair/pysmurf-server:%%SERVER_VERSION%%
   container_name: smurf_server_s${slot}
   command: -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% ${extra_opts}
   logging:
@@ -33,7 +33,7 @@ x-smurf-server:
 x-pysmurf:
   &pysmurf
   <<: *default-gui-app
-  image: tidair/pysmurf-client:%%PYSMURF_VERSION%%
+  image: tidair/pysmurf-client:%%CLIENT_VERSION%%
   container_name: pysmurf_s${slot}
   command: --epics smurf_server_s${slot}
   logging:
