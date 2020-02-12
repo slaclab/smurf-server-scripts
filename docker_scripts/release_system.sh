@@ -22,7 +22,6 @@ usage_header()
     echo
 }
 
-
 #############
 # Main body #
 #############

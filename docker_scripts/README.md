@@ -36,6 +36,7 @@ release-docker.sh -t system
                   -p|--client-version <pysmurf_client_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
   -s|--server-version <pysmurf_server_version> : Version of the pysmurf-server docker image.
@@ -44,6 +45,7 @@ release-docker.sh -t system
   -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to
                                                  /home/cryo/docker/smurf/stable/<slot_number>/<pysmurf_version>
+  -l|--list-versions                           : Print a list of available versions.
   -h|--help                                    : Show this message.
 ```
 
@@ -66,6 +68,7 @@ release-docker.sh -t system-dev-fw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
   -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image.
@@ -73,6 +76,7 @@ release-docker.sh -t system-dev-fw
   -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to
                                         /home/cryo/docker/smurf/dev_fw/<slot_number>/<pysmurf_version>
+  -l|--list-versions                  : Print a list of available versions.
   -h|--help                           : Show this message.
 ```
 
@@ -95,6 +99,7 @@ release-docker.sh -t system-dev-sw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
+                  [-l|--list-versions]
                   [-h|--help]
 
   -v|--version    <pysmurf_version>   : Version of the pysmurf server docker image.
@@ -102,6 +107,7 @@ release-docker.sh -t system-dev-sw
   -N|--slot       <slot_number>       : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir <output_dir>        : Top directory where to release the scripts. Defaults to
                                         /home/cryo/docker/smurf/dev_sw/<slot_number>/<pysmurf_version>
+  -l|--list-versions                  : Print a list of available versions.
   -h|--help                           : Show this message.
 ```
 
@@ -240,12 +246,13 @@ To release a pysmurf development application, use **type = pysmurf-dev**, with t
 
 ```
 release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
-                  [-o|--output-dir <output_dir>] [-h|--help]"
+                  [-o|--output-dir <output_dir>] [-l|--list-versions] [-h|--help]"
 
   -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
                                            image; pysmurf will be overwritten by the local copy.
   -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to
                                            /home/cryo/docker/pysmurf/dev.
+  -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
 
@@ -258,11 +265,13 @@ It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 To release an utility application, use **type = utils**, with the following arguments:
 
 ```
-release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>]
+                           [-l|--list-versions] [-h|--help]
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
                                          /home/cryo/docker/utils.
+  -l|--list-versions                   : Print a list of available versions.
   -h|--help                            : Show this message.
 ```
 
@@ -275,11 +284,13 @@ It runs in the [smurf-tpg-ioc docker](https://github.com/slaclab/smurf-tpg-ioc-d
 To release a TPG IOCm use **type = tpg**, with the following arguments:
 
 ```
-release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>]
+                         [-l|--list-versions] [-h|--help]
 
   -v|--version    <tpg_version>   : Version of the smurf-tpg-ioc docker image.
   -o|--output-dir <output_dir>    : Directory where to release the scripts. Defaults to
                                     /home/cryo/docker/tpg.
+  -l|--list-versions              : Print a list of available versions.
   -h|--help                       : Show this message.
 ```
 
@@ -292,11 +303,13 @@ It runs in the [smurf-pcie docker](https://github.com/slaclab/smurf-pcie-docker)
 To release a PCIe utility application use **type = pcie**, with the following arguments:
 
 ```
-release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>]
+                          [-l|--list-versions] [-h|--help]
 
   -v|--version    <pcie_version> : Version of the smurf-pcie docker image.
   -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to
-                                   /home/cryo/docker/pcie
+                                   /home/cryo/docker/pcie.
+  -l|--list-versions             : Print a list of available versions.
   -h|--help                      : Show this message.
 ```
 
@@ -309,11 +322,13 @@ It runs the [smurf-atca-monitor docker](https://github.com/slaclab/smurf-atca-mo
 To release an ATCA monitor application use **type = atca-monitor**, with the following arguments:
 
 ```
-release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>] [-h|--help]
+release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>]
+                                  [-l|--list-versions] [-h|--help]
 
   -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image.
   -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to
                                            /home/cryo/docker/atca-monitor
+  -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
 

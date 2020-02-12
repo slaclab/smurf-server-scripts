@@ -18,12 +18,24 @@
 ###############
 # Definitions #
 ###############
+# Git repositories
+## rogue
+rogue_git_repo=https://github.com/slaclab/rogue.git
+
+## pysmurf
+pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
+
+## pysmurf stable docker images
+pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
+
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 # Development releases need only 1 version, while stable
@@ -40,6 +52,7 @@ usage()
     fi
     echo "                         [-N|--slot <slot_number>]"
     echo "                         [-o|--output-dir <output_dir>]"
+    echo "                         [-l|--list-versions]"
     echo "                         [-h|--help]"
     echo
     if [ -z ${stable_release+x} ]; then
@@ -52,9 +65,31 @@ usage()
     echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
     echo "  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to"
     echo "                                                 ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<pysmurf_version>"
+    echo "  -l|--list-versions                           : Print a list of available versions."
     echo "  -h|--help                                    : Show this message."
     echo
     exit $1
+}
+
+# Print a list of all available versions
+print_list_versions()
+{
+    if [ -z ${stable_release+x} ]; then
+        # For development releases, print pysmurf versions
+        echo "List of available pysmurf_version:"
+        print_git_tags ${pysmurf_git_repo}
+    else
+        # For stable releases, print stable pysmurf-server and pysmurf versions
+        echo "List of available pysmurf_server_version:"
+        print_git_tags ${pysmurf_stable_git_repo}
+        echo
+
+        echo "List of available pysmurf_client_version:"
+        print_git_tags ${pysmurf_git_repo}
+    fi
+
+    echo
+    exit 0
 }
 
 #############
@@ -102,6 +137,9 @@ case ${key} in
     -N|--slot)
     slot_number="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
     ;;
     -h|--help)
     usage 0

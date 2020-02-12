@@ -3,6 +3,9 @@
 ###############
 # Definitions #
 ###############
+# TPG docker git repositories
+tpg_git_repo=https://github.com/slaclab/smurf-tpg-ioc-docker.git
+
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/tpg"
 
@@ -12,22 +15,33 @@ template_dir=${template_top_dir}/tpg
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 usage()
 {
     echo "Release a TPG IOC."
     echo
-    echo "usage: ${script_name} -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>] [-l|--list-versions] [-h|--help]"
     echo
     echo "  -v|--version    <tpg_version> : Version of the smurf-tpg-ioc docker image."
     echo "  -o|--output-dir <output_dir>  : Directory where to release the scripts. Defaults to"
     echo "                                  ${release_top_default_dir}/<tpg_version>"
+    echo "  -l|--list-versions            : Print a list of available versions."
     echo "  -h|--help                     : Show this message."
     echo
     exit $1
 }
 
+# Print a list of all available versions
+print_list_versions()
+{
+    echo "List of available tpg_version:"
+    print_git_tags ${tpg_git_repo}
+    echo
+    exit 0
+}
 
 #############
 # Main body #
@@ -46,6 +60,9 @@ case ${key} in
     -o|--output-dir)
     target_dir="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
     ;;
     -h|--help)
     usage 0

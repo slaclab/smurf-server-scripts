@@ -3,6 +3,9 @@
 ###############
 # Definitions #
 ###############
+# TPG docker git repositories
+atca_monitor_git_repo=https://github.com/slaclab/smurf-atca-monitor.git
+
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/atca_monitor"
 
@@ -12,6 +15,8 @@ template_dir=${template_top_dir}/atca-monitor
 ########################
 # Function definitions #
 ########################
+# Import common functions
+. common.sh
 
 # Usage message
 usage()
@@ -23,11 +28,20 @@ usage()
     echo "  -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image."
     echo "  -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to"
     echo "                                           ${release_top_default_dir}/<atca-monitor_version>"
+    echo "  -l|--list-versions                     : Print a list of available versions."
     echo "  -h|--help                              : Show this message."
     echo
     exit $1
 }
 
+# Print a list of all available versions
+print_list_versions()
+{
+    echo "List of available atca-monitor_version:"
+    print_git_tags ${atca_monitor_git_repo}
+    echo
+    exit 0
+}
 
 #############
 # Main body #
@@ -46,6 +60,9 @@ case ${key} in
     -o|--output-dir)
     target_dir="$2"
     shift
+    ;;
+    -l|--list-versions)
+    print_list_versions
     ;;
     -h|--help)
     usage 0

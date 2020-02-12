@@ -3,11 +3,6 @@
 ###############
 # Definitions #
 ###############
-# rogue git repository
-rogue_git_repo=http://github.com/slaclab/rogue.git
-
-# pysmurf git repository
-pysmurf_git_repo=http://github.com/slaclab/pysmurf.git
 
 # Prefix use in the default target release directory
 target_dir_prefix=dev_sw
@@ -33,7 +28,6 @@ usage_header()
     echo "and the docker image used for the client is 'tidair/pysmurf-client'."
     echo
 }
-
 
 #############
 # Main body #
