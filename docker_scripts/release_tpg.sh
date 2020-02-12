@@ -3,7 +3,7 @@
 ###############
 # Definitions #
 ###############
-# TPG docker git repositories
+# TPG docker git repository
 tpg_git_repo=https://github.com/slaclab/smurf-tpg-ioc-docker.git
 
 # Default release output directory

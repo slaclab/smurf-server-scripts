@@ -3,7 +3,7 @@
 ###############
 # Definitions #
 ###############
-# smurf-base docker git repositories
+# smurf-base docker git repository
 smurf_base_git_repo=https://github.com/slaclab/smurf-base-docker.git
 
 # Default release output directory

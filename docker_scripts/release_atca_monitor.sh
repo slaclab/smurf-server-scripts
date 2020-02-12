@@ -3,7 +3,7 @@
 ###############
 # Definitions #
 ###############
-# TPG docker git repositories
+# TPG docker git repository
 atca_monitor_git_repo=https://github.com/slaclab/smurf-atca-monitor.git
 
 # Default release output directory

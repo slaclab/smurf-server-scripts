@@ -3,7 +3,7 @@
 ###############
 # Definitions #
 ###############
-# PCIe docker git repositories
+# PCIe docker git repository
 pcie_git_repo=https://github.com/slaclab/smurf-pcie-docker.git
 
 # Default release output directory
