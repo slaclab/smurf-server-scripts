@@ -82,7 +82,7 @@ copy_template()
 # Print a list of all available versions
 print_list_versions()
 {
-    echo "List of available versions:"
+    echo "List of available versions of this script:"
     print_git_tags ${server_scripts_git_repo}
     echo
     exit 0
@@ -130,7 +130,8 @@ case ${key} in
     shift
     ;;
     -l|--list-versions)
-    print_list_versions
+    show_versions=1
+    app_options="${app_options} ${key}"
     ;;
     -u|--upgrade)
     update_scripts "$2"
@@ -149,10 +150,16 @@ done
 # Verify parameters
 if [ -z ${app_type+x} ]; then
 
-        # Show usage message when argument '-h' was used
+        # Show usage message when option '-h' was used
         # without defining an application type
         if [ ! -z ${show_help} ]; then
             usage 0
+        fi
+
+        # Print the available versions when option '-l'
+        # was used without defining an application type.
+        if [ ! -z ${show_versions} ]; then
+            print_list_versions
         fi
 
         echo "ERROR: Must specified the application type!"
