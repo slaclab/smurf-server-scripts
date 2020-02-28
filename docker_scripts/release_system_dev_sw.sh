@@ -69,7 +69,7 @@ cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
 echo ${cmd}
 ${cmd}
 
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
     echo ""
     return 1
@@ -81,7 +81,7 @@ cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
 echo ${cmd}
 ${cmd}
 
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
     echo ""
     return 1
