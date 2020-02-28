@@ -104,6 +104,7 @@ echo "Building applications:"
 ## Build rogue
 echo "Building rogue..."
 docker run -ti --rm \
+    --user cryo:smurf \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
@@ -119,6 +120,7 @@ fi
 ## Build pysmurf
 echo "Building pysmurf..."
 docker run -ti --rm \
+    --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
     --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
