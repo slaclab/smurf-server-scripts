@@ -60,10 +60,10 @@ else
     mkdir -p ${target_dir}/fw
 
     # Clone rogue (on the specific tag) in the target directory
-    git clone ${rogue_git_repo} ${target_dir}/rogue -b ${pysmurf_version}
+    git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}
 
     # Clone pysmurf (on the specific tag) in the target directory
-    git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${rogue_version}
+    git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}
 
     # Print final report
     echo ""
