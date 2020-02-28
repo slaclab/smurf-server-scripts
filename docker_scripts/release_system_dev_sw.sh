@@ -84,10 +84,10 @@ else
         echo "That is the copy that runs inside the docker container."
         echo
         echo "If you make changes to these repositories and want to push them back to git, remember to create"
-        echo "and push a new branch, by running these commands in the respective directory (replace <new_branch_name>,"
+        echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
         echo "with an appropriate branch name):"
-        echo " $ git checkout -b <new_branch_name>"
-        echo " $ git push -set-upstream origin <new_branch_name>"
+        echo " $ git checkout -b <new-branch-name>"
+        echo " $ git push -set-upstream origin <new-branch-name>"
         echo
         echo "Remember that you need to compile the pysmurf application the first time you start the container."
         echo "Remember to place your FW related files in the 'fw' directory."
