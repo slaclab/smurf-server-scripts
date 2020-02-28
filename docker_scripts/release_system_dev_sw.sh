@@ -116,7 +116,7 @@ echo ${cmd}
 ${cmd}
 echo
 
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
     echo "Error: Failed to build rogue"
     echo
     return 1
@@ -134,7 +134,7 @@ echo ${cmd}
 ${cmd}
 echo
 
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
     echo "Error: Failed to build pysmurf"
     echo
     return 1
