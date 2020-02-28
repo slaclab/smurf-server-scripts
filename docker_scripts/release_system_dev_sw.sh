@@ -111,7 +111,7 @@ docker run -ti --rm \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
     tidair/pysmurf-server-base:${pysmurf_version} \
-    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4 install"
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
 echo
 
 if [ $? -ne 0 ]; then
