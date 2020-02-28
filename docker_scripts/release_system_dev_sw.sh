@@ -59,13 +59,21 @@ else
     # Create fw directory
     mkdir -p ${target_dir}/fw
 
+    # Clone software repositories
+    echo "Cloning repositories:"
     clone_status=0
 
     # Clone rogue (on the specific tag) in the target directory
-    git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version} || clone_status=$?
+    echo "Cloning rogue..."
+    cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
+    echo ${cmd}
+    ${cmd} || clone_status=$?
 
     # Clone pysmurf (on the specific tag) in the target directory
-    git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version} || clone_status=$?
+    echo "Cloning pysmurf..."
+    cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
+    echo ${cmd}
+    ${cmd} || clone_status=$?
 
     # Checkout if there were error while cloning the repositories
     if [ ${clone_status} -ne 0 ]; then
