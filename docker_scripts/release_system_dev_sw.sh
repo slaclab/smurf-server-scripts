@@ -105,15 +105,13 @@ echo "Building applications:"
 
 ## Build rogue
 echo "Building rogue..."
-cmd='docker run -ti --rm \
+docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
     tidair/pysmurf-server-base:${pysmurf_version} \
-    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4 install"'
-echo ${cmd}
-${cmd}
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4 install"
 echo
 
 if [ $? -ne 0 ]; then
@@ -124,14 +122,12 @@ fi
 
 ## Build pysmurf
 echo "Building pysmurf..."
-cmd='docker run -ti --rm \
+docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
     --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
-    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"'
-echo ${cmd}
-${cmd}
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
 echo
 
 if [ $? -ne 0 ]; then
