@@ -34,10 +34,20 @@ usage_header()
 # It return the according version of rogue. Or an empty string if not found.
 get_rogue_version()
 {
+    # pysmurf version
     local pysmurf_version=$1
-    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
-    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
 
+    # First, the the smurf-rogue version
+    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
+        | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
+
+    # Now get the rogue version
+    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
+        | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
+
+    # Return the rogue version
     echo ${rogue_version}
 }
 
@@ -54,6 +64,7 @@ rogue_version=$(get_rogue_version ${pysmurf_version})
 # Check if a version of rogue was found
 if [ ! ${rogue_version} ]; then
     echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
+    echo
     return 1
 fi
 
@@ -71,7 +82,7 @@ ${cmd}
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
-    echo ""
+    echo
     return 1
 fi
 
@@ -83,7 +94,39 @@ ${cmd}
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
-    echo ""
+    echo
+    return 1
+fi
+
+# Build application
+echo "Building applications:"
+
+## Build rogue
+echo "Building rogue..."
+docker run -ti --rm \
+    -v ${target_dir}/rogue:/usr/local/src/rogue \
+    --workdir /usr/local/src/rogue \
+    --entrypoint="" \
+    tidair/pysmurf-server-base:${pysmurf_version} \
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4 install"
+
+if [ $? -ne 0]; then
+    echo "Error: Failed to build rogue"
+    echo
+    return 1
+fi
+
+## Build pysmurf
+echo "Building pysmurf..."
+docker run -ti --rm \
+    -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
+    --workdir /usr/local/src/pysmurf \
+    --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+
+if [ $? -ne 0]; then
+    echo "Error: Failed to build pysmurf"
+    echo
     return 1
 fi
 
@@ -104,6 +147,5 @@ echo "with an appropriate branch name):"
 echo " $ git checkout -b <new-branch-name>"
 echo " $ git push -set-upstream origin <new-branch-name>"
 echo
-echo "Remember that you need to compile the pysmurf application the first time you start the container."
 echo "Remember to place your FW related files in the 'fw' directory."
 echo ""
