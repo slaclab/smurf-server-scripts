@@ -54,51 +54,56 @@ rogue_version=$(get_rogue_version ${pysmurf_version})
 # Check if a version of rogue was found
 if [ ! ${rogue_version} ]; then
     echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
-else
-
-    # Create fw directory
-    mkdir -p ${target_dir}/fw
-
-    # Clone software repositories
-    echo "Cloning repositories:"
-    clone_status=0
-
-    # Clone rogue (on the specific tag) in the target directory
-    echo "Cloning rogue..."
-    cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
-    echo ${cmd}
-    ${cmd} || clone_status=$?
-
-    # Clone pysmurf (on the specific tag) in the target directory
-    echo "Cloning pysmurf..."
-    cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
-    echo ${cmd}
-    ${cmd} || clone_status=$?
-
-    # Checkout if there were error while cloning the repositories
-    if [ ${clone_status} -ne 0 ]; then
-        echo "Error: Failed to clone some of the repositories."
-        echo ""
-    else
-        # Print final report
-        echo ""
-        echo "All Done!"
-        echo "Script released to ${target_dir}"
-        echo
-        echo "The tag '${rogue_version}' of ${rogue_git_repo} was checkout in ${target_dir}/rogue."
-        echo "That is the copy that runs inside the docker container."
-        echo
-        echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
-        echo "That is the copy that runs inside the docker container."
-        echo
-        echo "If you make changes to these repositories and want to push them back to git, remember to create"
-        echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
-        echo "with an appropriate branch name):"
-        echo " $ git checkout -b <new-branch-name>"
-        echo " $ git push -set-upstream origin <new-branch-name>"
-        echo
-        echo "Remember that you need to compile the pysmurf application the first time you start the container."
-        echo "Remember to place your FW related files in the 'fw' directory."
-        echo ""
-    fi
+    return 1
 fi
+
+# Create fw directory
+mkdir -p ${target_dir}/fw
+
+# Clone software repositories
+echo "Cloning repositories:"
+
+## Clone rogue (on the specific tag) in the target directory
+echo "Cloning rogue..."
+cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
+echo ${cmd}
+${cmd}
+
+if [ $? -ne 0]; then
+    echo "Error: Failed to clone rogue."
+    echo ""
+    return 1
+fi
+
+## Clone pysmurf (on the specific tag) in the target directory
+echo "Cloning pysmurf..."
+cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
+echo ${cmd}
+${cmd}
+
+if [ $? -ne 0]; then
+    echo "Error: Failed to clone rogue."
+    echo ""
+    return 1
+fi
+
+# Print final report
+echo ""
+echo "All Done!"
+echo "Script released to ${target_dir}"
+echo
+echo "The tag '${rogue_version}' of ${rogue_git_repo} was checkout in ${target_dir}/rogue."
+echo "That is the copy that runs inside the docker container."
+echo
+echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
+echo "That is the copy that runs inside the docker container."
+echo
+echo "If you make changes to these repositories and want to push them back to git, remember to create"
+echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
+echo "with an appropriate branch name):"
+echo " $ git checkout -b <new-branch-name>"
+echo " $ git push -set-upstream origin <new-branch-name>"
+echo
+echo "Remember that you need to compile the pysmurf application the first time you start the container."
+echo "Remember to place your FW related files in the 'fw' directory."
+echo ""
