@@ -79,6 +79,7 @@ echo "Cloning rogue..."
 cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
 echo ${cmd}
 ${cmd}
+echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
@@ -91,6 +92,7 @@ echo "Cloning pysmurf..."
 cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
 echo ${cmd}
 ${cmd}
+echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
@@ -112,6 +114,7 @@ cmd='docker run -ti --rm \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4 install"'
 echo ${cmd}
 ${cmd}
+echo
 
 if [ $? -ne 0]; then
     echo "Error: Failed to build rogue"
@@ -129,6 +132,7 @@ cmd='docker run -ti --rm \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"'
 echo ${cmd}
 ${cmd}
+echo
 
 if [ $? -ne 0]; then
     echo "Error: Failed to build pysmurf"
