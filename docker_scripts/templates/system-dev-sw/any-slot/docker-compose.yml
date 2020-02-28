@@ -27,8 +27,8 @@ x-smurf-server:
   - ${PWD}/fw:/tmp/fw
   - ${PWD}/rogue:/usr/local/src/rogue
   - ${PWD}/pysmurf:/usr/local/src/pysmurf
-  #command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_opts}
-  entrypoint: bash
+  command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_opts}
+  #entrypoint: bash
   logging:
     options:
       tag: smurf_server
