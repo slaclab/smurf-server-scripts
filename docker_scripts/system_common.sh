@@ -247,7 +247,7 @@ fi
 
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${pysmurf_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${server_version}
 fi
 
 # Verify is target directory already exist
