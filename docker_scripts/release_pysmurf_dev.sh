@@ -96,7 +96,7 @@ if [ -z ${ret} ]; then
 fi
 
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}
+    target_dir=${release_top_default_dir}/${pysmurf_version}
 fi
 
 # Verify is target directory already exist
