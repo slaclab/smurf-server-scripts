@@ -144,6 +144,14 @@ Now you can start the docker container normally again.
 
 You need to repeat these steps every time you make changes to C++ code.
 
+If you make changes to these repositories and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following command (you can create the new branch even after committing changes):"
+```
+git checkout -b <new-branch-name>"
+git push -set-upstream origin <new-branch-name>"
+```
+
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
+
 ### Full systems based on smurf2mce and rogue v3
 
 #### Full stable system
