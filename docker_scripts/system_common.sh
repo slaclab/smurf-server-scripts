@@ -164,7 +164,7 @@ if [ -z ${stable_release+x} ]; then
 
     # Check if the pysmurf_version exist
     ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
-    if [ ${ret} -ne 0 ]; then
+    if [ -z ${ret} ]; then
         echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
         echo
         exit 1
@@ -189,7 +189,7 @@ else
 
     # Check if the server version exist
     ret=$(verify_git_tag_exist ${pysmurf_stable_git_repo} ${server_version})
-    if [ ${ret} -ne 0 ]; then
+    if [ -z ${ret} ]; then
         echo "ERROR: pysmurf server version ${server_version} does not exist"
         echo
         exit 1
@@ -197,7 +197,7 @@ else
 
     # Check if the client version exist
     ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version})
-    if [ ${ret} -ne 0 ]; then
+    if [ -z ${ret} ]; then
         echo "ERROR: pysmurf client version ${client_version} does not exist"
         echo
         exit 1
