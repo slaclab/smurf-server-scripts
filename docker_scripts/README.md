@@ -142,7 +142,7 @@ make -j4
 
 Now you can start the docker container normally again.
 
-You need to repeat these steps everytime you make changes to C++ code.
+You need to repeat these steps every time you make changes to C++ code.
 
 ### Full systems based on smurf2mce and rogue v3
 
