@@ -86,6 +86,15 @@ if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}/${pcie_version}
 fi
 
+# Check if the pcie-version exist
+ret=$(verify_git_tag_exist ${pcie_git_repo} ${pcie_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: pcie-version version ${pcie_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 # Verify is target directory already exist
 if [ -d ${target_dir} ]; then
     echo "ERROR: release directory '${target_dir}' already exist."

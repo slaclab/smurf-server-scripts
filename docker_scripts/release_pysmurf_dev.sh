@@ -86,6 +86,15 @@ if [ -z ${pysmurf_version+x} ]; then
         usage 1
 fi
 
+# Check if the pysmurf version exist
+ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}
 fi

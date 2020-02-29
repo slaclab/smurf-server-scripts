@@ -82,6 +82,15 @@ if [ -z ${atca_monitor_version+x} ]; then
         usage 1
 fi
 
+# Check if the smurf-atca-monitor exist
+ret=$(verify_git_tag_exist ${atca_monitor_git_repo} ${atca_monitor_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: smurf-atca-monitor version ${atca_monitor_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}/${atca_monitor_version}
 fi
