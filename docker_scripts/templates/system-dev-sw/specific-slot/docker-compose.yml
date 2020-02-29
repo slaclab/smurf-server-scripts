@@ -38,6 +38,7 @@ services:
     volumes:
     - /data:/data
     - /home/${user_name}:/home/${user_name}
+    - ${PWD}/pysmurf:/usr/local/src/pysmurf
     command: --epics smurf_server_s%%SLOT_NUMBER%%
     logging:
       options:
