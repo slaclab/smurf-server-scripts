@@ -17,7 +17,7 @@ verify_git_tag_exist()
 	local repo=$1
 	local tag=$2
 
-	local macth=$(git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep ${tag})
+	local macth=$(git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep -P ^${tag}$)
 
 	echo ${macth}
 }
