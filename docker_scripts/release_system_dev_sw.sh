@@ -79,26 +79,28 @@ echo "Cloning rogue..."
 cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
 echo ${cmd}
 ${cmd}
-echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
     echo
     return 1
 fi
+
+echo
 
 ## Clone pysmurf (on the specific tag) in the target directory
 echo "Cloning pysmurf..."
 cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
 echo ${cmd}
 ${cmd}
-echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
     echo
     return 1
 fi
+
+echo
 
 # Build application
 echo "Building applications:"
@@ -112,13 +114,14 @@ docker run -ti --rm \
     --entrypoint="" \
     tidair/pysmurf-server-base:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
-echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build rogue"
     echo
     return 1
 fi
+
+echo
 
 ## Build pysmurf
 echo "Building pysmurf..."
@@ -128,13 +131,14 @@ docker run -ti --rm \
     --workdir /usr/local/src/pysmurf \
     --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
-echo
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build pysmurf"
     echo
     return 1
 fi
+
+echo
 
 # Print final report
 echo ""
