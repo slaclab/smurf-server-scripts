@@ -146,4 +146,10 @@ echo "Script released to ${target_dir}"
 echo
 echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
 echo "That is the copy that runs inside the docker container."
+echo
+echo "If you make changes to these repositories and want to push them back to git, remember to create"
+echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
+echo "with an appropriate branch name):"
+echo " $ git checkout -b <new-branch-name>"
+echo " $ git push -set-upstream origin <new-branch-name>"
 echo ""
