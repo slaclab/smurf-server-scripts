@@ -31,7 +31,7 @@ usage()
     echo "  -v|--version    <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
     echo "                                      image; pysmurf will be overwritten by the local copy."
     echo "  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to"
-    echo "                                      ${release_top_default_dir}"
+    echo "                                      ${release_top_default_dir}/<pysmurf_version>"
     echo "  -l|--list-versions                : Print a list of available versions."
     echo "  -h|--help                         : Show this message."
     echo
