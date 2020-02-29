@@ -133,7 +133,11 @@ fi
 chmod +x ${target_dir}/run.sh
 
 # Clone pysmurf (master branch) in the target directory
-git clone ${pysmurf_git_repo} ${target_dir}/pysmurf
+echo "Cloning pysmurf..."
+cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
+echo ${cmd}
+${cmd}
+echo
 
 # Print final report
 echo ""
