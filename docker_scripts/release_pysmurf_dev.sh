@@ -143,5 +143,7 @@ echo
 echo ""
 echo "All Done!"
 echo "Script released to ${target_dir}"
-echo "The master branch of ${pysmurf_git_repo} was clone in ${target_dir}/pysmurf. That is the copy that runs inside the docker container."
+echo
+echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
+echo "That is the copy that runs inside the docker container."
 echo ""
