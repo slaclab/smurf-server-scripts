@@ -248,6 +248,8 @@ You will need to compile the code every time you make changes to the C++ code. O
 
 ### Pysmurf application, in development mode
 
+**Note**: This mode only supports pysmurf starting at version 4, including all its initial release candidates.
+
 A pysmurf application in development mode, consist only on the pysmurf client application. It uses a local checkout of the pysmurf repository located in a folder called **pysmurf** in the release folder. The release script will checkout the specified version of pysmurf from the [pysmurf git repository](https://github.com/slaclab/pysmurf).
 
 Pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
