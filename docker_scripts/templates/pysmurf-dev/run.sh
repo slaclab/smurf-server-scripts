@@ -16,4 +16,4 @@ docker run -it --rm  \
   -v ${PWD}/pysmurf:/usr/local/src/pysmurf \
   --entrypoint bash \
   --workdir /usr/local/src/pysmurf \
-  tidair/pysmurf:%%PYSMURF_VERSION%%
+  tidair/pysmurf-client:%%PYSMURF_VERSION%%
