@@ -144,7 +144,7 @@ Now you can start the docker container normally again.
 
 You need to repeat these steps every time you make changes to C++ code.
 
-If you make changes to these repositories and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following command (you can create the new branch even after committing changes):"
+If you make changes to these repositories and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
 ```
 git checkout -b <new-branch-name>"
 git push -set-upstream origin <new-branch-name>"
@@ -248,9 +248,9 @@ You will need to compile the code every time you make changes to the C++ code. O
 
 ### Pysmurf application, in development mode
 
-A pysmurf application in development mode, consist only on pysmurf. It contains a pysmurf application provided by the user in a folder called **pysmurf** in the release folder. The release script will do a clone of the master branch of the [pysmurf git repository](https://github.com/slaclab/pysmurf).
+A pysmurf application in development mode, consist only on the pysmurf client application. It uses a local checkout of the pysmurf repository located in a folder called **pysmurf** in the release folder. The release script will checkout the specified version of pysmurf from the [pysmurf git repository](https://github.com/slaclab/pysmurf).
 
-Pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
+Pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
 To release a pysmurf development application, use **type = pysmurf-dev**, with the following arguments:
 
@@ -265,6 +265,14 @@ release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
   -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
+
+If you make changes to the pysmurf repository and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
+```
+git checkout -b <new-branch-name>"
+git push -set-upstream origin <new-branch-name>"
+```
+
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
 
 ### Utility application
 
