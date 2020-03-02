@@ -18,7 +18,22 @@ release-docker.sh -t|--type <type> <arguments>
 
 where **type** specified the type of system to release, and **arguments** depends on the type.
 
-The different type of systems, and their respective arguments are described next.
+Currently, the script supports the following system types:
+- [Full systems based on pysmurf and rogue v4](#full-systems-based-on-pysmurf-and-rogue-v4)
+  - [Full stable system](#full-stable-system)
+  - [Full system, for Firmware development](#full-system-for-firmware-development)
+  - [Full system, for Software development](#full-system-for-software-development)
+- [Full systems based on smurf2mce and rogue v3](#full-systems-based-on-smurf2mce-and-rogue-v3)
+  - [Full stable system](#full-stable-system-1)
+  - [Full system, for Firmware development](#full-system-for-firmware-development-1)
+  - [Full system, for Software development](#full-system-for-software-development-1)
+- [Pysmurf application, in development mode](#pysmurf-application-in-development-mode)
+- [Utility application](#utility-application)
+- [TPG IOC](#tpg-ioc)
+- [PCIe utility application](#pcie-utility-application)
+- [ATCA monitor application](#atca-monitor-application)
+
+All these different type of systems, and their respective arguments are described next.
 
 ### Full systems based on pysmurf and rogue v4
 
@@ -88,7 +103,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 #### Full system, for Software development
 
-A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server uses local copies of both rogue and pysmurf; rogue is located in a folder called **rogue**, and pysmurf is located in a folder called **pysmurf** in the release folder. The release script will do a clone of the `pre-release` branch of both the [rogue git repository](https://github.com/slaclab/rogue) and [pysmurf git repository](https://github.com/slaclab/pysmurf). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server uses local copies of both rogue and pysmurf; rogue is located in a folder called **rogue**, and pysmurf is located in a folder called **pysmurf** in the release folder. The release script will checkout and build the specified version of pysmurf and the corresponding  version of rogue from [rogue git repository](https://github.com/slaclab/rogue) and [pysmurf git repository](https://github.com/slaclab/pysmurf) respectively. Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
 The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
@@ -117,10 +132,19 @@ The slot number is optional:
 
 The `run.sh` script accepts options to be passed to the pysmurf-server's startup script, using the option `-e|--extra-opts`. For example, the `--hard-boot` option can be passed to the pysmurf-server by running `run.sh -e --hard-boot`. Multiple options, or options with argument can be passed by wrapping then in quotes, for example: `run.sh -e "--hard-boot -a 10.0.1.101 --disable-bay1"`.
 
-In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the pysmurf server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
-
-When this container is run for the first time, the freshly cloned version of rogue and pysmurf need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then:
-- Go to the rogue folder (`/usr/local/src/rogue`) and make a clean build:
+When this system is released, both rogue and pysmurf are build, so you can start the docker containers without any change. Moreover, you can modify python code from both local copies of rogue and pysmurf, and those changes will take effect by simply restarting the docker containers. However, if you make changes to C++ code, you will need to build the code. In order to do that, follow the following steps:
+- First, edit the `docker-compose.yml` file, and comment out the line that stat with `command:` under the `smurf_server` section, and un-comment out the line `entrypoint: bash`.
+- Start the container (by running the `run.sh` script). It will run a bash session instead of starting the pysmurf server.
+- Attach to the container using the command `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using. You will be now in the bash session inside the container.
+- If you changed code in rogue go to the rogue folder (`/usr/local/src/rogue`) and make a clean build:
+```
+rm -rf build
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local ..
+make -j4 install
+```
+- Go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
 ```
 rm -rf build
 mkdir build
@@ -128,19 +152,20 @@ cd build
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 make -j4
 ```
+- Exist the docker container, by typing `exit`.
+- Change back the `docker-compose.yml` file to its original state.
 
-- Then, go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
+Now you can start the docker container normally again.
+
+You need to repeat these steps every time you make changes to C++ code.
+
+If you make changes to these repositories and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
 ```
-rm -rf build
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-make -j4
+git checkout -b <new-branch-name>"
+git push -set-upstream origin <new-branch-name>"
 ```
 
-You can now start the server using the `start_server.sh` script with the appropriate parameters (you can run the command with the same arguments defined in the `docker-compose.yml` file for example).
-
-You will need to compile the code every time you make changes to the C++ code. On the other hand, you don't need to compile when changing python code.
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
 
 ### Full systems based on smurf2mce and rogue v3
 
@@ -238,9 +263,11 @@ You will need to compile the code every time you make changes to the C++ code. O
 
 ### Pysmurf application, in development mode
 
-A pysmurf application in development mode, consist only on pysmurf. It contains a pysmurf application provided by the user in a folder called **pysmurf** in the release folder. The release script will do a clone of the master branch of the [pysmurf git repository](https://github.com/slaclab/pysmurf).
+**Note**: This mode only supports pysmurf starting at version 4, including all its initial release candidates.
 
-Pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
+A pysmurf application in development mode, consist only on the pysmurf client application. It uses a local checkout of the pysmurf repository located in a folder called **pysmurf** in the release folder. The release script will checkout the specified version of pysmurf from the [pysmurf git repository](https://github.com/slaclab/pysmurf).
+
+Pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
 To release a pysmurf development application, use **type = pysmurf-dev**, with the following arguments:
 
@@ -251,10 +278,18 @@ release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
   -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
                                            image; pysmurf will be overwritten by the local copy.
   -o|--output-dir      <output_dir>      : Directory where to release the scripts. Defaults to
-                                           /home/cryo/docker/pysmurf/dev.
+                                           /home/cryo/docker/pysmurf/<pysmurf_version>.
   -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```
+
+If you make changes to the pysmurf repository and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
+```
+git checkout -b <new-branch-name>"
+git push -set-upstream origin <new-branch-name>"
+```
+
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
 
 ### Utility application
 
@@ -270,7 +305,7 @@ release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <o
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
   -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to
-                                         /home/cryo/docker/utils.
+                                         /home/cryo/docker/utils/<smurf-base_version>.
   -l|--list-versions                   : Print a list of available versions.
   -h|--help                            : Show this message.
 ```
@@ -289,7 +324,7 @@ release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir
 
   -v|--version    <tpg_version>   : Version of the smurf-tpg-ioc docker image.
   -o|--output-dir <output_dir>    : Directory where to release the scripts. Defaults to
-                                    /home/cryo/docker/tpg.
+                                    /home/cryo/docker/tpg/<tpg_version>.
   -l|--list-versions              : Print a list of available versions.
   -h|--help                       : Show this message.
 ```
@@ -308,7 +343,7 @@ release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_d
 
   -v|--version    <pcie_version> : Version of the smurf-pcie docker image.
   -o|--output-dir <output_dir>   : Directory where to release the scripts. Defaults to
-                                   /home/cryo/docker/pcie.
+                                   /home/cryo/docker/pcie/<pcie_version>.
   -l|--list-versions             : Print a list of available versions.
   -h|--help                      : Show this message.
 ```
@@ -327,7 +362,7 @@ release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--outp
 
   -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image.
   -o|--output-dir <output_dir>           : Directory where to release the scripts. Defaults to
-                                           /home/cryo/docker/atca-monitor
+                                           /home/cryo/docker/atca-monitor/<atca-monitor_version>.
   -l|--list-versions                     : Print a list of available versions.
   -h|--help                              : Show this message.
 ```

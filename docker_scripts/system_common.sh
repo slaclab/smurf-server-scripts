@@ -162,6 +162,15 @@ if [ -z ${stable_release+x} ]; then
             usage 1
     fi
 
+    # Check if the pysmurf_version exist
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
+        echo "You can use the '-l' option to list the available versions."
+        echo
+        exit 1
+    fi
+
     # The server and client version are the same in this case
     server_version=${pysmurf_version}
     client_version=${pysmurf_version}
@@ -178,6 +187,25 @@ else
             echo ""
             usage 1
     fi
+
+    # Check if the server version exist
+    ret=$(verify_git_tag_exist ${pysmurf_stable_git_repo} ${server_version})
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf server version ${server_version} does not exist"
+        echo "You can use the '-l' option to list the available versions."
+        echo
+        exit 1
+    fi
+
+    # Check if the client version exist
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version})
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf client version ${client_version} does not exist"
+        echo "You can use the '-l' option to list the available versions."
+        echo
+        exit 1
+    fi
+
 fi
 
 # Verify the communication type
@@ -222,7 +250,7 @@ fi
 
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${pysmurf_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${server_version}
 fi
 
 # Verify is target directory already exist

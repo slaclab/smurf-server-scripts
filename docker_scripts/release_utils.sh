@@ -82,6 +82,15 @@ if [ -z ${smurf_base_version+x} ]; then
         usage 1
 fi
 
+# Check if the smurf-base version exist
+ret=$(verify_git_tag_exist ${smurf_base_git_repo} ${smurf_base_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: smurf-base version ${smurf_base_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}/${smurf_base_version}
 fi

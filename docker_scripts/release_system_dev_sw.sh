@@ -29,6 +29,28 @@ usage_header()
     echo
 }
 
+# Get the Rogue version used by an specific version of pysmurf.
+# The first argument is the pysmurf version.
+# It return the according version of rogue. Or an empty string if not found.
+get_rogue_version()
+{
+    # pysmurf version
+    local pysmurf_version=$1
+
+    # First, the the smurf-rogue version
+    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
+        | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
+
+    # Now get the rogue version
+    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
+        | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
+
+    # Return the rogue version
+    echo ${rogue_version}
+}
+
 #############
 # Main body #
 #############
@@ -36,26 +58,104 @@ usage_header()
 # Call common release step to all type of application
 . system_common.sh
 
+# Look for the rogue version
+rogue_version=$(get_rogue_version ${pysmurf_version})
+
+# Check if a version of rogue was found
+if [ ! ${rogue_version} ]; then
+    echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
+    echo
+    return 1
+fi
+
 # Create fw directory
 mkdir -p ${target_dir}/fw
 
-# Clone rogue (pre-release branch) in the target directory
-git clone ${rogue_git_repo} ${target_dir}/rogue -b pre-release
+# Clone software repositories
+echo "Cloning repositories:"
 
-# Clone pysmurf (pre-release branch) in the target directory
-git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b pre-release
+## Clone rogue (on the specific tag) in the target directory
+echo "Cloning rogue..."
+cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
+echo ${cmd}
+${cmd}
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to clone rogue."
+    echo
+    return 1
+fi
+
+echo
+
+## Clone pysmurf (on the specific tag) in the target directory
+echo "Cloning pysmurf..."
+cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
+echo ${cmd}
+${cmd}
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to clone rogue."
+    echo
+    return 1
+fi
+
+echo
+
+# Build application
+echo "Building applications:"
+
+## Build rogue
+echo "Building rogue..."
+docker run -ti --rm \
+    --user cryo:smurf \
+    -v ${target_dir}/rogue:/usr/local/src/rogue \
+    --workdir /usr/local/src/rogue \
+    --entrypoint="" \
+    tidair/pysmurf-server-base:${pysmurf_version} \
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to build rogue"
+    echo
+    return 1
+fi
+
+echo
+
+## Build pysmurf
+echo "Building pysmurf..."
+docker run -ti --rm \
+    --user cryo:smurf \
+    -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
+    --workdir /usr/local/src/pysmurf \
+    --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
+    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to build pysmurf"
+    echo
+    return 1
+fi
+
+echo
 
 # Print final report
 echo ""
 echo "All Done!"
 echo "Script released to ${target_dir}"
 echo
-echo "The 'pre-release' branch of ${rogue_git_repo} was clone in ${target_dir}/rogue."
+echo "The tag '${rogue_version}' of ${rogue_git_repo} was checkout in ${target_dir}/rogue."
 echo "That is the copy that runs inside the docker container."
 echo
-echo "The 'pre-release' branch of ${pysmurf_git_repo} was clone in ${target_dir}/pysmurf."
+echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
 echo "That is the copy that runs inside the docker container."
 echo
-echo "Remember that you need to compile the pysmurf application the first time you start the container."
+echo "If you make changes to these repositories and want to push them back to git, remember to create"
+echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
+echo "with an appropriate branch name):"
+echo " $ git checkout -b <new-branch-name>"
+echo " $ git push -set-upstream origin <new-branch-name>"
+echo
 echo "Remember to place your FW related files in the 'fw' directory."
 echo ""

@@ -31,7 +31,7 @@ usage()
     echo "  -v|--version    <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
     echo "                                      image; pysmurf will be overwritten by the local copy."
     echo "  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to"
-    echo "                                      ${release_top_default_dir}"
+    echo "                                      ${release_top_default_dir}/<pysmurf_version>"
     echo "  -l|--list-versions                : Print a list of available versions."
     echo "  -h|--help                         : Show this message."
     echo
@@ -86,8 +86,17 @@ if [ -z ${pysmurf_version+x} ]; then
         usage 1
 fi
 
+# Check if the pysmurf version exist
+ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}
+    target_dir=${release_top_default_dir}/${pysmurf_version}
 fi
 
 # Verify is target directory already exist
@@ -124,11 +133,23 @@ fi
 chmod +x ${target_dir}/run.sh
 
 # Clone pysmurf (master branch) in the target directory
-git clone ${pysmurf_git_repo} ${target_dir}/pysmurf
+echo "Cloning pysmurf..."
+cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
+echo ${cmd}
+${cmd}
+echo
 
 # Print final report
 echo ""
 echo "All Done!"
 echo "Script released to ${target_dir}"
-echo "The master branch of ${pysmurf_git_repo} was clone in ${target_dir}/pysmurf. That is the copy that runs inside the docker container."
+echo
+echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
+echo "That is the copy that runs inside the docker container."
+echo
+echo "If you make changes to these repositories and want to push them back to git, remember to create"
+echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
+echo "with an appropriate branch name):"
+echo " $ git checkout -b <new-branch-name>"
+echo " $ git push -set-upstream origin <new-branch-name>"
 echo ""

@@ -82,6 +82,15 @@ if [ -z ${tpg_version+x} ]; then
         usage 1
 fi
 
+# Check if the smurf-tpg-ioc version exist
+ret=$(verify_git_tag_exist ${tpg_git_repo} ${tpg_version})
+if [ -z ${ret} ]; then
+    echo "ERROR: smurf-tpg-ioc version ${tpg_version} does not exist"
+    echo "You can use the '-l' option to list the available versions."
+    echo
+    exit 1
+fi
+
 if [ -z ${target_dir+x} ]; then
     target_dir=${release_top_default_dir}/${tpg_version}
 fi
