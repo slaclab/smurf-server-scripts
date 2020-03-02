@@ -20,7 +20,7 @@ where **type** specified the type of system to release, and **arguments** depend
 
 The different type of systems, and their respective arguments are described next.
 
-[Pysmurf application, in development mode](#Pysmurf application, in development mode)
+[Pysmurf application, in development mode](#pysmurf-application,-in-development-mode)
 
 ### Full systems based on pysmurf and rogue v4
 
