@@ -18,9 +18,22 @@ release-docker.sh -t|--type <type> <arguments>
 
 where **type** specified the type of system to release, and **arguments** depends on the type.
 
-The different type of systems, and their respective arguments are described next.
+Currently, the script supports the following system types:
+- [Full systems based on pysmurf and rogue v4](#full-systems-based-on-pysmurf-and-rogue-v4)
+  - [Full stable system](#full-stable-system)
+  - [Full system, for Firmware development](#full-system-for-firmware-development)
+  - [Full system, for Software development](#full-system-for-software-development)
+- [Full systems based on smurf2mce and rogue v3](#full-systems-based-on-smurf2mce-and-rogue-v3)
+  - [Full stable system](#full-stable-system-1)
+  - [Full system, for Firmware development](#full-system-for-firmware-development-1)
+  - [Full system, for Software development](#full-system-for-software-development-1)
+- [Pysmurf application, in development mode](#pysmurf-application-in-development-mode)
+- [Utility application](#utility-application)
+- [TPG IOC](#tpg-ioc)
+- [PCIe utility application](#pcie-utility-application)
+- [ATCA monitor application](#atca-monitor-application)
 
-[Pysmurf application, in development mode](#pysmurf-application-in-development-mode)
+All these different type of systems, and their respective arguments are described next.
 
 ### Full systems based on pysmurf and rogue v4
 
