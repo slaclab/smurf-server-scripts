@@ -93,15 +93,17 @@ update_scripts()
 {
     local tag="$1"
 
-    # If not version was specified, user 'master'
+    cd ${top_dir}
+
+    # If not version was specified, checkout the 'master' branch
     if [ -z ${tag} ]; then
-        tag="master"
+        echo "Not tag was specified, so updating these scripts to the head of the master branch..."
+        sudo bash -c "git fetch --all --tags && git checkout master && git pull"
+    else
+        echo "Updating these scripts to version '${tag}'..."
+        sudo bash -c "git fetch --all --tags && git checkout ${tag}"
     fi
 
-    echo "Updating these scripts to '${tag}'..."
-
-    cd ${top_dir}
-    sudo bash -c "git fetch --all --tags && git checkout ${tag} && git pull"
     ret=$?
     cd - > /dev/null
 
