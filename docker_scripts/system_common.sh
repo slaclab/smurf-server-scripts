@@ -75,17 +75,17 @@ usage()
 print_list_versions()
 {
     if [ -z ${stable_release+x} ]; then
-        # For development releases, print pysmurf versions
+        # For development releases, print pysmurf versions (excluding version before v4.*)
         echo "List of available pysmurf_version:"
-        print_git_tags ${pysmurf_git_repo}
+        print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
     else
-        # For stable releases, print stable pysmurf-server and pysmurf versions
+        # For stable releases, print stable pysmurf-server and pysmurf versions (excluding version before v4.*)
         echo "List of available pysmurf_server_version:"
         print_git_tags ${pysmurf_stable_git_repo}
         echo
 
         echo "List of available pysmurf_client_version:"
-        print_git_tags ${pysmurf_git_repo}
+        print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
     fi
 
     echo
@@ -162,8 +162,8 @@ if [ -z ${stable_release+x} ]; then
             usage 1
     fi
 
-    # Check if the pysmurf_version exist
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
+    # Check if the pysmurf_version exist (excluding version before v4.*)
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
@@ -197,8 +197,8 @@ else
         exit 1
     fi
 
-    # Check if the client version exist
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version})
+    # Check if the client version exist (excluding version before v4.*)
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf client version ${client_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
