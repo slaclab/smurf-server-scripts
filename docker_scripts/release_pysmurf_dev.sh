@@ -38,11 +38,11 @@ usage()
     exit $1
 }
 
-# Print a list of all available versions
+# Print a list of all available versions (excluding version before v4.*)
 print_list_versions()
 {
     echo "List of available pysmurf_version:"
-    print_git_tags ${pysmurf_git_repo}
+    print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
     echo
     exit 0
 }
@@ -86,8 +86,8 @@ if [ -z ${pysmurf_version+x} ]; then
         usage 1
 fi
 
-# Check if the pysmurf version exist
-ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version})
+# Check if the pysmurf version exist (excluding version before v4.*)
+ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
 if [ -z ${ret} ]; then
     echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
     echo "You can use the '-l' option to list the available versions."
