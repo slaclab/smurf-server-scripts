@@ -101,7 +101,7 @@ update_scripts()
     echo "Updating these scripts to '${tag}'..."
 
     cd ${top_dir}
-    sudo bash -c "git fetch --all --tags && git checkout ${tag}"
+    sudo bash -c "git fetch --all --tags && git checkout ${tag} && git pull"
     ret=$?
     cd - > /dev/null
 
