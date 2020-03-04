@@ -22,7 +22,8 @@ services:
     container_name: smurf_server_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data
-    - /home/${user_name}:/home/${user_name}
+    - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+    - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
     - ${PWD}/fw:/tmp/fw
     command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_opts}
     logging:
@@ -34,7 +35,9 @@ services:
     container_name: pysmurf_s%%SLOT_NUMBER%%
     volumes:
     - /data:/data
-    - /home/${user_name}:/home/${user_name}
+    - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+    - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
+    - /home/${user_name}/.ipython:/home/${user_name}/.ipython
     command: --epics smurf_server_s%%SLOT_NUMBER%%
     logging:
       options:

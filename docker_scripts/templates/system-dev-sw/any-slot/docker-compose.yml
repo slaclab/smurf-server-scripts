@@ -23,7 +23,8 @@ x-smurf-server:
   container_name: smurf_server_s${slot}
   volumes:
   - /data:/data
-  - /home/${user_name}:/home/${user_name}
+  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
   - ${PWD}/fw:/tmp/fw
   - ${PWD}/rogue:/usr/local/src/rogue
   - ${PWD}/pysmurf:/usr/local/src/pysmurf
@@ -41,7 +42,9 @@ x-pysmurf:
   container_name: pysmurf_s${slot}
   volumes:
   - /data:/data
-  - /home/${user_name}:/home/${user_name}
+  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
+  - /home/${user_name}/.ipython:/home/${user_name}/.ipython
   - ${PWD}/pysmurf:/usr/local/src/pysmurf
   command: --epics smurf_server_s${slot}
   logging:

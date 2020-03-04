@@ -12,7 +12,9 @@ x-gui-app:
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
   volumes:
   - /data:/data
-  - /home/${user_name}:/home/${user_name}
+  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
+  - /home/${user_name}/.ipython:/home/${user_name}/.ipython
   security_opt:
   - "apparmor=docker-smurf"
   tty: true
