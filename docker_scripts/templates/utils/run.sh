@@ -12,7 +12,7 @@ docker run -it --rm  \
   -e DISPLAY \
   -e location=${PWD} \
   -v /etc/group:/etc/group:ro \
-  -v /home/${user}:/home/${user} \
+  -v /home/${user}/.bash_history:/home/${user}/.bash_history \
   -v /data:/data \
   -v ${PWD}/shared:/shared \
   tidair/smurf-base:%%SMURF_BASE_VERSION%% $1
