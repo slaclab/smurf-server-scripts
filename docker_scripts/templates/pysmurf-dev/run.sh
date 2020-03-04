@@ -11,7 +11,9 @@ docker run -it --rm  \
   -e location=${PWD} \
   -e EPICS_CA_ADDR_LIST=172.17.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \
-  -v /home/${user}:/home/${user} \
+  -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
+  -v /home/${user}/.bash_history:/home/${user}/.bash_history \
+  -v /home/${user}/.ipython:/home/${user}/.ipython \
   -v /data:/data \
   -v ${PWD}/pysmurf:/usr/local/src/pysmurf \
   --entrypoint bash \
