@@ -9,6 +9,7 @@ docker run -it --rm  \
   --net host \
   -e DISPLAY \
   -e location=${PWD} \
-  -v /home/${user}:/home/${user} \
+  -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
+  -v /home/${user}/.bash_history:/home/${user}/.bash_history \
   -v /data:/data \
   tidair/smurf-atca-monitor:%%VERSION%% -g -S shm-smrf-sp01
