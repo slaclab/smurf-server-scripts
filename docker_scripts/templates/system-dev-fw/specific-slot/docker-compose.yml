@@ -25,7 +25,7 @@ services:
     - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
     - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
     - ${PWD}/fw:/tmp/fw
-    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% -d /tmp/fw/config/defaults.yml ${extra_opts}
+    command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% ${extra_opts}
     logging:
       options:
         tag: smurf_server
