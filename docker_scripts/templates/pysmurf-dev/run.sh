@@ -9,7 +9,7 @@ docker run -it --rm  \
   --net host \
   -e DISPLAY \
   -e location=${PWD} \
-  -e EPICS_CA_ADDR_LIST=172.17.255.255 \
+  -e EPICS_CA_ADDR_LIST=127.255.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \
   -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
   -v /home/${user}/.bash_history:/home/${user}/.bash_history \

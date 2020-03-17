@@ -8,7 +8,7 @@ x-gui-app:
   environment:
   - location=${PWD}
   - DISPLAY
-  - EPICS_CA_ADDR_LIST=172.17.255.255
+  - EPICS_CA_ADDR_LIST=127.255.255.255
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
   security_opt:
   - "apparmor=docker-smurf"
