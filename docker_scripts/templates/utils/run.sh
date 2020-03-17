@@ -7,7 +7,7 @@ docker run -it --rm  \
   -u $(id -u ${user}):$(id -g ${user}) \
   --net host \
   -e EPICS_CA_AUTO_ADDR_LIST=NO \
-  -e EPICS_CA_ADDR_LIST=172.17.255.255 \
+  -e EPICS_CA_ADDR_LIST=127.255.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \
   -e DISPLAY \
   -e location=${PWD} \

@@ -9,7 +9,7 @@ services:
     network_mode: "host"
     environment:
     - location=${PWD}
-    - EPICS_CA_ADDR_LIST=172.17.255.255
+    - EPICS_CA_ADDR_LIST=127.255.255.255
     security_opt:
     - "apparmor=docker-smurf"
     tty: true
