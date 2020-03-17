@@ -27,6 +27,8 @@ services:
     - ${PWD}/fw:/tmp/fw
     - ${PWD}/rogue:/usr/local/src/rogue
     - ${PWD}/pysmurf:/usr/local/src/pysmurf
+    - ${PWD}/pysmurf/docker/server/scripts/start_server.sh:/usr/local/src/pysmurf_utilities/start_server.sh
+    - ${PWD}/pysmurf/docker/server/scripts/server_common.sh:/usr/local/src/pysmurf_utilities/server_common.sh
     command: -g -w smurf_server_s%%SLOT_NUMBER%% -S shm-smrf-sp01 -N %%SLOT_NUMBER%% -e smurf_server_s%%SLOT_NUMBER%% %%COMM_ARGS%% ${extra_opts}
     #entrypoint: bash
     logging:
