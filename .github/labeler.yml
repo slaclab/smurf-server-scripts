@@ -11,4 +11,5 @@ server-scripts:
 # Add label 'repo' to any change to all other files
 repo:
   - ./*
+  - ./.*
   - .github/**/*
