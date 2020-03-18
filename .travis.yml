@@ -1,14 +1,11 @@
 os: linux
 
+dist: bionic
+
 language: node_js
 
 node_js:
   - 8
-
-env:
-  global:
-    - DOCKER_ORG_NAME=tidair
-    - DOCKER_REPO=pysmurf-server
 
 stages:
   - name: generate_release_notes
