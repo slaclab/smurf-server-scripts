@@ -1,0 +1,24 @@
+os: linux
+
+language: node_js
+
+node_js:
+  - 8
+
+env:
+  global:
+    - DOCKER_ORG_NAME=tidair
+    - DOCKER_REPO=pysmurf-server
+
+stages:
+  - name: generate_release_notes
+    if: tag IS present
+
+jobs:
+  include:
+    - stage: generate_release_notes
+      name: "Generate Release Notes"
+      before_script:
+        - npm install github-release-notes -g
+      script:
+        - gren release
