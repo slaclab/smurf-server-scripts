@@ -7,3 +7,8 @@ docker-scripts:
 # 'server_scripts' folder or any subfolders
 server-scripts:
   - server_scripts/**/*
+
+# Add label 'repo' to any change to all other files
+repo:
+  - ./*
+  - .github/**/*
