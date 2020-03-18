@@ -1,0 +1,14 @@
+---
+  dataSource: "prs"
+  onlyMilestones: false
+  # Group the release notes in three categories,
+  # based on the PR labels
+  groupBy:
+    "Docker scripts:":
+    - "docker-scripts"
+    "Server scripts:":
+    - "server-scripts"
+    "Repository changes:":
+    - "repo"
+  template:
+    "issue": "- {{url}} {{name}}"
