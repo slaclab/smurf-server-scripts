@@ -40,10 +40,11 @@ usage()
     echo "                           - system3-dev-fw : Full system (with a development version of FW) [smurf2mce/rogue v3]."
     echo "                           - system3-dev-sw : Full system with a development version of SW and FW [smurf2mce/rogue v3]."
     echo "                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode."
-    echo "                           - utils          : A utility system."
+    echo "                           - utils          : An utility system."
     echo "                           - tpg            : A TPG IOC."
     echo "                           - pcie           : A PCIe utility application."
     echo "                           - atca-monitor   : An ATCA monitor application."
+    echo "                           - guis           : Application to connect remote rogue GUIs."
     echo "  -u|--upgrade [version] : Upgrade these scripts to the specified version. If not version if specified, then the head"
     echo "                           of the master branch will be used. Note: You will be asked for the sudo password."
     echo "  -l|--list-versions     : Print a list of available versions."
@@ -203,6 +204,9 @@ case ${app_type} in
     ;;
     atca-monitor)
     . ${top_dir}/release_atca_monitor.sh ${app_options}
+    ;;
+    guis)
+    . ${top_dir}/release_guis.sh ${app_options}
     ;;
     *)
     echo "ERROR: Invalid application type!"
