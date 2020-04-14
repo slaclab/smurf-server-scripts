@@ -10,8 +10,8 @@ This repository contains a set of useful script for setting up SMuRF servers, di
 
 You can find documentation about the two different categories of scripts here:
 
-File                        | Description
-----------------------------|------------------------
-[server_scripts/README.md]  | How to use the scripts to setup an SMuRF server from scratch.
-[docker_scripts/README.md]  | How to use the scripts to release docker systems.
+File                                                  | Description
+------------------------------------------------------|------------------------
+[server_scripts/README.md](server_scripts/README.md)  | How to use the scripts to setup an SMuRF server from scratch.
+[docker_scripts/README.md](docker_scripts/README.md)  | How to use the scripts to release docker systems.
 
