@@ -32,6 +32,7 @@ Currently, the script supports the following system types:
 - [TPG IOC](#tpg-ioc)
 - [PCIe utility application](#pcie-utility-application)
 - [ATCA monitor application](#atca-monitor-application)
+- [Application to connect remote GUIs](#remote-rogue-gui-application)
 
 All these different type of systems, and their respective arguments are described next.
 
@@ -367,6 +368,20 @@ release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--outp
   -h|--help                              : Show this message.
 ```
 
+### Remote rogue GUI application
 
+An application to connect a rogue GUI to a remote server.
 
+It runs in the [smurf-rogue docker](https://github.com/slaclab/smurf-rogue-docker).
 
+To release this application use **type = guis**, with the following argument:
+```
+release-docker.sh -t guis -v|--version <smurf-rogue_version> [-o|--output-dir <output_dir>]
+                          [-l|--list-versions] [-h|--help]
+
+  -v|--version    <smurf-rogue_version> : Version of the smurf-rogue docker image.
+  -o|--output-dir <output_dir>          : Directory where to release the scripts. Defaults to
+                                          /home/cryo/docker/guis/<smurf-rogue_version>
+  -l|--list-versions                    : Print a list of available versions.
+  -h|--help                             : Show this message.
+```
