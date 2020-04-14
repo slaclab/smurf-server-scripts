@@ -23,7 +23,8 @@ usage()
 {
     echo "Release an application to connect remote rogue GUIs."
     echo
-    echo "usage: ${script_name} -t guis -v|--version <smurf-rogue_version> [-o|--output-dir <output_dir>] [-h|--help]"
+    echo "usage: ${script_name} -t guis -v|--version <smurf-rogue_version> [-o|--output-dir <output_dir>]"
+    echo "                                 [-l|--list-versions] [-h|--help]"
     echo
     echo "  -v|--version    <smurf-rogue_version> : Version of the smurf-rogue docker image."
     echo "  -o|--output-dir <output_dir>          : Directory where to release the scripts. Defaults to"
