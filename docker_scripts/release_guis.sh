@@ -85,7 +85,7 @@ if [ -z ${smurf_rogue_version+x} ]; then
 fi
 
 # Check if the smurf-rogue version exist
-ret=$(verify_git_tag_exist ${smurf_rogue_git_repo} ${smurf_rogue_version})
+ret=$(verify_git_tag_exist ${smurf_rogue_git_repo} ${smurf_rogue_version} 'R0.\|R1.\|R2.0.\|R2.1\|R2.2\|R2.3\|R2.4\|R2.5\|R2.6')
 if [ -z ${ret} ]; then
     echo "ERROR: smurf-rogue version ${smurf_rogue_version} does not exist"
     echo "You can use the '-l' option to list the available versions."
