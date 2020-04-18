@@ -105,7 +105,7 @@ do
 key="$1"
 
 case ${key} in
-    -v|--pysmurf-version)
+    -v|--version)
     # This option is only valid for development releases
     if [ -z ${stable_release+x} ]; then
         pysmurf_version="$2"
