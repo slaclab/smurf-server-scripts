@@ -372,7 +372,7 @@ release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--outp
 
 An application to connect a rogue GUI to a remote server.
 
-It runs in the [smurf-rogue docker](https://github.com/slaclab/smurf-rogue-docker).
+It runs in the [smurf-rogue docker](https://github.com/slaclab/smurf-rogue-docker). This docker images included support for this application starting in version [R2.7.0](https://github.com/slaclab/smurf-rogue-docker/releases/tag/R2.7.0).
 
 To release this application use **type = guis**, with the following argument:
 ```
