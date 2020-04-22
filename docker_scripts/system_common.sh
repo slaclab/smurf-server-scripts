@@ -182,7 +182,7 @@ else
     if [ ! ${pysmurf_version} ]; then
         echo "Error: pysmurf version not found for server version ${server_version}"
         echo
-        return 1
+        exit 1
     fi
 
     # Check if the client version exist (excluding version before v4.*)
