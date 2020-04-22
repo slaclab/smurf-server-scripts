@@ -23,8 +23,8 @@ usage_header()
 }
 
 
-# Get the pysmurf version used to build an specific pysmurf-stable version.
-# The first argument is the pysmurf-stable version.
+# Get the pysmurf version used to build an specific pysmurf-server version.
+# The first argument is the pysmurf-server version.
 # It return the according version of pysmurf. Or an empty string if not found.
 get_pysmurf_version()
 {
