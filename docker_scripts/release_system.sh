@@ -37,7 +37,7 @@ get_pysmurf_version()
         | grep -Po '^pysmurf_server_base_version=\s*\K.+') || exit 1
 
     # Return the rogue version
-    echo ${rogue_version}
+    echo ${pysmurf_version}
 }
 
 #############
