@@ -186,7 +186,7 @@ else
     fi
 
     # Check if the client version exist (excluding version before v4.*)
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf client version ${client_version} does not exist"
         echo
