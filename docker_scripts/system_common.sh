@@ -175,20 +175,20 @@ else
         exit 1
     fi
 
-    # Now we need to look for the corresponding pysmurf version
-    pysmurf_version=$(get_pysmurf_version ${server_version})
+    # Now we need to look for the corresponding pysmurf client version
+    client_version=$(get_pysmurf_version ${server_version})
 
     # Check if a version of pysmurf was found
-    if [ ! ${pysmurf_version} ]; then
+    if [ ! ${client_version} ]; then
         echo "Error: pysmurf version not found for server version ${server_version}"
         echo
         exit 1
     fi
 
     # Check if the client version exist (excluding version before v4.*)
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
     if [ -z ${ret} ]; then
-        echo "ERROR: pysmurf client version ${client_version} does not exist"
+        echo "ERROR: pysmurf version ${client_version} does not exist"
         echo
         exit 1
     fi
