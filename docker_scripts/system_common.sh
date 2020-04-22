@@ -107,6 +107,7 @@ case ${key} in
         shift
     else
         server_version="$2"
+        shift
     fi
     ;;
     -o|--output-dir)
