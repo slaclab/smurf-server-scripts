@@ -47,8 +47,7 @@ usage()
     if [ -z ${stable_release+x} ]; then
         echo "                         -v|--version <pysmurf_version>"
     else
-        echo "                         -s|--server-version <pysmurf_server_version>"
-        echo "                         -p|--client-version <pysmurf_client_version>"
+        echo "                         -v|--version <pysmurf_server_version>"
     fi
     echo "                         [-N|--slot <slot_number>]"
     echo "                         [-o|--output-dir <output_dir>]"
@@ -58,8 +57,7 @@ usage()
     if [ -z ${stable_release+x} ]; then
         echo "  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images."
     else
-        echo "  -s|--server-version <pysmurf_server_version> : Version of the pysmurf-server docker image."
-        echo "  -p|--client-version <pysmurf_client_version> : Version of the pysmurf-client docker image."
+        echo "  -v|--version        <pysmurf_server_version> : Version of the pysmurf-server docker image."
     fi
     echo "  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
@@ -79,13 +77,9 @@ print_list_versions()
         echo "List of available pysmurf_version:"
         print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
     else
-        # For stable releases, print stable pysmurf-server and pysmurf versions (excluding version before v4.*)
+        # For stable releases, print stable pysmurf-server versions
         echo "List of available pysmurf_server_version:"
         print_git_tags ${pysmurf_stable_git_repo}
-        echo
-
-        echo "List of available pysmurf_client_version:"
-        print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
     fi
 
     echo
@@ -106,23 +100,13 @@ key="$1"
 
 case ${key} in
     -v|--version)
-    # This option is only valid for development releases
+    # For development releases, this is the pysmurf version.
+    # For stable released, this is the pysmurf-server version.
     if [ -z ${stable_release+x} ]; then
         pysmurf_version="$2"
         shift
-    fi
-    ;;
-    -s|--server-version)
-    # This option is only valid for stable releases
-    if [ ! -z ${stable_release+x} ]; then
+    else
         server_version="$2"
-        shift
-    fi
-    ;;
-    -p|--client-version)
-    # This option is only valid for stable releases
-    if [ ! -z ${stable_release+x} ]; then
-        client_version="$2"
         shift
     fi
     ;;
@@ -175,15 +159,9 @@ if [ -z ${stable_release+x} ]; then
     server_version=${pysmurf_version}
     client_version=${pysmurf_version}
 else
-    # For stable releases, we need both the server and the client versions
+    # For stable releases, we only need server version
     if [ -z ${server_version+x} ]; then
             echo "ERROR: pysmurf server version not defined!"
-            echo ""
-            usage 1
-    fi
-
-    if [ -z ${client_version+x} ]; then
-            echo "ERROR: pysmurf client version not defined!"
             echo ""
             usage 1
     fi
@@ -197,11 +175,20 @@ else
         exit 1
     fi
 
+    # Now we need to look for the corresponding pysmurf client version
+    client_version=$(get_pysmurf_version ${server_version})
+
+    # Check if a version of pysmurf was found
+    if [ ! ${client_version} ]; then
+        echo "Error: pysmurf version not found for server version ${server_version}"
+        echo
+        exit 1
+    fi
+
     # Check if the client version exist (excluding version before v4.*)
     ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
     if [ -z ${ret} ]; then
-        echo "ERROR: pysmurf client version ${client_version} does not exist"
-        echo "You can use the '-l' option to list the available versions."
+        echo "ERROR: pysmurf version ${client_version} does not exist"
         echo
         exit 1
     fi

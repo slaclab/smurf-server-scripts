@@ -22,6 +22,24 @@ usage_header()
     echo
 }
 
+
+# Get the pysmurf version used to build an specific pysmurf-server version.
+# The first argument is the pysmurf-server version.
+# It return the according version of pysmurf. Or an empty string if not found.
+get_pysmurf_version()
+{
+    # pysmurf version
+    local pysmurf_stable_version=$1
+
+    # First, the the smurf-rogue version
+    local pysmurf_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/pysmurf-stable-docker/${pysmurf_stable_version}/definitions.sh 2> /dev/null \
+        | grep -Po '^pysmurf_server_base_version=\s*\K.+') || exit 1
+
+    # Return the rogue version
+    echo ${pysmurf_version}
+}
+
 #############
 # Main body #
 #############
