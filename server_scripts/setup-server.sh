@@ -419,46 +419,34 @@ if [ ${dell_r440+x} ]; then
     echo "###############################################################"
 
     # Driver version
-    datadev_version=v5.4.0
+    datadev_version=5.8.9
 
-    # Install directory
-    datadev_install_dir=/usr/local/src/datadev/${datadev_version}
+    # Download the driver Debian package
+    echo "Downloading driver..."
+    wget -O datadev.deb \
+        https://github.com/slaclab/aes-stream-drivers/releases/download/${datadev_version}/datadev-dkms_${datadev_version}_amd64.deb
 
-    # Create Install directory
-    mkdir -p ${datadev_install_dir}
-
-    # Copy the kernel module scripts
-    cat ./kernel_drivers/datadev_scripts/install-module.sh \
-        | sed s/%%VERSION%%/${datadev_version}/g \
-        > ${datadev_install_dir}/install-module.sh
-    chmod +x ${datadev_install_dir}/install-module.sh
-    cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
-
-    # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    if ! grep -Fq "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" /etc/sudoers ; then
-        echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
-    fi
-
-    # Run the install module script after login
-    if ! grep -Fq "sudo ${datadev_install_dir}/install-module.sh" /etc/profile.d/smurf_config.sh ; then
-        echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
-    fi
-
-    # Build the kernel module from source
-    git clone https://github.com/slaclab/aes-stream-drivers.git -b ${datadev_version}
-    cd aes-stream-drivers/data_dev/driver
-    make
-    # Verify if the kernel module was built successfully. If so, copy the resulting
-    # kernel module to the install directory
+    # Verify is the file was downloaded correctly.
     if [ $? -ne 0 ]; then
-        echo
-        echo "ERROR: Could not build the kernel module!"
-        echo "It will not be installed"
-        echo
+        echo "ERROR: Failed to download the datadev driver Debian package"
     else
-        cp datadev.ko ${datadev_install_dir}/
+        # Create a configuration file for the driver
+        echo "Creating driver configuration file..."
+        cat << EOF > /etc/modprobe.d/datadev.conf
+options datadev cfgTxCount=1024 cfgRxCount=1024 cfgSize=131072 cfgMode=1 cfgCont=1
+EOF
+
+        # Install the driver
+        echo "Installing driver..."
+        dpkg -i datadev.deb
+
+        # Verify if the installation was successful.
+        if [ $? -ne 0 ]; then
+            echo "ERROR: Failed to install the datadev driver Debian package"
+        else
+            echo "The driver was installed successfully"
+        fi
     fi
-    cd -
 
     echo
     echo "################################################"
