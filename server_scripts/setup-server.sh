@@ -60,7 +60,8 @@ apt-get -y install \
     tigervnc-standalone-server \
     tigervnc-viewer \
     xfce4 \
-    xfce4-goodies
+    xfce4-goodies \
+    dkms
 
 # Install it lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
