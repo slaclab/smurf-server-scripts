@@ -195,7 +195,7 @@ mkdir -p /home/cryo/.ipython
 chown -R cryo:smurf /home/cryo/.ipython
 
 # Set git defaults configurations. Make a backup of the original file.
-cp /home/cryo/.gitconfig /home/cryo/.gitconfig.BACKUP
+cp /home/cryo/.gitconfig /home/cryo/.gitconfig.BACKUP &> /dev/null
 cat << EOF > /home/cryo/.gitconfig
 [alias]
     co = checkout
@@ -220,7 +220,15 @@ cat << EOF > /home/cryo/.gitconfig
 [credential]
     helper = cache
 EOF
-chown -R cryo:smurf /home/cryo/.gitconfig*
+chown -R cryo:smurf /home/cryo/.gitconfig{,.BACKUP}
+
+# Set default bash aliases. Make a backup of the original file.
+cp /home/cryo/.bash_aliases /home/cryo/.bash_aliases.BACKUP &> /dev/null
+cat << OEF > /home/cryo/.bash_aliases
+alias vnc_start='vncserver :2 -geometry 1920x1200 -alwaysshared -localhost yes'
+alias killeverything='docker rm -f \$(docker ps -a -q)'
+OEF
+chown -R cryo:smurf /home/cryo/.bash_aliases{,.BACKUP}
 
 echo
 echo "###########################################"
