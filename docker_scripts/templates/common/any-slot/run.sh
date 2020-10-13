@@ -16,7 +16,7 @@ echo "Starting docker containers for slot ${slot}..."
 # If the PCIe card in present in the system, use the
 # PCIe related docker-compose file as well
 extra_composes=""
-if [ -c /dev/datadev_0 ]; then
+if [ -c /dev/datadev_0 ] && [ -c /dev/datadev_1 ]; then
     extra_composes+=" -f docker-compose.pcie.yml"
 fi
 
