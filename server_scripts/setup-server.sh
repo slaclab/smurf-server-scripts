@@ -186,7 +186,7 @@ usermod -aG smurf cryo
 usermod -g smurf cryo
 
 # Create the data directories, which should be owned by the cryo user
-mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores}
+mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores,smurf_startup_cfg,smurf_data/tune,smurf_data/status}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 chown -R cryo:smurf /data
 
