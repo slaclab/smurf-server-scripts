@@ -194,6 +194,34 @@ chown -R cryo:smurf /data
 mkdir -p /home/cryo/.ipython
 chown -R cryo:smurf /home/cryo/.ipython
 
+# Set git defaults configurations. Make a backup of the original file.
+cp /home/cryo/.gitconfig /home/cryo/.gitconfig.BACKUP
+cat << EOF > /home/cryo/.gitconfig
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg = !"git lg1"
+    shawncommit = -c user.name='Shawn W. Henderson' -c user.email='shawn@slac.stanford.edu' commit
+    edcommit = -c user.name='Edward Young' -c user.email='eyyoung@gmail.com' commit
+[core]
+    editor = emacs
+[user]
+    name = cryo
+    email = cryo@$(hostname)
+[filter "lfs"]
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+[credential]
+    helper = cache
+EOF
+chown -R cryo:smurf /home/cryo/.gitconfig*
+
 echo
 echo "###########################################"
 echo "### Done applying SMuRF configurations. ###"
