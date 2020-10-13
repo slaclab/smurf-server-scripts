@@ -60,7 +60,8 @@ apt-get -y install \
     tigervnc-standalone-server \
     tigervnc-viewer \
     xfce4 \
-    xfce4-goodies
+    xfce4-goodies \
+    dkms
 
 # Install it lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
@@ -417,47 +418,106 @@ if [ ${dell_r440+x} ]; then
     echo "### Installing PCIe KCU1500 card kernel driver (datadev)... ###"
     echo "###############################################################"
 
+    # Driver repository
+    datadev_repo=https://github.com/slaclab/aes-stream-drivers
+
+    # Driver name
+    datadev_name=datadev
+
     # Driver version
-    datadev_version=v5.4.0
+    datadev_version=v5.7.0
 
-    # Install directory
-    datadev_install_dir=/usr/local/src/datadev/${datadev_version}
-
-    # Create Install directory
-    mkdir -p ${datadev_install_dir}
-
-    # Copy the kernel module scripts
-    cat ./kernel_drivers/datadev_scripts/install-module.sh \
-        | sed s/%%VERSION%%/${datadev_version}/g \
-        > ${datadev_install_dir}/install-module.sh
-    chmod +x ${datadev_install_dir}/install-module.sh
-    cp -r ./kernel_drivers/datadev_scripts/remove-module.sh ${datadev_install_dir}/remove-module.sh
-
-    # Let the cryo user to run the install and remove modules without password, so it can be scripted
-    if ! grep -Fq "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" /etc/sudoers ; then
-        echo "cryo ALL=(root) NOPASSWD: ${datadev_install_dir}/install-module.sh, ${datadev_install_dir}/remove-module.sh" | sudo EDITOR="tee -a" visudo
-    fi
-
-    # Run the install module script after login
-    if ! grep -Fq "sudo ${datadev_install_dir}/install-module.sh" /etc/profile.d/smurf_config.sh ; then
-        echo "sudo ${datadev_install_dir}/install-module.sh" >> /etc/profile.d/smurf_config.sh
-    fi
-
-    # Build the kernel module from source
-    git clone https://github.com/slaclab/aes-stream-drivers.git -b ${datadev_version}
-    cd aes-stream-drivers/data_dev/driver
-    make
-    # Verify if the kernel module was built successfully. If so, copy the resulting
-    # kernel module to the install directory
-    if [ $? -ne 0 ]; then
-        echo
-        echo "ERROR: Could not build the kernel module!"
-        echo "It will not be installed"
-        echo
+    # Check if version exist in the repository
+    if ! git ls-remote --refs --tag ${datadev_repo} | grep -q refs/tags/${datadev_version} > /dev/null ; then
+        echo "ERROR: Invalid driver version: ${datadev_version}"
     else
-        cp datadev.ko ${datadev_install_dir}/
+
+        # Remove any loaded module
+        rmmod ${datadev_name} &> /dev/null
+
+        # Check is other version of the diver are install. If so, uninstall them.
+        local list=$(dkms status -m ${datadev_name})
+
+        if [ "${list}" ]; then
+            echo "Removing previously installed versions..."
+
+            declare -a local versions
+
+            while IFS= read -r line; do
+                versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
+            done <<< "${list}"
+
+            for v in "${versions[@]}"; do
+                echo "Uninstalling version ${v}..."
+                dkms uninstall -m ${datadev_name} -v ${v}
+
+                echo "Removing version ${v}..."
+                dkms remove -m ${datadev_name}/${v} --all
+            done
+        fi
+
+        # Clone the driver repository
+        echo "Downloading driver..."
+        rm -rf /usr/src/${datadev_name}-${v} && \
+            mkdir /usr/src/${datadev_name}-${datadev_version}/
+        git clone ${datadev_repo} -b ${datadev_version} \
+            /usr/src/${datadev_name}-${datadev_version}/aes-stream-drivers
+
+        # Verify is the repository was cloned correctly.
+        if [ $? -ne 0 ]; then
+            echo "ERROR: Failed to download the ${datadev_name} driver source!"
+            rm -rf /usr/src/${datadev_name}-${datadev_version}/
+        else
+            # Create a configuration file for the driver
+            echo "Creating driver configuration files..."
+            cat << EOF > /etc/modprobe.d/${datadev_name}.conf
+options ${datadev_name} cfgTxCount=1024 cfgRxCount=1024 cfgSize=131072 cfgMode=1 cfgCont=1
+EOF
+            cat << EOF > /usr/src/${datadev_name}-${datadev_version}/dkms.conf
+MAKE="make -C aes-stream-drivers/data_dev/driver/"
+CLEAN="make -C aes-stream-drivers/data_dev/driver/ clean"
+BUILT_MODULE_NAME=${datadev_name}
+BUILT_MODULE_LOCATION=aes-stream-drivers/data_dev/driver/
+DEST_MODULE_LOCATION="/kernel/modules/misc"
+PACKAGE_NAME=${datadev_name}
+REMAKE_INITRD=no
+AUTOINSTALL="yes"
+PACKAGE_VERSION=${datadev_version}
+EOF
+
+            # Install the driver
+            echo "Installing driver..."
+            dkms add -m ${datadev_name} -v ${datadev_version} && \
+                dkms build -m ${datadev_name} -v ${datadev_version} && \
+                dkms install -m ${datadev_name} -v ${datadev_version}
+
+            # Verify if the installation was successful.
+            if [ $? -ne 0 ]; then
+                echo "ERROR: Failed to install the ${datadev_name} driver!"
+            else
+
+                # Loading driver
+                modprobe ${datadev_name}
+
+                if [ $? -ne 0 ]; then
+                    echo "ERROR: failed to load the module"
+                else
+                    # Remove the now legacy call to 'install_module.sh' in /etc/profile.d/smurf_config.sh
+                    # and sudoers files.
+                    sed -i -e '/.*\/usr\/local\/src\/datadev\/.*\/install-module.sh/d' /etc/profile.d/smurf_config.sh
+                    sed -i -e '/.*\/usr\/local\/src\/datadev\/.*\/install-module.sh/d' /etc/sudoers
+
+                    # Change the default virtual memory mmap count limits
+                    sed -i -e '/^vm.max_map_count=.*/d' /etc/sysctl.conf
+                    cat << EOF >> /etc/sysctl.conf
+vm.max_map_count=262144
+EOF
+
+                    echo "The driver was installed and loaded successfully"
+                fi
+            fi
+        fi
     fi
-    cd -
 
     echo
     echo "################################################"
