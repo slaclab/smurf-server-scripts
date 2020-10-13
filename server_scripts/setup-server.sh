@@ -61,7 +61,11 @@ apt-get -y install \
     tigervnc-viewer \
     xfce4 \
     xfce4-goodies \
-    dkms
+    dkms \
+    tmux \
+    python3-pip \
+    ipython3 \
+    gnuplot
 
 # Install it lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
