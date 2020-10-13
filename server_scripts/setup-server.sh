@@ -425,7 +425,7 @@ if [ ${dell_r440+x} ]; then
     datadev_name=datadev
 
     # Driver version
-    datadev_version=5.8.9
+    datadev_version=v5.7.0
 
     # Check if version exist in the repository
     if ! git ls-remote --refs --tag ${datadev_repo} | grep -q refs/tags/${datadev_version} > /dev/null ; then
