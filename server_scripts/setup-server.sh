@@ -181,12 +181,14 @@ groupadd smurf
 usermod -aG smurf cryo
 usermod -g smurf cryo
 
-# Create the data directories
+# Create the data directories, which should be owned by the cryo user
 mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
-
-# Set the data directories permissions
 chown -R cryo:smurf /data
+
+# Create the ipython home directory, which should be owned by the cryo user
+mkdir -p /home/cryo/.ipython
+chown -R cryo:smurf /home/cryo/.ipython
 
 echo
 echo "###########################################"
