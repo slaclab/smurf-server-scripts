@@ -502,8 +502,6 @@ EOF
                 if [ $? -ne 0 ]; then
                     echo "ERROR: failed to load the module"
                 else
-                    echo "The driver was installed and loaded successfully"
-
                     # Remove the now legacy call to 'install_module.sh' in /etc/profile.d/smurf_config.sh
                     # and sudoers files.
                     sed -i -e '/.*\/usr\/local\/src\/datadev\/.*\/install-module.sh/d' /etc/profile.d/smurf_config.sh
@@ -514,6 +512,8 @@ EOF
                     cat << EOF >> /etc/sysctl.conf
 vm.max_map_count=262144
 EOF
+
+                    echo "The driver was installed and loaded successfully"
                 fi
             fi
         fi
