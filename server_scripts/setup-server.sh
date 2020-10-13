@@ -418,64 +418,93 @@ if [ ${dell_r440+x} ]; then
     echo "### Installing PCIe KCU1500 card kernel driver (datadev)... ###"
     echo "###############################################################"
 
+    # Driver repository
+    datadev_repo=https://github.com/slaclab/aes-stream-drivers
+
+    # Driver name
+    datadev_name=datadev
+
     # Driver version
     datadev_version=5.8.9
 
-    # Remove any loaded module
-    rmmod datadev &> /dev/null
-
-    # Check is other version of the diver are install. If so, uninstall them.
-    local list=$(dkms status -m datadev)
-
-    if [ "${list}" ]; then
-        echo "Removing previously installed versions..."
-
-        declare -a local versions
-
-        while IFS= read -r line; do
-            versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
-        done <<< "${list}"
-
-        for v in "${versions[@]}"; do
-            echo "Uninstalling version ${v}..."
-            dkms uninstall -m datadev -v ${v}
-            echo "Removing version ${v}..."
-            dkms remove -m datadev/${v} --all
-        done
-    fi
-
-    # Download the driver Debian package
-    echo "Downloading driver..."
-    wget -O datadev.deb \
-        https://github.com/slaclab/aes-stream-drivers/releases/download/${datadev_version}/datadev-dkms_${datadev_version}_amd64.deb
-
-    # Verify is the file was downloaded correctly.
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Failed to download the datadev driver Debian package"
+    # Check if version exist in the repository
+    if ! git ls-remote --refs --tag ${datadev_repo} | grep -q refs/tags/${datadev_version} > /dev/null ; then
+        echo "ERROR: Invalid driver version: ${datadev_version}"
     else
-        # Create a configuration file for the driver
-        echo "Creating driver configuration file..."
-        cat << EOF > /etc/modprobe.d/datadev.conf
-options datadev cfgTxCount=1024 cfgRxCount=1024 cfgSize=131072 cfgMode=1 cfgCont=1
+
+        # Remove any loaded module
+        rmmod ${datadev_name} &> /dev/null
+
+        # Check is other version of the diver are install. If so, uninstall them.
+        local list=$(dkms status -m ${datadev_name})
+
+        if [ "${list}" ]; then
+            echo "Removing previously installed versions..."
+
+            declare -a local versions
+
+            while IFS= read -r line; do
+                versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
+            done <<< "${list}"
+
+            for v in "${versions[@]}"; do
+                echo "Uninstalling version ${v}..."
+                dkms uninstall -m ${datadev_name} -v ${v}
+
+                echo "Removing version ${v}..."
+                dkms remove -m ${datadev_name}/${v} --all
+            done
+        fi
+
+        # Clone the driver repository
+        echo "Downloading driver..."
+        rm -rf /usr/src/${datadev_name}-${v} && \
+            mkdir /usr/src/${datadev_name}-${datadev_version}/
+        git clone ${datadev_repo} -b ${datadev_version} \
+            /usr/src/${datadev_name}-${datadev_version}/aes-stream-drivers
+
+        # Verify is the repository was cloned correctly.
+        if [ $? -ne 0 ]; then
+            echo "ERROR: Failed to download the ${datadev_name} driver source!"
+            rm -rf /usr/src/${datadev_name}-${datadev_version}/
+        else
+            # Create a configuration file for the driver
+            echo "Creating driver configuration files..."
+            cat << EOF > /etc/modprobe.d/${datadev_name}.conf
+options ${datadev_name} cfgTxCount=1024 cfgRxCount=1024 cfgSize=131072 cfgMode=1 cfgCont=1
+EOF
+            cat << EOF > /usr/src/${datadev_name}-${datadev_version}/dkms.conf
+MAKE="makei -C aes-stream-drivers/data_dev/driver/"
+CLEAN="make -C aes-stream-drivers/data_dev/driver/ clean"
+BUILT_MODULE_NAME=${datadev_name}
+BUILT_MODULE_LOCATION=aes-stream-drivers/data_dev/driver/
+DEST_MODULE_LOCATION="/kernel/modules/misc"
+PACKAGE_NAME=${datadev_name}
+REMAKE_INITRD=no
+AUTOINSTALL="yes"
+PACKAGE_VERSION=${datadev_version}
 EOF
 
-        # Install the driver
-        echo "Installing driver..."
-        dpkg -i datadev.deb
+            # Install the driver
+            echo "Installing driver..."
+            dkms add -m ${datadev_name} -v ${datadev_version} && \
+                dkms build -m ${datadev_name} -v ${datadev_version} && \
+                dkms install -m ${datadev_name} -v ${datadev_version}
 
-        # Verify if the installation was successful.
-        if [ $? -ne 0 ]; then
-            echo "ERROR: Failed to install the datadev driver Debian package"
-        else
-
-            # Loading driver
-            modprobe datadev
-
+            # Verify if the installation was successful.
             if [ $? -ne 0 ]; then
-                echo "ERROR: failed to load the module"
+                echo "ERROR: Failed to install the ${datadev_name} driver!"
             else
 
-                echo "The driver was installed successfully"
+                # Loading driver
+                modprobe ${datadev_name}
+
+                if [ $? -ne 0 ]; then
+                    echo "ERROR: failed to load the module"
+                else
+
+                    echo "The driver was installed and loaded successfully"
+                fi
             fi
         fi
     fi
