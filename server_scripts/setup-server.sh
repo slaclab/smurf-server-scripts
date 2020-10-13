@@ -61,7 +61,11 @@ apt-get -y install \
     tigervnc-viewer \
     xfce4 \
     xfce4-goodies \
-    dkms
+    dkms \
+    tmux \
+    python3-pip \
+    ipython3 \
+    gnuplot
 
 # Install it lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
@@ -182,13 +186,49 @@ usermod -aG smurf cryo
 usermod -g smurf cryo
 
 # Create the data directories, which should be owned by the cryo user
-mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores}
+mkdir -p /data/{pysmurf_ipython_data,smurf2mce_config,smurf2mce_logs,smurf_data,cores,smurf_startup_cfg,smurf_data/tune,smurf_data/status}
 mkdir -p /data/epics/ioc/data/sioc-smrf-ml00/
 chown -R cryo:smurf /data
 
 # Create the ipython home directory, which should be owned by the cryo user
 mkdir -p /home/cryo/.ipython
 chown -R cryo:smurf /home/cryo/.ipython
+
+# Set git defaults configurations. Make a backup of the original file.
+cp /home/cryo/.gitconfig /home/cryo/.gitconfig.BACKUP &> /dev/null
+cat << EOF > /home/cryo/.gitconfig
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg = !"git lg1"
+    shawncommit = -c user.name='Shawn W. Henderson' -c user.email='shawn@slac.stanford.edu' commit
+    edcommit = -c user.name='Edward Young' -c user.email='eyyoung@gmail.com' commit
+[core]
+    editor = emacs
+[user]
+    name = cryo
+    email = cryo@$(hostname)
+[filter "lfs"]
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+[credential]
+    helper = cache
+EOF
+chown -R cryo:smurf /home/cryo/.gitconfig{,.BACKUP}
+
+# Set default bash aliases. Make a backup of the original file.
+cp /home/cryo/.bash_aliases /home/cryo/.bash_aliases.BACKUP &> /dev/null
+cat << OEF > /home/cryo/.bash_aliases
+alias vnc_start='vncserver :2 -geometry 1920x1200 -alwaysshared -localhost yes'
+alias killeverything='docker rm -f \$(docker ps -a -q)'
+OEF
+chown -R cryo:smurf /home/cryo/.bash_aliases{,.BACKUP}
 
 echo
 echo "###########################################"
@@ -527,6 +567,31 @@ EOF
     echo "################################################"
     echo
 fi
+
+###################
+# RELEASE DOCKERS #
+###################
+echo "###################################"
+echo "### Releasing docker scripts... ###"
+echo "###################################"
+
+# Move to the docker_script directory
+cd ../docker_scripts
+
+# Release latest utils, atca-monitor, guis, and pcie dockers. We need to release
+# them as the 'cryo' user so that the generated files has the right permissions.
+for d in 'utils' 'pcie' 'atca-monitor' 'guis' ; do
+    v=$(./release-docker.sh -t ${d} -l | tail -n2 | head -n1)
+    echo "Releasing '${d}' version '${v}'..."
+    su cryo -c "./release-docker.sh -t ${d} -v ${v}"
+done
+
+# Move back to the original directory
+cd -
+
+echo "########################################"
+echo "### Done releasing docker scripts... ###"
+echo "########################################"
 
 ######################
 # SHOW FINAL MESSAGE #
