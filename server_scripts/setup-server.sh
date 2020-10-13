@@ -421,6 +421,29 @@ if [ ${dell_r440+x} ]; then
     # Driver version
     datadev_version=5.8.9
 
+    # Remove any loaded module
+    rmmod datadev &> /dev/null
+
+    # Check is other version of the diver are install. If so, uninstall them.
+    local list=$(dkms status -m datadev)
+
+    if [ "${list}" ]; then
+        echo "Removing previously installed versions..."
+
+        declare -a local versions
+
+        while IFS= read -r line; do
+            versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
+        done <<< "${list}"
+
+        for v in "${versions[@]}"; do
+            echo "Uninstalling version ${v}..."
+            dkms uninstall -m datadev -v ${v}
+            echo "Removing version ${v}..."
+            dkms remove -m datadev/${v} --all
+        done
+    fi
+
     # Download the driver Debian package
     echo "Downloading driver..."
     wget -O datadev.deb \
@@ -444,7 +467,16 @@ EOF
         if [ $? -ne 0 ]; then
             echo "ERROR: Failed to install the datadev driver Debian package"
         else
-            echo "The driver was installed successfully"
+
+            # Loading driver
+            modprobe datadev
+
+            if [ $? -ne 0 ]; then
+                echo "ERROR: failed to load the module"
+            else
+
+                echo "The driver was installed successfully"
+            fi
         fi
     fi
 
