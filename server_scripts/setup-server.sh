@@ -568,6 +568,31 @@ EOF
     echo
 fi
 
+###################
+# RELEASE DOCKERS #
+###################
+echo "###################################"
+echo "### Releasing docker scripts... ###"
+echo "###################################"
+
+# Move to the docker_script directory
+cd ../docker_scripts
+
+# Release latest utils, atca-monitor, guis, and pcie dockers. We need to release
+# them as the 'cryo' user so that the generated files has the right permissions.
+for d in 'utils' 'pcie' 'atca-monitor' 'guis' ; do
+    v=$(./release-docker.sh -t ${d} -l | tail -n2 | head -n1)
+    echo "Releasing '${d}' version '${v}'..."
+    su cryo -c "./release-docker.sh -t ${d} -v ${v}"
+done
+
+# Move back to the original directory
+cd -
+
+echo "########################################"
+echo "### Done releasing docker scripts... ###"
+echo "########################################"
+
 ######################
 # SHOW FINAL MESSAGE #
 ######################
