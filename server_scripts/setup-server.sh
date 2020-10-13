@@ -508,6 +508,12 @@ EOF
                     # and sudoers files.
                     sed -i -e '/.*\/usr\/local\/src\/datadev\/.*\/install-module.sh/d' /etc/profile.d/smurf_config.sh
                     sed -i -e '/.*\/usr\/local\/src\/datadev\/.*\/install-module.sh/d' /etc/sudoers
+
+                    # Change the default virtual memory mmap count limits
+                    sed -i -e '/^vm.max_map_count=.*/d' /etc/sysctl.conf
+                    cat << EOF >> /etc/sysctl.conf
+vm.max_map_count=262144
+EOF
                 fi
             fi
         fi
