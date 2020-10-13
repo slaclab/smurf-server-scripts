@@ -47,7 +47,7 @@ echo
 # Start the sever
 echo "Starting docker containers..."
 
-if [ -c /dev/datadev_0 ]; then
+if [ -c /dev/datadev_0 ] && [ -c /dev/datadev_1 ]; then
     extra_opts=${extra_opts} docker-compose -f docker-compose.yml -f docker-compose.pcie.yml up -d
 else
     docker-compose up -d
