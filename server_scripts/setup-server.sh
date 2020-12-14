@@ -160,7 +160,7 @@ update-grub
 # Disable apport, and send core dump to custom location
 sed -i -e 's/^enabled=.*/enabled=0/g' /etc/default/apport
 rm -f /etc/sysctl.d/60-core-pattern.conf
-cat << EOF >> /etc/sysctl.d/60-core-pattern.conf
+cat << EOF > /etc/sysctl.d/60-core-pattern.conf
 kernel.core_pattern = /data/cores/core_%t_%e_%P_%I_%g_%u
 EOF
 
