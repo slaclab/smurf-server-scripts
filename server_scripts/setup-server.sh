@@ -480,18 +480,18 @@ if [ ${dell_r440+x} ]; then
         rmmod ${datadev_name} &> /dev/null
 
         # Check is other versions of the diver are installed. If so, uninstall them.
-        local list=$(dkms status -m ${datadev_name})
+        datadev_list=$(dkms status -m ${datadev_name})
 
-        if [ "${list}" ]; then
+        if [ "${datadev_list}" ]; then
             echo "Removing previously installed versions..."
 
-            declare -a local versions
+            declare -a datadev_versions
 
             while IFS= read -r line; do
-                versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
-            done <<< "${list}"
+                datadev_versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
+            done <<< "${datadev_list}"
 
-            for v in "${versions[@]}"; do
+            for v in "$datadev_versions[@]}"; do
                 echo "Uninstalling version ${v}..."
                 dkms uninstall -m ${datadev_name} -v ${v}
 
