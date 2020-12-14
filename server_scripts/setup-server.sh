@@ -429,7 +429,7 @@ echo "### Setting up the VNC server... ###"
 echo "####################################"
 echo
 
-# Create the xstartup file. Make a backup of the original file.
+# Create the xstartup file
 mkdir /home/cryo/.vnc
 cp /home/cryo/.vnc/xstartup /home/cryo/.vnc/xstartup.BACKUP &> /dev/null
 cat << EOF > /home/cryo/.vnc/xstartup
@@ -599,5 +599,6 @@ echo "########################################"
 ######################
 echo
 echo "Server configuration finished successfully!"
+echo "The configuration log was written to 'server_setup.log'."
 echo "Please reboot the server so all changes take effect."
 echo
