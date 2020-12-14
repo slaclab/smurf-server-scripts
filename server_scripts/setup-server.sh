@@ -479,7 +479,7 @@ if [ ${dell_r440+x} ]; then
         # Remove any loaded module
         rmmod ${datadev_name} &> /dev/null
 
-        # Check is other version of the diver are install. If so, uninstall them.
+        # Check is other versions of the diver are installed. If so, uninstall them.
         local list=$(dkms status -m ${datadev_name})
 
         if [ "${list}" ]; then
