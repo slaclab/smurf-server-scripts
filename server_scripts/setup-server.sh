@@ -74,7 +74,7 @@ apt-get -y install git-lfs
 git lfs install
 
 # Install this server scripts into the system
-mkdir /usr/local/src/smurf-server-scripts
+mkdir -p /usr/local/src/smurf-server-scripts
 cp -r .. /usr/local/src/smurf-server-scripts
 
 # Create smurf bash profile file and add the docker scripts to PATH
