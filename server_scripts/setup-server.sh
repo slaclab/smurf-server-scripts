@@ -20,7 +20,8 @@ fi
 # The -i option is used to avoid signal interrupt from
 # disrupting stdout in the script.
 # Redirect stderr as well to the log file.
-exec > >(tee -ia server_setup.log)
+server_log_file="server_setup.log"
+exec > >(tee -ia ${server_log_file})
 exec 2>&1
 
 echo "Starting server configuration..."
@@ -599,6 +600,6 @@ echo "########################################"
 ######################
 echo
 echo "Server configuration finished successfully!"
-echo "The configuration log was written to 'server_setup.log'."
+echo "The configuration log was written to '${server_log_file}'."
 echo "Please reboot the server so all changes take effect."
 echo
