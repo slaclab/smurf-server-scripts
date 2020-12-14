@@ -431,7 +431,7 @@ echo "####################################"
 echo
 
 # Create the xstartup file
-mkdir /home/cryo/.vnc
+mkdir -p /home/cryo/.vnc
 cp /home/cryo/.vnc/xstartup /home/cryo/.vnc/xstartup.BACKUP &> /dev/null
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
