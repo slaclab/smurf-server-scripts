@@ -20,7 +20,7 @@ else
 
   echo "Verifying that the interfaces '${atca_interface_name}' is not defined in '${config_file}'..."
   if grep -Fq "${atca_interface_name}:" ${config_file} 2&> /dev/null ; then
-      echo "ERROR: Interface '${atca_interface_name}' found in '${config_file}'"
+      echo "Interface '${atca_interface_name}' found in '${config_file}'. Skipping..."
       configure_interafce=0
   else
     echo "Interface not defined."
@@ -30,7 +30,7 @@ fi
 echo
 
 if [ ${configure_interafce} -eq 0 ]; then
-  echo "Errors were founds. Interface ${atca_interface_name} will not be configured!"
+  echo "Interface ${atca_interface_name} will not be configured!"
 else
   echo "Writing configuration to ${config_file} for interface ${atca_interface_name}..."
   cat << EOF >>  ${config_file}
@@ -70,7 +70,7 @@ else
 
   echo "Verifying that the interfaces '${shm_interface_name}' is not defined in '${config_file}'..."
   if grep -Fq "${shm_interface_name}:" ${config_file} 2&> /dev/null ; then
-      echo "ERROR: Interface '${shm_interface_name}' found in '${config_file}'"
+      echo "Interface '${shm_interface_name}' found in '${config_file}'. Skipping..."
       configure_interafce=0
   else
     echo "Interface not defined."
@@ -80,7 +80,7 @@ fi
 echo
 
 if [ ${configure_interafce} -eq 0 ]; then
-  echo "Errors were founds. Interface ${shm_interface_name} will not be configured!"
+  echo "Interface ${shm_interface_name} will not be configured!"
 else
   echo "Writing configuration to ${config_file} for interface ${shm_interface_name}..."
   cat << EOF >>  ${config_file}
@@ -99,7 +99,7 @@ fi
 
 echo
 
-echo "Applying configuration to netplay..."
+echo "Applying configuration to netplan..."
 netplan apply
 sleep 5
 

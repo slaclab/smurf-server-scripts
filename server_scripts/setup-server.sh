@@ -125,7 +125,7 @@ if [ -e /dev/mapper/ubuntu--vg-swap_1 ]; then
 
     echo "Done!"
 else
-    echo "The swap partition does not exit."
+    echo "The swap partition does not exit. Skipping..."
 fi
 
 echo
