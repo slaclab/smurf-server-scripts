@@ -502,8 +502,8 @@ if [ ${dell_r440+x} ]; then
 
         # Clone the driver repository
         echo "Downloading driver..."
-        rm -rf /usr/src/${datadev_name}-${v} && \
-            mkdir /usr/src/${datadev_name}-${datadev_version}/
+        rm -rf /usr/src/${datadev_name}-${datadev_version} && \
+            mkdir -p /usr/src/${datadev_name}-${datadev_version}/
         git clone ${datadev_repo} -b ${datadev_version} \
             /usr/src/${datadev_name}-${datadev_version}/aes-stream-drivers
 
