@@ -24,13 +24,14 @@ If you have a previously configured SMuRF server, you can use the [setup-server.
 
 In order to upgrade your existing server follow these steps:
 
-1. First, reboot your server.
+1. First, reboot the server.
 2. Then, run these commands on any directory of your preference (if the directory `smurf-server-scripts` already exist in that location, you will need to remove it first):
 ```bash
 $ git clone https://github.com/slaclab/smurf-server-scripts -b <VERSION>
 $ cd smurf-server-scripts/server_scripts/
 $ sudo ./setup-server.sh
 ```
+3. Finally, reboot the server.
 
 Where `<VERSION>` is the version of this script you want to use.
 
