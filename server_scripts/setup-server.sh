@@ -495,7 +495,7 @@ if [ ${dell_r440+x} ]; then
                 datadev_versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
             done <<< "${datadev_list}"
 
-            for v in "$datadev_versions[@]}"; do
+            for v in "${datadev_versions[@]}"; do
                 echo "Uninstalling version ${v}..."
                 dkms uninstall -m ${datadev_name} -v ${v}
 
