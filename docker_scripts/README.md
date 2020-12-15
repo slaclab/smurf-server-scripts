@@ -2,7 +2,8 @@
 
 ## Description
 
-This scripts are used to release a set of files necessary to run SMuRF system based on dockers.
+This scripts are used to release a set of files necessary to run SMuRF system based on dockers. These scripts are installed in a SMuRF server as part of their initial configuration as described [here](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+System+Initial+Configuration) as part of a [SMuRF system deployment](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+Deployment).
+.
 
 ## Installation
 

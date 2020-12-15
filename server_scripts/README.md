@@ -1,11 +1,5 @@
 # Server setup script
 
-This scripts sets up a SMuRF server after a fresh installation of Ubuntu 18.04.
+These scripts are used to setup SMuRF servers, as part of the initial configuration, as described [here](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+System+Initial+Configuration) during a [SMuRF system deployment](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+Deployment).
 
-## Run the script
-
-After a fresh installation of Ubuntu 18.04, run:
-
-```
-sudo ./setup-server.sh
-```
+Please follow the procedure described there in order to use these scripts.

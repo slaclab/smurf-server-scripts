@@ -2,9 +2,11 @@
 
 ## Description
 
-This repository contains a set of useful script for setting up SMuRF servers, divided in two main categories:
+This repository contains a set of useful scripts for setting up SMuRF servers, divided in two main categories:
 - Scripts used to setup a SMuRF server from scratch,
 - Scripts used to release docker system in an SMuRF server.
+
+These scripts are used during SMuRF system deployments as described [here](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+Deployment).
 
 ## Documentation
 
