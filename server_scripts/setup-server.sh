@@ -535,7 +535,7 @@ if [ ${dell_r440+x} ]; then
 options ${datadev_name} cfgTxCount=1024 cfgRxCount=1024 cfgSize=131072 cfgMode=1 cfgCont=1
 EOF
             cat << EOF > /usr/src/${datadev_name}-${datadev_version}/dkms.conf
-MAKE="make -C aes-stream-drivers/data_dev/driver/ KERNELDIR=/lib/modules/\${kernelver}/build"
+MAKE="make -C aes-stream-drivers/data_dev/driver/ KVER=\${kernelver}"
 CLEAN="make -C aes-stream-drivers/data_dev/driver/ clean"
 BUILT_MODULE_NAME=${datadev_name}
 BUILT_MODULE_LOCATION=aes-stream-drivers/data_dev/driver/
