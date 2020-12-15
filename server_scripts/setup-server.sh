@@ -77,7 +77,11 @@ apt-get -y install git-lfs
 git lfs install
 
 # Save the version of this script used:
-git describe --tags --always > version 2> /dev/null
+version_file="../version"
+rm -f ${version_file}
+touch ${version_file}
+chown -R cryo:smurf ${version_file}
+git describe --tags --always > ${version_file} 2> /dev/null
 
 # Install this server scripts into the system
 rm -rf /usr/local/src/smurf-server-scripts
