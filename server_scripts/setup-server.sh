@@ -20,7 +20,11 @@ fi
 # The -i option is used to avoid signal interrupt from
 # disrupting stdout in the script.
 # Redirect stderr as well to the log file.
-exec > >(tee -ia server_setup.log)
+server_log_file="server_setup.log"
+rm -f ${server_log_file}
+touch ${server_log_file}
+chown -R cryo:smurf ${server_log_file}
+exec > >(tee -ia ${server_log_file})
 exec 2>&1
 
 echo "Starting server configuration..."
@@ -73,7 +77,8 @@ apt-get -y install git-lfs
 git lfs install
 
 # Install this server scripts into the system
-mkdir /usr/local/src/smurf-server-scripts
+rm -rf /usr/local/src/smurf-server-scripts
+mkdir -p /usr/local/src/smurf-server-scripts
 cp -r .. /usr/local/src/smurf-server-scripts
 
 # Create smurf bash profile file and add the docker scripts to PATH
@@ -124,7 +129,7 @@ if [ -e /dev/mapper/ubuntu--vg-swap_1 ]; then
 
     echo "Done!"
 else
-    echo "The swap partition does not exit."
+    echo "The swap partition does not exit. Skipping..."
 fi
 
 echo
@@ -160,7 +165,7 @@ update-grub
 # Disable apport, and send core dump to custom location
 sed -i -e 's/^enabled=.*/enabled=0/g' /etc/default/apport
 rm -f /etc/sysctl.d/60-core-pattern.conf
-cat << EOF >> /etc/sysctl.d/60-core-pattern.conf
+cat << EOF > /etc/sysctl.d/60-core-pattern.conf
 kernel.core_pattern = /data/cores/core_%t_%e_%P_%I_%g_%u
 EOF
 
@@ -430,7 +435,8 @@ echo "####################################"
 echo
 
 # Create the xstartup file
-mkdir /home/cryo/.vnc
+mkdir -p /home/cryo/.vnc
+cp /home/cryo/.vnc/xstartup /home/cryo/.vnc/xstartup.BACKUP &> /dev/null
 cat << EOF > /home/cryo/.vnc/xstartup
 #!/bin/bash
 
@@ -477,19 +483,19 @@ if [ ${dell_r440+x} ]; then
         # Remove any loaded module
         rmmod ${datadev_name} &> /dev/null
 
-        # Check is other version of the diver are install. If so, uninstall them.
-        local list=$(dkms status -m ${datadev_name})
+        # Check is other versions of the diver are installed. If so, uninstall them.
+        datadev_list=$(dkms status -m ${datadev_name})
 
-        if [ "${list}" ]; then
+        if [ "${datadev_list}" ]; then
             echo "Removing previously installed versions..."
 
-            declare -a local versions
+            declare -a datadev_versions
 
             while IFS= read -r line; do
-                versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
-            done <<< "${list}"
+                datadev_versions+=($(echo "$line" | awk -F ', ' '{print $2}'))
+            done <<< "${datadev_list}"
 
-            for v in "${versions[@]}"; do
+            for v in "${datadev_versions[@]}"; do
                 echo "Uninstalling version ${v}..."
                 dkms uninstall -m ${datadev_name} -v ${v}
 
@@ -500,8 +506,8 @@ if [ ${dell_r440+x} ]; then
 
         # Clone the driver repository
         echo "Downloading driver..."
-        rm -rf /usr/src/${datadev_name}-${v} && \
-            mkdir /usr/src/${datadev_name}-${datadev_version}/
+        rm -rf /usr/src/${datadev_name}-${datadev_version} && \
+            mkdir -p /usr/src/${datadev_name}-${datadev_version}/
         git clone ${datadev_repo} -b ${datadev_version} \
             /usr/src/${datadev_name}-${datadev_version}/aes-stream-drivers
 
@@ -598,5 +604,6 @@ echo "########################################"
 ######################
 echo
 echo "Server configuration finished successfully!"
+echo "The configuration log was written to '${server_log_file}'."
 echo "Please reboot the server so all changes take effect."
 echo

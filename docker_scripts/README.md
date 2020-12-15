@@ -2,21 +2,52 @@
 
 ## Description
 
-This scripts are used to release a set of files necessary to run SMuRF system based on dockers.
+These scripts are used to release a set of files necessary to run SMuRF system based on dockers. These scripts are installed in a SMuRF server as part of their initial configuration as described [here](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+System+Initial+Configuration) as part of a [SMuRF system deployment](https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+Deployment).
+.
+
+The top script is [release-docker.sh](release-docker.sh).
 
 ## Installation
 
-This script will be installed by the `setup-server.sh` script when setting up a new server. It will installed under `/usr/local/src/smurf-server-scripts/docker_scripts`, and that path is added to the `PATH` so that this script can be called from any location.
+These scripts will be installed by the [setup-server.sh](../server_scripts/setup-server.sh) script when setting up a new server. It will installed under `/usr/local/src/smurf-server-scripts/docker_scripts`, and that path is added to the `PATH` environmental variable, allowing these scripts to be called from any location.
 
 ## Usage
 
-To release a new system, run:
+The top script is `release-docker.sh`, and its usage is:
 
-```
-release-docker.sh -t|--type <type> <arguments>
+```bash
+$ release-docker.sh --help
+Release a new set of scripts to run an specified system based on dockers.
+Version: R3.7.0
+
+usage: release-docker.sh -t|--type <app_type> [-h|--help]
+
+  -t|--type <app_type>   : Type of application to install. Options are:
+                           - system         : Full system (stable version) [pysmurf/rogue v4].
+                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4].
+                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4].
+                           - system3        : [OBSOLETE] Full system (stable version) [smurf2mce/rogue v3].
+                           - system3-dev-fw : [OBSOLETE] Full system (with a development version of FW) [smurf2mce/rogue v3].
+                           - system3-dev-sw : [OBSOLETE] Full system with a development version of SW and FW [smurf2mce/rogue v3].
+                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode.
+                           - utils          : An utility system.
+                           - tpg            : A TPG IOC.
+                           - pcie           : A PCIe utility application.
+                           - atca-monitor   : An ATCA monitor application.
+                           - guis           : Application to connect remote rogue GUIs.
+  -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head
+                           of the master branch will be used. Note: You will be asked for the sudo password.
+  -l|--list-versions     : Print a list of available versions.
+  -h|--help              : Show help message for each application type.
 ```
 
-where **type** specified the type of system to release, and **arguments** depends on the type.
+To release a new system, call the script with the `--type` option:
+
+```bash
+release-docker.sh --type <type> <arguments>
+```
+
+where `type` specified the type of system to release, and `arguments` depends on the type.
 
 Currently, the script supports the following system types:
 - [Full systems based on pysmurf and rogue v4](#full-systems-based-on-pysmurf-and-rogue-v4)
@@ -44,10 +75,10 @@ A stable system is formed by a pysmurf server and a pysmurf client. For stables 
 
 The server runs in the [pysmurf-server docker](https://github.com/slaclab/pysmurf-stable-docker), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
-To release an stable system, use **type = system**, with the following arguments:
+To release an stable system, use `type` = `system`, with the following arguments:
 
-```
-release-docker.sh -t system
+```bash
+$ release-docker.sh -t|--type system
                   -s|--server-version <pysmurf_server_version>
                   -p|--client-version <pysmurf_client_version>
                   [-N|--slot <slot_number>]
@@ -77,10 +108,10 @@ A development system is formed by a pysmurf server and a pysmurf client. For fir
 
 The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf). As both of these images are released together, the user only needs to specify one version number, which will be used for both images.
 
-To release a firmware development system, use **type = system-dev-fw**, with the following arguments:
+To release a firmware development system, use `type` = `system-dev-fw`, with the following arguments:
 
-```
-release-docker.sh -t system-dev-fw
+```bash
+$ release-docker.sh -t|--type system-dev-fw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
@@ -108,10 +139,10 @@ A development system is formed by a pysmurf server a pysmurf client. For softwar
 
 The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
-To release a software development system, use **type = system-dev-sw**, with the following arguments:
+To release a software development system, use `type` = `system-dev-sw`, with the following arguments:
 
-```
-release-docker.sh -t system-dev-sw
+```bash
+$ release-docker.sh -t|--type system-dev-sw
                   -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
@@ -138,20 +169,20 @@ When this system is released, both rogue and pysmurf are build, so you can start
 - Start the container (by running the `run.sh` script). It will run a bash session instead of starting the pysmurf server.
 - Attach to the container using the command `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using. You will be now in the bash session inside the container.
 - If you changed code in rogue go to the rogue folder (`/usr/local/src/rogue`) and make a clean build:
-```
-rm -rf build
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local ..
-make -j4 install
+```bash
+$ rm -rf build
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local ..
+$ make -j4 install
 ```
 - Go to the pysmurf folder (`/usr/local/src/pysmurf`) and make a clean build:
-```
-rm -rf build
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-make -j4
+```bash
+$ rm -rf build
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+$ make -j4
 ```
 - Exist the docker container, by typing `exit`.
 - Change back the `docker-compose.yml` file to its original state.
@@ -161,14 +192,14 @@ Now you can start the docker container normally again.
 You need to repeat these steps every time you make changes to C++ code.
 
 If you make changes to these repositories and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
-```
-git checkout -b <new-branch-name>"
-git push -set-upstream origin <new-branch-name>"
+```bash
+$ git checkout -b <new-branch-name>"
+$ git push -set-upstream origin <new-branch-name>"
 ```
 
 Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
 
-### Full systems based on smurf2mce and rogue v3
+### Full systems based on smurf2mce and rogue v3 [OBSOLETE]
 
 #### Full stable system
 
@@ -176,10 +207,10 @@ A stable system is formed by a SMuRF server and pysmurf. For stables systems, th
 
 The server runs in the [smur2mce docker](https://github.com/slaclab/smurf2mce-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
 
-To release an stable system, use **type = system3**, with the following arguments:
+To release an stable system, use `type` = `system3`, with the following arguments:
 
-```
-release-docker.sh -t|--type system3 -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>
+```bash
+$ release-docker.sh -t|--type system3 -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
@@ -201,10 +232,10 @@ A development system is formed by a SMuRF server and pysmurf. For firmware devel
 
 The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2mce-base-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
 
-To release a firmware development system, use **type = system3-dev-fw**, with the following arguments:
+To release a firmware development system, use `type` = `system3-dev-fw`, with the following arguments:
 
-```
-release-docker.sh -t|--type system3-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+```bash
+$ release-docker.sh -t|--type system3-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
@@ -226,10 +257,10 @@ A development system is formed by a SMuRF server and pysmurf. For software devel
 
 The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2mce-base-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
 
-To release a software development system, use **type = system3-dev-sw**, with the following arguments:
+To release a software development system, use `type` = `system3-dev-sw`, with the following arguments:
 
-```
-release-docker.sh -t|--type system3-dev-sw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+```bash
+$ release-docker.sh -t|--type system3-dev-sw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
                   [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
 
   -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
@@ -250,12 +281,12 @@ In the software development mode, if you take a look a the  generated `docker-co
 
 When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and make a clean build:
 
-```
-rm -rf build
-mkdir build
-cd build
-cmake ..
-make
+```bash
+$ rm -rf build
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
 ```
 
 You can now start the server using the `start_server.sh` script with the appropriate parameters (you can run the command with the same arguments defined in the `docker-compose.yml` file for example).
@@ -270,10 +301,10 @@ A pysmurf application in development mode, consist only on the pysmurf client ap
 
 Pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
-To release a pysmurf development application, use **type = pysmurf-dev**, with the following arguments:
+To release a pysmurf development application, use `type` = `pysmurf-dev`, with the following arguments:
 
-```
-release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
+```bash
+$ release-docker.sh -t|--type pysmurf-dev -p|--pysmurf_version <pysmurf_version>
                   [-o|--output-dir <output_dir>] [-l|--list-versions] [-h|--help]"
 
   -p|--pysmurf_version <pysmurf_version> : Version of the pysmurf docker image. Used as a base.
@@ -285,9 +316,9 @@ release-docker.sh -t pysmurf-dev -p|--pysmurf_version <pysmurf_version>
 ```
 
 If you make changes to the pysmurf repository and want to push them back to Github, you need to create a new branch (the reason for this is that when you checkout a tagged version, you will in  detached mode, i.e. no attach to any branch). In order to do that you can run the following commands (you can create the new branch even after committing changes):"
-```
-git checkout -b <new-branch-name>"
-git push -set-upstream origin <new-branch-name>"
+```bash
+$ git checkout -b <new-branch-name>
+$ git push -set-upstream origin <new-branch-name>
 ```
 
 Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
@@ -298,10 +329,10 @@ An utility application contains tools useful on SMuRF system.
 
 It run in the [smurf-base docker](https://github.com/slaclab/smurf-base-docker).
 
-To release an utility application, use **type = utils**, with the following arguments:
+To release an utility application, use `type` = `utils`, with the following arguments:
 
-```
-release-docker.sh -t utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>]
+```bash
+$ release-docker.sh -t|--type utils -v|--version <smurf_base_version> [-o|--output-dir <output_dir>]
                            [-l|--list-versions] [-h|--help]
 
   -v|--version    <smurf-base_version> : Version of the smurf-base docker image.
@@ -317,10 +348,10 @@ A Timing Pattern Generator (TPG) IOC.
 
 It runs in the [smurf-tpg-ioc docker](https://github.com/slaclab/smurf-tpg-ioc-docker).
 
-To release a TPG IOCm use **type = tpg**, with the following arguments:
+To release a TPG IOCm use `type` = `tpg`, with the following arguments:
 
-```
-release-docker.sh -t tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>]
+```bash
+$ release-docker.sh -t|--type tpg -v|--version <tpg_version> [-o|--output-dir <output_dir>]
                          [-l|--list-versions] [-h|--help]
 
   -v|--version    <tpg_version>   : Version of the smurf-tpg-ioc docker image.
@@ -336,10 +367,10 @@ An application with utilities related to the SMuRF PCIe card.
 
 It runs in the [smurf-pcie docker](https://github.com/slaclab/smurf-pcie-docker).
 
-To release a PCIe utility application use **type = pcie**, with the following arguments:
+To release a PCIe utility application use `type` = `pcie`, with the following arguments:
 
-```
-release-docker.sh -t pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>]
+```bash
+$ release-docker.sh -t|--type pcie -v|--version <pcie_version> [-o|--output-dir <output_dir>]
                           [-l|--list-versions] [-h|--help]
 
   -v|--version    <pcie_version> : Version of the smurf-pcie docker image.
@@ -355,10 +386,10 @@ A PyRogue-based application used to monitor an entire ATCA crate.
 
 It runs the [smurf-atca-monitor docker](https://github.com/slaclab/smurf-atca-monitor).
 
-To release an ATCA monitor application use **type = atca-monitor**, with the following arguments:
+To release an ATCA monitor application use `type` = `atca-monitor`, with the following arguments:
 
-```
-release-docker.sh -t atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>]
+```bash
+$ release-docker.sh -t|--type atca-monitor -v|--version <atca-monitor_version> [-o|--output-dir <output_dir>]
                                   [-l|--list-versions] [-h|--help]
 
   -v|--version    <atca-monitor_version> : Version of the smurf-atca-monitor docker image.
@@ -374,9 +405,9 @@ An application to connect a rogue GUI to a remote server.
 
 It runs in the [smurf-rogue docker](https://github.com/slaclab/smurf-rogue-docker). This docker images included support for this application starting in version [R2.7.0](https://github.com/slaclab/smurf-rogue-docker/releases/tag/R2.7.0).
 
-To release this application use **type = guis**, with the following argument:
-```
-release-docker.sh -t guis -v|--version <smurf-rogue_version> [-o|--output-dir <output_dir>]
+To release this application use `type` = `guis`, with the following argument:
+```bash
+$ release-docker.sh -t|--type guis -v|--version <smurf-rogue_version> [-o|--output-dir <output_dir>]
                           [-l|--list-versions] [-h|--help]
 
   -v|--version    <smurf-rogue_version> : Version of the smurf-rogue docker image.
@@ -385,3 +416,61 @@ release-docker.sh -t guis -v|--version <smurf-rogue_version> [-o|--output-dir <o
   -l|--list-versions                    : Print a list of available versions.
   -h|--help                             : Show this message.
 ```
+
+## Version Upgrade
+
+You can see which version of the `release-docker.sh` script you are using by calling the script with the `--help` option:
+
+```bash
+$ release-docker.sh --help
+Release a new set of scripts to run an specified system based on dockers.
+Version: R3.7.0
+
+usage: release-docker.sh -t|--type <app_type> [-h|--help]
+
+  -t|--type <app_type>   : Type of application to install. Options are:
+                           - system         : Full system (stable version) [pysmurf/rogue v4].
+                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4].
+                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4].
+                           - system3        : [OBSOLETE] Full system (stable version) [smurf2mce/rogue v3].
+                           - system3-dev-fw : [OBSOLETE] Full system (with a development version of FW) [smurf2mce/rogue v3].
+                           - system3-dev-sw : [OBSOLETE] Full system with a development version of SW and FW [smurf2mce/rogue v3].
+                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode.
+                           - utils          : An utility system.
+                           - tpg            : A TPG IOC.
+                           - pcie           : A PCIe utility application.
+                           - atca-monitor   : An ATCA monitor application.
+                           - guis           : Application to connect remote rogue GUIs.
+  -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head
+                           of the main branch will be used. Note: You will be asked for the sudo password.
+  -l|--list-versions     : Print a list of available versions.
+  -h|--help              : Show help message for each application type.
+```
+
+The version number will be printed out on the top part of the output. In this example, we are using version `R3.7.0`.
+
+You can upgrade the version of this script using the `--upgrade` option:
+
+```bash
+$ release-docker.sh --upgrade <version>
+```
+
+Replacing `<version>` with the version number you want to use (if you omit the version number, the head of the `main` branch will be used. Under normal circumstances you should specified a version number).
+
+To print a list of available versions, you can call the script with the `--list-versions` option:
+```bash
+$ release-docker.sh --list-versions
+List of available versions of this script:
+R3.1.0
+R3.2.0
+R3.3.0
+R3.4.0
+R3.5.0
+R3.5.1
+R3.6.0
+R3.7.0
+```
+
+Alternatively, the list of available versions, with release notes described the changes on each version, can also be found in the releases section of this repository [here](https://github.com/slaclab/smurf-server-scripts/releases).
+
+**Note:** The version of this script is automatically upgraded when you upgrade your server configuration as described [here](../README.md#How-to-upgrade-an-existing-SMuRF-server).
