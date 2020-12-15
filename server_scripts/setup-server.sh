@@ -73,7 +73,11 @@ curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/reposit
 apt-get -y install git-lfs
 git lfs install
 
+# Save the version of this script used:
+git describe --tags --always > version 2> /dev/null
+
 # Install this server scripts into the system
+rm -rf /usr/local/src/smurf-server-scripts
 mkdir -p /usr/local/src/smurf-server-scripts
 cp -r .. /usr/local/src/smurf-server-scripts
 

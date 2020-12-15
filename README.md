@@ -33,6 +33,13 @@ Where `<VERSION>` is the version of this script you want to use.
 
 A list of available versions, with release notes described the changes on each version, can be found in the releases section of this repository [here](https://github.com/slaclab/smurf-server-scripts/releases).
 
+To see the version of the script used to configured your system, run this command:
+```bash
+cat /usr/local/src/smurf-server-scripts/version
+```
+
+**Note**: if the file `/usr/local/src/smurf-server-scripts/version` does not exist in your system, then you server was setup with a script version previous to `R3.8.0`.
+
 ## Docker System Release Scripts
 
 As part of the system initialization described above, scripts to release SMuRF docker-based systems are installed in the server. For more information about these scripts, please refer to [this documentation](docker_scripts/README.md).
