@@ -539,10 +539,10 @@ MAKE="make -C aes-stream-drivers/data_dev/driver/ KERNELDIR=/lib/modules/\${kern
 CLEAN="make -C aes-stream-drivers/data_dev/driver/ clean"
 BUILT_MODULE_NAME=${datadev_name}
 BUILT_MODULE_LOCATION=aes-stream-drivers/data_dev/driver/
-DEST_MODULE_LOCATION="/kernel/modules/misc"
+DEST_MODULE_LOCATION=/kernel/modules/misc
 PACKAGE_NAME=${datadev_name}
 REMAKE_INITRD=no
-AUTOINSTALL="yes"
+AUTOINSTALL=yes
 PACKAGE_VERSION=${datadev_version}
 EOF
 
