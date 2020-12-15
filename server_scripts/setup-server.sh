@@ -89,13 +89,13 @@ mkdir -p /usr/local/src/smurf-server-scripts
 cp -r .. /usr/local/src/smurf-server-scripts
 
 # Create smurf bash profile file and add the docker scripts to PATH
-if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh 2> /dev/null; then
+if ! grep -q "^export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts\s*$" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
 fi
 
 # Add an alias 'smurf-server-scripts-version' to the smurf bash profile file, to get the version of the smurf-server-script
 # used during this setup
-if ! grep -q "^alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'\s*" /etc/profile.d/smurf_config.sh 2> /dev/null; then
+if ! grep -q "^alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'\s*$" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'" >> /etc/profile.d/smurf_config.sh
 fi
 
