@@ -1,0 +1,23 @@
+# This workflow will be triggered on tags pushes and it
+# will generate release notes using green.
+#
+
+name: Release notes
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release_notes:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Generate release notes
+      - name: Generate release notes
+      - uses: smartlyio/github-release-notes-action@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
