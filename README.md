@@ -22,7 +22,10 @@ In order to setup a new SMuRF server, please follow the initial configuration pr
 
 If you have a previously configured SMuRF server, you can use the [setup-server.sh](server_scripts/setup-server.sh) script to upgrade your server configuration, when new version of this repository are released. New version contain bug fixes and new feature which you should install in your server to keep it up to date.
 
-In order to upgrade your existing server follow these steps, on any directory in your server:
+In order to upgrade your existing server follow these steps:
+
+1. First, reboot your server.
+2. Then, run these commands on any directory of your preference (if the directory `smurf-server-scripts` already exist in that location, you will need to remove it first):
 ```bash
 $ git clone https://github.com/slaclab/smurf-server-scripts -b <VERSION>
 $ cd smurf-server-scripts/server_scripts/
