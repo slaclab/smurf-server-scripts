@@ -76,6 +76,13 @@ curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/reposit
 apt-get -y install git-lfs
 git lfs install
 
+# Save the version of the script used during this setup:
+version_file="version"
+rm -f ${version_file}
+touch ${version_file}
+chown -R cryo:smurf ${version_file}
+git describe --tags --always > ${version_file} 2> /dev/null
+
 # Install this server scripts into the system
 rm -rf /usr/local/src/smurf-server-scripts
 mkdir -p /usr/local/src/smurf-server-scripts
@@ -84,6 +91,12 @@ cp -r .. /usr/local/src/smurf-server-scripts
 # Create smurf bash profile file and add the docker scripts to PATH
 if ! grep -Fq "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
+fi
+
+# Add an alias 'smurf-server-scripts-version' to the smurf bash profile file, to get the version of the smurf-server-script
+# used during this setup
+if ! grep -q "^alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'\s*" /etc/profile.d/smurf_config.sh 2> /dev/null; then
+    echo "alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'" >> /etc/profile.d/smurf_config.sh
 fi
 
 # Disable automatic system updates
