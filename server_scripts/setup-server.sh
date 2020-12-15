@@ -21,6 +21,9 @@ fi
 # disrupting stdout in the script.
 # Redirect stderr as well to the log file.
 server_log_file="server_setup.log"
+rm -f ${server_log_file}
+touch ${server_log_file}
+chown -R cryo:smurf ${server_log_file}
 exec > >(tee -ia ${server_log_file})
 exec 2>&1
 
