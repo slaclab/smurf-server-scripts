@@ -1,6 +1,5 @@
 # This workflow will be triggered on tags pushes and it
 # will generate release notes using green.
-#
 
 name: Release notes
 on:
