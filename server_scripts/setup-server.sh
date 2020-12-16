@@ -99,9 +99,9 @@ if ! grep -q "^alias smurf-server-scripts-version='cat /usr/local/src/smurf-serv
     echo "alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'" >> /etc/profile.d/smurf_config.sh
 fi
 
-# Disable automatic system updates
-sed -i -e 's|APT::Periodic::Update-Package-Lists ".*";|APT::Periodic::Update-Package-Lists "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
-sed -i -e 's|APT::Periodic::Unattended-Upgrade ".*";|APT::Periodic::Unattended-Upgrade "0";|g' /etc/apt/apt.conf.d/20auto-upgrades
+# Enable automatic system updates
+sed -i -e 's|APT::Periodic::Update-Package-Lists ".*";|APT::Periodic::Update-Package-Lists "1";|g' /etc/apt/apt.conf.d/20auto-upgrades
+sed -i -e 's|APT::Periodic::Unattended-Upgrade ".*";|APT::Periodic::Unattended-Upgrade "1";|g' /etc/apt/apt.conf.d/20auto-upgrades
 
 echo
 echo "#################################"
