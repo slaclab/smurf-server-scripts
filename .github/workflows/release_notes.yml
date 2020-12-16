@@ -17,6 +17,6 @@ jobs:
 
       # Generate release notes
       - name: Generate release notes
-      - uses: smartlyio/github-release-notes-action@v1.0.0
+        uses: smartlyio/github-release-notes-action@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
