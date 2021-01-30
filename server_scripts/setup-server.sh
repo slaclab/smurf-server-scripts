@@ -240,13 +240,14 @@ cat << EOF > /home/cryo/.gitconfig
 EOF
 chown -fR cryo:smurf /home/cryo/.gitconfig{,.BACKUP}
 
-# Set default bash aliases. Make a backup of the original file.
-cp /home/cryo/.bash_aliases /home/cryo/.bash_aliases.BACKUP &> /dev/null
-cat << OEF > /home/cryo/.bash_aliases
-alias vnc_start='vncserver :2 -geometry 1920x1200 -alwaysshared -localhost yes'
-alias killeverything='docker rm -f \$(docker ps -a -q)'
-OEF
-chown -fR cryo:smurf /home/cryo/.bash_aliases{,.BACKUP}
+# Set default bash aliases. Make numbered backups of the original file.
+cp --backup=numbered templates/bash_aliases /home/cryo/.bash_aliases
+
+# Create an empty .bash_aliases_local file, if it doesn't exist
+touch /home/cryo/.bash_aliases_local
+
+# Change file permissions
+chown -fR cryo:smurf /home/cryo/.bash_aliases{,_local,.~*}
 
 echo
 echo "###########################################"
