@@ -610,7 +610,7 @@ shawnhammer_scripts_location="/home/cryo/docker/pysmurf/dev/${pysmurf_dev_versio
 for s in ${shawnhammer_scripts[@]}; do
     ln -s ${shawnhammer_scripts_location}/${s}.sh ${new_script_path}/${s} &> /dev/null && \
         chown -fR cryo:smurf ${new_script_path}/${s} && \
-        echo "\"${s}\" created, pointing to \"${shawnhammer_scripts_location}/${s}.sh\""
+        echo "\"${s}\" was created, pointing to \"${shawnhammer_scripts_location}/${s}.sh\""
 done
 
 echo "###########################################"
