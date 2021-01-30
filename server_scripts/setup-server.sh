@@ -563,20 +563,63 @@ echo "###################################"
 # Move to the docker_script directory
 cd ../docker_scripts
 
-# Release latest utils, atca-monitor, guis, and pcie dockers. We need to release
-# them as the 'cryo' user so that the generated files has the right permissions.
-for d in 'utils' 'pcie' 'atca-monitor' 'guis' ; do
+# Release latest pysmurf-dev, utils, atca-monitor, guis, and pcie dockers.
+# We need to release them as the 'cryo' user so that the generated files
+# has the right permissions.
+for d in 'utils' 'pcie' 'atca-monitor' 'guis' 'pysmurf-dev'; do
     v=$(./release-docker.sh -t ${d} -l | tail -n2 | head -n1)
     echo "Releasing '${d}' version '${v}'..."
     su cryo -c "./release-docker.sh -t ${d} -v ${v}"
 done
 
 # Move back to the original directory
-cd -
+cd - &> /dev/null
 
 echo "########################################"
 echo "### Done releasing docker scripts... ###"
 echo "########################################"
+
+#######################
+# RELEASE SHAWNHAMMER #
+#######################
+echo "########################################"
+echo "### Releasing shawnhammer scripts... ###"
+echo "########################################"
+
+# List of shawnhammer scripts
+shawnhammer_scripts=('ping_carrier' 'shawnhammer' 'shawnhammerfunctions' 'switch_carrier')
+
+# First, move soft links defined, if any, under
+# "/usr/local/src/smurf-server-scripts/docker_scripts/"
+# to the standard location "/home/cryo/.local/bin"
+old_script_path='/usr/local/src/smurf-server-scripts/docker_scripts'
+new_script_path='/home/cryo/.local/bin'
+for s in ${shawnhammer_scripts[@]}; do
+    mv ${old_script_path}/${s} ${new_script_path}/${s} &> /dev/null && \
+        chown -fR cryo:smurf ${new_script_path}/${s}
+done
+
+# Get the latest version of pysmurf-dev. This version was either,
+# released, or already existed.
+cd ../docker_scripts
+pysmurf_dev_version=$(./release-docker.sh -t pysmurf-dev -l | tail -n2 | head -n1)
+cd - &> /dev/null
+
+# Now create, new soft links.
+# They will be created in the standard location "/home/cryo/.local/bin"
+# and will point to the latest pysmurf-dev version.=, which was
+# either released or already existed.
+# If the soft links already exist, they won't be overridden.
+shawnhammer_scripts_location="/home/cryo/docker/pysmurf/dev/${pysmurf_dev_version}/pysmurf/scratch/shawn/scripts"
+for s in ${shawnhammer_scripts[@]}; do
+    ln -s ${shawnhammer_scripts_location}/${s}.sh ${new_script_path}/${s} &> /dev/null && \
+        chown -fR cryo:smurf ${new_script_path}/${s}
+done
+
+echo "#############################################"
+echo "### Done releasing shawnhammer scripts... ###"
+echo "#############################################"
+
 
 ######################
 # SHOW FINAL MESSAGE #
