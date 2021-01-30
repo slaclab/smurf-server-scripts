@@ -448,16 +448,9 @@ echo "### Setting up the VNC server... ###"
 echo "####################################"
 echo
 
-# Create the xstartup file
+# Create the xstartup file. Make numbered backups of the original file.
 mkdir -p /home/cryo/.vnc
-cp /home/cryo/.vnc/xstartup /home/cryo/.vnc/xstartup.BACKUP &> /dev/null
-cat << EOF > /home/cryo/.vnc/xstartup
-#!/bin/bash
-
-unset SESSION_MANAGER
-unset DBUS_SESSION_BUS_ADDRESS
-startxfce4 &
-EOF
+cp --backup=numbered templates/vnc-xstartup /home/cryo/.vnc/xstartup
 
 # Make the script executable
 chmod +x /home/cryo/.vnc/xstartup
