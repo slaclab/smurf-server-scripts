@@ -212,41 +212,16 @@ chown -R cryo:smurf /data
 mkdir -p /home/cryo/.ipython
 chown -R cryo:smurf /home/cryo/.ipython
 
-# Set git defaults configurations. Make a backup of the original file.
-cp /home/cryo/.gitconfig /home/cryo/.gitconfig.BACKUP &> /dev/null
-cat << EOF > /home/cryo/.gitconfig
-[alias]
-    co = checkout
-    br = branch
-    ci = commit
-    st = status
-    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    lg = !"git lg1"
-    shawncommit = -c user.name='Shawn W. Henderson' -c user.email='shawn@slac.stanford.edu' commit
-    edcommit = -c user.name='Edward Young' -c user.email='eyyoung@gmail.com' commit
-[core]
-    editor = emacs
-[user]
-    name = cryo
-    email = cryo@$(hostname)
-[filter "lfs"]
-    required = true
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-[credential]
-    helper = cache
-EOF
-chown -fR cryo:smurf /home/cryo/.gitconfig{,.BACKUP}
+# Set git defaults configurations. Make numbered backups of the original file.
+# Set the right file permissions.
+cp --backup=numbered templates/gitconfig /home/cryo/.gitconfig
+chown -fR cryo:smurf /home/cryo/.gitconfig{,.~*}
 
 # Set default bash aliases. Make numbered backups of the original file.
+# Also, create an empty .bash_aliases_local file, if it doesn't exist
+# Set the right file permissions.
 cp --backup=numbered templates/bash_aliases /home/cryo/.bash_aliases
-
-# Create an empty .bash_aliases_local file, if it doesn't exist
 touch /home/cryo/.bash_aliases_local
-
-# Change file permissions
 chown -fR cryo:smurf /home/cryo/.bash_aliases{,_local,.~*}
 
 echo
@@ -449,13 +424,10 @@ echo "####################################"
 echo
 
 # Create the xstartup file. Make numbered backups of the original file.
+# Make the script executable, and with the right permissions.
 mkdir -p /home/cryo/.vnc
 cp --backup=numbered templates/vnc-xstartup /home/cryo/.vnc/xstartup
-
-# Make the script executable
 chmod +x /home/cryo/.vnc/xstartup
-
-# Change folder and files permissions
 chown -R cryo:smurf  /home/cryo/.vnc/
 
 echo
