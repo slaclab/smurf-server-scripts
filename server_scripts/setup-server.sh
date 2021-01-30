@@ -591,7 +591,8 @@ old_script_path='/usr/local/src/smurf-server-scripts/docker_scripts'
 new_script_path='/home/cryo/.local/bin'
 for s in ${shawnhammer_scripts[@]}; do
     mv ${old_script_path}/${s} ${new_script_path}/${s} &> /dev/null && \
-        chown -fR cryo:smurf ${new_script_path}/${s}
+        chown -fR cryo:smurf ${new_script_path}/${s} && \
+        echo "\"${s}\" was found under \"${old_script_path}/\". It was moved to \"${new_script_path}/\"."
 done
 
 # Get the latest version of pysmurf-dev. This version was either,
@@ -608,7 +609,7 @@ cd - &> /dev/null
 shawnhammer_scripts_location="/home/cryo/docker/pysmurf/dev/${pysmurf_dev_version}/pysmurf/scratch/shawn/scripts"
 for s in ${shawnhammer_scripts[@]}; do
     ln -s ${shawnhammer_scripts_location}/${s}.sh ${new_script_path}/${s} &> /dev/null && \
-        chown -fR cryo:smurf ${new_script_path}/${s} &&
+        chown -fR cryo:smurf ${new_script_path}/${s} && \
         echo "\"${s}\" created."
 done
 
