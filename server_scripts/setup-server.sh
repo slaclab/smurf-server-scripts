@@ -83,11 +83,6 @@ touch ${version_file}
 chown -R cryo:smurf ${version_file}
 git describe --tags --always > ${version_file} 2> /dev/null
 
-# Install this server scripts into the system
-rm -rf /usr/local/src/smurf-server-scripts
-mkdir -p /usr/local/src/smurf-server-scripts
-cp -r .. /usr/local/src/smurf-server-scripts
-
 # Create smurf bash profile file and add the docker scripts to PATH
 if ! grep -q "^export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts\s*$" /etc/profile.d/smurf_config.sh 2> /dev/null; then
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
@@ -575,9 +570,9 @@ done
 # Move back to the original directory
 cd - &> /dev/null
 
-echo "########################################"
-echo "### Done releasing docker scripts... ###"
-echo "########################################"
+echo "######################################"
+echo "### Done releasing docker scripts. ###"
+echo "######################################"
 
 #######################
 # RELEASE SHAWNHAMMER #
@@ -613,13 +608,32 @@ cd - &> /dev/null
 shawnhammer_scripts_location="/home/cryo/docker/pysmurf/dev/${pysmurf_dev_version}/pysmurf/scratch/shawn/scripts"
 for s in ${shawnhammer_scripts[@]}; do
     ln -s ${shawnhammer_scripts_location}/${s}.sh ${new_script_path}/${s} &> /dev/null && \
-        chown -fR cryo:smurf ${new_script_path}/${s}
+        chown -fR cryo:smurf ${new_script_path}/${s} &&
+        echo "\"${s}\" created."
 done
 
-echo "#############################################"
-echo "### Done releasing shawnhammer scripts... ###"
-echo "#############################################"
+echo "###########################################"
+echo "### Done releasing shawnhammer scripts. ###"
+echo "###########################################"
 
+#########################################
+# INSTALL THESE SCRIPTS INTO THE SYSTEM #
+#########################################
+
+# NOTE: We need to install these scripts, after installing
+# shawnhammer scripts, to avoid overriding existing versions
+
+echo "###################################################"
+echo "### Installing these scripts into the system... ###"
+echo "###################################################"
+
+rm -rf /usr/local/src/smurf-server-scripts
+mkdir -p /usr/local/src/smurf-server-scripts
+cp -r .. /usr/local/src/smurf-server-scripts
+
+echo "######################################################"
+echo "### Done installing these scripts into the system. ###"
+echo "######################################################"
 
 ######################
 # SHOW FINAL MESSAGE #
