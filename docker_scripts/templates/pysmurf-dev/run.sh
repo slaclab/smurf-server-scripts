@@ -9,6 +9,7 @@ docker run -it --rm  \
   --net host \
   -e DISPLAY \
   -e location=${PWD} \
+  -e EPICS_CA_AUTO_ADDR_LIST=NO \
   -e EPICS_CA_ADDR_LIST=127.255.255.255 \
   -e EPICS_CA_MAX_ARRAY_BYTES=80000000 \
   -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
