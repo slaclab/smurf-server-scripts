@@ -1,5 +1,5 @@
 # This workflow will be triggered on tags pushes and it
-# will generate release notes using green.
+# will generate release notes using gren.
 
 name: Release notes
 on:
@@ -15,8 +15,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Setup node environment
+      - name: Setup node environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      # Install gren
+      - name: Install gren
+        run: npm install github-release-notes@0.17.3 -g
+
       # Generate release notes
       - name: Generate release notes
-        uses: smartlyio/github-release-notes-action@v1.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GREN_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gren release
