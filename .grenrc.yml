@@ -10,5 +10,7 @@
     - "server-scripts"
     "Repository changes:":
     - "repo"
+    "Others:":
+    - "..."
   template:
     "issue": "- {{url}} {{name}}"
