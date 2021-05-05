@@ -17,10 +17,10 @@ usage_header()
     echo "Release a new system for SW development. Includes both server and client."
     echo "This SMuRF server is based on pysmurf and rogue v4"
     echo
-    echo "This script will clone the 'pre-release' branch of both rogue and pysmurf repositories into the local"
-    echo "directories 'rogue' and 'pysmurf' respectevely. The SMuRF server docker image will use these local copies,"
-    echo "instead of the one provided internally. So, any change you make to the local copy will be present in the"
-    echo "docker container."
+    echo "This script will clone the specified version of pysmurf, and its corresponding version of rogue repositories"
+    echo "into the local directories 'rogue' and 'pysmurf' respectively. The SMuRF server docker image will use these"
+    echo "local copies, instead of the one provided internally. So, any change you make to the local copy will be"
+    echo "present in the docker container."
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
