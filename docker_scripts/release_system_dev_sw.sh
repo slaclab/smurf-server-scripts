@@ -24,7 +24,7 @@ usage_header()
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base'"
+    echo "Note: The docker image used for the server is 'tidait/pysmurf-server'"
     echo "and the docker image used for the client is 'tidair/pysmurf-client'."
     echo
 }
@@ -55,7 +55,7 @@ get_rogue_version()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of applications
 . system_common.sh
 
 # Look for the rogue version
@@ -112,7 +112,7 @@ docker run -ti --rm \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
-    tidair/pysmurf-server-base:${pysmurf_version} \
+    tidair/pysmurf-server:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
 
 if [ $? -ne 0 ]; then
@@ -129,7 +129,7 @@ docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
-    --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
+    --entrypoint="" tidair/pysmurf-server:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
 
 if [ $? -ne 0 ]; then

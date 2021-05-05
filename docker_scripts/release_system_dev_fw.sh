@@ -19,7 +19,7 @@ usage_header()
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base'"
+    echo "Note: The docker image used for the server is 'tidait/pysmurf-server'"
     echo "and the docker image used for the client is 'tidair/pysmurf-client'."
     echo
 }
@@ -28,7 +28,7 @@ usage_header()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of applications
 . system_common.sh
 
 # Create fw directory

@@ -73,21 +73,19 @@ All these different type of systems, and their respective arguments are describe
 
 A stable system is formed by a pysmurf server and a pysmurf client. For stables systems, the pysmurf server contains both the pysmurf server application and the files from an specific firmware version.
 
-The server runs in the [pysmurf-server docker](https://github.com/slaclab/pysmurf-stable-docker), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
+The server runs in the [pysmurf-server docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
 To release an stable system, use `type` = `system`, with the following arguments:
 
 ```bash
 $ release-docker.sh -t|--type system
-                  -s|--server-version <pysmurf_server_version>
-                  -p|--client-version <pysmurf_client_version>
+                  -v|--version <pysmurf_version>
                   [-N|--slot <slot_number>]
                   [-o|--output-dir <output_dir>]
                   [-l|--list-versions]
                   [-h|--help]
 
-  -s|--server-version <pysmurf_server_version> : Version of the pysmurf-server docker image.
-  -p|--client-version <pysmurf_client_version> : Version of the pysmurf-client docker image.
+  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images.
   -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
   -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional).
   -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to
@@ -106,7 +104,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 A development system is formed by a pysmurf server and a pysmurf client. For firmware development systems, the pysmurf server contains the pysmurf server application, while the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
-The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf). As both of these images are released together, the user only needs to specify one version number, which will be used for both images.
+The server runs in the [pysmurf-server docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf). As both of these images are released together, the user only needs to specify one version number, which will be used for both images.
 
 To release a firmware development system, use `type` = `system-dev-fw`, with the following arguments:
 
@@ -137,7 +135,7 @@ The `run.sh` script accepts options to be passed to the pysmurf-server's startup
 
 A development system is formed by a pysmurf server a pysmurf client. For software development systems, the pysmurf server uses local copies of both rogue and pysmurf; rogue is located in a folder called **rogue**, and pysmurf is located in a folder called **pysmurf** in the release folder. The release script will checkout and build the specified version of pysmurf and the corresponding  version of rogue from [rogue git repository](https://github.com/slaclab/rogue) and [pysmurf git repository](https://github.com/slaclab/pysmurf) respectively. Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
 
-The server runs in the [pysmurf-server-base docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
+The server runs in the [pysmurf-server docker](https://github.com/slaclab/pysmurf), and pysmurf runs in the the [pysmurf-client docker](https://github.com/slaclab/pysmurf).
 
 To release a software development system, use `type` = `system-dev-sw`, with the following arguments:
 
