@@ -203,7 +203,11 @@ else
     new_server_version=$(echo ${server_version} | grep -v 'v4.\|v3.\|v2.\|v1.\|v0.')
 
     # Now we need to look for the corresponding pysmurf client version
-    if [ -z ${new_server_version+x} ]; then
+    if [ ${new_server_version} ]; then
+        # Starting at version v5.0.0, the server will come from the pysmurf repository
+        # so the client will have the same version of the server.
+        client_version=${server_version}
+    else
        # For version before v5.0.0, we need to figure out which version of the client (which
        # comes from the pysmurf repository) correspond to this particular server version.
         client_version=$(get_pysmurf_version ${server_version})
@@ -214,10 +218,6 @@ else
             echo
             exit 1
         fi
-    else
-       # Starting at version v5.0.0, the server will come from the pysmurf repository
-       # so the client will have the same version of the server.
-        client_version=${server_version}
     fi
 
 fi
