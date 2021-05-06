@@ -84,8 +84,8 @@ print_list_versions()
         echo "List of available pysmurf_server_version:"
         print_git_tags ${pysmurf_stable_git_repo}
 
-        # Starting on version v5.0.0, the stable versions come from the pysmurf repository
-        print_git_tags ${pysmurf_git_repo} 'v4.\|v3.\|v2.\|v1.\|v0.'
+        # Starting on version v5.0.1, the stable versions come from the pysmurf repository
+        print_git_tags ${pysmurf_git_repo} 'v5.0.0\|v4.\|v3.\|v2.\|v1.\|v0.'
     fi
 
     echo
