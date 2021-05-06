@@ -24,8 +24,10 @@ usage_header()
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base'"
-    echo "and the docker image used for the client is 'tidair/pysmurf-client'."
+    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base', for version prior to"
+    echo "'v5.0.0', or 'tidait/pysmurf-server' for versions starting at 'v5.0.0'. Starting at version"
+    echo "'v5.0.0', the 'tidait/pysmurf-server' image comes from the pysmurf repository."
+    echo "On the other hand, the docker image used for the client is 'tidair/pysmurf-client'."
     echo
 }
 

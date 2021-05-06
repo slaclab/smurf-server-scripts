@@ -19,6 +19,8 @@ usage_header()
     echo
     echo "Note: The docker image used for the server is 'tidait/pysmurf-server'"
     echo "and the docker image used for the client is 'tidair/pysmurf-client'."
+    echo "Starting at version 'v5.0.0', the 'tidait/pysmurf-server' image comes"
+    echo "from the pysmurf repository."
     echo
 }
 
