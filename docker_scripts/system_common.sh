@@ -9,6 +9,11 @@
 # this script, and perform application specific step later.
 # The variable ${app_type} will point to the application type,
 # and the usage_header() function is defined for each one as well.
+#
+# The system application has different options, so that script
+# sets the flag "stable_release" before calling this script. So,
+# int his script, the that flag is used to processed the options
+# accordingly.
 
 ###############
 # Definitions #
@@ -19,6 +24,9 @@ rogue_git_repo=https://github.com/slaclab/rogue.git
 
 ## pysmurf
 pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
+
+## pysmurf stable docker images
+pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
@@ -36,13 +44,21 @@ usage()
 {
     usage_header
     echo "usage: ${script_name} -t ${app_type}"
-    echo "                         -v|--version <pysmurf_version>"
+    if [ -z ${stable_release+x} ]; then
+        echo "                         -v|--version <pysmurf_version>"
+    else
+        echo "                         -v|--version <pysmurf_server_version>"
+    fi
     echo "                         [-N|--slot <slot_number>]"
     echo "                         [-o|--output-dir <output_dir>]"
     echo "                         [-l|--list-versions]"
     echo "                         [-h|--help]"
     echo
-    echo "  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images."
+    if [ -z ${stable_release+x} ]; then
+        echo "  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images."
+    else
+        echo "  -v|--version        <pysmurf_server_version> : Version of the pysmurf-server docker image."
+    fi
     echo "  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
     echo "  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to"
@@ -56,9 +72,15 @@ usage()
 # Print a list of all available versions
 print_list_versions()
 {
-    # Print pysmurf versions (excluding version before v5.*)
-    echo "List of available pysmurf_versions:"
-    print_git_tags ${pysmurf_git_repo} 'v4.\|v3.\|v2.\|v1.\|v0.'
+    if [ -z ${stable_release+x} ]; then
+        # For development releases, print pysmurf versions (excluding version before v4.*)
+        echo "List of available pysmurf_version:"
+        print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
+    else
+        # For stable releases, print stable pysmurf-server versions
+        echo "List of available pysmurf_server_version:"
+        print_git_tags ${pysmurf_stable_git_repo}
+    fi
 
     echo
     exit 0
@@ -78,8 +100,15 @@ key="$1"
 
 case ${key} in
     -v|--version)
-    pysmurf_version="$2"
-    shift
+    # For development releases, this is the pysmurf version.
+    # For stable released, this is the pysmurf-server version.
+    if [ -z ${stable_release+x} ]; then
+        pysmurf_version="$2"
+        shift
+    else
+        server_version="$2"
+        shift
+    fi
     ;;
     -o|--output-dir)
     target_dir="$2"
@@ -109,21 +138,61 @@ shift
 done
 
 # Verify parameters
+if [ -z ${stable_release+x} ]; then
+    # For no stable releases, we only need the pysmurf version
+    if [ -z ${pysmurf_version+x} ]; then
+            echo "ERROR: pysmurf version not defined!"
+            echo ""
+            usage 1
+    fi
 
-# Check if the pysmurf version was defined
-if [ -z ${pysmurf_version+x} ]; then
-        echo "ERROR: pysmurf version not defined!"
-        echo ""
-        usage 1
-fi
+    # Check if the pysmurf_version exist (excluding version before v4.*)
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
+        echo "You can use the '-l' option to list the available versions."
+        echo
+        exit 1
+    fi
 
-# Check if the pysmurf_version exist (excluding version before v5.*)
-ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v4.\|v3.\|v2.\|v1.\|v0.')
-if [ -z ${ret} ]; then
-    echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
-    echo "You can use the '-l' option to list the available versions."
-    echo
-    exit 1
+    # The server and client version are the same in this case
+    server_version=${pysmurf_version}
+    client_version=${pysmurf_version}
+else
+    # For stable releases, we only need server version
+    if [ -z ${server_version+x} ]; then
+            echo "ERROR: pysmurf server version not defined!"
+            echo ""
+            usage 1
+    fi
+
+    # Check if the server version exist
+    ret=$(verify_git_tag_exist ${pysmurf_stable_git_repo} ${server_version})
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf server version ${server_version} does not exist"
+        echo "You can use the '-l' option to list the available versions."
+        echo
+        exit 1
+    fi
+
+    # Now we need to look for the corresponding pysmurf client version
+    client_version=$(get_pysmurf_version ${server_version})
+
+    # Check if a version of pysmurf was found
+    if [ ! ${client_version} ]; then
+        echo "Error: pysmurf version not found for server version ${server_version}"
+        echo
+        exit 1
+    fi
+
+    # Check if the client version exist (excluding version before v4.*)
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
+    if [ -z ${ret} ]; then
+        echo "ERROR: pysmurf version ${client_version} does not exist"
+        echo
+        exit 1
+    fi
+
 fi
 
 # Verify the communication type
@@ -168,7 +237,7 @@ fi
 
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${pysmurf_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${server_version}
 fi
 
 # Verify is target directory already exist
@@ -197,7 +266,8 @@ template_dir=${template_top_dir}/${app_type}/${template_prefix}
 
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
-        | sed s/%%PYSMURF_VERSION%%/${pysmurf_version}/g \
+        | sed s/%%SERVER_VERSION%%/${server_version}/g \
+        | sed s/%%CLIENT_VERSION%%/${client_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
         > ${target_dir}/docker-compose.yml
 if [ $? -ne 0 ]; then
