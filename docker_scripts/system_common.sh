@@ -58,6 +58,9 @@ usage()
         echo "  -v|--version        <pysmurf_version>        : Version of the pysmurf server/client images."
     else
         echo "  -v|--version        <pysmurf_server_version> : Version of the pysmurf-server docker image."
+        echo "                                                 Starting with version v5.0.0, this will be the version of the pysmurf"
+        echo "                                                 server/client images."
+
     fi
     echo "  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
     echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
@@ -80,6 +83,9 @@ print_list_versions()
         # For stable releases, print stable pysmurf-server versions
         echo "List of available pysmurf_server_version:"
         print_git_tags ${pysmurf_stable_git_repo}
+
+        # Starting on version v5.0.0, the stable versions come from the pysmurf repository
+        print_git_tags ${pysmurf_git_repo} 'v4.\|v3.\|v2.\|v1.\|v0.'
     fi
 
     echo
@@ -92,6 +98,7 @@ print_list_versions()
 
 # Default values
 comm_type='eth'
+server_name='pysmurf-server-base'
 
 # Verify inputs arguments
 while [[ $# -gt 0 ]]
@@ -158,6 +165,15 @@ if [ -z ${stable_release+x} ]; then
     # The server and client version are the same in this case
     server_version=${pysmurf_version}
     client_version=${pysmurf_version}
+
+    # Check if the version is newer or equal than v5.0.0. Starting in this version, the
+    # image comes from the pysmurf repository.
+    new_server_version=$(echo ${pysmurf_version} | grep -v 'v4.\|v3.\|v2.\|v1.\|v0.')
+
+    # Starting on version v5.0.0, we use the stable image for the development systems as well
+    if [ ${new_server_version} ]; then
+       server_name='pysmurf-server'
+    fi
 else
     # For stable releases, we only need server version
     if [ -z ${server_version+x} ]; then
@@ -166,8 +182,15 @@ else
             usage 1
     fi
 
-    # Check if the server version exist
+    # First, check if the server version exist in the pysmurf_stable_git_repo
     ret=$(verify_git_tag_exist ${pysmurf_stable_git_repo} ${server_version})
+
+    # If it doesn't exit there, then look in the pysmurf repository considering only
+    # versions starting at v5.0.0
+    if [ -z ${ret} ]; then
+       ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${server_version} 'v4.\|v3.\|v2.\|v1.\|v0.')
+    fi
+
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf server version ${server_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
@@ -175,22 +198,26 @@ else
         exit 1
     fi
 
+    # Check if the version is newer or equal than v5.0.0. Starting in this version, the
+    # image comes from the pysmurf repository.
+    new_server_version=$(echo ${server_version} | grep -v 'v4.\|v3.\|v2.\|v1.\|v0.')
+
     # Now we need to look for the corresponding pysmurf client version
-    client_version=$(get_pysmurf_version ${server_version})
+    if [ -z ${new_server_version+x} ]; then
+       # For version before v5.0.0, we need to figure out which version of the client (which
+       # comes from the pysmurf repository) correspond to this particular server version.
+        client_version=$(get_pysmurf_version ${server_version})
 
-    # Check if a version of pysmurf was found
-    if [ ! ${client_version} ]; then
-        echo "Error: pysmurf version not found for server version ${server_version}"
-        echo
-        exit 1
-    fi
-
-    # Check if the client version exist (excluding version before v4.*)
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${client_version} 'v3.\|v2.\|v1.\|v0.')
-    if [ -z ${ret} ]; then
-        echo "ERROR: pysmurf version ${client_version} does not exist"
-        echo
-        exit 1
+        # Check if a version of pysmurf was found
+        if [ ! ${client_version} ]; then
+            echo "Error: pysmurf version not found for server version ${server_version}"
+            echo
+            exit 1
+        fi
+    else
+       # Starting at version v5.0.0, the server will come from the pysmurf repository
+       # so the client will have the same version of the server.
+        client_version=${server_version}
     fi
 
 fi
@@ -266,6 +293,7 @@ template_dir=${template_top_dir}/${app_type}/${template_prefix}
 
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
+        | sed s/%%SERVER_NAME%%/${server_name}/g \
         | sed s/%%SERVER_VERSION%%/${server_version}/g \
         | sed s/%%CLIENT_VERSION%%/${client_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
