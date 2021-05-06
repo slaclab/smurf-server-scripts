@@ -57,7 +57,7 @@ get_rogue_version()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of applications
 . system_common.sh
 
 # Look for the rogue version

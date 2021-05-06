@@ -30,7 +30,7 @@ usage_header()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of applications
 . system_common.sh
 
 # Create fw directory

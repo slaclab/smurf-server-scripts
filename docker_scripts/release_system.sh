@@ -46,7 +46,7 @@ get_pysmurf_version()
 # Main body #
 #############
 
-# Call common release step to all type of application,
+# Call common release step to all type of applications,
 # but in this case set the "stable_release" flag.
 stable_release=1
 . system_common.sh
