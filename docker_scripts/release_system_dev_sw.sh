@@ -17,15 +17,17 @@ usage_header()
     echo "Release a new system for SW development. Includes both server and client."
     echo "This SMuRF server is based on pysmurf and rogue v4"
     echo
-    echo "This script will clone the 'pre-release' branch of both rogue and pysmurf repositories into the local"
-    echo "directories 'rogue' and 'pysmurf' respectevely. The SMuRF server docker image will use these local copies,"
-    echo "instead of the one provided internally. So, any change you make to the local copy will be present in the"
-    echo "docker container."
+    echo "This script will clone the specified version of pysmurf, and its corresponding version of rogue repositories"
+    echo "into the local directories 'rogue' and 'pysmurf' respectively. The SMuRF server docker image will use these"
+    echo "local copies, instead of the one provided internally. So, any change you make to the local copy will be"
+    echo "present in the docker container."
     echo
     echo "The SMuRF server docker image uses an user-provided FW version, located in the local 'fw' folder."
     echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base'"
-    echo "and the docker image used for the client is 'tidair/pysmurf-client'."
+    echo "Note: The docker image used for the server is 'tidait/pysmurf-server-base', for version prior to"
+    echo "'v5.0.0', or 'tidait/pysmurf-server' for versions starting at 'v5.0.0'. Starting at version"
+    echo "'v5.0.0', the 'tidait/pysmurf-server' image comes from the pysmurf repository."
+    echo "On the other hand, the docker image used for the client is 'tidair/pysmurf-client'."
     echo
 }
 
@@ -55,7 +57,7 @@ get_rogue_version()
 # Main body #
 #############
 
-# Call common release step to all type of application
+# Call common release step to all type of applications
 . system_common.sh
 
 # Look for the rogue version
