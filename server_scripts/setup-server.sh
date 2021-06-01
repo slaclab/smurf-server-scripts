@@ -589,7 +589,10 @@ shawnhammer_scripts=('ping_carrier' 'shawnhammer' 'shawnhammerfunctions' 'switch
 # to the standard location "/home/cryo/.local/bin"
 old_script_path='/usr/local/src/smurf-server-scripts/docker_scripts'
 new_script_path='/home/cryo/.local/bin'
+
+# Make sure the 'new_script_path' directory exist
 mkdir -p ${new_script_path}
+
 for s in ${shawnhammer_scripts[@]}; do
     mv ${old_script_path}/${s} ${new_script_path}/${s} &> /dev/null && \
         chown -fR cryo:smurf ${new_script_path}/${s} && \
@@ -613,6 +616,9 @@ for s in ${shawnhammer_scripts[@]}; do
         chown -fR cryo:smurf ${new_script_path}/${s} && \
         echo "\"${s}\" was created, pointing to \"${shawnhammer_scripts_location}/${s}.sh\""
 done
+
+# The 'new_script_path' directory and its content should be owned by the 'cryo' user
+chown -R cryo:smurf ${new_script_path}
 
 echo "###########################################"
 echo "### Done releasing shawnhammer scripts. ###"
