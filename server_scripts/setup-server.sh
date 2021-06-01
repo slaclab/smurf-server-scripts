@@ -589,6 +589,7 @@ shawnhammer_scripts=('ping_carrier' 'shawnhammer' 'shawnhammerfunctions' 'switch
 # to the standard location "/home/cryo/.local/bin"
 old_script_path='/usr/local/src/smurf-server-scripts/docker_scripts'
 new_script_path='/home/cryo/.local/bin'
+mkdir -p ${new_script_path}
 for s in ${shawnhammer_scripts[@]}; do
     mv ${old_script_path}/${s} ${new_script_path}/${s} &> /dev/null && \
         chown -fR cryo:smurf ${new_script_path}/${s} && \
