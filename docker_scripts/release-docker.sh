@@ -98,10 +98,10 @@ update_scripts()
 
     cd ${top_dir}
 
-    # If not version was specified, checkout the 'master' branch
+    # If not version was specified, checkout the 'main' branch
     if [ -z ${tag} ]; then
-        echo "Not tag was specified, so updating these scripts to the head of the master branch..."
-        sudo bash -c "git fetch --all --tags && git checkout master && git pull"
+        echo "Not tag was specified, so updating these scripts to the head of the main branch..."
+        sudo bash -c "git fetch --all --tags && git checkout main && git pull"
     else
 
         # Check if the version exist

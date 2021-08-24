@@ -36,7 +36,7 @@ usage: release-docker.sh -t|--type <app_type> [-h|--help]
                            - atca-monitor   : An ATCA monitor application.
                            - guis           : Application to connect remote rogue GUIs.
   -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head
-                           of the master branch will be used. Note: You will be asked for the sudo password.
+                           of the main branch will be used. Note: You will be asked for the sudo password.
   -l|--list-versions     : Print a list of available versions.
   -h|--help              : Show help message for each application type.
 ```
@@ -197,7 +197,7 @@ $ git checkout -b <new-branch-name>"
 $ git push -set-upstream origin <new-branch-name>"
 ```
 
-Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the main branch.
 
 ### Full systems based on smurf2mce and rogue v3 [OBSOLETE]
 
@@ -321,7 +321,7 @@ $ git checkout -b <new-branch-name>
 $ git push -set-upstream origin <new-branch-name>
 ```
 
-Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the master branch.
+Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the main branch.
 
 ### Utility application
 

@@ -23,7 +23,7 @@ usage()
 {
     echo "Release a stand alone pysmurf application in development mode."
     echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder."
-    echo "This script will clone the master branch from github."
+    echo "This script will clone the main branch from github."
     echo
     echo "usage: ${script_name} -t pysmurf-dev -v|--version <pysmurf_version>"
     echo "                         [-o|--output-dir <output_dir>] [-h|--help]"
@@ -132,7 +132,7 @@ fi
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh
 
-# Clone pysmurf (master branch) in the target directory
+# Clone pysmurf (main branch) in the target directory
 echo "Cloning pysmurf..."
 cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
 echo ${cmd}
