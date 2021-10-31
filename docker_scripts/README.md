@@ -18,7 +18,7 @@ The top script is `release-docker.sh`, and its usage is:
 ```bash
 $ release-docker.sh --help
 Release a new set of scripts to run an specified system based on dockers.
-Version: R3.10.2-dirty
+Version: R3.7.0
 
 usage: release-docker.sh -t|--type <app_type> [-h|--help]
 
@@ -26,6 +26,9 @@ usage: release-docker.sh -t|--type <app_type> [-h|--help]
                            - system         : Full system (stable version) [pysmurf/rogue v4].
                            - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4].
                            - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4].
+                           - system3        : [OBSOLETE] Full system (stable version) [smurf2mce/rogue v3].
+                           - system3-dev-fw : [OBSOLETE] Full system (with a development version of FW) [smurf2mce/rogue v3].
+                           - system3-dev-sw : [OBSOLETE] Full system with a development version of SW and FW [smurf2mce/rogue v3].
                            - pysmurf-dev    : A stand-alone version of pysmurf, in development mode.
                            - utils          : An utility system.
                            - tpg            : A TPG IOC.
@@ -51,6 +54,10 @@ Currently, the script supports the following system types:
   - [Full stable system](#full-stable-system)
   - [Full system, for Firmware development](#full-system-for-firmware-development)
   - [Full system, for Software development](#full-system-for-software-development)
+- [Full systems based on smurf2mce and rogue v3](#full-systems-based-on-smurf2mce-and-rogue-v3)
+  - [Full stable system](#full-stable-system-1)
+  - [Full system, for Firmware development](#full-system-for-firmware-development-1)
+  - [Full system, for Software development](#full-system-for-software-development-1)
 - [Pysmurf application, in development mode](#pysmurf-application-in-development-mode)
 - [Utility application](#utility-application)
 - [TPG IOC](#tpg-ioc)
@@ -192,6 +199,100 @@ $ git push -set-upstream origin <new-branch-name>"
 
 Replace `<new-branch-name>`, with an appropriate branch name. After you push all your changes to Github, you should open a PR to merge your changes into the main branch.
 
+### Full systems based on smurf2mce and rogue v3 [OBSOLETE]
+
+#### Full stable system
+
+A stable system is formed by a SMuRF server and pysmurf. For stables systems, the SMuRF server contains both the smur2mce application and the files from an specific firmware version.
+
+The server runs in the [smur2mce docker](https://github.com/slaclab/smurf2mce-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
+
+To release an stable system, use `type` = `system3`, with the following arguments:
+
+```bash
+$ release-docker.sh -t|--type system3 -s|--smurf2mce-version <smurf2mce_version> -p|--pysmurf_version <pysmurf_version>
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
+
+  -s|--smurf2mce-version <smurf2mce_version> : Version of the smurf2mce docker image.
+  -p|--pysmurf-version   <pysmurf_version>   : Version of the pysmurf docker image.
+  -c|--comm-type         <commm_type>        : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot              <slot_number>       : ATCA crate slot number (2-7) (Optional).
+  -o|--output-dir        <output_dir>        : Top directory where to release the scripts. Defaults to
+                                               /home/cryo/docker/smurf/stable/<slot_number>/<smurf2mce_version>.
+  -h|--help                                  : Show this message.
+```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+
+#### Full system, for Firmware development
+
+A development system is formed by a SMuRF server and pysmurf. For firmware development systems, the SMuRF server contains the smurf2mce application, while the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+
+The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2mce-base-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
+
+To release a firmware development system, use `type` = `system3-dev-fw`, with the following arguments:
+
+```bash
+$ release-docker.sh -t|--type system3-dev-fw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
+
+  -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
+  -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
+                                                         /home/cryo/docker/smurf/dev_fw/<slot_number>/<smurf2mce_base_version>.
+  -h|--help                                            : Show this message.
+```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+
+#### Full system, for Software development
+
+A development system is formed by a SMuRF server and pysmurf. For software development systems, the SMuRF server contains a smurf2mce application provided by the user in a folder called **smurf2mce** in the release folder. The release script will do a clone of the master branch of the [smurf2mce git repository](https://github.com/slaclab/smurf2mce). Also, the firmware files are provided by the user by adding them in a folder called **fw** in the release folder.
+
+The server runs in the [smur2mce-base docker](https://github.com/slaclab/smurf2mce-base-docker), and pysmurf runs in the the [pysmurf docker](https://github.com/slaclab/pysmurf-docker).
+
+To release a software development system, use `type` = `system3-dev-sw`, with the following arguments:
+
+```bash
+$ release-docker.sh -t|--type system3-dev-sw -s|--smurf2mce-base-version <smurf2mce-base_version> -p|--pysmurf_version <pysmurf_version>
+                  [-N|--slot <slot_number>] [-o|--output-dir <output_dir>] [-h|--help]
+
+  -s|--smurf2mce-base-version <smurf2mce-base_version> : Version of the smurf2mce-base docker image. Used as a base
+                                                         image; smurf2mce will be overwritten by the local copy.
+  -p|--pysmurf-version        <pysmurf_version>        : Version of the pysmurf docker image.
+  -c|--comm-type              <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'.
+  -N|--slot                   <slot_number>            : ATCA crate slot number (2-7) (Optional).
+  -o|--output-dir             <output_dir>             : Top directory where to release the scripts. Defaults to
+                                                         /home/cryo/docker/smurf/dev_sw/<slot_number>/<smurf2mce-base_version>.
+  -h|--help                                            : Show this message.
+```
+
+The slot number is optional:
+- If the slot number is specified, then the released docker will run in that particular slot number; the container can be started simply by running the `run.sh` script.
+- On the other hand, if the slot number is not specified, then the docker can run against any slot number, the `run.sh` script will accept the slot number as an argument, in the following way: `run.sh -N <slot_number>`. In the default release directory the `<slot_number>` directory will be called `slotN`.
+
+In the software development mode, if you take a look a the  generated `docker-compose.yml` file you will see that the `command:` line under the `smurf_server` section is commented out. The effect of this, is that when the container is started (by running the `run.sh` script) it will run by default a bash session, instead of starting the smurf2mce pyrogue server. Later one, after you have done your software modification, you can choose to re-enable this line to start the server by default.
+
+When this container is run for the first time, the freshly cloned version of smurf2mce need to be compiled. In order to do that, start the container and attach to it (by running `docker attach smurf_server_s<N>`, where *N* depend on which slot you are using). Then go to the smurf2mce folder (`/usr/local/src/smurf2mce/mcetransmit`) and make a clean build:
+
+```bash
+$ rm -rf build
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
+You can now start the server using the `start_server.sh` script with the appropriate parameters (you can run the command with the same arguments defined in the `docker-compose.yml` file for example).
+
+You will need to compile the code every time you make changes to the C++ code. On the other hand, you don't need to compile when changing python code.
+
 ### Pysmurf application, in development mode
 
 **Note**: This mode only supports pysmurf starting at version 4, including all its initial release candidates.
@@ -318,7 +419,37 @@ $ release-docker.sh -t|--type guis -v|--version <smurf-rogue_version> [-o|--outp
 
 ## Version Upgrade
 
-Run `release-docker.sh --help` to see the current version of the script. In this example, we are using version `R3.7.0`. You can upgrade the version of this script using the `--upgrade` option:
+You can see which version of the `release-docker.sh` script you are using by calling the script with the `--help` option:
+
+```bash
+$ release-docker.sh --help
+Release a new set of scripts to run an specified system based on dockers.
+Version: R3.7.0
+
+usage: release-docker.sh -t|--type <app_type> [-h|--help]
+
+  -t|--type <app_type>   : Type of application to install. Options are:
+                           - system         : Full system (stable version) [pysmurf/rogue v4].
+                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4].
+                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4].
+                           - system3        : [OBSOLETE] Full system (stable version) [smurf2mce/rogue v3].
+                           - system3-dev-fw : [OBSOLETE] Full system (with a development version of FW) [smurf2mce/rogue v3].
+                           - system3-dev-sw : [OBSOLETE] Full system with a development version of SW and FW [smurf2mce/rogue v3].
+                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode.
+                           - utils          : An utility system.
+                           - tpg            : A TPG IOC.
+                           - pcie           : A PCIe utility application.
+                           - atca-monitor   : An ATCA monitor application.
+                           - guis           : Application to connect remote rogue GUIs.
+  -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head
+                           of the main branch will be used. Note: You will be asked for the sudo password.
+  -l|--list-versions     : Print a list of available versions.
+  -h|--help              : Show help message for each application type.
+```
+
+The version number will be printed out on the top part of the output. In this example, we are using version `R3.7.0`.
+
+You can upgrade the version of this script using the `--upgrade` option:
 
 ```bash
 $ release-docker.sh --upgrade <version>
