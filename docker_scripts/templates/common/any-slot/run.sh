@@ -4,7 +4,7 @@ args=$@
 
 . ./base.sh
 
-. .env.sh
+. .env
 
 # Stop previously running server, if any by calling
 # the stop.sh script with the input arguments.
