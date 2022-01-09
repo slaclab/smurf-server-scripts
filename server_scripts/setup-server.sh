@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-########################
-# ASK USER CONFIMATION #
-########################
 echo "This script will setup an SMuRF server right after the OS installation."
 echo "This script should be run juts once, and right after the the OS is installed."
 echo "Note: You must execute this script with root privileges."
@@ -27,18 +24,8 @@ chown -R cryo:smurf ${server_log_file}
 exec > >(tee -ia ${server_log_file})
 exec 2>&1
 
-echo "Starting server configuration..."
-date
-echo
+. assert_server_type.sh
 
-############################
-# DETECTING TYPE OF SERVER #
-############################
-. server_type.sh
-
-####################
-# INSTALL PACKAGES #
-####################
 echo "##############################"
 echo "### Installing packages... ###"
 echo "##############################"
@@ -209,11 +196,7 @@ cp --backup=numbered templates/gitconfig /home/cryo/.gitconfig
 chown -fR cryo:smurf /home/cryo/.gitconfig{,.~*}
 
 # Set default bash aliases. Make numbered backups of the original file.
-# Also, create an empty .bash_aliases_local file, if it doesn't exist
-# Set the right file permissions.
 cp --backup=numbered templates/bash_aliases /home/cryo/.bash_aliases
-touch /home/cryo/.bash_aliases_local
-chown -fR cryo:smurf /home/cryo/.bash_aliases{,_local,.~*}
 
 echo
 echo "###########################################"
