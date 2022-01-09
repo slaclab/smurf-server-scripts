@@ -10,8 +10,11 @@ args=$@
 # the stop.sh script with the input arguments.
 ./stop.sh ${args}
 
-# Start the server
-echo "Starting docker containers for slot ${slot}..."
+echo "Starting pysmurf server and client for slot ${slot}..."
+
+if [ $reactivate -eq true ]; then
+    reactivate
+fi
 
 # If the PCIe card in present in the system, use the
 # PCIe related docker-compose file as well
