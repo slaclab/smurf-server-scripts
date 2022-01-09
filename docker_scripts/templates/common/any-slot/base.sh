@@ -93,7 +93,7 @@ reactivate() {
 
     # activate carriers
     echo "Activating slot ${slot}"
-    deactivatecmd="clia activate board ${slot}"
+    activatecmd="clia activate board ${slot}"
     ssh root@${shelfmanager} "$activatecmd"
 
     # Mean time until the carrier is up again is 25 seconds.
