@@ -12,7 +12,7 @@ args=$@
 
 echo "Starting pysmurf server and client in slot ${slot}..."
 
-if $reactivate; then
+if [ "$reactivate" = true ] ; then
     reactivate
 fi
 
