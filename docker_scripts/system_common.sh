@@ -318,15 +318,8 @@ fi
 
 copy_template "run.sh"
 copy_template "stop.sh"
-# Copy the base.sh common script only when the slot number is not defined
-if [ -z ${slot_number+x} ]; then
-    copy_template "base.sh"
-fi
-
-# Copy the .env file, which is common independent of the slot selection
-template_dir=${template_top_dir}/common
+copy_template "base.sh"
 copy_template "env" ".env"
 
-# Mark the scripts as executable
 chmod +x ${target_dir}/run.sh
 chmod +x ${target_dir}/stop.sh

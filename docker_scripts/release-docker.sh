@@ -62,7 +62,6 @@ copy_template()
         else
                 output_file=${target_dir}/$2
         fi
-        echo "Creating ${output_file}"
 
         cat ${template_file} > ${output_file}
         if [ $? -ne 0 ]; then
@@ -71,8 +70,7 @@ copy_template()
                 exit 1
         fi
 
-        echo "Done!"
-        echo ""
+	echo "Copied ${output_file} from ${template_file}."
 }
 
 # Print a list of all available versions
