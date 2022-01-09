@@ -94,19 +94,10 @@ update_self()
     cd ${top_dir}
     
     if [ -z ${tag} ]; then
-        echo ""
+        echo "No reference specified. Using branch main of ${server_scripts_git_repo}. Use -l if you want some specific version."
         sudo bash -c "git fetch --all --tags && git checkout main && git pull"
     else
-
-        # Check if the version exist
-        ret=$(verify_git_tag_exist ${server_scripts_git_repo} ${tag} 'R1.\|R2.\|R3.0')
-        if [ -z ${ret} ]; then
-            echo "ERROR: version ${tag} does not exist"
-            echo "You can use the '-l' option to list the available versions."
-            echo
-            exit 1
-        fi
-        echo "Updating these scripts to version '${tag}'..."
+        echo "Updating ${script_name} to version ${tag} of ${server_scripts_git_repo}."
         sudo bash -c "git fetch --all --tags && git checkout ${tag}"
     fi
 
