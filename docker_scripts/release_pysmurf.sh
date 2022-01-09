@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-###############
-# Definitions #
-###############
 # pysmurf git repository
 pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
 
@@ -12,29 +9,25 @@ release_top_default_dir="/home/cryo/docker/pysmurf/dev"
 # Template directory for this application
 template_dir=${template_top_dir}/pysmurf-dev
 
-########################
-# Function definitions #
-########################
 # Import common functions
 . common.sh
 
 # Usage message
 usage()
 {
-    echo "Release a stand alone pysmurf application in development mode."
-    echo "It uses a user provide version of pysmurf located in the 'pysmurf' folder."
-    echo "This script will clone the main branch from github."
-    echo
-    echo "usage: ${script_name} -t pysmurf-dev -v|--version <pysmurf_version>"
-    echo "                         [-o|--output-dir <output_dir>] [-h|--help]"
-    echo
-    echo "  -v|--version    <pysmurf_version> : Version of the pysmurf docker image. Used as a base"
-    echo "                                      image; pysmurf will be overwritten by the local copy."
-    echo "  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to"
-    echo "                                      ${release_top_default_dir}/<pysmurf_version>"
-    echo "  -l|--list-versions                : Print a list of available versions."
-    echo "  -h|--help                         : Show this message."
-    echo
+    echo "
+Copy the pysmurf repository at the specified version.
+
+usage: ${script_name} -t pysmurf -v|--version <pysmurf_version>
+                         [-o|--output-dir <output_dir>] [-h|--help]
+
+  -v|--version    <pysmurf_version> : Version of the pysmurf docker image. Used as a base
+                                      image; pysmurf will be overwritten by the local copy.
+  -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to
+                                      ${release_top_default_dir}/<pysmurf_version>
+  -l|--list-versions                : Print a list of available versions.
+  -h|--help                         : Show this message."
+    
     exit $1
 }
 
@@ -46,10 +39,6 @@ print_list_versions()
     echo
     exit 0
 }
-
-#############
-# Main body #
-#############
 
 # Verify inputs arguments
 while [[ $# -gt 0 ]]

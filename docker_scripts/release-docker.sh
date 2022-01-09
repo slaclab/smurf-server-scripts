@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-###############
-# Definitions #
-###############
 # smurf server scripts git repository
 server_scripts_git_repo=https://github.com/slaclab/smurf-server-scripts.git
 
@@ -18,33 +15,29 @@ script_name=$(basename $0)
 # Script version
 version=$(cd ${top_dir} && git describe --tags --always --dirty)
 
-########################
-# Function definitions #
-########################
 # Import common functions
 . common.sh
 
 # Usage message
 usage()
 {
-    echo "
-Script that provides the SMuRF software. Does not set up the server, use setup-server.sh for that.
-Version: $version
+    echo "Script that provides SMuRF software. Does not set up the server, use setup-server.sh for that.
+
+version: $version
 
 usage: $(basename $0) -t|--type type [-h|--help]
 
   -t|--type type : Type of application to install. Options are:
-       - system        : SMuRF software using pysmurf and firmware already embedded.
-       - system-dev-fw : 'system' with user-supplied firmware .mcs file.
-       - system-dev-sw : 'system-dev-fw' with user-supplied pysmurf code.
-       - pysmurf-dev   : Copy of pysmurf, commonly used in development.
-       - utils         : The utility software, commonly used in operations.
-       - tpg           : The timing software.
-       - pcie          : PCIe utility application.
-       - atca-monitor  : PyDM interface to view ATCA crate information.
-       - guis          : PyDM interface to modify firmware and software variables.
-  -u|--upgrade version : Upgrade to version, e.g. R3.10.2, develop, main.
-  -l|--list-versions : Print a list of available versions.
+    - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
+    - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
+    - pysmurf      : Copy of the pysmurf repository.
+    - utils        : The utility software, commonly used in operations.
+    - tpg          : The timing software.
+    - pcie         : PCIe software for 6-carrier operation.
+    - atca-monitor : Interface to view ATCA crate information.
+    - guis         : Interface to modify running systems.
+  -u|--upgrade version : Upgrade this script to another version.
+  -l|--list-versions : List this script's available versions.
   -h|--help : Show help. Use with -t for type help.
 "
     exit $1
@@ -111,10 +104,6 @@ update_self()
     exit ${ret}
 }
 
-#############
-# Main body #
-#############
-
 app_options=""
 # Verify inputs arguments
 while [[ $# -gt 0 ]]
@@ -167,23 +156,11 @@ case ${app_type} in
     system)
     . ${top_dir}/release_system.sh ${app_options}
     ;;
-    system-dev-fw)
-    . ${top_dir}/release_system_dev_fw.sh ${app_options}
+    system-dev)
+    . ${top_dir}/release_system_dev.sh ${app_options}
     ;;
-    system-dev-sw)
-    . ${top_dir}/release_system_dev_sw.sh ${app_options}
-    ;;
-    system3)
-    . ${top_dir}/release_system3.sh ${app_options}
-    ;;
-    system3-dev-fw)
-    . ${top_dir}/release_system3_dev_fw.sh ${app_options}
-    ;;
-    system3-dev-sw)
-    . ${top_dir}/release_system3_dev_sw.sh ${app_options}
-    ;;
-    pysmurf-dev)
-    . ${top_dir}/release_pysmurf_dev.sh ${app_options}
+    pysmurf)
+    . ${top_dir}/release_pysmurf.sh ${app_options}
     ;;
     utils)
     . ${top_dir}/release_utils.sh ${app_options}

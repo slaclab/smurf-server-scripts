@@ -2,8 +2,7 @@
 
 # This script contains steps common to application types:
 # - system
-# - system-dev-fw
-# - system-dev-sw
+# - system-dev
 #
 # Each of these application specific release script will call
 # this script, and perform application specific step later.
@@ -231,9 +230,7 @@ case ${comm_type} in
     comm_args="-c pcie"
     ;;
     *)
-    echo
-    echo "ERROR: Invalid communication type!"
-    echo
+    echo "Invalid communication type ${comm_type}. Exiting."
     usage 1
     ;;
 esac
