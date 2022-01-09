@@ -27,26 +27,26 @@ version=$(cd ${top_dir} && git describe --tags --always --dirty)
 # Usage message
 usage()
 {
-    echo "Release a new set of scripts to run an specified system based on dockers."
-    echo "Version: ${version}"
-    echo
-    echo "usage: ${script_name} -t|--type <app_type> [-h|--help]"
-    echo
-    echo "  -t|--type <app_type>   : Type of application to install. Options are:"
-    echo "                           - system         : Full system (stable version) [pysmurf/rogue v4]."
-    echo "                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4]."
-    echo "                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4]."
-    echo "                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode."
-    echo "                           - utils          : An utility system."
-    echo "                           - tpg            : A TPG IOC."
-    echo "                           - pcie           : A PCIe utility application."
-    echo "                           - atca-monitor   : An ATCA monitor application."
-    echo "                           - guis           : Application to connect remote rogue GUIs."
-    echo "  -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head"
-    echo "                           of the main branch will be used. Note: You will be asked for the sudo password."
-    echo "  -l|--list-versions     : Print a list of available versions."
-    echo "  -h|--help              : Show help message for each application type."
-    echo
+    echo "
+Script that provides the SMuRF software. Does not set up the server, use setup-server.sh for that.
+Version: $version
+
+usage: $(basename $0) -t|--type type [-h|--help]
+
+  -t|--type type : Type of application to install. Options are:
+       - system        : SMuRF software using pysmurf and firmware already embedded.
+       - system-dev-fw : 'system' with user-supplied firmware .mcs file.
+       - system-dev-sw : 'system-dev-fw' with user-supplied pysmurf code.
+       - pysmurf-dev   : Copy of pysmurf, commonly used in development.
+       - utils         : The utility software, commonly used in operations.
+       - tpg           : The timing software.
+       - pcie          : PCIe utility application.
+       - atca-monitor  : PyDM interface to view ATCA crate information.
+       - guis          : PyDM interface to modify firmware and software variables.
+  -u|--upgrade version : Upgrade this script to version, otherwise the latest commit.
+  -l|--list-versions : Print a list of available versions.
+  -h|--help : Show help. Use with -t for type help.
+"
     exit $1
 }
 
@@ -173,8 +173,6 @@ if [ -z ${app_type+x} ]; then
             print_list_versions
         fi
 
-        echo "ERROR: Must specified the application type!"
-        echo ""
         usage 1
 fi
 

@@ -17,23 +17,22 @@ The top script is `release-docker.sh`, and its usage is:
 
 ```bash
 $ release-docker.sh --help
-Release a new set of scripts to run an specified system based on dockers.
-Version: R3.10.2-dirty
+Script that provides most SMuRF software. Does not set up the server, use setup-server.sh for that.
+Version: R3.10.2
 
 usage: release-docker.sh -t|--type <app_type> [-h|--help]
 
   -t|--type <app_type>   : Type of application to install. Options are:
-                           - system         : Full system (stable version) [pysmurf/rogue v4].
-                           - system-dev-fw  : Full system (with a development version of FW) [pysmurf/rogue v4].
-                           - system-dev-sw  : Full system with a development version of SW and FW [pysmurf/rogue v4].
-                           - pysmurf-dev    : A stand-alone version of pysmurf, in development mode.
-                           - utils          : An utility system.
-                           - tpg            : A TPG IOC.
-                           - pcie           : A PCIe utility application.
-                           - atca-monitor   : An ATCA monitor application.
-                           - guis           : Application to connect remote rogue GUIs.
-  -u|--upgrade <version> : Upgrade these scripts to the specified version. If not version if specified, then the head
-                           of the main branch will be used. Note: You will be asked for the sudo password.
+                           - system         : Stable system using pysmurf and firmware already in the image.
+                           - system-dev-fw  : "system" with user-supplied firmware .mcs file.
+                           - system-dev-sw  : "system-dev-fw" with user-supplied pysmurf code.
+                           - pysmurf-dev    : The copy of pysmurf, commonly used in development.
+                           - utils          : The utility software, commonly used in operations.
+                           - tpg            : The timing software, a.k.a timing pattern generator.
+                           - pcie           : PCIe utility application.
+                           - atca-monitor   : PyDM interface that can interrogate the ATCA crate.
+                           - guis           : PyDM interface that can interrogate the pysmurf server, pyrogue.
+  -u|--upgrade <version> : Upgrade this script to version, otherwise main.
   -l|--list-versions     : Print a list of available versions.
   -h|--help              : Show help message for each application type.
 ```
@@ -43,22 +42,6 @@ To release a new system, call the script with the `--type` option:
 ```bash
 release-docker.sh --type <type> <arguments>
 ```
-
-where `type` specified the type of system to release, and `arguments` depends on the type.
-
-Currently, the script supports the following system types:
-- [Full systems based on pysmurf and rogue v4](#full-systems-based-on-pysmurf-and-rogue-v4)
-  - [Full stable system](#full-stable-system)
-  - [Full system, for Firmware development](#full-system-for-firmware-development)
-  - [Full system, for Software development](#full-system-for-software-development)
-- [Pysmurf application, in development mode](#pysmurf-application-in-development-mode)
-- [Utility application](#utility-application)
-- [TPG IOC](#tpg-ioc)
-- [PCIe utility application](#pcie-utility-application)
-- [ATCA monitor application](#atca-monitor-application)
-- [Application to connect remote GUIs](#remote-rogue-gui-application)
-
-All these different type of systems, and their respective arguments are described next.
 
 ### Full systems based on pysmurf and rogue v4
 
