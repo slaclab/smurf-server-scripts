@@ -43,18 +43,16 @@ usage: $(basename $0) -t|--type type [-h|--help]
        - pcie          : PCIe utility application.
        - atca-monitor  : PyDM interface to view ATCA crate information.
        - guis          : PyDM interface to modify firmware and software variables.
-  -u|--upgrade version : Upgrade this script to version, otherwise the latest commit.
+  -u|--upgrade version : Upgrade to version, e.g. R3.10.2, develop, main.
   -l|--list-versions : Print a list of available versions.
   -h|--help : Show help. Use with -t for type help.
 "
     exit $1
 }
 
-# copy a template file without any substitutions
-# First argument is the template file name, while the
-# second argument is the output file name. If the second
-# argument is omitted, then the output file will have the
-# same name as the template fie
+# Function to copy stuff from template_dir to target_dir. Used in
+# system_common.sh and release-tpg.sh. Copy filename template_dir/$1
+# to target_dir/$2, or target_dir/$1 if $2 is not specified.
 copy_template()
 {
         local template_file=${template_dir}/$1
@@ -89,15 +87,14 @@ print_list_versions()
 }
 
 # Update these scripts
-update_scripts()
+update_self()
 {
     local tag="$1"
 
     cd ${top_dir}
-
-    # If not version was specified, checkout the 'main' branch
+    
     if [ -z ${tag} ]; then
-        echo "Not tag was specified, so updating these scripts to the head of the main branch..."
+        echo ""
         sudo bash -c "git fetch --all --tags && git checkout main && git pull"
     else
 
@@ -145,7 +142,7 @@ case ${key} in
     app_options="${app_options} ${key}"
     ;;
     -u|--upgrade)
-    update_scripts "$2"
+    update_self "$2"
     ;;
     -h|--help)
     show_help=1
