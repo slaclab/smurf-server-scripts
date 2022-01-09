@@ -10,9 +10,9 @@ args=$@
 # the stop.sh script with the input arguments.
 ./stop.sh ${args}
 
-echo "Starting pysmurf server and client for slot ${slot}..."
+echo "Starting pysmurf server and client in slot ${slot}..."
 
-if [ $reactivate -eq true ]; then
+if $reactivate; then
     reactivate
 fi
 
