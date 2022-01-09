@@ -105,9 +105,9 @@ update_self()
     cd - > /dev/null
 
     if [ ${ret} == 0 ]; then
-        echo "Done!"
+        echo "Done, scripts now in ${top_dir}."
     else
-        echo "Failed!"
+        echo "Failed."
     fi
 
     exit ${ret}
