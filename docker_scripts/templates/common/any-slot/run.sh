@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Save input arguments
 args=$@
 
-# Call the base script
 . ./base.sh
+
+. .env.sh
 
 # Stop previously running server, if any by calling
 # the stop.sh script with the input arguments.
