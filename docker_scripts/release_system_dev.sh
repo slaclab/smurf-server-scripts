@@ -42,7 +42,6 @@ get_rogue_version() {
 
 # Do exactly the system release, except without stable_release=1.
 . ${top_dir}/system_common.sh
-. ${top_dir}/system_common.sh
 
 # Now clone rogue, pysmurf, compile them, and make the custom fw folder.
 

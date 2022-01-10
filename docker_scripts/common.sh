@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# This script contains common functions to all scrips
-
 # Print all the available tags in a remote repository, pointed by passed argument ($1)
 # Only the tag names are printed, and they are sorted from high to low.
 # The second argument is optional, and defines string to be excluded (for example 'v1.' to exclude all v1.* versions)

@@ -30,10 +30,6 @@ pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
-# Import common functions
-. ${top_dir}/common.sh
-. ${top_dir}/common.sh
-
 # Usage message
 # Development releases need only 1 version, while stable
 # releases need 2 version, the server and the client.

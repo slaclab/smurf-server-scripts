@@ -17,8 +17,7 @@ from the pysmurf repository."
 # Call common release step to all type of applications,
 # but in this case set the "stable_release" flag.
 stable_release=1
-. ${top_dir}/./system_common.sh
-. ${top_dir}/./system_common.sh
+. ${top_dir}/system_common.sh
 
 echo "Scripts placed in ${target_dir}"
 echo "End of release-system.sh"

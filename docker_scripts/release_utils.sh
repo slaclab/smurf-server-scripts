@@ -12,13 +12,6 @@ release_top_default_dir="/home/cryo/docker/utils"
 # Template directory for this application
 template_dir=${template_top_dir}/utils
 
-########################
-# Function definitions #
-########################
-# Import common functions
-. ${top_dir}/common.sh
-. ${top_dir}/common.sh
-
 # Usage message
 usage()
 {
