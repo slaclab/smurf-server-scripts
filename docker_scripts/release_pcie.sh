@@ -16,7 +16,8 @@ template_dir=${template_top_dir}/pcie
 # Function definitions #
 ########################
 # Import common functions
-. common.sh
+. ${top_dir}/common.sh
+. ${top_dir}/common.sh
 
 # Usage message
 usage()

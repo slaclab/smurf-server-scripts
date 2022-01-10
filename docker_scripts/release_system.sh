@@ -1,58 +1,24 @@
 #!/usr/bin/env bash
 
-###############
-# Definitions #
-###############
-
 # Prefix use in the default target release directory
 target_dir_prefix=stable
 
-########################
-# Function definitions #
-########################
+# This is called by the help flag.
+usage_header() {
+    echo "Release a new stable system. Includes both server and client.
+This SMuRF server is based on pysmurf and rogue v4
 
-# Usage message
-usage_header()
-{
-    echo "Release a new stable system. Includes both server and client."
-    echo "This SMuRF server is based on pysmurf and rogue v4"
-    echo
-    echo "Note: The docker image used for the server is 'tidait/pysmurf-server'"
-    echo "and the docker image used for the client is 'tidair/pysmurf-client'."
-    echo "Starting at version 'v5.0.0', the 'tidait/pysmurf-server' image comes"
-    echo "from the pysmurf repository."
-    echo
+Note: The docker image used for the server is 'tidair/pysmurf-server'
+and the docker image used for the client is 'tidair/pysmurf-client'.
+Starting at version 'v5.0.0', the 'tidair/pysmurf-server' image comes
+from the pysmurf repository."
 }
-
-
-# Get the pysmurf version used to build an specific pysmurf-server version.
-# The first argument is the pysmurf-server version.
-# It return the according version of pysmurf. Or an empty string if not found.
-get_pysmurf_version()
-{
-    # pysmurf version
-    local pysmurf_stable_version=$1
-
-    # First, the the smurf-rogue version
-    local pysmurf_version=$(curl -fsSL --retry-connrefused --retry 5 \
-        https://raw.githubusercontent.com/slaclab/pysmurf-stable-docker/${pysmurf_stable_version}/definitions.sh 2> /dev/null \
-        | grep -Po '^pysmurf_server_base_version=\s*\K.+') || exit 1
-
-    # Return the rogue version
-    echo ${pysmurf_version}
-}
-
-#############
-# Main body #
-#############
 
 # Call common release step to all type of applications,
 # but in this case set the "stable_release" flag.
 stable_release=1
-. system_common.sh
+. ${top_dir}/./system_common.sh
+. ${top_dir}/./system_common.sh
 
-# Print final report
-echo ""
-echo "All Done!"
-echo "Script released to ${target_dir}"
-echo ""
+echo "Scripts placed in ${target_dir}"
+echo "End of release-system.sh"

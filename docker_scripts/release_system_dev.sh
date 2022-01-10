@@ -1,73 +1,61 @@
 #!/usr/bin/env bash
 
-# Prefix use in the default target release directory
 target_dir_prefix=dev
 
 # Usage message
 usage_header() {
-    echo "
-Same as the system release, but allow the user to provide their own
+    echo "Same as the system release, but allow the user to provide their own
 rogue, pysmurf, and firmware files.
 
 The rogue and pysmurf repositories are cloned at the given version,
 and compiled locally. The firmware files must be provided by the user,
 i.e. the .mcs.gz and corresponding .zip configuration. Put those in
-the fw folder.
+the fw folder after running this script.
 
-Note: The docker image used for the server is
-'tidait/pysmurf-server-base', for version prior to 'v5.0.0', or
-'tidait/pysmurf-server' for versions starting at 'v5.0.0'. Starting at
+Note: For older systems, the docker image used for the server is
+'tidair/pysmurf-server-base', for versions prior to 'v5.0.0', or
+'tidair/pysmurf-server' for versions starting at 'v5.0.0'. Starting at
 version 'v5.0.0', the 'tidait/pysmurf-server' image comes from the
 pysmurf repository.  On the other hand, the docker image used for the
 client is 'tidair/pysmurf-client'."
 }
 
-# Get the Rogue version used by an specific version of pysmurf.
-# The first argument is the pysmurf version.
-# It return the according version of rogue. Or an empty string if not found.
-get_rogue_version()
-{
-    # pysmurf version
+get_rogue_version() {
+    # Get the Rogue version used by the given pysmurf
+    # version. Practically this means digging into pysmurf to get the
+    # smurf-rogue-docker version, then digging into smurf-rogue-docker
+    # to get the version of Rogue it uses. I know.
+    # $1 : Version of pysmurf
+
     local pysmurf_version=$1
 
-    # First, the the smurf-rogue version
     local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
         | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
 
-    # Now get the rogue version
     local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
         | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
 
-    # Return the rogue version
     echo ${rogue_version}
 }
 
-#############
-# Main body #
-#############
+# Do exactly the system release, except without stable_release=1.
+. ${top_dir}/system_common.sh
+. ${top_dir}/system_common.sh
 
-# Call common release step to all type of applications
-. system_common.sh
+# Now clone rogue, pysmurf, compile them, and make the custom fw folder.
 
-# Look for the rogue version
 rogue_version=$(get_rogue_version ${pysmurf_version})
 
-# Check if a version of rogue was found
 if [ ! ${rogue_version} ]; then
     echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
     echo
     return 1
 fi
 
-# Create fw directory
 mkdir -p ${target_dir}/fw
 
-# Clone software repositories
-echo "Cloning repositories:"
-
-## Clone rogue (on the specific tag) in the target directory
 echo "Cloning rogue..."
 cmd="git clone ${rogue_git_repo} ${target_dir}/rogue -b ${rogue_version}"
 echo ${cmd}
@@ -75,30 +63,22 @@ ${cmd}
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to clone rogue."
-    echo
     return 1
 fi
 
-echo
-
-## Clone pysmurf (on the specific tag) in the target directory
 echo "Cloning pysmurf..."
 cmd="git clone ${pysmurf_git_repo} ${target_dir}/pysmurf -b ${pysmurf_version}"
 echo ${cmd}
 ${cmd}
 
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to clone rogue."
+    echo "Error: Failed to clone pysmurf."
     echo
     return 1
 fi
 
 echo
 
-# Build application
-echo "Building applications:"
-
-## Build rogue
 echo "Building rogue..."
 docker run -ti --rm \
     --user cryo:smurf \
@@ -110,13 +90,9 @@ docker run -ti --rm \
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build rogue"
-    echo
     return 1
 fi
 
-echo
-
-## Build pysmurf
 echo "Building pysmurf..."
 docker run -ti --rm \
     --user cryo:smurf \
@@ -127,28 +103,20 @@ docker run -ti --rm \
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build pysmurf"
-    echo
     return 1
 fi
 
-echo
+echo "The tag ${rogue_version} of ${rogue_git_repo} was checked out in
+${target_dir}/rogue.  That is the copy that runs inside the docker
+container.
 
-# Print final report
-echo ""
-echo "All Done!"
-echo "Script released to ${target_dir}"
-echo
-echo "The tag '${rogue_version}' of ${rogue_git_repo} was checkout in ${target_dir}/rogue."
-echo "That is the copy that runs inside the docker container."
-echo
-echo "The tag '${pysmurf_version}' of ${pysmurf_git_repo} was checkout in ${target_dir}/pysmurf."
-echo "That is the copy that runs inside the docker container."
-echo
-echo "If you make changes to these repositories and want to push them back to git, remember to create"
-echo "and push a new branch, by running these commands in the respective directory (replace <new-branch-name>,"
-echo "with an appropriate branch name):"
-echo " $ git checkout -b <new-branch-name>"
-echo " $ git push -set-upstream origin <new-branch-name>"
-echo
-echo "Remember to place your FW related files in the 'fw' directory."
-echo ""
+The tag ${pysmurf_version} of ${pysmurf_git_repo} was checkout in
+${target_dir}/pysmurf.  That is the copy that runs inside the docker
+container.
+
+You may modify the pysmurf Python code on the fly, however you'll need
+to recompile pysmurf or rogue yourself if you modify their C++ code.
+
+Go ahead and cd ${target_dir} and ./run.sh.
+
+End of release_system_dev.sh."

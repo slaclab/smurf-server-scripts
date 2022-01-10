@@ -10,7 +10,8 @@ release_top_default_dir="/home/cryo/docker/pysmurf/dev"
 template_dir=${template_top_dir}/pysmurf-dev
 
 # Import common functions
-. common.sh
+. ${top_dir}/common.sh
+. ${top_dir}/common.sh
 
 # Usage message
 usage()

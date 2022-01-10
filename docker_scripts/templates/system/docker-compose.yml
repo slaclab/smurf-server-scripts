@@ -11,6 +11,11 @@ x-gui-app:
   - EPICS_CA_AUTO_ADDR_LIST=NO
   - EPICS_CA_ADDR_LIST=127.255.255.255
   - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  volumes:
+  - /data:/data
+  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
+  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
+  - /home/${user_name}/.ipython:/home/${user_name}/.ipython
   security_opt:
   - "apparmor=docker-smurf"
   tty: true
@@ -20,19 +25,9 @@ x-gui-app:
 x-smurf-server:
   &smurf-server
   <<: *default-gui-app
-  image: tidair/%%SERVER_NAME%%:%%SERVER_VERSION%%
+  image: tidair/pysmurf-server:%%SERVER_VERSION%%
   container_name: smurf_server_s${slot}
-  volumes:
-  - /data:/data
-  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
-  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
-  - ${PWD}/fw:/tmp/fw
-  - ${PWD}/rogue:/usr/local/src/rogue
-  - ${PWD}/pysmurf:/usr/local/src/pysmurf
-  - ${PWD}/pysmurf/docker/server/scripts/start_server.sh:/usr/local/src/pysmurf_utilities/start_server.sh
-  - ${PWD}/pysmurf/docker/server/scripts/server_common.sh:/usr/local/src/pysmurf_utilities/server_common.sh
-  command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% ${extra_opts}
-  #entrypoint: bash
+  command: -w smurf_server_s${slot} -S ${shelfmanager} -N ${slot} -e smurf_server_s${slot} %%COMM_ARGS%% ${extra_opts}
   logging:
     options:
       tag: smurf_server
@@ -43,12 +38,6 @@ x-pysmurf:
   <<: *default-gui-app
   image: tidair/pysmurf-client:%%CLIENT_VERSION%%
   container_name: pysmurf_s${slot}
-  volumes:
-  - /data:/data
-  - /home/${user_name}/.Xauthority:/home/${user_name}/.Xauthority
-  - /home/${user_name}/.bash_history:/home/${user_name}/.bash_history
-  - /home/${user_name}/.ipython:/home/${user_name}/.ipython
-  - ${PWD}/pysmurf:/usr/local/src/pysmurf
   command: --epics smurf_server_s${slot}
   logging:
     options:

@@ -30,17 +30,14 @@ pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
-########################
-# Function definitions #
-########################
 # Import common functions
-. common.sh
+. ${top_dir}/common.sh
+. ${top_dir}/common.sh
 
 # Usage message
 # Development releases need only 1 version, while stable
 # releases need 2 version, the server and the client.
-usage()
-{
+usage() {
     usage_header
     echo "usage: ${script_name} -t ${app_type}"
     if [ -z ${stable_release+x} ]; then
@@ -48,7 +45,6 @@ usage()
     else
         echo "                         -v|--version <pysmurf_server_version>"
     fi
-    echo "                         [-N|--slot <slot_number>]"
     echo "                         [-o|--output-dir <output_dir>]"
     echo "                         [-l|--list-versions]"
     echo "                         [-h|--help]"
@@ -61,13 +57,11 @@ usage()
         echo "                                                 server/client images."
 
     fi
-    echo "  -c|--comm-type      <commm_type>             : Communication type with the FPGA (eth or pcie). Defaults to 'eth'."
-    echo "  -N|--slot           <slot_number>            : ATCA crate slot number (2-7) (Optional)."
+    echo "  -c|--comm-type      <comm_type>              : Communication type with the FPGA (eth or pcie). Default 'eth'."
     echo "  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to"
-    echo "                                                 ${release_top_default_dir}/${target_dir_prefix}/<slot_number>/<pysmurf_version>"
+    echo "                                                 ${release_top_default_dir}/${target_dir_prefix}/<pysmurf_version>"
     echo "  -l|--list-versions                           : Print a list of available versions."
     echo "  -h|--help                                    : Show this message."
-    echo
     exit $1
 }
 
@@ -89,6 +83,21 @@ print_list_versions()
 
     echo
     exit 0
+}
+
+usage
+
+get_pysmurf_version() {
+    # pysmurf version
+    local pysmurf_stable_version=$1
+
+    # First, the the smurf-rogue version
+    local pysmurf_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/pysmurf-stable-docker/${pysmurf_stable_version}/definitions.sh 2> /dev/null \
+        | grep -Po '^pysmurf_server_base_version=\s*\K.+') || exit 1
+
+    # Return the rogue version
+    echo ${pysmurf_version}
 }
 
 #############
@@ -124,10 +133,6 @@ case ${key} in
     comm_type="$2"
     shift
     ;;
-    -N|--slot)
-    slot_number="$2"
-    shift
-    ;;
     -l|--list-versions)
     print_list_versions
     ;;
@@ -135,8 +140,7 @@ case ${key} in
     usage 0
     ;;
     *)
-    echo "ERROR: Unknown argument"
-    echo
+    echo "ERROR: Argument $2 not known, exiting."
     usage 1
     ;;
 esac
@@ -148,7 +152,6 @@ if [ -z ${stable_release+x} ]; then
     # For no stable releases, we only need the pysmurf version
     if [ -z ${pysmurf_version+x} ]; then
             echo "ERROR: pysmurf version not defined!"
-            echo ""
             usage 1
     fi
 
@@ -157,7 +160,6 @@ if [ -z ${stable_release+x} ]; then
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
-        echo
         exit 1
     fi
 
@@ -177,7 +179,6 @@ else
     # For stable releases, we only need server version
     if [ -z ${server_version+x} ]; then
             echo "ERROR: pysmurf server version not defined!"
-            echo ""
             usage 1
     fi
 
@@ -193,7 +194,6 @@ else
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf server version ${server_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
-        echo
         exit 1
     fi
 
@@ -214,7 +214,6 @@ else
         # Check if a version of pysmurf was found
         if [ ! ${client_version} ]; then
             echo "Error: pysmurf version not found for server version ${server_version}"
-            echo
             exit 1
         fi
     fi
@@ -235,33 +234,9 @@ case ${comm_type} in
     ;;
 esac
 
-# Verify if the slot number was defined
-if [ -z ${slot_number+x} ]; then
-    # If the slot number was not defined, the directory prefix will be "slotN"
-    slot_prefix="slotN"
-
-    # If the slot number was not defined, we will use the templates from the
-    # 'any-slot' directory
-    template_prefix="any-slot"
-else
-    # Verify that the slot number is valid
-    if [[ (${slot_number} < 2) || (${slot_number} > 7) ]]; then
-        echo "Invalid slot number. Must be a number between 2 and 7."
-        echo
-        usage 1
-    fi
-
-    # If the slot number was defined, the directory prefix will be "slot<slot_number>"
-    slot_prefix="slot${slot_number}"
-
-    # If the slot number was defined, we will use the templates from the
-    # 'specific-slot' directory
-    template_prefix="specific-slot"
-fi
-
 # Generate target directory
 if [ -z ${target_dir+x} ]; then
-    target_dir=${release_top_default_dir}/${target_dir_prefix}/${slot_prefix}/${server_version}
+    target_dir=${release_top_default_dir}/${target_dir_prefix}/${server_version}
 fi
 
 # Verify is target directory already exist
@@ -285,7 +260,7 @@ echo "Done!"
 echo ""
 
 # Generate file specific to this type of application, and for an specific slot number
-template_dir=${template_top_dir}/${app_type}/${template_prefix}
+template_dir=${template_top_dir}/${app_type}
 
 
 cat ${template_dir}/docker-compose.yml \
@@ -302,7 +277,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Generate file common to other type of application
-template_dir=${template_top_dir}/common/${template_prefix}
+template_dir=${template_top_dir}/common
 
 cat ${template_dir}/docker-compose.pcie.yml \
          | sed s/%%SLOT_NUMBER%%/${slot_number}/g \

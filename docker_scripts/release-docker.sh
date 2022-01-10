@@ -3,7 +3,7 @@
 # smurf server scripts git repository
 server_scripts_git_repo=https://github.com/slaclab/smurf-server-scripts.git
 
-# Top directory
+# e.g. common.sh is in top_dir.
 top_dir=$(dirname -- "$(readlink -f $0)")
 
 # Path to folder containing the template files
@@ -15,8 +15,14 @@ script_name=$(basename $0)
 # Script version
 version=$(cd ${top_dir} && git describe --tags --always --dirty)
 
-# Import common functions
-. common.sh
+# These scripts should call themselves using . ${top_dir}/... to be
+# sure they're referring to their folder. For example if developing in
+# ~/smurf-server-scripts then running . common.sh would match
+# /usr/src/... first before the local common.sh. More simply is to
+# change setup-server.sh to put these scripts somewhere nicely
+# accessible like ~/smurf-server-scripts.
+. ${top_dir}/common.sh
+. ${top_dir}/common.sh
 
 # Usage message
 usage()
