@@ -20,6 +20,11 @@ pysmurf repository.  On the other hand, the docker image used for the
 client is 'tidair/pysmurf-client'."
 }
 
+# Do exactly the system release, except without stable_release=1.
+. ${top_dir}/system_common.sh
+
+# Now clone rogue, pysmurf, compile them, and make the custom fw folder.
+
 get_rogue_version() {
     # Get the Rogue version used by the given pysmurf
     # version. Practically this means digging into pysmurf to get the
@@ -39,11 +44,6 @@ get_rogue_version() {
 
     echo ${rogue_version}
 }
-
-# Do exactly the system release, except without stable_release=1.
-. ${top_dir}/system_common.sh
-
-# Now clone rogue, pysmurf, compile them, and make the custom fw folder.
 
 rogue_version=$(get_rogue_version ${pysmurf_version})
 

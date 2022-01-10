@@ -81,8 +81,6 @@ print_list_versions()
     exit 0
 }
 
-usage
-
 get_pysmurf_version() {
     # pysmurf version
     local pysmurf_stable_version=$1
