@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Used by:
+# system
+# system-dev
+
 args=$@
 
 . ./base.sh
@@ -26,8 +30,6 @@ fi
 # Start the smurf server and pysmurf
 for d in ${server_name} ${pysmurf_name}; do
     run_cmd_with_echo "slot=${slot} extra_opts=${extra_opts} docker-compose -f docker-compose.yml ${extra_composes} up -d ${d}"
-    echo
 done
 
 echo "Done!"
-echo

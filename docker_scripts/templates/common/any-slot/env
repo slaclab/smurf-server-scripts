@@ -1,5 +1,5 @@
-# .env file. Copied from here into the same folder as run.sh. Used by
-# run.sh, docker-compose.yml. Ref https://docs.docker.com/compose/env-file/.
+# Copied from here into the same folder as run.sh. Used by run.sh,
+# docker-compose.yml. Ref https://docs.docker.com/compose/env-file/.
 
 user_uid=1000:1001
 user_name=cryo

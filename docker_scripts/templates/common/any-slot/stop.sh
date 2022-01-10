@@ -13,4 +13,3 @@ for d in ${pysmurf_name} ${server_name}; do
 done
 
 echo "Done!"
-echo
