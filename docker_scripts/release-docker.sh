@@ -33,10 +33,10 @@ usage: $(basename $0) -t|--type type [-h|--help]
   -t|--type type : Type of application to install. Options are:
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
-    - pysmurf      : Copy of the pysmurf repository.
-    - utils        : The utility software, commonly used in operations.
+    - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
+    - utils        : The utility software.
     - tpg          : The timing software.
-    - pcie         : PCIe software for 6-carrier operation.
+    - pcie         : The PCIe software for 6-carrier operation. 
     - atca-monitor : Interface to view ATCA crate information.
     - guis         : Interface to modify running systems.
   -u|--upgrade version : Upgrade this script to another version.
@@ -162,7 +162,7 @@ case ${app_type} in
     system-dev)
     . ${top_dir}/release_system_dev.sh ${app_options}
     ;;
-    pysmurf)
+    pysmurf-dev)
     . ${top_dir}/release_pysmurf.sh ${app_options}
     ;;
     utils)
