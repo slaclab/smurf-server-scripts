@@ -14,25 +14,12 @@
 # int his script, the that flag is used to processed the options
 # accordingly.
 
-###############
-# Definitions #
-###############
-# Git repositories
-## rogue
 rogue_git_repo=https://github.com/slaclab/rogue.git
-
-## pysmurf
 pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
-
-## pysmurf stable docker images
+# Deprecated, need backwards compatibility.
 pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
-
-# Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
-# Usage message
-# Development releases need only 1 version, while stable
-# releases need 2 version, the server and the client.
 usage() {
     usage_header
     echo "usage: ${script_name} -t ${app_type}"

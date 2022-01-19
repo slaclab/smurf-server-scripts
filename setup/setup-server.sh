@@ -58,7 +58,7 @@ apt-get -y install \
     ipython3 \
     gnuplot
 
-# Install it lfs
+# Install git lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 apt-get -y install git-lfs
 git lfs install
@@ -75,21 +75,6 @@ if ! grep -q "^export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_s
     echo "export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts" >> /etc/profile.d/smurf_config.sh
 fi
 
-# Add an alias 'smurf-server-scripts-version' to the smurf bash profile file, to get the version of the smurf-server-script
-# used during this setup
-if ! grep -q "^alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'\s*$" /etc/profile.d/smurf_config.sh 2> /dev/null; then
-    echo "alias smurf-server-scripts-version='cat /usr/local/src/smurf-server-scripts/server_scripts/version'" >> /etc/profile.d/smurf_config.sh
-fi
-
-echo
-echo "#################################"
-echo "### Done Installing packages. ###"
-echo "#################################"
-echo
-
-#######################
-# SETUP THE SWAP FILE #
-#######################
 echo "###############################"
 echo "### Setting up swap file... ###"
 echo "###############################"

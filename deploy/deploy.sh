@@ -21,16 +21,12 @@ script_name=$(basename $0)
 # Script version
 version=$(cd ${top_dir} && git describe --tags --always --dirty)
 
-# Usage message
-usage()
-{
-    echo "Script that provides SMuRF software. Does not set up the server, use setup-server.sh for that.
+function usage {
+    echo "Script that deploys SMuRF software. Assumes the OS has been set up already.
+Version: $version
+Usage:
 
-version: $version
-
-usage: $(basename $0) -t|--type type [-h|--help]
-
-  -t|--type type : Type of application to install. Options are:
+  -t|--type type   : Type of application to deploy. Options are:
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
     - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
@@ -43,35 +39,36 @@ usage: $(basename $0) -t|--type type [-h|--help]
   -l|--list-versions : List this script's available versions.
   -h|--help : Show help. Use with -t for type help.
 "
-    exit $1
+}
+
+function error () {
+    usage
+    echo "Error: $1"
+    exit 1
 }
 
 # Function to copy stuff from template_dir to target_dir. Used in
 # system_common.sh and release-tpg.sh. Copy filename template_dir/$1
 # to target_dir/$2, or target_dir/$1 if $2 is not specified.
-copy_template()
-{
-        local template_file=${template_dir}/$1
-        local output_file
-        if [ -z "$2" ]; then
-                output_file=${target_dir}/$1
-        else
-                output_file=${target_dir}/$2
-        fi
+function copy_template {
+    local template_file=${template_dir}/$1
+    local output_file
+    if [ -z "$2" ]; then
+        output_file=${target_dir}/$1
+    else
+        output_file=${target_dir}/$2
+    fi
 
-        cat ${template_file} > ${output_file}
-        if [ $? -ne 0 ]; then
-                echo ""
-                echo "ERROR: Could not create ${output_file}"
-                exit 1
-        fi
+    cat ${template_file} > ${output_file}
+    if [ $? -ne 0 ]; then
+	error "Could not create ${output_file}"
+    fi
 
-	echo "Copied ${output_file} from ${template_file}."
+    echo "Copied ${template_file} to ${output_file}"
 }
 
 # Print a list of all available versions
-print_list_versions()
-{
+function list_versions {
     # The version list and upgrade feature was added in version R3.1.0,
     # so exclude previous versions.
     echo "List of available versions of this script:"
@@ -81,8 +78,7 @@ print_list_versions()
 }
 
 # Update these scripts
-update_self()
-{
+function update_self {
     local tag="$1"
 
     cd ${top_dir}
@@ -108,80 +104,73 @@ update_self()
 }
 
 app_options=""
-# Verify inputs arguments
-while [[ $# -gt 0 ]]
-do
-key="$1"
+while [[ $# -gt 0 ]]; do
+    key="$1"
 
-case ${key} in
-    -t|--type)
-    app_type="$2"
-    shift
-    ;;
-    -l|--list-versions)
-    show_versions=1
-    app_options="${app_options} ${key}"
-    ;;
-    -u|--upgrade)
-    update_self "$2"
-    ;;
-    -h|--help)
-    show_help=1
-    app_options="${app_options} ${key}"
-    ;;
-    *)
-    app_options="${app_options} ${key}"
-    ;;
-esac
-shift
+    case ${key} in
+	-t|--type)
+	    app_type="$2"	    
+	    ;;
+	-l|--list-versions)
+	    show_versions=1
+	    app_options="${app_options} ${key}"
+	    ;;
+	-u|--upgrade)
+	    update_self "$2"
+	    ;;
+	-h|--help)
+	    show_help=1
+	    app_options="${app_options} ${key}"
+	    ;;
+	*)
+	    app_options="${app_options} ${key}"
+	    ;;
+    esac; shift
 done
 
-# Verify parameters
-if [ -z ${app_type+x} ]; then
+# If app_type
+if [ -z ${app_type} ]; then
 
-        # Show usage message when option '-h' was used
-        # without defining an application type
-        if [ ! -z ${show_help} ]; then
-            usage 0
-        fi
+    # Show usage message when option '-h' was used
+    # without defining an application type
+    if [ ! -z ${show_help} ]; then
+        usage
+    fi
 
-        # Print the available versions when option '-l'
-        # was used without defining an application type.
-        if [ ! -z ${show_versions} ]; then
-            print_list_versions
-        fi
-
-        usage 1
+    # Print the available versions when option '-l'
+    # was used without defining an application type.
+    if [ ! -z ${show_versions} ]; then
+        list_versions
+    fi
 fi
 
 # Now call the application specific script
 case ${app_type} in
     system)
-    . ${top_dir}/release_system.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-system.sh ${app_options}
+	;;
     system-dev)
-    . ${top_dir}/release_system_dev.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-system_dev.sh ${app_options}
+	;;
     pysmurf-dev)
-    . ${top_dir}/release_pysmurf.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-pysmurf.sh ${app_options}
+	;;
     utils)
-    . ${top_dir}/release_utils.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-utils.sh ${app_options}
+	;;
     tpg)
-    . ${top_dir}/release_tpg.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-tpg.sh ${app_options}
+	;;
     pcie)
-    . ${top_dir}/release_pcie.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-pcie.sh ${app_options}
+	;;
     atca-monitor)
-    . ${top_dir}/release_atca_monitor.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-atca_monitor.sh ${app_options}
+	;;
     guis)
-    . ${top_dir}/release_guis.sh ${app_options}
-    ;;
+	. ${top_dir}/deploy-guis.sh ${app_options}
+	;;
     *)
-    echo "ERROR: Invalid application type!"
-    usage 1
-    ;;
+	error "Invalid application type"
+	;;
 esac
