@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-# Folder of these scripts. Note the edge case: if developing in for
-# example ~/smurf-server-scripts, then calling . common.sh matches the
-# common script in /usr/local/src/... So make sure top_dir is in the
-# path. The easy fix is to change setup-server.sh so that the
-# installed scripts are somewhere nice like ~/smurf-server-scripts
-# instead of /usr/. Do that later please.
 top_dir=$(dirname -- "$(readlink -f $0)")
 . ${top_dir}/common.sh
 
@@ -26,7 +20,7 @@ function usage {
 Version: $version
 Usage:
 
-  -t|--type type   : Type of application to deploy. Options are:
+  -t|--type type   : Type of software to deploy.
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
     - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.

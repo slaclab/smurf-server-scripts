@@ -270,9 +270,9 @@ echo
 
 # Apply the network configuration to each kind of server
 if [ ${dell_r440+x} ]; then
-    . r440_network.sh
+    . configure-network-r440.sh
 elif [ ${dell_r330+x} ]; then
-    . r330_network.sh
+    . configure-network-r330.sh
 fi
 
 echo

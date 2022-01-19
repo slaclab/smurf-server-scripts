@@ -1,37 +1,30 @@
 #!/bin/bash
 
-function error {
-    echo $1
-    exit 1
-}
-
 function usage {
     echo "Interact with SMuRF systems.
+
+Usage: [-c | -i | -r]
     	 
-  -h : Help message. Use with -s, -d, or -r for particular help.
-  -s : Setup the SMuRF server.
-  -r : Run some type of SMuRF software. Collects files as necessary.
+  -c : Configure the server's operating system (one-shot).
+  -i : Install some type of SMuRF software.=
+  -r : Run commands to interact with SMuRF.
 "
     exit 1
 }
 
 script_dir=$(dirname -- "$(readlink -f $0)")
-script_name=$(basename $0)
 
 function goto_script {
     . $script_dir/$1
 }
 
-while getopts "hsdr" opt; do
+while getopts "ciur" opt; do
     case ${opt} in
-	h)
-	    usage
+	c)
+	    goto_script configure/configure.sh $2
 	    ;;
-	s)
-	    goto_script setup/setup.sh $2
-	    ;;
-	d)
-	    goto_script deploy/deploy.sh $2
+	i)
+	    goto_script install/install.sh $2
 	    ;;
 	r)
 	    goto_script run/run.sh $2

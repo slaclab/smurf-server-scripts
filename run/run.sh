@@ -1,10 +1,21 @@
 #!/bin/bash
 
 function usage {
-    echo "Run some type of SMuRF software.
+    echo "Run SMuRF software that was recently deployed.
+
+Usage: -t type [-v version | -l]
     	 
-  -h : Help message. Use with -s, -d, or -r for particular help.
-  -t type : Run the type of deployed instance.
+  -t type : Type of application that was deployed.
+    - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
+    - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
+    - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
+    - utils        : The utility software.
+    - tpg          : The timing software.
+    - pcie         : The PCIe software for 6-carrier operation. 
+    - atca-monitor : Interface to view ATCA crate information.
+    - guis         : Interface to modify running systems.
+  -v version : Version of the application to run.
+  -l : List available versions of type.
 "
     exit 1
 }
@@ -16,26 +27,27 @@ function goto_script {
     . $script_dir/$1
 }
 
-while getopts "hsdr" opt; do
-    case ${opt} in
-	h)
-	    usage
-	    ;;
-	s)
-	    goto_script setup/setup.sh $2
-	    ;;
-	d)
-	    goto_script deploy/deploy.sh $2
-	    ;;
-	r)
-	    goto_script run/run.sh $2
-	    ;;
-	\?)
-	    usage
-	    ;;
-    esac
-done
+function parse_arguments {
+    while getopts "t" opt; do
+	case ${opt} in
+	    h)
+		usage
+		;;
+	    t)
+		type=$2
+		;;
+	    l)
+		list_versions=true
+		;;
+	    \?)
+		usage
+		;;
+	esac
+    done
 
-if [ $OPTIND -eq 1 ]; then
-    usage
-fi
+    if [ $OPTIND -eq 1 ]; then
+	usage
+    fi
+}
+
+parse_arguments
