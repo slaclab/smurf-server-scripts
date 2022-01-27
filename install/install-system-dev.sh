@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-target_dir_prefix=dev
+target_dir_prefix=system-dev
+rogue_git_repo=https://github.com/slaclab/rogue.git
 
 # Usage message
 usage_header() {

@@ -1,42 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-top_dir=$(dirname -- "$(readlink -f $0)")
-. ${top_dir}/common.sh
-
-# smurf server scripts git repository
-server_scripts_git_repo=https://github.com/slaclab/smurf-server-scripts.git
-
-# Path to folder containing the template files
-template_top_dir=${top_dir}/templates
-
-# This script name
-script_name=$(basename $0)
-
-# Script version
-version=$(cd ${top_dir} && git describe --tags --always --dirty)
+template_top_dir=${top_dir}/install/templates
 
 function usage {
-    echo "Script that deploys SMuRF software. Assumes the OS has been set up already.
-Version: $version
-Usage:
+    echo "Script that installs SMuRF software. Assumes the OS has been configured already.
+Usage: -t type 
 
-  -t|--type type   : Type of software to deploy.
+  -t type : Type of installed application.
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
-    - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
-    - utils        : The utility software.
-    - tpg          : The timing software.
-    - pcie         : The PCIe software for 6-carrier operation. 
+    - pysmurf-dev  : Pysmurf client with modifiable pysmurf files.
+    - utils        : Utility software.
+    - tpg          : Timing software.
+    - pcie         : PCIe software for 6-carrier operation. 
     - atca-monitor : Interface to view ATCA crate information.
-    - guis         : Interface to modify running systems.
-  -u|--upgrade version : Upgrade this script to another version.
-  -l|--list-versions : List this script's available versions.
-  -h|--help : Show help. Use with -t for type help.
+    - gui          : Interface to modify Rogue registers.
 "
 }
 
 function error () {
-    usage
     echo "Error: $1"
     exit 1
 }
@@ -48,9 +30,9 @@ function copy_template {
     local template_file=${template_dir}/$1
     local output_file
     if [ -z "$2" ]; then
-        output_file=${target_dir}/$1
+	output_file=${target_dir}/$1
     else
-        output_file=${target_dir}/$2
+	output_file=${target_dir}/$2
     fi
 
     cat ${template_file} > ${output_file}
@@ -61,110 +43,45 @@ function copy_template {
     echo "Copied ${template_file} to ${output_file}"
 }
 
-# Print a list of all available versions
-function list_versions {
-    # The version list and upgrade feature was added in version R3.1.0,
-    # so exclude previous versions.
-    echo "List of available versions of this script:"
-    print_git_tags ${server_scripts_git_repo} 'R1.\|R2.\|R3.0'
-    echo
-    exit 0
-}
-
-# Update these scripts
-function update_self {
-    local tag="$1"
-
-    cd ${top_dir}
-    
-    if [ -z ${tag} ]; then
-        echo "No reference specified. Using branch main of ${server_scripts_git_repo}. Use -l if you want some specific version."
-        sudo bash -c "git fetch --all --tags && git checkout main && git pull"
-    else
-        echo "Updating ${script_name} to version ${tag} of ${server_scripts_git_repo}."
-        sudo bash -c "git fetch --all --tags && git checkout ${tag}"
-    fi
-
-    ret=$?
-    cd - > /dev/null
-
-    if [ ${ret} == 0 ]; then
-        echo "Done, scripts now in ${top_dir}."
-    else
-        echo "Failed."
-    fi
-
-    exit ${ret}
-}
-
-app_options=""
 while [[ $# -gt 0 ]]; do
-    key="$1"
-
-    case ${key} in
-	-t|--type)
-	    app_type="$2"	    
-	    ;;
-	-l|--list-versions)
-	    show_versions=1
-	    app_options="${app_options} ${key}"
-	    ;;
-	-u|--upgrade)
-	    update_self "$2"
-	    ;;
-	-h|--help)
-	    show_help=1
-	    app_options="${app_options} ${key}"
+    # e.g. $1 $2 $3 = -t system -l
+    case $1 in
+	-t)
+	    case $2 in
+		system)
+		    goto_script install/install-system.sh "${@:3}"
+		    ;;
+		system-dev)
+    		    goto_script install/install-system_dev.sh ${version}
+    		    ;;
+		pysmurf-dev)
+    		    goto_script install/install-pysmurf.sh ${version}
+    		    ;;
+		utils)
+    		    goto_script install/install-utils.sh ${version}
+    		    ;;
+		tpg)
+    		    goto_script install/install-tpg.sh ${version}
+    		    ;;
+		pcie)
+    		    goto_script install/install-pcie.sh ${version}
+    		    ;;
+		atca-monitor)
+    		    goto_script install/install-atca_monitor.sh ${version}
+    		    ;;
+		guis)
+    		    goto_script install/install-guis.sh ${version}
+    		    ;;
+		*)
+    		    usage
+    		    error "Invalid application type $type." 
+        	    ;;
+            esac
+	    shift
 	    ;;
 	*)
-	    app_options="${app_options} ${key}"
+	    usage
 	    ;;
-    esac; shift
+    esac
+    shift
 done
-
-# If app_type
-if [ -z ${app_type} ]; then
-
-    # Show usage message when option '-h' was used
-    # without defining an application type
-    if [ ! -z ${show_help} ]; then
-        usage
-    fi
-
-    # Print the available versions when option '-l'
-    # was used without defining an application type.
-    if [ ! -z ${show_versions} ]; then
-        list_versions
-    fi
-fi
-
-# Now call the application specific script
-case ${app_type} in
-    system)
-	. ${top_dir}/deploy-system.sh ${app_options}
-	;;
-    system-dev)
-	. ${top_dir}/deploy-system_dev.sh ${app_options}
-	;;
-    pysmurf-dev)
-	. ${top_dir}/deploy-pysmurf.sh ${app_options}
-	;;
-    utils)
-	. ${top_dir}/deploy-utils.sh ${app_options}
-	;;
-    tpg)
-	. ${top_dir}/deploy-tpg.sh ${app_options}
-	;;
-    pcie)
-	. ${top_dir}/deploy-pcie.sh ${app_options}
-	;;
-    atca-monitor)
-	. ${top_dir}/deploy-atca_monitor.sh ${app_options}
-	;;
-    guis)
-	. ${top_dir}/deploy-guis.sh ${app_options}
-	;;
-    *)
-	error "Invalid application type"
-	;;
-esac

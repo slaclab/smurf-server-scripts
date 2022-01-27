@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo "This script will setup an SMuRF server right after the OS installation."
-echo "This script should be run juts once, and right after the the OS is installed."
-echo "Note: You must execute this script with root privileges."
+echo "This script will setup a SMuRF server right after the OS installation.
+This script should be run juts once, and right after the the OS is installed.
+Note: You must execute this script with root privileges."
 
 read -p "Are you sure you want to continue? [Y/N]" -r
 echo
@@ -260,9 +260,6 @@ echo "### Done installing the docker engine ###"
 echo "#########################################"
 echo
 
-#########################
-# NETWORK CONFIGURATION #
-#########################
 echo "########################################"
 echo "### Setting network configuration... ###"
 echo "########################################"
@@ -512,106 +509,6 @@ EOF
     echo
 fi
 
-###################
-# RELEASE DOCKERS #
-###################
-echo "###################################"
-echo "### Releasing docker scripts... ###"
-echo "###################################"
-
-# Move to the docker_script directory
-cd ../docker_scripts
-
-# Release latest pysmurf-dev, utils, atca-monitor, guis, and pcie dockers.
-# We need to release them as the 'cryo' user so that the generated files
-# has the right permissions.
-for d in 'utils' 'pcie' 'atca-monitor' 'guis' 'pysmurf-dev'; do
-    v=$(./release-docker.sh -t ${d} -l | tail -n2 | head -n1)
-    echo "Releasing '${d}' version '${v}'..."
-    su cryo -c "./release-docker.sh -t ${d} -v ${v}"
-done
-
-# Move back to the original directory
-cd - &> /dev/null
-
-echo "######################################"
-echo "### Done releasing docker scripts. ###"
-echo "######################################"
-
-#######################
-# RELEASE SHAWNHAMMER #
-#######################
-echo "########################################"
-echo "### Releasing shawnhammer scripts... ###"
-echo "########################################"
-
-# List of shawnhammer scripts
-shawnhammer_scripts=('ping_carrier' 'shawnhammer' 'shawnhammerfunctions' 'switch_carrier')
-
-# First, move soft links defined, if any, under
-# "/usr/local/src/smurf-server-scripts/docker_scripts/"
-# to the standard location "/home/cryo/.local/bin"
-old_script_path='/usr/local/src/smurf-server-scripts/docker_scripts'
-new_script_path='/home/cryo/.local/bin'
-
-# Make sure the 'new_script_path' directory exist
-mkdir -p ${new_script_path}
-
-for s in ${shawnhammer_scripts[@]}; do
-    mv ${old_script_path}/${s} ${new_script_path}/${s} &> /dev/null && \
-        chown -fR cryo:smurf ${new_script_path}/${s} && \
-        echo "\"${s}\" was found under \"${old_script_path}/\". It was moved to \"${new_script_path}/\"."
-done
-
-# Get the latest version of pysmurf-dev. This version was either,
-# released, or already existed.
-cd ../docker_scripts
-pysmurf_dev_version=$(./release-docker.sh -t pysmurf-dev -l | tail -n2 | head -n1)
-cd - &> /dev/null
-
-# Now create, new soft links.
-# They will be created in the standard location "/home/cryo/.local/bin"
-# and will point to the latest pysmurf-dev version.=, which was
-# either released or already existed.
-# If the soft links already exist, they won't be overridden.
-shawnhammer_scripts_location="/home/cryo/docker/pysmurf/dev/${pysmurf_dev_version}/pysmurf/scratch/shawn/scripts"
-for s in ${shawnhammer_scripts[@]}; do
-    ln -s ${shawnhammer_scripts_location}/${s}.sh ${new_script_path}/${s} &> /dev/null && \
-        chown -fR cryo:smurf ${new_script_path}/${s} && \
-        echo "\"${s}\" was created, pointing to \"${shawnhammer_scripts_location}/${s}.sh\""
-done
-
-# The 'new_script_path' directory and its content should be owned by the 'cryo' user
-chown -R cryo:smurf ${new_script_path}
-
-echo "###########################################"
-echo "### Done releasing shawnhammer scripts. ###"
-echo "###########################################"
-
-#########################################
-# INSTALL THESE SCRIPTS INTO THE SYSTEM #
-#########################################
-
-# NOTE: We need to install these scripts, after installing
-# shawnhammer scripts, to avoid overriding existing versions
-
-echo "###################################################"
-echo "### Installing these scripts into the system... ###"
-echo "###################################################"
-
-rm -rf /usr/local/src/smurf-server-scripts
-mkdir -p /usr/local/src/smurf-server-scripts
-cp -r .. /usr/local/src/smurf-server-scripts
-
-echo "######################################################"
-echo "### Done installing these scripts into the system. ###"
-echo "######################################################"
-
-######################
-# SHOW FINAL MESSAGE #
-######################
-echo
 echo "Server configuration finished successfully!"
 echo "The configuration log was written to '${server_log_file}'."
 echo "Please reboot the server so all changes take effect."
-echo

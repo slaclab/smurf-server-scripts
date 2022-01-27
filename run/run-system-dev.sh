@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# stalls sometimes for some reason...
-#xhost +
-
 #default startup cfg
 startup_cfg=/data/smurf_startup_cfg/smurf_startup.cfg
 
@@ -101,7 +98,7 @@ else
     pysmurf_cfgs=( $(awk '{print $3}' <<< "$slot_cfgs") )
 fi
 
-source shawnhammerfunctions
+source run-system-dev-funtions.sh
 
 ctime=`date +%s`
 

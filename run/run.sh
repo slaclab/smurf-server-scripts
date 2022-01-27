@@ -1,53 +1,43 @@
 #!/bin/bash
 
 function usage {
-    echo "Run SMuRF software that was recently deployed.
+    echo "Run installed SMuRF software.
 
-Usage: -t type [-v version | -l]
+Usage: -t type 
     	 
-  -t type : Type of application that was deployed.
+  -t type : Type of installed application.
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
-    - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
-    - utils        : The utility software.
-    - tpg          : The timing software.
-    - pcie         : The PCIe software for 6-carrier operation. 
+    - pysmurf-dev  : Pysmurf client with modifiable pysmurf files.
+    - utils        : Utility software.
+    - tpg          : Timing software.
+    - pcie         : PCIe software for 6-carrier operation. 
     - atca-monitor : Interface to view ATCA crate information.
-    - guis         : Interface to modify running systems.
-  -v version : Version of the application to run.
-  -l : List available versions of type.
+    - gui          : Interface to modify Rogue registers.
 "
-    exit 1
 }
 
-script_dir=$(dirname -- "$(readlink -f $0)")
-script_name=$(basename $0)
+if [ $# -eq 1 ]; then
+    usage
+fi
 
-function goto_script {
-    . $script_dir/$1
-}
+while getopts "t:" opt; do
+    case ${opt} in
+        t)
+    	type=$2
+    	;;
+    esac
+    shift
+done
 
-function parse_arguments {
-    while getopts "t" opt; do
-	case ${opt} in
-	    h)
-		usage
+case $type in
+	system)
+		goto_script run/run-system.sh
 		;;
-	    t)
-		type=$2
+	system-dev)
+		goto_script run/run-system-dev.sh
 		;;
-	    l)
-		list_versions=true
+	*)
+		error "Invalid type $type"
 		;;
-	    \?)
-		usage
-		;;
-	esac
-    done
-
-    if [ $OPTIND -eq 1 ]; then
-	usage
-    fi
-}
-
-parse_arguments
+esac
