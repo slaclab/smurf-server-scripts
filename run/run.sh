@@ -1,20 +1,16 @@
 #!/bin/bash
 
 function usage {
-    echo "Run installed SMuRF software.
-
-Usage: -t type 
-    	 
-  -t type : Type of installed application.
+    echo "Run SMuRF software.
+Usage: 
+  -t type
     - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
     - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
-    - pysmurf-dev  : Pysmurf client with modifiable pysmurf files.
     - utils        : Utility software.
     - tpg          : Timing software.
     - pcie         : PCIe software for 6-carrier operation. 
     - atca-monitor : Interface to view ATCA crate information.
-    - gui          : Interface to modify Rogue registers.
-"
+    - gui          : Interface to modify Rogue registers."
 }
 
 if [ $# -eq 1 ]; then

@@ -1,0 +1,72 @@
+version: '3.4'
+
+# Default configuration for apps with GUI support
+x-gui-app:
+  &default-gui-app
+  network_mode: "host"
+  user: 1000:1001
+  environment:
+  - location=${PWD}
+  - DISPLAY
+  - EPICS_CA_AUTO_ADDR_LIST=NO
+  - EPICS_CA_ADDR_LIST=127.255.255.255
+  - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  volumes:
+  - /data:/data
+  - /home/cryo/.Xauthority:/home/cryo/.Xauthority
+  - /home/cryo/.bash_history:/home/cryo/.bash_history
+  - /home/cryo/.ipython:/home/cryo/.ipython
+  security_opt:
+  - "apparmor=docker-smurf"
+  tty: true
+  stdin_open: true
+
+# Default pysmurf server configuration
+x-smurf-server:
+  &smurf-server
+  <<: *default-gui-app
+  image: tidair/pysmurf-server:${version}
+  container_name: smurf_server_s${slot}
+  command: -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} ${comm_args} ${extra_opts}
+  logging:
+    options:
+      tag: smurf_server
+
+# Default pysmurf client configuration
+x-pysmurf:
+  &pysmurf
+  <<: *default-gui-app
+  image: tidair/pysmurf-client:${version}
+  container_name: pysmurf_s${slot}
+  command: --epics smurf_server_s${slot}
+  logging:
+    options:
+      tag: pysmurf
+  depends_on:
+  - smurf_server_s${slot}
+
+services:
+  smurf_server_s2:
+    <<: *smurf-server
+  smurf_server_s3:
+    <<: *smurf-server
+  smurf_server_s4:
+    <<: *smurf-server
+  smurf_server_s5:
+    <<: *smurf-server
+  smurf_server_s6:
+    <<: *smurf-server
+  smurf_server_s7:
+    <<: *smurf-server
+  pysmurf_s2:
+    <<: *pysmurf
+  pysmurf_s3:
+    <<: *pysmurf
+  pysmurf_s4:
+    <<: *pysmurf
+  pysmurf_s5:
+    <<: *pysmurf
+  pysmurf_s6:
+    <<: *pysmurf
+  pysmurf_s7:
+    <<: *pysmurf
