@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-user="cryo"
-
 docker run -it --rm  \
   --log-opt tag=utils \
-  -u $(id -u ${user}):$(id -g ${user}) \
+  -u $(id -u cryo):$(id -g cryo) \
   --net host \
   -e EPICS_CA_AUTO_ADDR_LIST=NO \
   -e EPICS_CA_ADDR_LIST=127.255.255.255 \
@@ -12,7 +10,7 @@ docker run -it --rm  \
   -e DISPLAY \
   -e location=${PWD} \
   -v /etc/group:/etc/group:ro \
-  -v /home/${user}/.bash_history:/home/${user}/.bash_history \
+  -v /home/cryo/.bash_history:/home/cryo/.bash_history \
   -v /data:/data \
   -v ${PWD}/shared:/shared \
-  tidair/smurf-base:%%SMURF_BASE_VERSION%% $1
+  tidair/smurf-base:R1.1.3

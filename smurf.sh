@@ -1,29 +1,23 @@
 #!/bin/bash
 
-# Top level script for SMuRF software. The bash scripts
-# are organized binary-tree style. Useful reading:
-# - https://tldp.org/LDP/abs/html/comparison-ops.html
-# - http://linuxsig.org/files/bash_scripting.html
-
-version=$(git describe --tags --always --dirty)
-top_dir=$(dirname -- "$(readlink -f $0)")
-
 function usage {
-    echo "Interact with SMuRF systems.
-Git version: ${version}
-Usage: [-c | -i | -r | -l | -u version]
-    	 
+    echo "Interact with SMuRF software.
+Usage: 
+  -t type : 
+    - system : Production software, with fixed pysmurf, rogue, and firmware.
+    - system-dev : 'system' with modifiable pysmurf, rogue, and firmware.
+    - timing : Fiber-based timing software.
+    - util : Utilities prompt.
   -c : Configure the server's operating system.
-  -i : Install some type of SMuRF software.
-  -r : Run some type of SMuRF software.
-  -s : Stop some type of SMuRF software.
-  -l : List versions of the SMuRF scripts.
-  -u version : Upgrade the SMuRF scripts to version.
-"
+  -v : Get version of smurf.sh.
+  -l : List versions of smurf.sh.
+  -u version : Upgrade smurf.sh to version."
 }
 
+top_dir=$(dirname -- "$(readlink -f $0)")
+
 function error {
-	echo "Error: $1"
+	echo "smurf.sh: Error: $1"
 	exit 1
 }
 
@@ -69,26 +63,24 @@ function verify_git_tag_exist {
 script_dir=$(dirname -- "$(readlink -f $0)")
 
 function goto_script {
-    echo "Go to script $1 with args ${@:2}"
-    source $script_dir/$1 "${@:2}"
+    echo "Go to script $1 with args ${@:1}"
+    source $script_dir/$1 "${@:1}"
 }
 
 function update_self {
-    # $1 Tag to update this repository to.
+    # $1 Ref to update this repository to. e.g. R3.10.2 or main.
 
-    local tag="$1"
+    local tag=$1
 
     cd ${top_dir}
     
     if [ -z ${tag} ]; then
-        echo "No reference specified. Using branch main of ${server_scripts_git_repo}. Use -l if you want some specific version."
-        sudo bash -c "git fetch --all --tags && git checkout main && git pull"
-    else
-        echo "Updating to version ${tag} of ${server_scripts_git_repo}."
-        sudo bash -c "git fetch --all --tags && git checkout ${tag}"
+	    error "No tag specified."
     fi
 
+    bash -c "git fetch --all --tags && git checkout ${tag}"
     ret=$?
+
     cd - > /dev/null
 
     if [ ${ret} == 0 ]; then
@@ -104,27 +96,31 @@ if [ $# -eq 0 ]; then
     usage
 fi
 
+# While the number of args is greater than 0, parse the first
+# arg $1, second arg $2, etc. It's generally good practice to
+# shift as soon as you can throw away the argument.
 while [[ $# -gt 0 ]]; do
-    arg=$1
-
-    case ${arg} in
-	-h)
-	    usage
+    case $1 in
+	-t)
+	    # e.g. smurf.sh -t system -r -v v5.0.4,
+	    # then goto_script system/system.sh -r -v v5.0.4
+	    type=$2
+	    shift; shift;
+	    goto_script $type/$type.sh $@
 	    ;;
 	-c)
 	    goto_script configure/configure.sh
 	    ;;
-	-i)
-            goto_script install/install.sh "${@:2}"
-	    ;;
-	-r)
-	    goto_script run/run.sh "${@:2}"
+	-v)
+            version=$(git describe --tags --always --dirty)
+	    echo $version
 	    ;;
 	-l)
             list_versions 'https://github.com/slaclab/smurf-server-scripts.git' 'R1.\|R2.\|R3.0'
 	    ;;
 	-u)
-            update_self
+            update_self $2
+	    shift
 	    ;;
     esac
     shift

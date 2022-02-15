@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-run_cmd_with_echo() {
-    echo "Running '$@'"
-    eval "$@"
-}
+. ./functions.sh
 
 for d in ${pysmurf_name} ${server_name}; do
     r=$(docker ps -a -f name=${d} | wc -l)

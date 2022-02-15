@@ -1,0 +1,83 @@
+version: '3.4'
+
+# Default configuration for apps with GUI support
+x-gui-app:
+  &default-gui-app
+  network_mode: "host"
+  user: cryo
+  environment:
+  - location=${PWD}
+  - DISPLAY
+  - EPICS_CA_AUTO_ADDR_LIST=NO
+  - EPICS_CA_ADDR_LIST=127.255.255.255
+  - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  security_opt:
+  - "apparmor=docker-smurf"
+  tty: true
+  stdin_open: true
+
+# Default pysmurf server configuration
+x-smurf-server:
+  &smurf-server
+  <<: *default-gui-app
+  image: tidair/smurf-server:v5.0.4
+  container_name: smurf_server_s${slot}
+  volumes:
+  - /data:/data
+  - /home/cryo/.Xauthority:/home/cryo/.Xauthority
+  - /home/cryo/.bash_history:/home/cryo/.bash_history
+  - ${PWD}/fw:/tmp/fw
+  - ${PWD}/rogue:/usr/local/src/rogue
+  - ${PWD}/pysmurf:/usr/local/src/pysmurf
+  - ${PWD}/pysmurf/docker/server/scripts/start_server.sh:/usr/local/src/pysmurf_utilities/start_server.sh
+  - ${PWD}/pysmurf/docker/server/scripts/server_common.sh:/usr/local/src/pysmurf_utilities/server_common.sh
+  command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} ${comm_args} ${extra_opts}
+  #entrypoint: bash
+  logging:
+    options:
+      tag: smurf_server
+
+# Default pysmurf client configuration
+x-pysmurf:
+  &pysmurf
+  <<: *default-gui-app
+  image: tidair/pysmurf-client:%%CLIENT_VERSION%%
+  container_name: pysmurf_s${slot}
+  volumes:
+  - /data:/data
+  - /home/cryo/.Xauthority:/home/cryo/.Xauthority
+  - /home/cryo/.bash_history:/home/cryo/.bash_history
+  - /home/cryo/.ipython:/home/cryo/.ipython
+  - ${PWD}/pysmurf:/usr/local/src/pysmurf
+  command: --epics smurf_server_s${slot}
+  logging:
+    options:
+      tag: pysmurf
+  depends_on:
+  - smurf_server_s${slot}
+
+services:
+  smurf_server_s2:
+    <<: *smurf-server
+  smurf_server_s3:
+    <<: *smurf-server
+  smurf_server_s4:
+    <<: *smurf-server
+  smurf_server_s5:
+    <<: *smurf-server
+  smurf_server_s6:
+    <<: *smurf-server
+  smurf_server_s7:
+    <<: *smurf-server
+  pysmurf_s2:
+    <<: *pysmurf
+  pysmurf_s3:
+    <<: *pysmurf
+  pysmurf_s4:
+    <<: *pysmurf
+  pysmurf_s5:
+    <<: *pysmurf
+  pysmurf_s6:
+    <<: *pysmurf
+  pysmurf_s7:
+    <<: *pysmurf

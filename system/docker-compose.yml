@@ -37,7 +37,7 @@ x-pysmurf:
   &pysmurf
   <<: *default-gui-app
   image: tidair/pysmurf-client:${version}
-  container_name: pysmurf_s${slot}
+  container_name: smurf_client_s${slot}
   command: --epics smurf_server_s${slot}
   logging:
     options:
