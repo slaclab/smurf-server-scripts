@@ -1,10 +1,22 @@
 import argparse
 
-def main(args):
-    description = "The utils software."
-    parser = argparse.ArgumentParser(description)
+"""
+os.system("some_command < input_file | another_command > output_file")  
+print(os.popen("ls -l").read())
+print subprocess.Popen("echo Hello World", shell=True, stdout=subprocess.PIPE).stdout.read()
+print os.popen("echo Hello World").read()
+return_code = subprocess.call("echo Hello World", shell=True)
+subprocess.run
+"""
+
+def add_subparser(subparsers):
+    parser = subparsers.add_parser('util', help = 'Utility software.')
     parser.add_argument('--run', dest = 'run', action = 'store_true')
-    args = parser.parse_args(args)
+
+def run():
+    if args.run:
+        print('yiz')
+        subprocess.call(util_call, shell = True)
 
     util_call = 'docker run -it --rm  \
   --log-opt tag=utils \
@@ -18,6 +30,3 @@ def main(args):
   -v /home/cryo/.bash_history:/home/cryo/.bash_history \
   -v /data:/data \
   tidair/smurf-base:R1.1.3'
-
-  if args.run:
-      print('yiz')
