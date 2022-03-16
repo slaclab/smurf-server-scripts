@@ -1,8 +1,0 @@
-{
-    "application": "smurf",
-    "smurf": {
-	"crate_id": 1,
-	"slot": 3,
-	"cfg_file": "cfg_files/b33/experiment_b33_lbOnlyBay0_newamps.cfg"
-    }
-}

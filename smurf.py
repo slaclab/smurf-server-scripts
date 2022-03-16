@@ -1,23 +1,33 @@
 import json
-import argparse
-import subprocess
 import os
-import sys
+
+import prod.prod
+
+def get_smurf_dict():
+    smurf_dict = {}
+
+    json_path = 'smurf.json'
+
+    if not os.path.isfile(json_path):
+        print('smurf.py: No JSON found.')
+    else:
+        with open(json_path) as json_object:
+            smurf_dict = json.loads(json_object.read())
+
+    return smurf_dict
+
+def verify_smurf_dict(smurf_dict):
+    return True
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('json_path', type=str, help='Fullpath to config json.')
-    args = parser.parse_args()
+    smurf_dict = get_smurf_dict()
 
-    whatever_json = {}
-
-    if not os.path.isfile(args.json_path):
-        print('No whatever_json found.')
+    if verify_smurf_dict(smurf_dict):
+        if smurf_dict['program'] == 'prod':
+            prod.prod.start_server(smurf_dict)
+            
     else:
-        with open(args.json_path) as json_fileobject:
-            whatever_json = json.loads(json_fileobject)
-
-    print(whatever_json)
+        print('verify_smurf_dict is False.')
     
 if __name__ == '__main__':
     main()

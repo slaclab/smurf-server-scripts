@@ -1,0 +1,17 @@
+{
+    "program": "prod",
+    "prod": {
+	"comm_type": "eth",
+	"version": "v5.0.4",
+	"cfg_file": "cfg_files/b33/experiment_b33_lbOnlyBay0_newamps.cfg",
+	"client_prefix": "smurf_client_s",
+	"crate_prefix": "shm-smrf-sp0",
+	"disable_bay0": false,
+	"disable_bay1": false,
+	"server_prefix": "smurf_server_s",
+	"slot": 4,
+	"start_gui": true,
+	"crate": "1",
+	"user": "cryo"
+    }
+}

@@ -1,9 +1,0 @@
-[core]
-    editor = emacs
-[user]
-    name = cryo
-    email = cryo@$(hostname)
-[filter "lfs"]
-    required = true
-[credential]
-    helper = cache

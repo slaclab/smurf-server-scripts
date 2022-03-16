@@ -1,7 +1,0 @@
-# Copied from here into the same folder as run.sh. Used by run.sh and
-# docker-compose.yml. Not sure if shawnhammer uses this. Ref
-# https://docs.docker.com/compose/env-file/.
-
-user_uid=1000:1001
-user_name=cryo
-shelfmanager=shm-smrf-sp01
