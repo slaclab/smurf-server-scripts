@@ -5,13 +5,13 @@ x-smurf-generic:
   network_mode: "host"
   user: ${USER}
   environment:
-  - location=${PWD}
-  - DISPLAY
-  - EPICS_CA_AUTO_ADDR_LIST=NO
-  - EPICS_CA_ADDR_LIST=127.255.255.255
-  - EPICS_CA_MAX_ARRAY_BYTES=80000000
+    - location=${PWD}
+    - DISPLAY
+    - EPICS_CA_AUTO_ADDR_LIST=NO
+    - EPICS_CA_ADDR_LIST=127.255.255.255
+    - EPICS_CA_MAX_ARRAY_BYTES=80000000
   volumes:
-  - /data:/data
+    - /data:/data
   tty: true
   stdin_open: true  
 
@@ -20,7 +20,7 @@ services:
     <<: *smurf-generic
     image: tidair/pysmurf-server:${version}
     container_name: ${server_prefix}${slot}
-    command: -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    command: -e ${server_prefix}${slot} -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type}
     
   smurf_client:
     <<: *smurf-generic
@@ -28,4 +28,5 @@ services:
     container_name: ${client_prefix}${slot}
     command: --epics ${server_prefix}${slot}
     volumes:
+      - /data:/data
       - /home/${USER}/.ipython:/home/${USER}/.ipython

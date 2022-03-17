@@ -2,7 +2,6 @@
     "program": "prod",
     "prod": {
 	"attach_client": true,
-	"cfg_file": "cfg_files/b33/experiment_b33_lbOnlyBay0_newamps.cfg",
 	"client_prefix": "smurf_client_s",
 	"comm_type": "eth",
 	"crate": "1",
