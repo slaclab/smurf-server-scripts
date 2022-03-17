@@ -1,9 +1,9 @@
 version: '3.7'
 
-x-gui-app:
-  &default-gui-app
+x-smurf-generic:
+  &smurf-generic
   network_mode: "host"
-  user: 1000:1001
+  user: ${USER}
   environment:
   - location=${PWD}
   - DISPLAY
@@ -13,46 +13,19 @@ x-gui-app:
   volumes:
   - /data:/data
   tty: true
-  stdin_open: true
-
-x-smurf-server:
-  &smurf-server
-  <<: *default-gui-app
-  image: tidair/pysmurf-server:${version}
-  container_name: ${server_prefix}${slot}
-  command: -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
-  
-x-smurf-client:
-  &smurf-client
-  <<: *default-gui-app
-  image: tidair/pysmurf-client:${version}
-  container_name: ${client_prefix}${slot}
-  command: --epics ${server_prefix}${slot}
-  depends_on:
-  - ${server_prefix}${slot}
+  stdin_open: true  
 
 services:
-  smurf_server_s2:
-    <<: *smurf-server
-  smurf_server_s3:
-    <<: *smurf-server
-  smurf_server_s4:
-    <<: *smurf-server
-  smurf_server_s5:
-    <<: *smurf-server
-  smurf_server_s6:
-    <<: *smurf-server
-  smurf_server_s7:
-    <<: *smurf-server
-  smurf_client_s2:
-    <<: *smurf-client
-  smurf_client_s3:
-    <<: *smurf-client
-  smurf_client_s4:
-    <<: *smurf-client
-  smurf_client_s5:
-    <<: *smurf-client
-  smurf_client_s6:
-    <<: *smurf-client
-  smurf_client_s7:
-    <<: *smurf-client
+  smurf_server:
+    <<: *smurf-generic
+    image: tidair/pysmurf-server:${version}
+    container_name: ${server_prefix}${slot}
+    command: -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    
+  smurf_client:
+    <<: *smurf-generic
+    image: tidair/pysmurf-client:${version}
+    container_name: ${client_prefix}${slot}
+    command: --epics ${server_prefix}${slot}
+    volumes:
+      - /home/${USER}/.ipython:/home/${USER}/.ipython

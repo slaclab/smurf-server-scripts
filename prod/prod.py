@@ -14,12 +14,18 @@ def get_env(smurf_dict):
 
     return env
 
-def start_server(smurf_dict):
-    docker_compose(smurf_dict, 'stop')
-    docker_compose(smurf_dict, 'rm')
-    docker_compose(smurf_dict, 'up')
-
-def docker_compose(smurf_dict, command):
-    proc_list = ['docker-compose', command, 'smurf_server_s4']
+def docker_compose(smurf_dict, arg_list):
+    proc_list = ['docker-compose'] + arg_list
     start_proc(proc_list, smurf_dict)
+
+def docker_restart_service(smurf_dict, service):
+    docker_compose(smurf_dict, ['stop', service])
+    docker_compose(smurf_dict, ['rm', service])
+    docker_compose(smurf_dict, ['up', '-d', service])
+    
+def start_server(smurf_dict):
+    docker_restart_service(smurf_dict, "smurf_server")
+    
+def start_client(smurf_dict):
+    docker_restart_service(smurf_dict, "smurf_client")
 

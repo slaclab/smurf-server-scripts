@@ -1,27 +1,7 @@
 version: '3.4'
 
 services:
-  smurf_server_s2:
+  smurf_server:
     devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
-  smurf_server_s3:
-    devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
-  smurf_server_s4:
-    devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
-  smurf_server_s5:
-    devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
-  smurf_server_s6:
-    devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
-  smurf_server_s7:
-    devices:
-    - /dev/datadev_0
-    - /dev/datadev_1
+      - /dev/datadev_0
+      - /dev/datadev_1
