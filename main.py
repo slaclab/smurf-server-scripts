@@ -1,47 +1,34 @@
-import json
-import os
-
-import prod.prod
+import server_prod.server_prod
 import client_jupyter.client_jupyter
-
-def get_main_dict():
-    """Get dictionary of SMuRF's configuration. Called by main, used by
-    Docker.
-
-    """
-    main_dict = {}
-
-    json_path = 'main.json'
-
-    if not os.path.isfile(json_path):
-        print('No JSON found.')
-    else:
-        with open(json_path) as json_object:
-            main_dict = json.loads(json_object.read())
-
-    return main_dict
+import main_os
+import main_dict
 
 def main():
-    """Start the SMuRF program as listed in main.json.
-
+    """
+    Start the SMuRF service as listed in main.json.
     """
     
-    main_dict = get_main_dict()
-    programs = main_dict['programs']
+    md = main_dict.get()
+    services = md['services']
 
-    for program in programs:
-        if program == 'prod':
-            prod.prod.start_server(main_dict)
-            prod.prod.start_client(main_dict)
+    for service in services:
+        if service == 'server_prod':
+            server_prod.server_prod.start(md, service)
+
+        elif service == 'client_prod':
+            pass
             
-        elif program == 'dev':
+        elif service == 'server_dev':
+            pass
+
+        elif service == 'client_dev':
             pass
         
-        elif program == 'client_jupyter':
-            client_jupyter.client_jupyter.start(main_dict)
+        elif service == 'client_jupyter':
+            client_jupyter.client_jupyter.start(md, service)
             
-        elif program == 'utils':
-            # utils.utils.start(main_dict)
+        elif service == 'utils':
+            # utils.utils.start(md)
             pass
         
 if __name__ == '__main__':

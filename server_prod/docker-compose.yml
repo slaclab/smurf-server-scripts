@@ -16,17 +16,8 @@ x-smurf-generic:
   stdin_open: true  
 
 services:
-  smurf_server:
+  server_prod:
     <<: *smurf-generic
     image: tidair/pysmurf-server:${version}
     container_name: ${server_prefix}${slot}
     command: -e ${server_prefix}${slot} -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type}
-    
-  smurf_client:
-    <<: *smurf-generic
-    image: tidair/pysmurf-client:${version}
-    container_name: ${client_prefix}${slot}
-    command: --epics ${server_prefix}${slot}
-    volumes:
-      - /data:/data
-      - /home/${USER}/.ipython:/home/${USER}/.ipython

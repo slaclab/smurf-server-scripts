@@ -23,16 +23,13 @@ schema==0.7.1
 
 ENV MPLBACKEND GTK3Agg
 
-# Get the pysmurf version, from docker-compose.yml, from main.json.
-ARG version
-# Conventionally /usr/local/src/ is where SMuRF source code is stored.
-WORKDIR /usr/local/src
-# Embed pysmurf in this docker image.
-RUN git clone https://github.com/slaclab/pysmurf.git -b $version
-ENV PYTHONPATH /usr/local/src/pysmurf/python:${PYTHONPATH}
-ENV PYSMURF_TOP /usr/local/src/pysmurf
-
 # Go to root, so /home/, /data/, etc. will be visible to Jupyter.
 WORKDIR /
-
 ENTRYPOINT ["jupyter", "lab", "--allow-root", "--ip=0.0.0.0"]
+
+# How does this docker image find pysmurf? It searches PYTHONPATH,
+# then import pysmurf can run correctly. In this docker container
+# PYTHONPATH is set to ${docker_pysmurf_dir}, and
+# ${docker_pysmurf_dir} maps to ${host_pysmurf_dir} on the host via
+# the docker-compose.yml file. This should make it very easy to move
+# around the pysmurf directory on the host to whatever you want.

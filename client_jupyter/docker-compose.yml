@@ -3,20 +3,39 @@ version: '3.7'
 services:
   client_jupyter:
     build:
-      # The docker image is preferably built with Pysmurf already
-      # embedded. If the version in main.json changes, Docker will
-      # nicely build another image automatically.
       context: .
-      args:
-        - version=${version}
+
+    # Permissions are much less complicated if we just use the user's
+    # username.
     user: ${USER}
+
+    # Use "host" to caget from the server. Communication between the
+    # client and the server is typicall local on the host, or you
+    # could start a remote connection to the server, which is less
+    # common but doable.
+    
+    network_mode: "host"
     environment:
       - EPICS_CA_AUTO_ADDR_LIST=NO
       - EPICS_CA_ADDR_LIST=127.255.255.255
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
+
+      # Jupyter will use PYTHONPATH to find pysmurf.client.
+      
+      - PYTHONPATH=${docker_pysmurf_dir}/python
     volumes:
+      # Data from SMuRF is conventionally saved to /data.
+      
       - /data:/data
-      - .jupyter/:/home/${USER}/.jupyter
+
+      # For convenience just put all the home directory stuff into the
+      # docker container.
+      
+      - /home/${USER}:/home/${USER}      
+      - ${host_pysmurf_dir}:${docker_pysmurf_dir}
+
+    # Open 8888 on the host to connect locally and also remotely.
+    # Example: http://smurf-srv01:8888/lab is the Jupyter lab.
     ports:
       - 8888:8888
     container_name: client_jupyter
