@@ -25,7 +25,7 @@ ENV MPLBACKEND GTK3Agg
 
 # Go to root, so /home/, /data/, etc. will be visible to Jupyter.
 WORKDIR /
-ENTRYPOINT ["jupyter", "lab", "--allow-root", "--ip=0.0.0.0"]
+ENTRYPOINT ["jupyter", "lab", "--ip=*"]
 
 # How does this docker image find pysmurf? It searches PYTHONPATH,
 # then import pysmurf can run correctly. In this docker container

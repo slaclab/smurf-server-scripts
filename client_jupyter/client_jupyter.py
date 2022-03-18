@@ -27,7 +27,7 @@ def start(main_dict, service):
     # change it, for example to update packages. If this doesn't
     # happen for some reason, add --build to the argument list.
     
-    docker_compose(main_dict, ['up', '-d'], service)
+    docker_compose(main_dict, ['up', '-d', '--build'], service)
 
     print(f'On the host pysmurf is at {path}, which is mapped to {main_dict[service]["docker_pysmurf_dir"]} in the container.')
 
