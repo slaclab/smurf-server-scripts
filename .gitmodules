@@ -1,0 +1,3 @@
+[submodule "dev/pysmurf"]
+	path = dev/pysmurf
+	url = https://github.com/slaclab/pysmurf.git

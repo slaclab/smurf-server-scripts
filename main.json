@@ -1,20 +1,22 @@
 {
-    "program": "prod",
+    "program": "client_jupyter",
     "prod": {
 	"attach_client": true,
 	"client_prefix": "smurf_client_s",
 	"comm_type": "eth",
-	"crate": "1",
+	"crate": "145",
 	"crate_prefix": "shm-smrf-sp0",
 	"disable_bay0": false,
 	"disable_bay1": false,
 	"server_prefix": "smurf_server_s",
 	"slot": "4",
-	"start_gui": true,
 	"version": "v5.0.4"
     },
     "dev": {
 	"comm_type": "eth"
+    },
+    "client_jupyter": {
+	"version": "v5.0.4"
     },
     "util": {
 	"version": "R1.1.3"
