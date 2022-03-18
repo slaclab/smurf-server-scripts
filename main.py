@@ -27,21 +27,22 @@ def main():
     """
     
     main_dict = get_main_dict()
-    program = main_dict['program']
+    programs = main_dict['programs']
 
-    if program == 'prod':
-        prod.prod.start_server(main_dict)
-        prod.prod.start_client(main_dict)
-
-    elif program == 'dev':
-        pass
-
-    elif program == 'client_jupyter':
-        client_jupyter.client_jupyter.start(main_dict)
-
-    elif program == 'utils':
-        # utils.utils.start(main_dict)
-        pass
-    
+    for program in programs:
+        if program == 'prod':
+            prod.prod.start_server(main_dict)
+            prod.prod.start_client(main_dict)
+            
+        elif program == 'dev':
+            pass
+        
+        elif program == 'client_jupyter':
+            client_jupyter.client_jupyter.start(main_dict)
+            
+        elif program == 'utils':
+            # utils.utils.start(main_dict)
+            pass
+        
 if __name__ == '__main__':
     main()

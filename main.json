@@ -1,10 +1,10 @@
 {
-    "program": "client_jupyter",
+    "programs": ["prod", "client_jupyter"],
     "prod": {
 	"attach_client": true,
 	"client_prefix": "smurf_client_s",
 	"comm_type": "eth",
-	"crate": "145",
+	"crate": "1",
 	"crate_prefix": "shm-smrf-sp0",
 	"disable_bay0": false,
 	"disable_bay1": false,
