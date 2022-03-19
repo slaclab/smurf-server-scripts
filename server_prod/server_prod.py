@@ -1,6 +1,4 @@
-import os
-import subprocess
-from main_os import start_proc, get_env, docker_compose
+from main_os import docker_compose
 
 def start(main_dict, service):
     

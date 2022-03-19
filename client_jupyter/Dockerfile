@@ -23,7 +23,7 @@ schema==0.7.1
 
 ENV MPLBACKEND GTK3Agg
 
-# Go to root, so /home/, /data/, etc. will be visible to Jupyter.
+# Goto / in the container's filesystem. docker-compose will insert /data into here.
 WORKDIR /
 ENTRYPOINT ["jupyter", "lab", "--ip=*"]
 

@@ -3,11 +3,16 @@ from main_os import docker_compose
 from main_git import get_repo_if_nonexistant
 
 def start(main_dict, service):
+    '''
+    Starting from the host, outside of all docker containers, start
+    Jupyter inside one docker container, and open the web browser. Run
+    the pysmurf Python code to connect to another docker container
+    running the uMux firmware.
+    '''
     url = main_dict[service]['pysmurf_url']
 
     # If the repository doesn't exist on the host, just clone it at
-    # this default version, then the user can check out other branches
-    # as they see fit.
+    # this default version, then the user can check out other branches.
     
     version = main_dict[service]['default_version']
 
@@ -23,15 +28,17 @@ def start(main_dict, service):
     docker_compose(main_dict, ['stop'], service)
     docker_compose(main_dict, ['rm', '-f'], service)
 
-    # Docker should detect changes in the Dockerfile if you choose to
-    # change it, for example to update packages. If this doesn't
-    # happen for some reason, add --build to the argument list.
+    # Use --build to check if the Dockerfile has changed.
     
     docker_compose(main_dict, ['up', '-d', '--build'], service)
 
-    print(f'On the host pysmurf is at {path}, which is mapped to {main_dict[service]["docker_pysmurf_dir"]} in the container.')
+    docker_pysmurf_dir = main_dict[service]['docker_pysmurf_dir']
+    print(f'On the host pysmurf is {path}, which maps to {docker_pysmurf_dir} in container {service}.')
 
     # For convenience open the browser. Does nothing if on terminal.
+    # The web browser runs on the host, but connects to the Jupyter
+    # program running inside the docker container.
+    
     webbrowser.open('http://localhost:8888', new = 2)
 
     

@@ -1,11 +1,15 @@
-import server_prod.server_prod
+import client_dev.client_dev
 import client_jupyter.client_jupyter
-import main_os
+import client_prod.client_prod
 import main_dict
+import main_os
+import server_dev.server_dev
+import server_prod.server_prod
+import utils.utils
 
 def main():
     """
-    Start the SMuRF service as listed in main.json.
+    Start the SMuRF services listed in main.json.
     """
     
     md = main_dict.get()
@@ -16,20 +20,19 @@ def main():
             server_prod.server_prod.start(md, service)
 
         elif service == 'client_prod':
-            pass
+            client_prod.client_prod.start(md, service)
             
         elif service == 'server_dev':
-            pass
+            server_dev.server_dev.start(md, service)
 
         elif service == 'client_dev':
-            pass
+            client_dev.client_dev.start(md, service)
         
         elif service == 'client_jupyter':
             client_jupyter.client_jupyter.start(md, service)
             
         elif service == 'utils':
-            # utils.utils.start(md)
-            pass
+            utils.utils.start(md, service)
         
 if __name__ == '__main__':
     main()

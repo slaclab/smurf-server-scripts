@@ -1,14 +1,18 @@
+version: '3.7'
+
 services:
-  util:
+  utils:
+    container_name: utils
     image: tidair/smurf-base:${version}
-    user: cryo
+    user: ${USER}
     network_mode: "host"
     environment:
-      - location=${PWD}
       - DISPLAY
       - EPICS_CA_AUTO_ADDR_LIST=NO
       - EPICS_CA_ADDR_LIST=127.255.255.255
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
     volumes:
       - /data:/data
-      - ${pwd}/shared:/shared
+      - ${PWD}/shared:/shared
+    tty: true
+    stdin_open: true

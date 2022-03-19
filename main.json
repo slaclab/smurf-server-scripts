@@ -4,11 +4,10 @@
 	"comm_type": "eth",
 	"crate": "1",
 	"crate_prefix": "shm-smrf-sp0",
-	"disable_bay0": false,
-	"disable_bay1": false,
 	"server_prefix": "smurf_server_s",
 	"slot": "6",
-	"version": "v5.0.4"
+	"version": "v5.0.4",
+	"crate_type": "comtel"
     },
     "client_prod": {
 	"attach_client": true,
@@ -16,7 +15,8 @@
 	"version": "v5.0.4"
     },
     "server_dev": {
-	"asdf": "adsf"
+	"asdf": "adsf",
+	"default_version": "v5.0.4"
     },
     "client_dev": {
 	"comm_type": "eth",
@@ -25,7 +25,7 @@
     "client_jupyter": {
 	"default_version": "main",
 	"docker_pysmurf_dir": "/pysmurf",
-	"host_pysmurf_dir": "/home/cryo/smurf-server-scripts/client_jupyter/pysmurf",
+	"host_pysmurf_dir": "/home/cryo/pysmurf",
 	"pysmurf_url": "https://github.com/slaclab/pysmurf.git"
     },
     "utils": {
