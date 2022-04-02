@@ -1,0 +1,27 @@
+version: '3.7'
+
+x-smurf-generic:
+  &smurf-generic
+  network_mode: "host"
+  user: ${USER}
+  environment:
+    - location=${PWD}
+    - DISPLAY
+    - EPICS_CA_AUTO_ADDR_LIST=NO
+    - EPICS_CA_ADDR_LIST=127.255.255.255
+    - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  volumes:
+    - /data:/data
+  tty: true
+  stdin_open: true  
+
+services:
+  client_prod:
+    <<: *smurf-generic
+    image: tidair/pysmurf-client:${version}
+    # Load the image from the internet. The server Dockerfile is
+    # located in pysmurf/docker/client.
+    container_name: ${prefix}${slot}
+    # The client will now run ipython and the startup script
+    # /usr/local/src/pysmurf_utilities/pysmurf_startup. You can import
+    # pysmurf and load SmurfControl here if you'd like.

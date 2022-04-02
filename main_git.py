@@ -1,4 +1,3 @@
-from main_os import start_proc
 from git import Repo
 import git.exc
 import os

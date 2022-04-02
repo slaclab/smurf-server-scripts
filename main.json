@@ -1,34 +1,43 @@
 {
-    "services": ["server_prod", "client_jupyter"],
+    "services": ["client_prod"],
     "server_prod": {
 	"comm_type": "eth",
-	"crate": "1",
-	"crate_prefix": "shm-smrf-sp0",
-	"server_prefix": "smurf_server_s",
-	"slot": "6",
-	"version": "v5.0.4",
-	"crate_type": "comtel"
-    },
-    "client_prod": {
-	"attach_client": true,
-	"client_prefix": "smurf_client_s",
+	"crate_hostname": "shm-smrf-sp01",
+	"restart_slot": true,
+	"prefix": "smurf_server_s",
+	"slot": "4",
 	"version": "v5.0.4"
     },
-    "server_dev": {
+    "client_prod": {
+	"version": "v5.0.4",
+	"slot": "4",
+	"attach": true,
+	"prefix": "smurf_client_s",
+	"script": "server_scripts/test_connection.py",
+	"script_start": true
+    },
+    "dev": {
 	"asdf": "adsf",
-	"default_version": "v5.0.4"
-    },
-    "client_dev": {
+	"default_version": "v5.0.4",
 	"comm_type": "eth",
-	"default_version": "main"
+	"default_version": "main"	
     },
-    "client_jupyter": {
+    "jupyter": {
 	"default_version": "v5.0.4",
 	"docker_pysmurf_dir": "/pysmurf",
 	"host_pysmurf_dir": "/home/cryo/pysmurf",
-	"pysmurf_url": "https://github.com/slaclab/pysmurf.git"
+	"pysmurf_url": "https://github.com/slaclab/pysmurf.git",
+	"script": "server_scripts/test_connection.py",
+	"script_start": true
     },
-    "utils": {
+    "util": {
 	"version": "R1.1.3"
+    },
+    "timing": {
+	"version": "R1.7.3-1.3.0"
+    },
+    "gui": {
+	"slot": "4",
+	"version": "R2.8.4"
     }
 }

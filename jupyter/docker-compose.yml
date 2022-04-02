@@ -1,9 +1,9 @@
 version: '3.7'
 
 services:
-  client_jupyter:
+  jupyter:
     # Assume that this host only needs one Jupyterlab running.
-    container_name: client_jupyter
+    container_name: jupyter
 
     # This lets us build using the local Dockerfile. Docker typically
     # wants to run in the same directory as Dockerfile and

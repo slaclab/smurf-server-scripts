@@ -16,8 +16,30 @@ x-smurf-generic:
   stdin_open: true  
 
 services:
+  # Unfortunately the next line needs to be hardcoded, I can't use
+  # bash substitution like ${USER}. This is why the folder is named
+  # specifically server_prod.
   server_prod:
     <<: *smurf-generic
     image: tidair/pysmurf-server:${version}
-    container_name: ${server_prefix}${slot}
-    command: -e ${server_prefix}${slot} -S ${crate_prefix}${crate} -N ${slot} -c ${comm_type}
+    # Load the image from the internet.  The server Dockerfile is
+    # located in pysmurf/docker/server.
+    container_name: ${prefix}${slot}
+    # The server will listen for local EPICS connections.
+    # The container name is the same as the EPICS "root."
+    # The container name is different from the crate hostname.
+    # The script is: pysmurf/docker/server/scripts/start_server.sh.
+    # Flags:
+    # -H reboot the FPGA
+    # --disable-hw-detect Dont automatically select the AMC board types.
+    # -N Slot number
+    # -S shelf manager hostname
+    # -a IP Address of FPGA
+    # -c communication type: either eth or pcie
+    # --defaults Pyrogue .yml file, e.g. /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    # Typically you either:
+    # - Dont use --disable-hw-detect or --defaults, and let the system detect the AMC types.
+    # - Use --disable-hw-detect and --defaults, where you specify the defaults file.
+    # The defaults files are from github.com/slaclab/smurf_cfg.
+    # They are embedded as /tmp/fw/smurf_cfg in this docker container.
+    command: -e ${prefix}${slot} -S ${crate_hostname} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml

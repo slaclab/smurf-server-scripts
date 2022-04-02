@@ -1,0 +1,81 @@
+# docker-compose.yml
+# Allow local machines to run pysmurf. GitHub uses another process
+# to build the client and server images for release.
+# Input: Environment variables from .env
+# Output: pysmurf client and server images
+
+# Set the compose file version. No known bugs.
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: '3.4'
+
+# Needed for GUI support I think. Not really tested.
+# Why the x-?  Only version, services, networks, volumes, secrets, configs, and
+# extensions are allowed in the top level yml.
+x-gui-app:
+  # Identify with the & alias so services can merge this.
+  &default-gui-app
+  network_mode: "host"
+  user: 1000:1001
+  environment:
+  - location=${PWD}
+  - DISPLAY
+  - EPICS_CA_AUTO_ADDR_LIST=NO
+  - EPICS_CA_ADDR_LIST=127.255.255.255
+  - EPICS_CA_MAX_ARRAY_BYTES=80000000
+  security_opt:
+  - "apparmor=docker-smurf"
+  tty: true
+  stdin_open: true
+
+# Run the server in development mode.
+x-smurf-server-dev:
+  &x-smurf-server-dev
+  <<: *default-gui-app
+  build:
+    context: ../docker/server/
+    args:
+      branch: ${branch}
+  container_name: smurf_server_s${slot}
+  volumes:
+  - /data:/data
+  - /home/cryo/.Xauthority:/home/cryo/.Xauthority
+  - /home/cryo/.bash_history:/home/cryo/.bash_history
+  - ${PWD}/../:/usr/local/src/pysmurf
+  - ${PWD}/../docker/server/scripts/start_server.sh:/usr/local/src/pysmurf_utilities/start_server.sh
+  - ${PWD}/../docker/server/scripts/server_common.sh:/usr/local/src/pysmurf_utilities/server_common.sh
+  command: -g -w smurf_server_s${slot} -S shm-smrf-sp01 -N ${slot} -e smurf_server_s${slot} -c ${connection_type} 
+  logging:
+    options:
+      tag: smurf_server
+
+# Run the client in development mode.
+x-smurf-client-dev:
+  &x-smurf-client-dev
+  <<: *default-gui-app
+  container_name: pysmurf_s${slot}
+  build:
+    context: ../docker/client/
+  ports:
+    # Open the Jupyter port on this Docker container. http://localhost:port. 
+    # If the server also opens this port, you can also connect to this
+    # hostname at this port at http://smurf-srvXX:port.
+    - "8888:8888"
+  volumes:
+  - /data:/data
+  - /home/cryo/.Xauthority:/home/cryo/.Xauthority
+  - /home/cryo/.bash_history:/home/cryo/.bash_history
+  - /home/cryo/.ipython:/home/cryo/.ipython
+  - ${PWD}/../:/usr/local/src/pysmurf
+  command: --epics smurf_server_s${slot}
+  logging:
+    options:
+      tag: pysmurf
+
+# So far, naming the service non-unique names, while naming the container
+# unique names works. If for some reason we need unique service names, replace
+# smurf-server-dev with smurf_server_s1 through 7 and the same for the client.
+services:
+  smurf-server-dev:
+    <<: *x-smurf-server-dev
+  smurf-client-dev:
+    <<: *x-smurf-client-dev

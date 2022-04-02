@@ -1,5 +1,5 @@
 import webbrowser
-from main_os import docker_compose
+from main_docker import docker_compose
 from main_git import get_repo_if_nonexistant
 
 def start(main_dict, service):

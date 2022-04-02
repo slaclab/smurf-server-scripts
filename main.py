@@ -1,38 +1,42 @@
-import client_dev.client_dev
-import client_jupyter.client_jupyter
-import client_prod.client_prod
+import jupyter.jupyter
 import main_dict
-import main_os
-import server_dev.server_dev
+import util.util
+
+import client_prod.client_prod
 import server_prod.server_prod
-import utils.utils
 
 def main():
     """
-    Start the SMuRF services listed in main.json.
+    Start one or multiple SMuRF programs.
     """
-    
+
+    # Read the main.json file.
     md = main_dict.get()
     services = md['services']
 
+    # Start the services listed in main.json.
+    
     for service in services:
         if service == 'server_prod':
             server_prod.server_prod.start(md, service)
-
+            
         elif service == 'client_prod':
             client_prod.client_prod.start(md, service)
+        
+        elif service == 'jupyter':
+            jupyter.jupyter.start(md, service)
             
-        elif service == 'server_dev':
-            server_dev.server_dev.start(md, service)
+        elif service == 'util':
+            util.util.start(md, service)
 
-        elif service == 'client_dev':
-            client_dev.client_dev.start(md, service)
-        
-        elif service == 'client_jupyter':
-            client_jupyter.client_jupyter.start(md, service)
-            
-        elif service == 'utils':
-            utils.utils.start(md, service)
-        
+        elif service == 'timing':
+            pass
+
+        elif service == 'timing_dev':
+            pass
+
+        elif service == 'gui':
+            pass
+
 if __name__ == '__main__':
     main()

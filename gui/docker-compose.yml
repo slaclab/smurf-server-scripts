@@ -3,7 +3,7 @@ version: '3.7'
 services:
   utils:
     container_name: utils
-    image: tidair/smurf-base:${version}
+    image: tidair/smurf-rogue:${version}
     user: ${USER}
     network_mode: "host"
     environment:
@@ -13,6 +13,6 @@ services:
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
     volumes:
       - /data:/data
-      - ${PWD}/shared:/shared
+    entrypoint: connect_remote_gui.py
     tty: true
     stdin_open: true
