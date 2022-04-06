@@ -284,7 +284,7 @@ fi
 
 copy_template "run.sh"
 copy_template "stop.sh"
-copy_template "base.sh"
+copy_template "functions.sh"
 copy_template "env" ".env"
 
 chmod +x ${target_dir}/run.sh
