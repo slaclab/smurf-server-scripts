@@ -23,16 +23,16 @@ def start(main_dict, service):
     path = main_dict[service]['host_pysmurf_dir']
     get_repo_if_nonexistant(url, version, path)
 
-    # Restart the container named service.    
-    docker_restart(main_dict, service)
+    if is_repo_verbose(path):
+        docker_restart(main_dict, service)
 
-    docker_pysmurf_dir = main_dict[service]['docker_pysmurf_dir']
-    print(f'On the host pysmurf is {path}, which maps to {docker_pysmurf_dir} in container {service}.')
+        docker_pysmurf_dir = main_dict[service]['docker_pysmurf_dir']
+        print(f'On the host pysmurf is {path}, which maps to {docker_pysmurf_dir} in container {service}.')
 
-    # For convenience open the browser. Does nothing if on terminal.
-    # The web browser runs on the host, but connects to the Jupyter
-    # program running inside the docker container.
-    
-    webbrowser.open('http://localhost:8888', new = 2)
+        # For convenience open the browser. Does nothing if on terminal.
+        # The web browser runs on the host, but connects to the Jupyter
+        # program running inside the docker container.
+        
+        webbrowser.open('http://localhost:8888', new = 2)
 
     

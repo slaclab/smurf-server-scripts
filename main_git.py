@@ -18,18 +18,8 @@ def is_repo(path):
 
     return True
 
-def get_repo(repo_url, path, version):
-    repo = Repo.clone_from(repo_url, path, branch = version)
-    return repo
-
-def get_repo_if_nonexistant(repo_url, version, path):
-    if not is_repo(path):
-        pwd = os.environ['PWD']
-        print(f'No repo in {path}, cloning {repo_url} at version {version} to {path}. Current dir is {pwd}.')
-        repo = get_repo(repo_url, path, version)
-        repo.head.reference = r.create_head('main')
-        
-    else:
+def is_repo_verbose(path):
+    if is_repo(path):
         repo = Repo(path)
         current_commit = repo.commit('HEAD').hexsha
         branch = str(repo.active_branch)
@@ -37,3 +27,8 @@ def get_repo_if_nonexistant(repo_url, version, path):
         message_short = message[:25] if len(message) > 25 else message
         
         print(f'Found repo in {path}, its current branch is {branch}, current commit is {current_commit}, current message {message_short}...')
+        return True
+
+    else:
+        print(f'No repo found in {path}.')
+        return False

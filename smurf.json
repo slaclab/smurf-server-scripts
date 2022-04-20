@@ -24,10 +24,8 @@
 	"attach": true
     },
     "jupyter": {
-	"default_version": "v4.0.0",
 	"docker_pysmurf_dir": "/pysmurf",
 	"host_pysmurf_dir": "/home/cryo/pysmurf",
-	"pysmurf_url": "https://github.com/slaclab/pysmurf.git"
     },
     "util": {
 	"version": "R1.1.3"
