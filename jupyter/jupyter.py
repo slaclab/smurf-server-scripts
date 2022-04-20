@@ -1,5 +1,5 @@
 import webbrowser
-from main_docker import docker_compose
+from main_docker import docker_restart
 from main_git import get_repo_if_nonexistant
 
 def start(main_dict, service):
@@ -23,14 +23,8 @@ def start(main_dict, service):
     path = main_dict[service]['host_pysmurf_dir']
     get_repo_if_nonexistant(url, version, path)
 
-    # Restart the container named service.
-    
-    docker_compose(main_dict, ['stop'], service)
-    docker_compose(main_dict, ['rm', '-f'], service)
-
-    # Use --build to check if the Dockerfile has changed.
-    
-    docker_compose(main_dict, ['up', '-d', '--build'], service)
+    # Restart the container named service.    
+    docker_restart(main_dict, service)
 
     docker_pysmurf_dir = main_dict[service]['docker_pysmurf_dir']
     print(f'On the host pysmurf is {path}, which maps to {docker_pysmurf_dir} in container {service}.')

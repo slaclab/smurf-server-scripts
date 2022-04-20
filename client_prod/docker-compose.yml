@@ -30,7 +30,7 @@ services:
       - /home/${USER}/.ipython:/home/${USER}/.ipython
       
     tty: true
-    stdin_open: true  
+    stdin_open: true
     # Load the image from the internet. The server Dockerfile is
     # located in pysmurf/docker/client. The Dockerfile is based off
     # tidair/pysmurf-base and many utilities come from there.

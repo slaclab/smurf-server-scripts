@@ -5,22 +5,21 @@ Given the main.json turn it into dictionary and verify.
 import os
 import json
 
-def get():
+def get(json_path):
     """
-    Get dictionary of SMuRF's configuration. Called by main, used by
-    Docker.
+    Get dictionary of SMuRF's configuration. Called by smurf.py, used
+    mostly by Docker for configuration variables.
     """
-    main_dict = {}
-
-    json_path = 'main.json'
+    
+    smurf_dict = {}
 
     if not os.path.isfile(json_path):
         print('No JSON found.')
     else:
         with open(json_path) as json_object:
-            main_dict = json.loads(json_object.read())
+            smurf_dict = json.loads(json_object.read())
 
-    return main_dict
+    return smurf_dict
 
 def verify():
     pass

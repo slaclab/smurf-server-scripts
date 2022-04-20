@@ -36,6 +36,7 @@ services:
     # -S shelf manager hostname
     # -a IP Address of FPGA
     # -c communication type: either eth or pcie
+    # -g Start the interface to see SMuRF variables. You typically want this.
     # --defaults Pyrogue .yml file, e.g. /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
     # Typically you either:
     # - Dont use --disable-hw-detect or --defaults, and let the system detect the AMC types.

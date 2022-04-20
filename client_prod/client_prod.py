@@ -14,4 +14,3 @@ def start(main_dict, service):
         container = main_dict[service]['prefix'] + main_dict[service]['slot']
         print('client_prod.py: Attaching to the production client. Use Ctrl-P Ctrl-Q to detatch, or Ctrl-D to kill the container. To attach again, use the command docker attach.')
         docker_attach(main_dict, service, container)
-        
