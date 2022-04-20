@@ -1,6 +1,6 @@
 import webbrowser
 from main_docker import docker_restart
-from main_git import get_repo_if_nonexistant
+from main_git import is_repo_verbose
 
 def start(main_dict, service):
     '''
@@ -9,19 +9,11 @@ def start(main_dict, service):
     the pysmurf Python code to connect to another docker container
     running the uMux firmware.
     '''
-    url = main_dict[service]['pysmurf_url']
-
-    # If the repository doesn't exist on the host, just clone it at
-    # this default version, then the user can check out other branches.
-    
-    version = main_dict[service]['default_version']
 
     # We'd like the pysmurf directory to be on the host and not buried
-    # inside the docker container. So specify it here and clone if it
-    # doesn't exist. Example: /home/cryo/myrepos/pysmurf.
+    # inside the docker container. Example: /home/cryo/repos/pysmurf.
     
     path = main_dict[service]['host_pysmurf_dir']
-    get_repo_if_nonexistant(url, version, path)
 
     if is_repo_verbose(path):
         docker_restart(main_dict, service)
