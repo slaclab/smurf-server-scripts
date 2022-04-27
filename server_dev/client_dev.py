@@ -1,7 +1,7 @@
 import docker
 
-def __init__(self, main_dict):
-    self.main_dict = main_dict
+def __init__(self, smurf_dict):
+    self.smurf_dict = smurf_dict
     self.dc = docker.from_env()
     
 def get_matching_dockers(match_str):

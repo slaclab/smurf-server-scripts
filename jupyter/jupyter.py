@@ -1,8 +1,8 @@
 import webbrowser
-from main_docker import docker_restart
-from main_git import is_repo_verbose
+from smurf_docker import docker_restart
+from smurf_git import is_repo_verbose
 
-def start(main_dict, service):
+def start(smurf_dict, service):
     '''
     Starting from the host, outside of all docker containers, start
     Jupyter inside one docker container, and open the web browser. Run
@@ -13,12 +13,12 @@ def start(main_dict, service):
     # We'd like the pysmurf directory to be on the host and not buried
     # inside the docker container. Example: /home/cryo/repos/pysmurf.
     
-    path = main_dict[service]['host_pysmurf_dir']
+    path = smurf_dict[service]['host_pysmurf_dir']
 
     if is_repo_verbose(path):
-        docker_restart(main_dict, service)
+        docker_restart(smurf_dict, service)
 
-        docker_pysmurf_dir = main_dict[service]['docker_pysmurf_dir']
+        docker_pysmurf_dir = smurf_dict[service]['docker_pysmurf_dir']
         print(f'On the host pysmurf is {path}, which maps to {docker_pysmurf_dir} in container {service}.')
 
         # For convenience open the browser. Does nothing if on terminal.
