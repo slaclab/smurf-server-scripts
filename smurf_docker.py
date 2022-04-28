@@ -22,30 +22,19 @@ def get_env(smurf_dict, service):
 
     return env
 
-def docker_compose(smurf_dict, arg_list, service):
+def compose(smurf_dict, arg_list, service):
     proc_list = ['docker-compose'] + arg_list + [service]
     env = get_env(smurf_dict, service)
     subprocess.call(proc_list, env = env, cwd = service)
 
-def docker_stop(smurf_dict, service):
+def stop(smurf_dict, service):
     "Stop the given service."
-    docker_compose(smurf_dict, ['stop'], service)
-    docker_compose(smurf_dict, ['rm', '-f'], service)
+    compose(smurf_dict, ['stop'], service)
+    compose(smurf_dict, ['rm', '-f'], service)
 
-def docker_restart(smurf_dict, service):
+def restart(smurf_dict, service):
     """
-    Restart the given service.
+    Restart the given service. Add --build to always rebuild the image. -d is detatch.
     """
-    docker_stop(smurf_dict, service)
-    docker_compose(smurf_dict, ['up', '-d'], service)
-
-def docker_attach(smurf_dict, service, container):
-    """
-    Attach to the docker container named container. This container is
-    related to the Docker service named service, so get the
-    environment variables for that service so the container can access
-    them, for example slot number.
-    """
-    proc_list = ['docker', 'attach', container]
-    subprocess.call(proc_list)
-    
+    stop(smurf_dict, service)
+    compose(smurf_dict, ['up', '--build', '-d'], service)    

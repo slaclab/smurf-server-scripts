@@ -1,0 +1,50 @@
+version: '3.7'
+  
+services:
+  client_dev:
+    # Name this container specific to the slot. While you can use one
+    # client for interacting with multiple slots by setting the EPICS
+    # prefix, most users like to have one client running for each
+    # slot.
+    container_name: ${prefix}${slot}
+    
+    # This lets us build using the local Dockerfile. Docker typically
+    # wants to run in the same directory as Dockerfile and
+    # docker-compose.yml. There are no remotely hosted images for
+    # client_jupter, we only worry about the production images,
+    # pysmurf-server, pysmurf-client having remotely hosted images.
+    build:
+      context: .
+  
+    # The production client. You container has the following folders
+    # - /usr/local/src/FirmwareLoader
+    # - /usr/local/src/IPMC
+    # - /usr/local/src/ProgramFPGA
+    # - /usr/local/src/epics
+    # - /usr/local/src/pysmurf
+    # - /usr/local/src/pysmurf_utilities
+    # - /usr/local/src/smurftestapps
+    # This container has the following commands
+    # - amcc_dump_bsi
+    # - amcc_bootloader
+    # - amcc_mac_adx
+    # - amcc_dump
+    network_mode: "host"
+    user: ${USER}
+    environment:
+      - location=${PWD}
+      - DISPLAY
+      - EPICS_CA_AUTO_ADDR_LIST=NO
+      - EPICS_CA_ADDR_LIST=127.255.255.255
+      - EPICS_CA_MAX_ARRAY_BYTES=80000000
+    volumes:
+      # Save data to /data typically.
+      - /data:/data
+      # Use Ctrl-R to go search back in history. Convenient.
+      - /home/${USER}/.ipython:/home/${USER}/.ipython
+      
+    tty: true
+    stdin_open: true
+    
+    # The client will now run ipython and the startup script
+    # /usr/local/src/pysmurf_utilities/pysmurf_startup.

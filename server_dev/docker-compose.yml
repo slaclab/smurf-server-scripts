@@ -1,71 +1,32 @@
+# server_dev/docker-compose.yml
+# Most commonly you want to modify the command: section below.
+
 version: '3.4'
 
-x-gui-app:
-  &default-gui-app
-  network_mode: "host"
-  user: ${user}
-  environment:
-  - location=${PWD}
-  - DISPLAY
-  - EPICS_CA_AUTO_ADDR_LIST=NO
-  - EPICS_CA_ADDR_LIST=127.255.255.255
-  - EPICS_CA_MAX_ARRAY_BYTES=80000000
-  security_opt:
-  - "apparmor=docker-smurf"
-  tty: true
-  stdin_open: true
-
-x-smurf-server:
-  &smurf-server
-  <<: *default-gui-app
-  image: tidair/smurf-server:${version}
-  container_name: ${server_prefix}${slot}
-  volumes:
-  - /data:/data
-  - ${PWD}/fw:/tmp/fw
-  - ${PWD}/rogue:/usr/local/src/rogue
-  - ${PWD}/pysmurf:/usr/local/src/pysmurf
-  - ${PWD}/pysmurf/docker/server/scripts/start_server.sh:/usr/local/src/pysmurf_utilities/start_server.sh
-  - ${PWD}/pysmurf/docker/server/scripts/server_common.sh:/usr/local/src/pysmurf_utilities/server_common.sh
-  command: -g -w ${server_prefix}${slot} -S ${shelf_prefix}{crate_id} -N ${slot} -e ${server_prefix}${slot} -c ${comm_type}
-  
-x-pysmurf:
-  &pysmurf
-  <<: *default-gui-app
-  image: tidair/pysmurf-client:${version}
-  container_name: ${client_prefix}${slot}
-  volumes:
-  - /data:/data
-  - ${PWD}/pysmurf:/usr/local/src/pysmurf
-  command: --epics ${server_prefix}${slot}
-  logging:
-    options:
-      tag: pysmurf
-  depends_on:
-  - ${server_prefix}${slot}
-
 services:
-  ${server_prefix}2:
-    <<: *smurf-server
-  ${server_prefix}3:
-    <<: *smurf-server
-  ${server_prefix}4:
-    <<: *smurf-server
-  ${server_prefix}5:
-    <<: *smurf-server
-  ${server_prefix}6:
-    <<: *smurf-server
-  ${server_prefix}7:
-    <<: *smurf-server
-  ${client_prefix}2:
-    <<: *pysmurf
-  ${client_prefix}3:
-    <<: *pysmurf
-  ${client_prefix}4:
-    <<: *pysmurf
-  ${client_prefix}5:
-    <<: *pysmurf
-  ${client_prefix}6:
-    <<: *pysmurf
-  ${client_prefix}7:
-    <<: *pysmurf
+  server_dev:
+    container_name: ${prefix}${slot}
+    
+    # Build using this Dockerfile. Remove this line, replace it
+    # with image: tidair/smurf-server:version and you esesntially
+    # have the production verison.
+    build:
+      context: .
+    network_mode: "host"
+    user: ${USER}
+    environment:
+      - DISPLAY
+      - EPICS_CA_AUTO_ADDR_LIST=NO
+      - EPICS_CA_ADDR_LIST=127.255.255.255
+      - EPICS_CA_MAX_ARRAY_BYTES=80000000
+    tty: true
+    stdin_open: true
+    volumes:
+      # Data saved here!
+      - /data:/data
+
+    # The server is started via start_server.sh, which then determines
+    # if its on PCIe or Ethernet, then finally calls cmb_pcie.py or
+    # cmb_eth.py. These are arguments to start_server.sh.
+    # start_server.sh: 
+    command: -g -w ${prefix}${slot} -S ${crate_hostname} -N ${slot} -e ${prefix}${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml

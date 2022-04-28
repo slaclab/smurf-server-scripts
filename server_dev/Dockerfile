@@ -5,9 +5,9 @@
 
 FROM tidair/smurf-rogue:R2.8.8
 
-# Copy all firmware related files, which are in the local_files directory
+# Copy all firmware related files, which are in the fw directory
 RUN mkdir -p /tmp/fw/ && chmod -R a+rw /tmp/fw/
-COPY local_files /tmp/fw/
+COPY fw /tmp/fw/
 
 # Install the SMURF PCIe card repository
 WORKDIR /usr/local/src
@@ -21,7 +21,7 @@ ENV PYTHONPATH /usr/local/src/smurf-pcie/firmware/submodules/axi-pcie-core/pytho
 # The client does not need to compile pysmurf, but the server does.
 ARG branch
 WORKDIR /usr/local/src
-RUN git clone https://github.com/slaclab/pysmurf.git -b ${branch}
+RUN git clone https://github.com/slaclab/pysmurf.git -b v6.0.0
 WORKDIR pysmurf
 RUN mkdir build
 WORKDIR build
