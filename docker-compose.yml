@@ -1,0 +1,22 @@
+# smurf-server-scripts/docker-compose.yml
+# This calls the docker-compose.yml files for each service.
+# Docs: https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+software
+# Usage:
+# docker-compose up server_dev to start the development server.
+# docker-compose config to see the current config taken from the .env file.
+# Notes
+# - This top-level .env applies to all these services.
+
+# Only 2.X and >3.8 support extends. 
+version: '2.2'
+
+services:
+  server_dev:
+    extends:
+      file: server_dev/docker-compose.yml
+      service: server_dev
+
+  client_dev:
+    extends:
+      file: client_dev/docker-compose.yml
+      service: client_dev

@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2.2'
   
 services:
   client_dev:
@@ -6,7 +6,7 @@ services:
     # client for interacting with multiple slots by setting the EPICS
     # prefix, most users like to have one client running for each
     # slot.
-    container_name: ${prefix}${slot}
+    container_name: ${client_prefix}${slot}
     
     # This lets us build using the local Dockerfile. Docker typically
     # wants to run in the same directory as Dockerfile and

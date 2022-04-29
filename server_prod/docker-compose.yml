@@ -12,6 +12,8 @@ x-smurf-generic:
     - EPICS_CA_MAX_ARRAY_BYTES=80000000
   volumes:
     - /data:/data
+    # Forward X to the container.
+    - /home/${USER}/.Xauthority:/home/${USER}/.Xauthority
   tty: true
   stdin_open: true  
 

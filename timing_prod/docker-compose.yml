@@ -8,14 +8,15 @@ services:
   # breaks, the firmware will continue operating even when the docker
   # container and IOC are shut down. You just can't interact with it
   # anymore.
-  timing:
-    container_name: timing
+  timing_prod:
+    container_name: timing_prod
     # Bash substitution.
     image: tidair/smurf-tpg-ioc:${version}
-    # Need to access saved PV variables, otherwise crash.
-    volumes:
-    - /data:/data
-    # Need to access the 10. network, so use "host."
+    # Need to access:
+    # - 10.0.0.0 network
+    # - shm-smrf-sp01 (192 network)
+    # - 127.0.0.0 network
+    # - 172.0.0.0 network
     network_mode: "host"
     environment:
     - EPICS_CA_ADDR_LIST=172.17.255.255
