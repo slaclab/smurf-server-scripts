@@ -1,0 +1,49 @@
+record(longin, "$(DEVICE):FLTBUFMLATCH$(BUF)")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) fltBuff_mLatch$(BUF)")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FLTBUFBCSLATCH$(BUF)")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) fltBuff_bcsLatch$(BUF)")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FLTBUFMPSLATCH$(BUF)")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) fltBuff_mpsLatch$(BUF)")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FLTBUFTAG$(BUF)")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) fltBuff_tag$(BUF)")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FLTBUFMPSTAG$(BUF)")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) fltBuff_mpsTag$(BUF)")
+  field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(DEVICE):FLTBUFCLR$(BUF)")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) fltBuff_clear$(BUF)")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "Clear")
+  field(SCAN, "Passive")
+}

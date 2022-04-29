@@ -1,0 +1,28 @@
+tag build.AmcCarrierTimingGenerator.0x0000000D.20170317173056
+Tagger: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Fri Mar 17 17:30:56 2017 -0700
+
+PROJECT: AmcCarrierTimingGenerator
+
+FW_VERSION: 0x0000000D
+
+BUILD_STRING: AmcCarrierTimingGenerator: Vivado v2016.4, x86_64, Built Fri Mar 17 17:30:56 PDT 2017 by weaver
+
+commit 1c855b0ee404fe03d6f0011987522ed01c3a0c25
+Author: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Fri Mar 17 15:10:15 2017 -0700
+
+    Syntax err
+
+diff --git a/targets/AmcCarrierTimingGenerator/hdl/Application.vhd b/targets/AmcCarrierTimingGenerator/hdl/Application.vhd
+index c010646..6c1987e 100644
+--- a/targets/AmcCarrierTimingGenerator/hdl/Application.vhd
++++ b/targets/AmcCarrierTimingGenerator/hdl/Application.vhd
+@@ -468,7 +468,6 @@ begin
+         JESD_RX_ROUTES_G   => JESD_CH0_CH1_SWAP_C,
+         JESD_TX_ROUTES_G   => JESD_ROUTES_INIT_C,
+         JESD_REF_SEL_G     => DEV_CLK2_SEL_C)
+-        )
+       port map (
+         -- Clock/reset/SYNC
+         jesdClk         => jesdClk(i),

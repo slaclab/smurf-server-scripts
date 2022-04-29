@@ -1,0 +1,194 @@
+# $(DEV) database
+
+file "tpgAsynDriver_smrf.db" {
+    pattern {   DEVICE,   PORT         }
+            {   "$(DEV)",    "tpgPort"    }
+    
+}
+
+file "tpgDiagnostics.db" {
+    pattern {   DEVICE,    PORT   }
+            {   "$(DEV)",  "tpgPort" }
+}
+
+file "tpgCountTrig.db" {
+    pattern {   DEVICE,    PORT,      N    }
+            {   "$(DEV)",  "tpgPort", "0"  }
+            {   "$(DEV)",  "tpgPort", "1"  }
+            {   "$(DEV)",  "tpgPort", "2"  }
+            {   "$(DEV)",  "tpgPort", "3"  }
+            {   "$(DEV)",  "tpgPort", "4"  }
+            {   "$(DEV)",  "tpgPort", "5"  }
+            {   "$(DEV)",  "tpgPort", "6"  }
+            {   "$(DEV)",  "tpgPort", "7"  }
+            {   "$(DEV)",  "tpgPort", "8"  }
+            {   "$(DEV)",  "tpgPort", "9"  }
+            {   "$(DEV)",  "tpgPort", "10" }
+            {   "$(DEV)",  "tpgPort", "11" }
+}
+
+file "tpgProgCount.db" {
+    pattern {   DEVICE,     PORT,       N }
+            {   "$(DEV)",   "tpgPort",  "0" }
+            {   "$(DEV)",   "tpgPort",  "1" }
+            {   "$(DEV)",   "tpgPort",  "2" }
+            {   "$(DEV)",   "tpgPort",  "3" }
+            {   "$(DEV)",   "tpgPort",  "4" }
+            {   "$(DEV)",   "tpgPort",  "5" }
+            {   "$(DEV)",   "tpgPort",  "6" }
+            {   "$(DEV)",   "tpgPort",  "7" }
+}
+
+file "tpgDiag.db" {
+    pattern {   DEVICE,  PORT,     MAX_LENGTH }
+            { "$(DEV)", "tpgPort",    "20000" }
+}
+
+
+file "tpgFaultHistory.db" {
+    pattern {   DEVICE,    PORT,          BUF    }
+            {   "$(DEV)",     "tpgPort",     "0"    }
+            {   "$(DEV)",     "tpgPort",     "1"    }
+            {   "$(DEV)",     "tpgPort",     "2"    }
+            {   "$(DEV)",     "tpgPort",     "3"    }
+}
+
+
+file "tpgMpsCtrl.db" {
+    pattern {   DEVICE,       PORT,          ENG,     INST        }
+            {   "$(DEV)",     "tpgPort",     "0",     "ALW00"     }
+            {   "$(DEV)",     "tpgPort",     "1",     "ALW01"     }
+            {   "$(DEV)",     "tpgPort",     "2",     "ALW02"     }
+            {   "$(DEV)",     "tpgPort",     "3",     "ALW03"     }
+            {   "$(DEV)",     "tpgPort",     "4",     "ALW04"     }
+            {   "$(DEV)",     "tpgPort",     "5",     "ALW05"     }
+            {   "$(DEV)",     "tpgPort",     "6",     "ALW06"     }
+            {   "$(DEV)",     "tpgPort",     "7",     "ALW07"     }
+            {   "$(DEV)",     "tpgPort",     "8",     "ALW08"     }
+            {   "$(DEV)",     "tpgPort",     "9",     "ALW09"     }
+#
+            {   "$(DEV)",     "tpgPort",     "10",    "ALW10"     }
+            {   "$(DEV)",     "tpgPort",     "11",    "ALW11"     }
+            {   "$(DEV)",     "tpgPort",     "12",    "ALW12"     }
+            {   "$(DEV)",     "tpgPort",     "13",    "ALW13"     }
+            {   "$(DEV)",     "tpgPort",     "14",    "ALW14"     }
+            {   "$(DEV)",     "tpgPort",     "15",    "ALW15"     }
+}
+
+
+file "tpgAllowEngine.db" {
+    pattern {   DEVICE,       PORT,          ENG,     INST       }
+            {   "$(DEV)",     "tpgPort",     "0",     "ALW00"    }
+}
+
+
+file "tpgBeamEngine.db" {
+     pattern {   DEVICE,    PORT,            ENG,     INST       }
+            {   "$(DEV)",     "tpgPort",     "1",    "DST00"    }
+}
+
+file "tpgExptEngine.db" {
+    pattern {   DEVICE,    PORT,             ENG,     INST       }
+            {   "$(DEV)",     "tpgPort",     "2",    "EXP00"    }
+            {   "$(DEV)",     "tpgPort",     "3",    "EXP01"    }
+            {   "$(DEV)",     "tpgPort",     "4",    "EXP02"    }
+            {   "$(DEV)",     "tpgPort",     "5",    "EXP03"    }
+            {   "$(DEV)",     "tpgPort",     "6",    "EXP04"    }
+            {   "$(DEV)",     "tpgPort",     "7",    "EXP05"    }
+            {   "$(DEV)",     "tpgPort",     "8",    "EXP06"    }
+            {   "$(DEV)",     "tpgPort",     "9",    "EXP07"    }
+#
+            {   "$(DEV)",     "tpgPort",     "10",    "EXP08"    }
+            {   "$(DEV)",     "tpgPort",     "11",    "EXP09"    }
+            {   "$(DEV)",     "tpgPort",     "12",    "EXP10"    }
+            {   "$(DEV)",     "tpgPort",     "13",    "EXP11"    }
+            {   "$(DEV)",     "tpgPort",     "14",    "EXP12"    }
+            {   "$(DEV)",     "tpgPort",     "15",    "EXP13"    }
+            {   "$(DEV)",     "tpgPort",     "16",    "EXP14"    }
+            {   "$(DEV)",     "tpgPort",     "17",    "EXP15"    }
+            {   "$(DEV)",     "tpgPort",     "18",    "EXP16"    }
+#
+            
+}
+
+file "tpgSeq.db" {
+    pattern {   DEVICE,    PORT,             ENG,      INST    }
+            {   "$(DEV)",     "tpgPort",     "0",      "ALW00" }
+            {   "$(DEV)",     "tpgPort",     "1",     "DST00" }
+            {   "$(DEV)",     "tpgPort",     "2",     "EXP00" }
+            {   "$(DEV)",     "tpgPort",     "3",     "EXP01" }
+            {   "$(DEV)",     "tpgPort",     "4",     "EXP02" }
+            {   "$(DEV)",     "tpgPort",     "5",     "EXP03" }
+            {   "$(DEV)",     "tpgPort",     "6",     "EXP04" }
+            {   "$(DEV)",     "tpgPort",     "7",     "EXP05" }
+            {   "$(DEV)",     "tpgPort",     "8",     "EXP06" }
+            {   "$(DEV)",     "tpgPort",     "9",     "EXP07" }
+#
+            {   "$(DEV)",     "tpgPort",     "10",     "EXP08" }
+            {   "$(DEV)",     "tpgPort",     "11",     "EXP09" }
+            {   "$(DEV)",     "tpgPort",     "12",     "EXP10" }
+            {   "$(DEV)",     "tpgPort",     "13",     "EXP11" }
+            {   "$(DEV)",     "tpgPort",     "14",     "EXP12" }
+            {   "$(DEV)",     "tpgPort",     "15",     "EXP13" }
+            {   "$(DEV)",     "tpgPort",     "16",     "EXP14" }
+            {   "$(DEV)",     "tpgPort",     "17",     "EXP15" }
+            {   "$(DEV)",     "tpgPort",     "18",     "EXP16" }
+#       
+}
+
+file "tpgBsaEdef_smrf.db" {
+    pattern {   DEVICE,    PORT,            BSA,    INST    }
+            {    "$(DEV)",  "tpgPort",      "0",    "BSA00" }
+            {    "$(DEV)",  "tpgPort",      "1",    "BSA01" }
+            {    "$(DEV)",  "tpgPort",      "2",    "BSA02" }
+            {    "$(DEV)",  "tpgPort",      "3",    "BSA03" }
+            {    "$(DEV)",  "tpgPort",      "4",    "BSA04" }
+            {    "$(DEV)",  "tpgPort",      "5",    "BSA05" }
+            {    "$(DEV)",  "tpgPort",      "6",    "BSA06" }
+            {    "$(DEV)",  "tpgPort",      "7",    "BSA07" }
+            {    "$(DEV)",  "tpgPort",      "8",    "BSA08" }
+            {    "$(DEV)",  "tpgPort",      "9",    "BSA09" }
+#
+            {    "$(DEV)",  "tpgPort",      "10",   "BSA10"  }
+            {    "$(DEV)",  "tpgPort",      "11",   "BSA11"  }
+            {    "$(DEV)",  "tpgPort",      "12",   "BSA12"  }
+            {    "$(DEV)",  "tpgPort",      "13",   "BSA13"  }
+            {    "$(DEV)",  "tpgPort",      "14",   "BSA14"  }
+            {    "$(DEV)",  "tpgPort",      "15",   "BSA15"  }
+            {    "$(DEV)",  "tpgPort",      "16",   "BSA16"  }
+            {    "$(DEV)",  "tpgPort",      "17",   "BSA17"  }
+            {    "$(DEV)",  "tpgPort",      "18",   "BSA18"  }
+            {    "$(DEV)",  "tpgPort",      "19",   "BSA19"  }
+}
+
+file "tpgRmEdef_smrf.db" {
+    pattern {   DEVICE,    PORT,            RM,       INST   }
+            {    "$(DEV)",  "tpgPort",      "0",      "RM00" }
+            {    "$(DEV)",  "tpgPort",      "1",      "RM01" }
+            {    "$(DEV)",  "tpgPort",      "2",      "RM02" }
+            {    "$(DEV)",  "tpgPort",      "3",      "RM03" }
+            {    "$(DEV)",  "tpgPort",      "4",      "RM04" }
+            {    "$(DEV)",  "tpgPort",      "5",      "RM05" }
+            {    "$(DEV)",  "tpgPort",      "6",      "RM06" }
+            {    "$(DEV)",  "tpgPort",      "7",      "RM07" }
+            {    "$(DEV)",  "tpgPort",      "8",      "RM08" }
+            {    "$(DEV)",  "tpgPort",      "9",      "RM09" }
+#
+            {    "$(DEV)",  "tpgPort",      "10",     "RM10" }
+            {    "$(DEV)",  "tpgPort",      "11",     "RM11" }
+            {    "$(DEV)",  "tpgPort",      "12",     "RM12" }
+            {    "$(DEV)",  "tpgPort",      "13",     "RM13" }
+            {    "$(DEV)",  "tpgPort",      "14",     "RM14" }
+            {    "$(DEV)",  "tpgPort",      "15",     "RM15" }
+            {    "$(DEV)",  "tpgPort",      "16",     "RM16" }
+            {    "$(DEV)",  "tpgPort",      "17",     "RM17" }
+            {    "$(DEV)",  "tpgPort",      "18",     "RM18" }
+            {    "$(DEV)",  "tpgPort",      "19",     "RM19" }
+#
+            {    "$(DEV)",  "tpgPort",      "20",     "RM20" }
+            {    "$(DEV)",  "tpgPort",      "21",     "RM21" }
+            {    "$(DEV)",  "tpgPort",      "22",     "RM22" }
+            {    "$(DEV)",  "tpgPort",      "23",     "RM23" }
+#           {    "$(DEV)",  "tpgPort",      "24",     "RM24" }
+}
+

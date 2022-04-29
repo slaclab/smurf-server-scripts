@@ -1,0 +1,67 @@
+##############################################################################
+## This file is part of 'SLAC Firmware Standard Library'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'SLAC Firmware Standard Library', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once MpsSim.yaml
+
+MpsSim: &MpsSim
+  class: MMIODev
+  configPrio: 1
+  description: Simulation of TPG MPS interface
+  size: 0x40
+  children:
+    #########################################################
+    LatchDiag:
+      at:
+        offset: 0x000
+      class: IntField
+      name: LatchDiag
+      sizeBits: 1
+      mode: RW
+      description: Latch diagnostics
+    #########################################################
+    Strobe:
+      at:
+        offset: 0x003
+      class: IntField
+      name: Strobe
+      sizeBits: 1
+      lsBit: 7
+      mode: RW
+      description: Assert message
+    #########################################################
+    Tag:
+      at:
+        offset: 0x004
+      class: IntField
+      name: Tag
+      sizeBits: 16
+      mode: RW
+      description: Message tag
+    #########################################################
+    TimeStamp:
+      at:
+        offset: 0x006
+      class: IntField
+      name: TimeStamp
+      sizeBits: 16
+      mode: RW
+      description: Message time stamp
+    #########################################################
+    Class:
+      at:
+        offset: 0x010
+        stride: 1
+        nelms: 16
+      class: IntField
+      name: Class
+      sizeBits: 4
+      mode: RW
+      description: Power class per destination
+    #########################################################

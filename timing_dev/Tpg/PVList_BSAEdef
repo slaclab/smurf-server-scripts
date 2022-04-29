@@ -1,0 +1,18 @@
+# Jan. 6, 2017
+# This is the PV list for BSA Edef
+# <n> - BSA data slot number
+
+PV name                     PV type   read/write       Description
+TPG:BSAEDEF<n>:INDEX        longin    read only        indicator for BSA data slot number
+TPG:BSAEDEF<n>:NTOAVG       longout   write            number of average
+TPG:BSAEDEF<n>:NTOACQ       longout   write            number of acquire
+TPG:BSAEDEF<n>:RATEMODE     longout   write            rate mode selector, -2: fixed rate, -1 AC reate, [0..MAX]: Expt. Sequence
+TPG:BSAEDEF<n>:FIXEDRATE    longout   write            fixed rate number    
+TPG:BSAEDEF<n>:ACRATE       longout   write            AC rate number
+TPG:BSAEDEF<n>:TIMESLOTMASK longout   write            timeslot mask for AC rate mode     
+TPG:BSAEDEF<n>:EXPSEQBIT    longout   write            Sequence bit
+TPG:BSAEDEF<n>:DESTMODE     mbbo      write            Destination mode, 0: no care, 1: exclusion, 2: inclusion
+TPG:BSAEDEF<n>:DESTMASK     longout   write            Destination mask bits
+TPG:BSAEDEF<n>:CTRL         bo        read and write   BSA start/stop control and monitor
+
+Note) TPG:BSAEDEF<n>:START is not implemented yet, under construction now :)

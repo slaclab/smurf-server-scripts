@@ -1,0 +1,9 @@
+record(longin, "$(DEVICE):COUNTTRIG$(N)")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "Counter Trigger $(N)")
+  field(INP,  "@asyn($(PORT),0) countTrig$(N)")
+  field(SCAN, "I/O Intr")
+}
+
+

@@ -1,0 +1,47 @@
+
+
+1. how to check up if ioc is running
+------------------------------------
+
+login cryo user and use "screen -list" command
+
+cryo@smurf-srv02  $ screen -list
+There are screens on:
+        8533.sioc-smrf-ts01     (Detached)
+        3280.sioc-smrf-ml00     (Detached)
+2 Sockets in /var/run/screen/S-cryo.
+
+If sioc-smrf-ts01 session is not existing, you don't have TPG ioc.
+
+
+2. how to bring up the ioc
+--------------------------
+
+cd /etc/init.d
+./sioc-smrf-ts01 start
+
+
+
+3. how to stop the ioc
+----------------------
+
+cd /etc/init.d
+./sioc-smrf-ts01 stop
+
+
+
+4. how to check up the cross bar
+--------------------------------
+
+screen -x sioc-smrf-ts01
+after getting epics iocshell, use "crossbarControlDriverReport"
+
+sioc-smrf-ts01>crossbarControlDriverReport
+Timing Crossbar Status
+OutputConfig[0]: RTM_OUT0 <--- FPGA
+OutputConfig[1]: FPGA <-- -FPGA
+OutputConfig[2]: BP <--- FPGA
+OutputConfig[3]: RTM_OUT1 <--- FPGA
+sioc-smrf-ts01>
+
+Now, the TPG send out Timing Pattern to RTM_OUT0, backplane and RTM_OUT1 port.

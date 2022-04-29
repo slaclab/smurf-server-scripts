@@ -1,0 +1,42 @@
+- AppTopJesd:
+    - JesdRx:
+        - ThresholdHigh: !<value>
+            - 0xa000
+            - 0xa000
+            - 0xa000
+            - 0xa000
+            - 0x0000
+            - 0x0000
+        - ThresholdLow: !<value>
+            - 0x5000
+            - 0x5000
+            - 0x5000
+            - 0x5000
+            - 0x0000
+            - 0x0000
+        - InvertAdcData: !<value> 0x00
+        - LinkErrMask: !<value> 0x3f
+        - ScrambleEnable: !<value> Disabled
+        - InvertSync: !<value> Regular
+        - ResetGTs: !<value> 0x0
+        - ClearErrors: !<value> 0x0
+        - SubClass: !<value> 0x1
+        - ReplaceEnable: !<value> Enabled
+        - SysrefDelay: !<value> 0x0b
+        - Enable: !<value> 0x0f
+    - JesdTx:
+        - testOutMux: !<value> SquareWave
+        - dataOutMux: !<value> UserData
+        - InvertDacData: !<value> 0x0
+        - HighAmplitudeVal: !<value> 0x0000ffff
+        - LowAmplitudeVal: !<value> 0x00000000
+        - SquarePeriod: !<value> 0xffff
+        - RampStep: !<value> 0x0001
+        - TestSigEnable: !<value> 0x1
+        - ScrambleEnable: !<value> Disabled
+        - InvertSync: !<value> 0x0
+        - ClearErrors: !<value> 0x0
+        - ReplaceEnable: !<value> 0x1
+        - ResetGTs: !<value> 0x0
+        - Enable: !<value> 0x3
+        - SubClass: !<value> 0x1

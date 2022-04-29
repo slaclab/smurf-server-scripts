@@ -1,0 +1,205 @@
+##############################################################################
+## This file is part of 'SLAC Firmware Standard Library'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'SLAC Firmware Standard Library', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once Pgp2bAxi.yaml
+
+Pgp2bAxi: &Pgp2bAxi
+  class: MMIODev
+  configPrio: 1
+  description: Pgp2b
+  size: 0x80
+  children:
+    #########################################################
+    CountReset:
+      at:
+        offset: 0x000
+      class: IntField
+      name: CountReset
+      sizeBits: 1
+      mode: RW
+      description: Reset counters
+    #########################################################
+    RxReset:
+      at:
+        offset: 0x004
+      class: IntField
+      name: RxReset
+      sizeBits: 0
+      mode: RW
+      description: Reset receiver
+    #########################################################
+    Flush:
+      at:
+        offset: 0x008
+      class: IntField
+      name: Flush
+      sizeBits: 1
+      mode: RW
+      description: Flush receiver
+    #########################################################
+    Loopback:
+      at:
+        offset: 0x00C
+      class: IntField
+      name: Loopback
+      sizeBits: 2
+      mode: RW
+      description: Loopback
+    #########################################################
+    SidebandTxData:
+      at:
+        offset: 0x010
+      class: IntField
+      name: SidebandTxData
+      sizeBits: 8
+      mode: RW
+      description: SidebandTxData
+    #########################################################
+    SidebandTxEnable:
+      at:
+        offset: 0x011
+      class: IntField
+      name: SidebandTxEnable
+      sizeBits: 1
+      mode: RW
+      description: SidebandTxEnable
+    #########################################################
+    AutoStatSendEnable:
+      at:
+        offset: 0x014
+      class: IntField
+      name: AutoStatSendEnable
+      sizeBits: 1
+      mode: RW
+      description: Auto status send enable for PPI
+    #########################################################
+    FlowControlDisable:
+      at:
+        offset: 0x018
+      class: IntField
+      name: FlowControlDisable
+      sizeBits: 1
+      mode: RW
+      description: FlowControlDisable
+    #########################################################
+    PhyReadyRx:
+      at:
+        offset: 0x020
+      class: IntField
+      name: PhyReadyRx
+      sizeBits: 1
+      mode: RO
+      description: Receiver phy ready 
+    #########################################################
+    PhyReadyTx:
+      at:
+        offset: 0x020
+      class: IntField
+      name: PhyReadyTx
+      sizeBits: 1
+      lsBit: 1
+      mode: RO
+      description: Transmitter phy ready 
+    #########################################################
+    LocalLinkReady:
+      at:
+        offset: 0x020
+      class: IntField
+      name: LocalLinkReady
+      sizeBits: 1
+      lsBit: 2
+      mode: RO
+      description: Local link ready 
+    #########################################################
+    RemoteLinkReady:
+      at:
+        offset: 0x020
+      class: IntField
+      name: RemoteLinkReady
+      sizeBits: 1
+      lsBit: 3
+      mode: RO
+      description: Remote link ready 
+    #########################################################
+    TransmitReady:
+      at:
+        offset: 0x020
+      class: IntField
+      name: TransmitReady
+      sizeBits: 1
+      lsBit: 4
+      mode: RO
+      description: Transmit ready 
+    #########################################################
+    RxPolarity:
+      at:
+        offset: 0x021
+      class: IntField
+      name: RxPolarity
+      sizeBits: 2
+      mode: RO
+      description: Receive link polarity
+    #########################################################
+    RemotePauseStatus:
+      at:
+        offset: 0x021
+      class: IntField
+      name: RemotePauseStatus
+      sizeBits: 4
+      lsBit: 4
+      mode: RO
+      description: Remote pause status
+    #########################################################
+    LocalPauseStatus:
+      at:
+        offset: 0x022
+      class: IntField
+      name: LocalPauseStatus
+      sizeBits: 4
+      mode: RO
+      description: Local pause status
+    #########################################################
+    RemoteOverflowStatus:
+      at:
+        offset: 0x023
+      class: IntField
+      name: RemoteOverflowStatus
+      sizeBits: 4
+      mode: RO
+      description: Remote overflow status
+    #########################################################
+    LocalOverflowStatus:
+      at:
+        offset: 0x023
+      class: IntField
+      name: LocalOverflowStatus
+      sizeBits: 4
+      lsBit: 4
+      mode: RO
+      description: Local overflow status
+    #########################################################
+    RxClockFreq:
+      at:
+        offset: 0x064
+      class: IntField
+      name: RxClockFreq
+      sizeBits: 32
+      mode: RO
+      description: Receiver clock frequency
+    #########################################################
+    TxClockFreq:
+      at:
+        offset: 0x068
+      class: IntField
+      name: TxClockFreq
+      sizeBits: 32
+      mode: RO
+      description: Transmitter clock frequency
+    #########################################################

@@ -1,0 +1,205 @@
+record(longin, "$(DEVICE):$(INST):IDX")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(INP, "@asyn($(PORT),0) bsa$(BSA)_edefIndex")
+    field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(DEVICE):$(INST):AVGCNT")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_NtoAvg")
+    field(SCAN, "Passive")
+    field(DRVL, "1")
+    field(DRVH, "8191")
+    field(LOPR, "1")
+    field(HOPR, "8191")
+    
+}
+
+record(longout, "$(DEVICE):$(INST):MEASCNT")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_NtoAcq")
+    field(SCAN, "Passive")
+    field(DRVL, "-1")
+    field(DRVH, "65535")
+    field(LOPR, "-1")
+    field(HOPR, "65535")
+}
+
+record(mbbo, "$(DEVICE):$(INST):RATEMODE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_rateMode")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Fixed Rate")
+    field(ONST, "AC Rate")
+    field(TWST, "Exp Seq")
+}
+
+record(longout, "$(DEVICE):$(INST):EXPSEQ")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) bsa$(BSA)_expSeq")
+    field(SCAN, "Passive")
+}
+
+record(mbbo, "$(DEVICE):$(INST):FIXEDRATE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_fixedRate")
+    field(SCAN, "Passive")
+    field(OMSL, "supervisory")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(FRVL, "4")
+    field(FVVL, "5")
+    field(SXVL, "6")
+    field(ZRST, "1MHz")
+    field(ONST, "71.5kHz")
+    field(TWST, "10kHz")
+    field(THST, "1kHz")
+    field(FRST, "100Hz")
+    field(FVST, "10Hz")
+    field(SXST, "1Hz")
+}
+
+record(mbbo, "$(DEVICE):$(INST):ACRATE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_acRate")
+    field(SCAN, "Passive")
+    field(OMSL, "supervisory")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Fixed")
+    field(ONST, "AC")
+    field(TWST, "Seq")
+}
+
+record(longout, "$(DEVICE):$(INST):TSLOTMASK")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) bsa$(BSA)_timeslotMask")
+    field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):$(INST):EXPSEQBIT")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_expSeqBit")
+    field(SCAN, "Passive")
+}
+
+record(mbbo, "$(DEVICE):$(INST):DESTMODE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_destMode")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Disable")
+    field(ONST, "Exclusion")
+    field(TWST, "Inclusion")
+}
+
+record(longout, "$(DEVICE):$(INST):DESTMASK")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_destMask")
+    field(SCAN, "Passive")
+}
+
+record(longin, "$(DEVICE):$(INST):AVGCNTACT")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) bsa$(BSA)_avgCnt")
+    field(SCAN, "I/O Intr")
+}
+
+
+record(longin, "$(DEVICE):$(INST):CNT")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) bsa$(BSA)_acqCnt")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):$(INST):CTRLFLAG")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) bsa$(BSA)_ctrlFlag")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbo, "$(DEVICE):$(INST):MEASSEVR")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) bsa$(BSA)_measSevr")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(ZRST, "None")
+    field(ONST, "Minor")
+    field(TWST, "Major")
+    field(THST, "Invalid")
+}
+
+record(bo, "$(DEVICE):$(INST):CTRLOFF")
+{
+    field(SDIS, "$(DEVICE):$(INST):CTRLFLAG")
+    field(DISV, "0")
+    field(OMSL, "closed_loop")
+    field(DOL,  "0")
+    field(OUT,  "$(DEVICE):$(INST):CTRL PP")
+    field(SCAN, ".5 second")
+}
+
+record(bo, "$(DEVICE):$(INST):CTRL")
+{
+    field(DESC, "State Control")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) bsa$(BSA)_start")
+    field(ZNAM, "OFF")
+    field(ZSV,  "MAJOR")
+    field(ONAM, "ON")
+    field(OMSL, "supervisory")
+    
+}
+
+record(longin, "$(DEVICE):$(INST):INTN_DESTMASK")
+{
+    field(DTYP, "asynInt32")
+    field(INP, "@asyn($(PORT),0) bsa$(BSA)_intDestMask")
+    field(SCAN, "I/O Intr")
+}
+
+
+
+
+

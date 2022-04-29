@@ -1,0 +1,34 @@
+# ===============================================================================
+# Two simulated BSA PV Data Sources
+# (1) A simple counter
+# (2) A sine wave
+# The above data source wakes up and becomes active whenever event 40 is seen
+# from the EVG
+# ===============================================================================
+# ===============================================================================
+# Macros:
+#       DEVICE  Name of the beam synchronous triggered device.
+# ===============================================================================
+record(calcout, $(DEVICE):COUNTER) {
+  field(DESC, "Increment on an event")  
+  field(SCAN, "Event")                  
+  field(EVNT, "40")                     
+  field(TSE, "-1")                      
+  field(PRIO, "HIGH")                   
+  field(FLNK, "$(DEVICE):EFCOUNTER")
+  field(CALC, "VAL+1")                  
+}                                       
+
+record(calcout, $(DEVICE):SINE) {
+  field(DESC, "sine of an event counter")
+  field(SCAN, "Event")
+  field(EVNT, "40")
+  field(TSE, "-1")
+  field(PRIO, "HIGH")
+  field(FLNK, "$(DEVICE):EFSINE")
+  field(CALC, "SIN(D2R*A/12)")
+  field(INPA, "$(DEVICE):COUNTER")
+}
+
+record(seq, $(DEVICE):COUNTDUP) {
+}

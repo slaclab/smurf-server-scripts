@@ -1,0 +1,22 @@
+tag build.AmcCarrierTimingGenerator.0x0000000D.20170222084204
+Tagger: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Wed Feb 22 08:42:04 2017 -0800
+
+PROJECT: AmcCarrierTimingGenerator
+
+FW_VERSION: 0x0000000D
+
+BUILD_STRING: AmcCarrierTimingGenerator: Vivado v2016.4, x86_64, Built Wed Feb 22 08:42:04 PST 2017 by weaver
+
+commit 373e63acb3caa18c8cd48aee4062a9a81fe2e7c8
+Author: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Wed Feb 22 08:41:55 2017 -0800
+
+    BSA variance changes
+
+Submodule submodules/amc-carrier-core 1a9fc11...1884939:
+  > BSA variance calc changes
+  < Changes for BSA variance calc
+  > bug fixing for ruckus release
+  > bug fixing for latest ruckus release
+  > bug fixed for new ruckus support

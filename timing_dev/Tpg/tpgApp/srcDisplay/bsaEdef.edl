@@ -1,0 +1,672 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 560
+y 80
+w 1024
+h 380
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+endScreenProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 56
+y 54
+w 37
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "BSA#"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 202
+y 53
+w 49
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "NtoAvg"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 298
+y 51
+w 49
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "NtoAcq"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 198
+y 79
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):AVGCNT"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 290
+y 76
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):MEASCNT"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 174
+y 204
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):EXPSEQ"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 376
+y 219
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):EXPSEQBIT"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 78
+y 136
+w 70
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Rate Mode"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 294
+y 156
+w 76
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Fixed Rate#"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 296
+y 195
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "AC Rate#"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 295
+y 229
+w 77
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "ExptSeqBit#"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 458
+y 165
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):TSLOTMASK"
+displayMode "hex"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 461
+y 150
+w 137
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Timeslot Mask (HEX)"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 618
+y 97
+w 117
+h 64
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Destination Mode"
+  "0: disable, no care"
+  "1: exclusion"
+  "2: inclusion"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 760
+y 137
+w 155
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Destination Mask (HEX)"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 775
+y 170
+w 69
+h 32
+controlPv "$(DEVICE):$(BSA):DESTMASK"
+displayMode "hex"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 610
+y 172
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):DESTMODE"
+indicatorPv "$(DEVICE):$(BSA):DESTMODE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 500
+y 257
+w 72
+h 12
+controlPv "$(DEVICE):$(BSA):AVGCNTACT"
+format "string"
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 499
+y 278
+w 75
+h 12
+controlPv "$(DEVICE):$(BSA):CNT"
+format "string"
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 608
+y 245
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):CTRL"
+indicatorPv "$(DEVICE):$(BSA):CTRL"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 185
+y 18
+w 75
+h 12
+controlPv "$(DEVICE):NACTIVEBSA"
+format "string"
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 174
+y 134
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):RATEMODE"
+indicatorPv "$(DEVICE):$(BSA):RATEMODE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 53
+y 210
+w 111
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Expt Seq Number"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 5
+y 10
+w 165
+h 32
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Number of BSA data slots"
+  "which are in-progress"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 169
+y 283
+w 145
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Measurement Severity"
+}
+autoSize
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 188
+y 304
+w 255
+h 24
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):MEASSEVR"
+indicatorPv "$(DEVICE):$(BSA):MEASSEVR"
+font "helvetica-medium-r-10.0"
+orientation "horizontal"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 98
+y 53
+w 97
+h 16
+controlPv "$(DEVICE):$(BSA):IDX"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 918
+y 15
+w 91
+h 31
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+label "EXIT"
+font "helvetica-medium-r-12.0"
+3d
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 370
+y 141
+w 72
+h 32
+fgColor index 14
+bgColor index 4
+inconsistentColor index 6
+topShadowColor index 0
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):FIXEDRATE"
+indicatorPv "$(DEVICE):$(BSA):FIXEDRATE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 370
+y 184
+w 72
+h 32
+fgColor index 14
+bgColor index 4
+inconsistentColor index 6
+topShadowColor index 0
+botShadowColor index 10
+controlPv "$(DEVICE):$(BSA):ACRATE"
+indicatorPv "$(DEVICE):$(BSA):ACRATE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 324
+y 257
+w 160
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "number of average so far"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 329
+y 275
+w 155
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "number of acquire so far"
+}
+autoSize
+endObjectProperties
+

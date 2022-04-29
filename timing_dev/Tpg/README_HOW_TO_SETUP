@@ -1,0 +1,16 @@
+Hist information:
+
+ssh laci@cpu-b084-hp03
+
+network setup and check up
+
+su
+# ifconfig eth3 192.168.2.3 netmask=255.255.255.0
+ifconfig eth3 10.0.3.1 netmask=255.255.255.0
+arping -I eth3 10.0.3.102
+
+setup routing table
+
+route add -net 10.0.3.0 netmask 255.255.255.0 dev eth3
+
+

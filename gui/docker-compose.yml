@@ -1,0 +1,22 @@
+version: '2.2'
+
+services:
+  # Image that connects you to the space of low-level SMuRF variables.
+  gui:
+    container_name: gui
+    network_mode: "host"
+    user: ${USER}
+    environment:
+      - location=${PWD}
+      - DISPLAY
+      - EPICS_CA_AUTO_ADDR_LIST=NO
+      - EPICS_CA_ADDR_LIST=127.255.255.255
+      - EPICS_CA_MAX_ARRAY_BYTES=80000000
+    volumes:
+      - /data:/data
+      # Forward X to the container.
+      - /home/${USER}/.Xauthority:/home/${USER}/.Xauthority
+    tty: true
+    stdin_open: true  
+    image: tidair/smurf-rogue:R2.8.8
+    entrypoint: connect_remote_gui.py

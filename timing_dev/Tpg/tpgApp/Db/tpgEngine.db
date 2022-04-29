@@ -1,0 +1,137 @@
+record(longin, "$(DEVICE):ENG$(ENG):NUM_RBV")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) engine$(ENG)_number")
+	field(SCAN, "I/O Intr")
+}
+
+record(longout, "$(DEVICE):ENG$(ENG):REQUIREDMASK")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn($(PORT),0) engine$(ENG)_requiredMask")
+	field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):ENG$(ENG):DESTINATION")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) engine$(ENG)_destination")
+	field(SCAN, "Passive")
+}
+
+record(stringout, "$(DEVICE):ENG$(ENG):DESCENGINE")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynOctetWrite")
+	field(OUT,  "@asyn($(PORT),0) engine$(ENG)_descEngine")
+	field(SCAN, "Passive")
+}
+
+record(stringout, "$(DEVICE):ENG$(ENG):DESCINSTRSET")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynOctetWrite")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_descInstrSet")
+  field(SCAN, "Passive")
+}
+
+record(waveform, "$(DEVICE):ENG$(ENG):WFINSTRUCTION")
+{
+  #field(PINI, "YES")
+  field(DTYP, "asynInt32ArrayOut")
+  field(INP, "@asyn($(PORT),0) engine$(ENG)_wfInstruction")
+  field(SCAN, "Passive")
+  field(FTVL, "ULONG")
+  field(NELM, "8")
+}
+
+record(longin, "$(DEVICE):ENG$(ENG):COUNTERINSTRUCTION_RBV")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) engine$(ENG)_counterInstruction")
+  field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(DEVICE):ENG$(ENG):INSERTINSTRSET")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_insertInstrSet")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "Insert")
+}
+
+record(bo, "$(DEVICE):ENG$(ENG):CANCELINSTRSET")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_cancelInstrSet")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "Cancel")
+}
+
+record(longout, "$(DEVICE):ENG$(ENG):IDXSEQREMOVE")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_idxSeqRemove")
+  field(SCAN, "Passive")
+}
+
+
+record(bo, "$(DEVICE):ENG$(ENG):SEQREMOVE")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_seqRemove")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "Remove")
+}
+
+record(longout, "$(DEVICE):ENG$(ENG):IDXSEQRESET")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_idxSeqReset")
+  field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):ENG$(ENG):JUMPSEQRESET")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_jumpSeqReset")
+  field(SCAN, "Passive")
+}
+
+record(bo, "$(DEVICE):ENG$(ENG):SCHEDRESET")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_schedReset")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "SchedReset")
+}
+
+record(bi, "$(DEVICE):ENG$(ENG):SCHEDRESET_RBV")
+{
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) engine$(ENG)_schedResetFlag")
+  field(SCAN, "I/O Intr")
+  field(ZNAM, "NoReset")
+  field(ONAM, "SchedReset")
+}
+
+record(bo, "$(DEVICE):ENG$(ENG):PROMPTRESET")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) engine$(ENG)_promptReset")
+  field(OMSL, "supervisory")
+  field(ZNAM, "Ready")
+  field(ONAM, "PromptReset")
+}
+
+

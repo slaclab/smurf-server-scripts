@@ -1,0 +1,20 @@
+file "tpgMpsCtrlList.db" {
+    pattern  {   MPSCTRL,   MPSCTRL_INST  }
+             {   "0",       "MPS00"       }
+             {   "1",       "MPS01"       }
+             {   "2",       "MPS02"       }
+             {   "3",       "MPS03"       }
+             {   "4",       "MPS04"       }
+             {   "5",       "MPS05"       }
+             {   "6",       "MPS06"       }
+             {   "7",       "MPS07"       }
+             {   "8",       "MPS08"       }
+             {   "9",       "MPS09"       }
+#             
+             {   "10",      "MPS10"       }
+             {   "11",      "MPS11"       }
+             {   "12",      "MPS12"       }
+             {   "13",      "MPS13"       }
+             {   "14",      "MPS14"       }
+             {   "15",      "MPS15"       }
+}

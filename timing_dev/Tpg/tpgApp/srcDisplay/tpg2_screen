@@ -1,0 +1,1 @@
+edm -x -m "DEVICE=TPG:SYS2:2" TPG.edl &

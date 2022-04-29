@@ -1,0 +1,154 @@
+record(longin, "$(DEVICE):$(INST):IDX")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(INP, "@asyn($(PORT),0) rm$(RM)_index")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbo, "$(DEVICE):$(INST):RATEMODE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_rateMode")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Fixed Rate")
+    field(ONST, "AC Rate")
+    field(TWST, "Exp Seq")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):EXPSEQ")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) rm$(RM)_expSeq")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(DEVICE):$(INST):FIXEDRATE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_fixedRate")
+    field(SCAN, "Passive")
+    field(OMSL, "supervisory")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(THVL, "3")
+    field(FRVL, "4")
+    field(FVVL, "5")
+    field(SXVL, "6")
+    field(SVVL, "7")
+    field(EIVL, "8")
+    field(NIVL, "9")
+    field(ZRST, "15kHz")
+    field(ONST, "12kHz")
+    field(TWST, "10kHz")
+    field(THST, "8kHz")
+    field(FRST, "6kHz")
+    field(FVST, "5kHz")
+    field(SXST, "4kHz")
+    field(SVST, "3kHz")
+    field(EIST, "2kHz")
+    field(NIST, "1kHz")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(DEVICE):$(INST):ACRATE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_acRate")
+    field(SCAN, "Passive")
+    field(OMSL, "supervisory")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Fixed")
+    field(ONST, "AC")
+    field(TWST, "Seq")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):TSLOTMASK")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) rm$(RM)_timeslotMask")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):EXPSEQBIT")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_expSeqBit")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(DEVICE):$(INST):DESTMODE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_destMode")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(TWVL, "2")
+    field(ZRST, "Disable")
+    field(ONST, "Exclusion")
+    field(TWST, "Inclusion")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):DESTMASK")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT, "@asyn($(PORT),0) rm$(RM)_destMask")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longin, "$(DEVICE):$(INST):CNT")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) rm$(RM)_counter")
+    field(SCAN, "I/O Intr")
+}
+
+# record(ai, "$(DEVICE):$(INST):RATE")
+# {
+#     field(DTYP, "asynFloat64")
+#     field(INP,  "@asyn($(PORT),0) rm$(RM)_rate")
+#     field(SCAN, "I/O Intr")
+# }
+
+record(bo, "$(DEVICE):$(INST):CTRL")
+{
+    field(DESC, "State Control")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) rm$(RM)_ctrl")
+    field(ZNAM, "OFF")
+    field(ZSV,  "MAJOR")
+    field(ONAM, "ON")
+    field(OMSL, "supervisory")   
+}
+
+record(ai, "$(DEVICE):$(INST):SOFTJITTER")
+{
+    field(DTYP, "asynFloat64")
+    field(INP, "@asyn($(PORT),0) rm_softjitter")
+    field(SCAN, "I/O Intr")
+}
+

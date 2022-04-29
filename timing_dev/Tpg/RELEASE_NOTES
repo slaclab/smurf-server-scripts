@@ -1,0 +1,175 @@
+
+#==============================================================
+#
+#  Name: RELEASE_NOTES
+#
+#  Rem:  This files describes release notes for
+#        the XXX IOC Application.
+#
+#  Auth: xx-Dec-2012, XXX         (xxx)
+#  Rev:  dd-mmm-yyyy, Reviewer's Name    (USERNAME)
+#--------------------------------------------------------------
+#
+#
+R1.7.6      Kukhee Kim
+            - remove BSA related PVs and drive configuration to avoid huge memory consumptions
+
+R1.7.5      Kukhee Kim
+            - remove crossbarControl PVs from Soth Pole TPG,
+              and hard-code the crossbar configuration to send out
+              timing pattern to both EVR0 and EVR1 ports
+
+R1.7.4      Kukhee Kim for Jesus Vasquez
+            - branch out from R1.7.4 for SouthPole TPG
+            - use smurf server environment
+            - add screen shot and descriptions for SouthPole TPG diagnostics
+
+
+
+---- Branch out from master to smurf ------
+
+ 
+R1.7.3      Kukhee Kim (KHKIM)
+            - support autosave for fixed rate divisor (for SouthPole TPG)
+            - bug fix for fixed rate divisor and AC rate divisor (using fixed length of vector for API, and put zero pad for remaining elements)
+
+R1.7.2      Kukhee Kim (KHKIM)
+            - add mps state dropping when lateched state is lower than the setting
+            - pre-program fixed rate divisors for south pole TPG
+              15kHz, 12kHz, 10kHz, 8kHz, 6kHz, 5kHz, 4kHz, 3kHz, 2kHz, 1kHz
+
+R1.7.1      Kukhee Kim (KHKIM)
+            - add report to recognize LCLS2 and SouthPole TPG
+            - put auto save for rate meausrement system (but, do not start measurement automatically)
+            
+R1.7.0      Kukhee Kim (KHKIM)
+            - consideration for South Pole TPG
+            - use tpg api R1.3.2 to avoid setBaseDivisor bug
+
+R1.6.3      Kukhee Kim (KHKIM)
+            - add TxClkCount, delta and rate
+            - put a proper sioc name for iocAdmin for production
+
+R1.6.2      Kukhee Kim (KHKIM)
+            - change fixed rate/ac rate controls for BSA EDEF and Rate Measurement to enumerate type (mbbo)
+            - prevent BSA start when number of acquire is set to 0
+            - add labels for BSA EDEF screen
+
+R1.6.1      Kukhee Kim (KHKIM)
+            - upgrade crossbarControl driver to R1.0.4
+            - set EPICS_CA_MAX_ARRAY_BYTES to 80000000
+       
+R1.6.0      Kukhee Kim (KHKIM)
+            - prepare EIC TPG: sioc-sys2-ts01
+
+R1.5.0      Kukhee Kim (KHKIM)
+            - redefine clock skew adjustment step to most fine granularity
+            - add new PV to show clock skew adjustment details (the incremental interval)
+            - Add CrossbarControl to  timing stream routing
+            - Upgrade BSA API verson to R1.0.4
+            
+R1.4.4      Kukhee Kim (KHKIM)
+            - Add MPS Link/Communication Diagnostics
+            - Add TPG diagnostics PVs:error counters, clock counters and program counter
+            - Add relative address (instruction location) for  sequence diagnostics buffer
+
+R1.4.4-Diag Kukhee Kim (KHKIM)
+            - add sequence diagnostic buffer
+            - temporal release for test only
+
+R1.4.3:     Kukhee Kim (KHKIM)
+            - build against tpg API R1.2.5
+              . bug fix in poll_irq thread in API layer
+            - change configYaml file and hierarchy for the file to fix wrong setup for ADC
+            - change interface for fault buffer clear, add up clear button for each fault buffer, keep previous interface, both interfaces work
+
+
+R1.4.2:     Kukhee Kim (KHKIM)
+            - prepare EIC TPG ioc
+            
+R1.4.1:     Kukhee Kim (KHKIM)
+            - build against bsaDriver R1.1.0
+              multiple data conversion with slave BSA node
+
+R1.4.0:     Kukhee Kim (KHKIM)
+            - PV name changes to follow up the naming convention
+            - Sequence Engine Programming Interface
+
+
+R1.3.4:     Kukhee Kim (KHKIM)
+            - add number of allow engine PV
+            - make a snapshot version to prepare PV name changes for TPG naming convention
+
+
+R1.3.3:     Kukhee Kim (KHKIM)
+            clean up unnecessary directories
+            - build against:
+            (api layer)
+                cpsw R3.5.4
+                tpg R1.2.3
+                bsa R1.0.1
+            (epics driver)
+                yamlLoader R1.0.3
+                bsaDriver R0.9.9
+            
+R1.3.2:     5/2/2017 Kukhee Kim (KHKIM)
+            Add up rate measurement for sequencer request
+            Bug fix in inclusion mode for BSA programming and Rate Measurement Counters
+            Clean up the wanring messages in compile time
+            Build against tpg api R1.2.2
+            Build against bsaDriver R0.9.6
+            
+
+R1.3.1:     4/24/2017 Kukhee Kim (KHKIM)
+            Asynchronous notification makes the RSSI communication slowdown.
+            We ar going to use software polling for the rate measurement instead of the asynchronous notification
+            until the slowdown issue is resolved
+            
+R1.3.0:     4/17/2017 Kukhee Kim (KHKIM)
+            Update for MPS Allow Table Programming
+            - add yamlConfig for version 0x0000000E-20170416145959 for slot 2 TPG
+            - add MPS state monitoring (current state and latched state)
+            - add MPS state control/transition for recovery process
+            Add Diagnostic Counters, rate measurement counters
+            Build against tpg api R1.2.0
+            Use new firmware: yamlConfig_0x0000000E-20170420000855
+            Use interval callback for the reate measurement counters
+
+
+R1.2.3:     4/12/2017 KUkhee Kim (KHKIM)
+            add yaml directory for firmware version 0x0000000D-20170412114921
+            use firmware version 0x0000000D-20170412114921 for slot #2 TPG (vioc-b84-ev02)
+            re-tagging to R1.2.3
+ 
+            4/10/2017 Kukhee Kim (KHKIM)
+            prepare vioc-b84-ev02 for slot 2 TPG
+            add up yaml directory for new viersion of firmware (for slot 2 TPG, not stable version yet)
+
+R1.2.2:     3/24/2017 Kukhee Kim (KHKIM)
+            Fix a typo in BsaBufferControl.yaml for timestamp readout for BSA history buffer
+
+R1.2.1:     3/24/2017 Kukhee Kim (KHKIM)
+            Sync register name change in YAML file to avoid ioc crash
+            Sync ---> GenStatus
+
+R1.2.0:     3/21/2017 Kukhee Kim (KHKIM)
+            migration to epics R3.15
+
+tpg-R1-1-0: 1/26/2017 Kukhee Kim (KHKIM)
+           add up BSA module into TPG application for test purpose
+           the BSA will be separated out as a stand alone module after the testing
+
+tpg-R1-0-2: 01/18/2017 Kukhee Kim (KHKIM)
+           modify rate mode selection for BSA
+           - separate rate mode PV and exp_seq PV
+             rate mode: 0 - fixed rate
+                        1 - AC rate
+                        2 - exp seq mode
+             exp seq:   sequencer number to use for the exp seq mode
+
+tpg-R1-0-1: 01/13/2017 Kukhee Kim (KHKIM)
+           put full PVs into the ioc, use substitutions instead of individual database loading
+
+
+tpg-R1-0-0: 01/12/2017  Kukhee Kim (KHKIM)
+           initial release of TPG, LCLS-II Timing Pattern Generator

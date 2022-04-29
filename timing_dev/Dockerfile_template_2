@@ -1,0 +1,46 @@
+# dockerfile_template_2
+
+# Application top directory
+ARG APP_TOP=/root/Tpg
+# Add ipmitool to the image
+RUN yum -y update && yum install -y ipmitool && yum clean all -y
+# Set some EPICS env vars
+ENV BASE_MODULE_VERSION R3.15.5-1.1
+# Prepare the build directory
+RUN mkdir -p ${APP_TOP}
+WORKDIR ${APP_TOP}
+# Copy files from the repo.
+ADD Tpg .
+ADD scripts/start_ioc.sh .
+ADD config config
+# Build the application
+RUN make distclean && make
+# Next, extract the data.tar.gz file and put it into $APP_TOP/sioc-smrf-ts01.
+COPY data.tar.gz .
+RUN mkdir sioc-smrf-ts01
+RUN tar -xf data.tar.gz -C sioc-smrf-ts01/
+RUN mv sioc-smrf-ts01/data/* sioc-smrf-ts01
+RUN rmdir sioc-smrf-ts01/data
+RUN rm data.tar.gz
+# Extract tpg.tar.gz, which is a compiled version of /afs/slac/g/cd/swe/git/repos/package/timing/tpg.git, which contains the scripts hps_peek. Useful for debugging. In the future it would be nice to copy it from there.
+COPY tpg.tar.gz .
+RUN mkdir tpg
+RUN tar -xf tpg.tar.gz -C tpg/
+RUN rm tpg.tar.gz
+# Create the final image
+FROM centos:6.10
+# Remember ARG and ENV do not persist after FROM.
+ARG APP_TOP=/root/Tpg
+ENV EPICS_CA_REPEATER_PORT 5065
+ENV EPICS_CA_AUTO_ADDR_LIST YES
+ENV EPICS_CA_SERVER_PORT 5064
+ENV IOC_DATA $APP_TOP
+# Copy the IOC produced during the building stage
+COPY --from=builder $APP_TOP $APP_TOP
+# Copy the ipmitool binary
+COPY --from=builder /usr/bin/ipmitool /usr/bin/ipmitool
+# Go to the application top level
+WORKDIR $APP_TOP
+# Start the IOC using the default shelfmanager name and slot number
+ENTRYPOINT ["./start_ioc.sh","-S", "shm-smrf-sp01", "-N", "2"]
+

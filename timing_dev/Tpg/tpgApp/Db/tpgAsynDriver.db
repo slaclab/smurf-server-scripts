@@ -1,0 +1,376 @@
+record(stringin, "$(DEVICE):IPADDR")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynOctetRead")
+	field(INP,  "@asyn($(PORT),0) ipAddress")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FWVER")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) fwVersion")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):NALW")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) nAllowEngines")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):NDST")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP, "@asyn($(PORT),0) nBeamEngines")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):NEXP")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) nExptEngines")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):NBSAARRAY")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) nArraysBSA")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):SEQADDRWIDTH")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) seqAddrWidth")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):FIFOADDRWIDTH")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) fifoAddrWidth")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):PIDU")
+{
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) pulseID_U")
+	field(SCAN, "I/O Intr")
+  field(FLNK, "$(DEVICE):PIDU_TRF PP")
+}
+
+record(longout, "$(DEVICE):PIDU_TRF")
+{
+    field(DOL,  "$(DEVICE):PIDU")
+    field(OUT,  "$(DEVICE):PIDU_SAVE PP")
+    field(OMSL, "closed_loop")
+    field(SCAN, "Passive")
+}
+
+record(longin, "$(DEVICE):PIDL")
+{
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) pulseID_L")
+	field(SCAN, "I/O Intr")
+  field(FLNK, "$(DEVICE):PIDL_TRF")
+}
+
+record(longout, "$(DEVICE):PIDL_TRF")
+{
+    field(DOL,  "$(DEVICE):PIDL")
+    field(OUT,  "$(DEVICE):PIDL_SAVE PP")
+    field(OMSL, "closed_loop")
+    field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):PIDU_SAVE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) savePulseID_U")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):PIDL_SAVE")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) savePulseID_L")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):PID_OFFSET")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) pulseID_offset")
+	field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):BASEDIV")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) baseDivisor")
+	field(SCAN, "Passive")
+}
+
+record(longout, "$(DEVICE):ACDELAY")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) acDelay")
+	field(SCAN, "Passive")
+}
+
+
+record(bo, "$(DEVICE):FORCESYNC")
+{
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) forceResync")
+	field(OMSL, "supervisory")
+	field(ZNAM, "Ready")
+	field(ONAM, "ForceSync")
+}
+
+record(bo, "$(DEVICE):SETPULSEID")
+{
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) setPulseID")
+	field(OMSL, "supervisory")
+	field(ZNAM, "Ready")
+	field(ONAM, "SetPulseID")
+}
+
+
+record(bo, "$(DEVICE):FORCEFLT")
+{
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) manualFault")
+	field(SCAN, "Passive")
+	field(OMSL, "supervisory")
+	field(ZNAM, "Ready")
+	field(ONAM, "Fault")
+}
+
+record(longout, "$(DEVICE):RESETFLT")
+{
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) clearFaultBuffer")
+	field(SCAN, "Passive")
+	field(OMSL, "supervisory")
+}
+
+record(longin, "$(DEVICE):SEC")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) second")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):NSEC")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) nanoSecond")
+	field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(DEVICE):TIMESKEW")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynFloat64")
+	field(INP,  "@asyn($(PORT),0) timeSkew")
+	field(EGU,  "micro-second")
+	field(PREC, "3")
+	field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(DEVICE):TS")
+{
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT),0) timestamp")
+  field(SCAN, "I/O Intr")
+}
+
+
+record(mbbi, "$(DEVICE):CLKST")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) timeState")
+	field(SCAN, "I/O Intr")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(ZRST, "Init")
+	field(ONST, "Nominal")
+	field(TWST, "Fast")
+	field(THST, "Slow")
+}
+
+
+record(ai, "$(DEVICE):CLKINTVADJ")
+{
+  field(PINI, "YES")
+  field(DESC, "Clock Interval Adjustment")
+  field(DTYP, "asynFloat64")
+  field(INP,  "@asyn($(PORT),0) clockInterval")
+  field(EGU,  "pico-second")
+  field(PREC, "3")
+  field(SCAN, "I/O Intr")
+}
+
+
+
+record(waveform, "$(DEVICE):FIXEDDIV")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32ArrayOut")
+	field(INP,  "@asyn($(PORT),0) fixedDivisors")
+	field(SCAN, "Passive")
+	field(FTVL, "ULONG")
+	field(NELM, "10")
+}
+
+record(waveform, "$(DEVICE):ACDIV")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32ArrayOut")
+	field(INP,  "@asyn($(PORT),0) acDivisors")
+	field(SCAN, "Passive")
+	field(FTVL, "ULONG")
+	field(NELM, "6")
+}
+
+record(waveform, "$(DEVICE):ENERGY")
+{
+	field(PINI, "YES")
+	field(DTYP, "asynInt32ArrayOut")
+	field(INP,  "@asyn($(PORT),0) energy")
+	field(SCAN, "Passive")
+	field(FTVL, "ULONG")
+	field(NELM, "4")
+}
+
+
+record(waveform, "$(DEVICE):WF")
+{
+	field(DTYP, "asynInt32ArrayOut")
+	field(INP,  "@asyn($(PORT),0) waveform")
+	field(FTVL, "ULONG")
+	field(NELM, "3")
+}
+
+
+record(longin, "$(DEVICE):NACTIVEBSA")
+{
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) bsa_NinProgress")
+  field(SCAN, "I/O Intr")
+}
+
+
+record(longin, "$(DEVICE):DIAG_SADDR")
+{
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) dw_startAddr")
+  field(DESC, "DIAG buffer start address")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):DIAG_EADDR")
+{
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) dw_endAddr")
+  field(DESC, "DIAG buffer end address")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):DIAG_NADDR")
+{
+	field(DTYP, "asynInt32")
+	field(INP,  "@asyn($(PORT),0) dw_nxtAddr")
+  field(DESC, "DIAG buffer next address")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):DIAG_LEN")
+{
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) dw_length")
+  field(DESC, "DIAG buffer length")
+  field(SCAN, "I/O Intr")
+}
+
+record(bo, "$(DEVICE):DIAG_CTRL")
+{
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(PORT),0) dw_start")
+	field(OMSL, "supervisory")
+  field(SCAN, "Passive")
+	field(ZNAM, "Stop")
+	field(ONAM, "Start")
+}
+
+record(bo, "$(DEVICE):DIAG_CTRLOFF")
+{
+    field(SDIS, "$(DEVICE):DIAG_CTRLFLAG")
+    field(DISV, "0")
+    field(OMSL, "closed_loop")
+    field(DOL,  "0")
+    field(OUT,  "$(DEVICE):DIAG_CTRL PP")
+    field(SCAN, ".5 second")
+}
+
+record(longin, "$(DEVICE):DIAG_CTRLFLAG")
+{
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) dw_ctrlFlag")
+    field(SCAN, "I/O Intr")
+}
+
+record(mbbo, "$(DEVICE):DIAG_SELENG")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) dw_eng")
+  field(OMSL, "supervisory")
+  field(SCAN, "Passive")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(ZRST, "ALW")
+  field(ONST, "DST")
+  field(TWST, "EXP")
+}
+
+record(longout, "$(DEVICE):DIAG_ENGIDX")
+{
+  field(DTYP, "asynInt32")
+  field(OUT,  "@asyn($(PORT),0) dw_engIndex")
+  field(SCAN, "Passive")
+}
+
+record(stringin, "$(DEVICE):DIAG_NAME")
+{
+	field(DTYP, "asynOctetRead")
+	field(INP,  "@asyn($(PORT),0) dw_name")
+	field(SCAN, "I/O Intr")
+}
+
+

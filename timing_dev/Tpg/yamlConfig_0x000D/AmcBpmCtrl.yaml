@@ -1,0 +1,147 @@
+##############################################################################
+## This file is part of 'LCLS2 Common Carrier Core'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'LCLS2 Common Carrier Core', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once
+
+AmcBpmCtrl: &AmcBpmCtrl
+  name: AmcBpmCtrl
+  description: BPM Control Module
+  class: MMIODev 
+  size: 0x400 
+  children:
+    #########################################################
+    AdcValidCnt:
+      at:
+        offset: 0x000
+        nelms: 4
+      class: IntField
+      name: AdcValidCnt
+      mode: RO
+      description: ADC Valid Transistion Counter[3:0]
+    #########################################################
+    LemoTrigCnt:
+      at:
+        offset: 0x010
+      class: IntField
+      name: LemoTrigCnt
+      mode: RO
+      description: LEMO Trigger counter
+    #########################################################
+    AdcValid:
+      at:
+        offset: 0x0FC
+      class: IntField
+      name: AdcValid
+      sizeBits: 4
+      lsBit: 0
+      mode: RO
+      description: ADC Valid[3:0]
+    #########################################################
+    LemoTrig:
+      at:
+        offset: 0x0FC
+      class: IntField
+      name: LemoTrig
+      sizeBits: 1
+      lsBit: 4
+      mode: RO
+      description: LEMO Trigger
+    #########################################################
+    AdcData:
+      at:
+        offset: 0x100
+        stride: 4
+        nelms: 4
+      class: IntField
+      name: AdcData
+      sizeBits: 16
+      mode: RO
+      description: ADC Data[3:0]
+    #########################################################
+    VcoDac:
+      at:
+        offset: 0x1F8
+      class: IntField
+      name: VcoDac
+      sizeBits: 16
+      mode: RO
+      description: VCO's DAC Value
+    #########################################################
+    AmcClkFreq:
+      at:
+        offset: 0x1FC
+      class: IntField
+      name: AmcClkFreq
+      mode: RO
+      description: AMC Clock frequency (in units of Hz)
+    #########################################################
+    LmkClkSel:
+      at:
+        offset: 0x200
+      class: IntField
+      name: LmkClkSel
+      sizeBits: 2
+      mode: RW
+      description: LMK Clock Select
+    #########################################################
+    LmkRst:
+      at:
+        offset: 0x204
+      class: IntField
+      name: LmkRst
+      sizeBits: 1
+      mode: RW
+      description: LMK Reset
+    #########################################################
+    LmkSync:
+      at:
+        offset: 0x208
+      class: IntField
+      name: LmkSync
+      sizeBits: 1
+      mode: RW
+      description: LMK SYNC
+    #########################################################
+    VcoDacSckConfig:
+      at:
+        offset: 0x308
+      class: IntField
+      name: VcoDacSckConfig
+      sizeBits: 16
+      mode: RW
+      description: VCO DAC SCK Rate Configuration
+    #########################################################
+    VcoDacEnable:
+      at:
+        offset: 0x30C
+      class: IntField
+      name: VcoDacEnable
+      sizeBits: 1
+      mode: RW
+      description: VCO DAC Enable
+    #########################################################
+    RollOverEn:
+      at:
+        offset: 0x3F8
+      class: IntField
+      name: RollOverEn
+      sizeBits: 5
+      mode: RW
+      description: Enable Status counter roll over
+    #########################################################
+    CntRst:
+      at:
+        offset: 0x3FC
+      class: IntField
+      name: CntRst
+      sizeBits: 1
+      mode: WO
+      description: Status counter reset
+    #########################################################

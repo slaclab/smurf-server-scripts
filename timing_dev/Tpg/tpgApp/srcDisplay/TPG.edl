@@ -1,0 +1,6056 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 182
+y 145
+w 1400
+h 900
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+endScreenProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 7
+y 4
+w 279
+h 110
+lineColor index 14
+fillColor index 0
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 64
+y 56
+w 90
+h 21
+controlPv "$(DEVICE):TIMESKEW"
+font "helvetica-medium-r-18.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 5
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 157
+y 60
+w 100
+h 16
+controlPv "$(DEVICE):TIMESKEW.EGU"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 61
+y 36
+w 93
+h 16
+controlPv "$(DEVICE):CLKST"
+format "string"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text w. Reg. Exp.)
+object activeXRegTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 14
+y 12
+w 233
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 28
+bgColor index 0
+value {
+  "State Machine for Timeskew"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 430
+y 167
+w 97
+h 16
+controlPv "$(DEVICE):FIFOADDRWIDTH"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 325
+y 167
+w 108
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "FIFO AddrWidth"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 430
+y 147
+w 97
+h 16
+controlPv "$(DEVICE):SEQADDRWIDTH"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 325
+y 147
+w 99
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Seq AddrWidth"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 430
+y 127
+w 97
+h 16
+controlPv "$(DEVICE):NBSAARRAY"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 325
+y 127
+w 77
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "BSA Arrays"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 431
+y 106
+w 97
+h 16
+controlPv "$(DEVICE):NEXP"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 326
+y 106
+w 85
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Expr Engines"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 431
+y 86
+w 97
+h 16
+controlPv "$(DEVICE):NDST"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 326
+y 86
+w 92
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Beam Engines"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 431
+y 37
+w 97
+h 16
+controlPv "$(DEVICE):FWVER"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 326
+y 37
+w 87
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Firmware Ver"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 431
+y 17
+w 97
+h 16
+controlPv "$(DEVICE):IPADDR"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 326
+y 17
+w 74
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "IP Address"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 540
+y 40
+w 51
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "PulseID"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 714
+y 40
+w 97
+h 16
+controlPv "$(DEVICE):PIDL"
+format "decimal"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 613
+y 40
+w 97
+h 16
+controlPv "$(DEVICE):PIDU"
+format "decimal"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 540
+y 62
+w 70
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Timestamp"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 613
+y 62
+w 97
+h 16
+controlPv "$(DEVICE):SEC"
+format "decimal"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 543
+y 89
+w 267
+h 21
+controlPv "$(DEVICE):TS"
+font "helvetica-medium-r-18.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 5
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 22
+y 36
+w 33
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "State"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 80
+y 213
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMLATCH0"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 80
+y 235
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMLATCH1"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 80
+y 256
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMLATCH2"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 80
+y 278
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMLATCH3"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 179
+y 213
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFBCSLATCH0"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 179
+y 235
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFBCSLATCH1"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 179
+y 256
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFBCSLATCH2"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 179
+y 278
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFBCSLATCH3"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 277
+y 277
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSLATCH3"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 277
+y 255
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSLATCH2"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 277
+y 234
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSLATCH1"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 277
+y 212
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSLATCH0"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 375
+y 277
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFTAG3"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 375
+y 255
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFTAG2"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 375
+y 234
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFTAG1"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 375
+y 212
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFTAG0"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 79
+y 191
+w 84
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Manual Fault"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 176
+y 191
+w 64
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "BCS Fault"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 272
+y 191
+w 67
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS Fault"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 373
+y 192
+w 25
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Tag"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 14
+y 214
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "FLT Buf 0"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 13
+y 235
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "FLT Buf 1"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 13
+y 254
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "FLT Buf 2"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 15
+y 277
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "FLT Buf 3"
+}
+autoSize
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 635
+y 196
+w 101
+h 39
+fgColor index 14
+onColor index 5
+offColor index 8
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FORCEFLT"
+onLabel "FORCE FAULT"
+offLabel "Force Fault"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 654
+y 237
+w 117
+h 35
+controlPv "$(DEVICE):RESETFLT"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 1041
+y 50
+w 75
+h 12
+controlPv "$(DEVICE):NACTIVEBSA"
+format "string"
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 861
+y 42
+w 165
+h 32
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Number of BSA data slots"
+  "which are in-progress"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 435
+y 62
+w 97
+h 16
+controlPv "$(DEVICE):NALW"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 330
+y 62
+w 91
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Allow Engines"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 714
+y 62
+w 97
+h 16
+controlPv "$(DEVICE):NSEC"
+format "decimal"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 78
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA00"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA00"
+}
+symbols {
+  0 "BSA=BSA00"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 111
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA01"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA01"
+}
+symbols {
+  0 "BSA=BSA01"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 143
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA02"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA02"
+}
+symbols {
+  0 "BSA=BSA02"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 175
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA03"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA03"
+}
+symbols {
+  0 "BSA=BSA03"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 207
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA04"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA04"
+}
+symbols {
+  0 "BSA=BSA04"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 239
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA05"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA05"
+}
+symbols {
+  0 "BSA=BSA05"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 272
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA06"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA06"
+}
+symbols {
+  0 "BSA=BSA06"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 304
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA07"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA07"
+}
+symbols {
+  0 "BSA=BSA07"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 336
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA08"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA08"
+}
+symbols {
+  0 "BSA=BSA08"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 368
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA09"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA09"
+}
+symbols {
+  0 "BSA=BSA09"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 401
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA10"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA10"
+}
+symbols {
+  0 "BSA=BSA10"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 434
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA11"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA11"
+}
+symbols {
+  0 "BSA=BSA11"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 466
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA12"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA12"
+}
+symbols {
+  0 "BSA=BSA12"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 498
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA13"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA13"
+}
+symbols {
+  0 "BSA=BSA13"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 530
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA14"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA14"
+}
+symbols {
+  0 "BSA=BSA14"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 562
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA15"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA15"
+}
+symbols {
+  0 "BSA=BSA15"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 595
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA16"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA16"
+}
+symbols {
+  0 "BSA=BSA16"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 627
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA17"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA17"
+}
+symbols {
+  0 "BSA=BSA17"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 659
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA18"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA18"
+}
+symbols {
+  0 "BSA=BSA18"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 882
+y 691
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA19"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA19"
+}
+symbols {
+  0 "BSA=BSA19"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 77
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA20"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA20"
+}
+symbols {
+  0 "BSA=BSA20"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 110
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA21"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA21"
+}
+symbols {
+  0 "BSA=BSA21"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 142
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA22"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA22"
+}
+symbols {
+  0 "BSA=BSA22"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 174
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA23"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA23"
+}
+symbols {
+  0 "BSA=BSA23"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 206
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA24"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA24"
+}
+symbols {
+  0 "BSA=BSA24"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 238
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA25"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA25"
+}
+symbols {
+  0 "BSA=BSA25"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 271
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA26"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA26"
+}
+symbols {
+  0 "BSA=BSA26"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 303
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA27"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA27"
+}
+symbols {
+  0 "BSA=BSA27"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 335
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA28"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA28"
+}
+symbols {
+  0 "BSA=BSA28"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 367
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA29"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA29"
+}
+symbols {
+  0 "BSA=BSA29"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 400
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA30"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA30"
+}
+symbols {
+  0 "BSA=BSA30"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 433
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA31"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA31"
+}
+symbols {
+  0 "BSA=BSA31"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 465
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA32"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA32"
+}
+symbols {
+  0 "BSA=BSA32"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 497
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA33"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA33"
+}
+symbols {
+  0 "BSA=BSA33"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 529
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA34"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA34"
+}
+symbols {
+  0 "BSA=BSA34"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 561
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA35"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA35"
+}
+symbols {
+  0 "BSA=BSA35"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 594
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA36"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA36"
+}
+symbols {
+  0 "BSA=BSA36"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 626
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA37"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA37"
+}
+symbols {
+  0 "BSA=BSA37"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 658
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA38"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA38"
+}
+symbols {
+  0 "BSA=BSA38"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 959
+y 690
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA39"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA39"
+}
+symbols {
+  0 "BSA=BSA39"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 77
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA40"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA40"
+}
+symbols {
+  0 "BSA=BSA40"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 110
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA41"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA41"
+}
+symbols {
+  0 "BSA=BSA41"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 142
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA42"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA42"
+}
+symbols {
+  0 "BSA=BSA42"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 174
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA43"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA43"
+}
+symbols {
+  0 "BSA=BSA43"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 206
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA44"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA44"
+}
+symbols {
+  0 "BSA=BSA44"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 238
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA45"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA45"
+}
+symbols {
+  0 "BSA=BSA45"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 271
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA46"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA46"
+}
+symbols {
+  0 "BSA=BSA46"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 303
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA47"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA47"
+}
+symbols {
+  0 "BSA=BSA47"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 335
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA48"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA48"
+}
+symbols {
+  0 "BSA=BSA48"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1042
+y 367
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "BSA49"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "bsaEdef"
+}
+menuLabel {
+  0 "BSA49"
+}
+symbols {
+  0 "BSA=BSA49"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 79
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM00"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM00"
+}
+symbols {
+  0 "RM=RM00"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 112
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM01"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM01"
+}
+symbols {
+  0 "RM=RM01"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 144
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM02"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM02"
+}
+symbols {
+  0 "RM=RM02"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 176
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM03"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM03"
+}
+symbols {
+  0 "RM=RM03"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 208
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM04"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM04"
+}
+symbols {
+  0 "RM=RM04"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 240
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM05"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM05"
+}
+symbols {
+  0 "RM=RM05"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 274
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM06"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM06"
+}
+symbols {
+  0 "RM=RM06"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 307
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM07"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM07"
+}
+symbols {
+  0 "RM=RM07"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 339
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM08"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM08"
+}
+symbols {
+  0 "RM=RM08"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 371
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM09"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM09"
+}
+symbols {
+  0 "RM=RM09"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 405
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM10"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM10"
+}
+symbols {
+  0 "RM=RM10"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 438
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM11"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM11"
+}
+symbols {
+  0 "RM=RM11"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 470
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM12"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM12"
+}
+symbols {
+  0 "RM=RM12"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 502
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM13"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM13"
+}
+symbols {
+  0 "RM=RM13"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 534
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM14"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM14"
+}
+symbols {
+  0 "RM=RM14"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 566
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM15"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM15"
+}
+symbols {
+  0 "RM=RM15"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 600
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM16"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM16"
+}
+symbols {
+  0 "RM=RM16"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 633
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM17"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM17"
+}
+symbols {
+  0 "RM=RM17"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 665
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM18"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM18"
+}
+symbols {
+  0 "RM=RM18"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1183
+y 697
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM19"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM19"
+}
+symbols {
+  0 "RM=RM19"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1263
+y 79
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM20"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM20"
+}
+symbols {
+  0 "RM=RM20"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1263
+y 112
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM21"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM21"
+}
+symbols {
+  0 "RM=RM21"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1263
+y 144
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM22"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM22"
+}
+symbols {
+  0 "RM=RM22"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 1263
+y 176
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "RM23"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "RM"
+}
+menuLabel {
+  0 "RM23"
+}
+symbols {
+  0 "RM=RM23"
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 623
+y 17
+w 79
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Upper Word"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 721
+y 16
+w 79
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Lower Word"
+}
+autoSize
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 15
+y 505
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW00"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW00"
+}
+symbols {
+  0 "ENG=ALW00"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 15
+y 538
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW01"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW01"
+}
+symbols {
+  0 "ENG=ALW01"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 15
+y 571
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW02"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW02"
+}
+symbols {
+  0 "ENG=ALW02"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 15
+y 604
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW03"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW03"
+}
+symbols {
+  0 "ENG=ALW03"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 14
+y 637
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW04"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW04"
+}
+symbols {
+  0 "ENG=ALW04"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 14
+y 670
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW05"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW05"
+}
+symbols {
+  0 "ENG=ALW05"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 14
+y 703
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW06"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW06"
+}
+symbols {
+  0 "ENG=ALW06"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 14
+y 736
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW07"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW07"
+}
+symbols {
+  0 "ENG=ALW07"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 82
+y 505
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW08"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW08"
+}
+symbols {
+  0 "ENG=ALW08"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 82
+y 538
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW09"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW09"
+}
+symbols {
+  0 "ENG=ALW09"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 82
+y 571
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW10"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW10"
+}
+symbols {
+  0 "ENG=ALW10"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 82
+y 604
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW11"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW11"
+}
+symbols {
+  0 "ENG=ALW11"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 81
+y 637
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW12"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW12"
+}
+symbols {
+  0 "ENG=ALW12"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 81
+y 670
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW13"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW13"
+}
+symbols {
+  0 "ENG=ALW13"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 81
+y 703
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW14"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW14"
+}
+symbols {
+  0 "ENG=ALW14"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 81
+y 736
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "ALW15"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "alwEngine"
+}
+menuLabel {
+  0 "ALW15"
+}
+symbols {
+  0 "ENG=ALW15"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 176
+y 504
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST00"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST00"
+}
+symbols {
+  0 "ENG=DST00"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 176
+y 537
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST01"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST01"
+}
+symbols {
+  0 "ENG=DST01"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 176
+y 570
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST02"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST02"
+}
+symbols {
+  0 "ENG=DST02"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 176
+y 603
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST03"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST03"
+}
+symbols {
+  0 "ENG=DST03"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 175
+y 636
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST04"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST04"
+}
+symbols {
+  0 "ENG=DST04"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 175
+y 669
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST05"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST05"
+}
+symbols {
+  0 "ENG=DST05"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 175
+y 702
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST06"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST06"
+}
+symbols {
+  0 "ENG=DST06"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 175
+y 735
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST07"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST07"
+}
+symbols {
+  0 "ENG=DST07"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 243
+y 504
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST08"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST08"
+}
+symbols {
+  0 "ENG=DST08"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 243
+y 537
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST09"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST09"
+}
+symbols {
+  0 "ENG=DST09"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 243
+y 570
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST10"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST10"
+}
+symbols {
+  0 "ENG=DST10"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 243
+y 603
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST11"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST11"
+}
+symbols {
+  0 "ENG=DST11"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 242
+y 636
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST12"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST12"
+}
+symbols {
+  0 "ENG=DST12"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 242
+y 669
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST13"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST13"
+}
+symbols {
+  0 "ENG=DST13"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 242
+y 702
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST14"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST14"
+}
+symbols {
+  0 "ENG=DST14"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 242
+y 735
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "DST15"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "dstEngine"
+}
+menuLabel {
+  0 "DST15"
+}
+symbols {
+  0 "ENG=DST15"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 348
+y 505
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP00"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP00"
+}
+symbols {
+  0 "ENG=EXP00"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 348
+y 538
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP01"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP01"
+}
+symbols {
+  0 "ENG=EXP01"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 348
+y 571
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP02"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP02"
+}
+symbols {
+  0 "ENG=EXP02"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 348
+y 604
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP03"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP03"
+}
+symbols {
+  0 "ENG=EXP03"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 347
+y 637
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP04"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP04"
+}
+symbols {
+  0 "ENG=EXP04"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 347
+y 670
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP05"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP05"
+}
+symbols {
+  0 "ENG=EXP05"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 347
+y 703
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP06"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP06"
+}
+symbols {
+  0 "ENG=EXP06"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 347
+y 736
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP07"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP07"
+}
+symbols {
+  0 "ENG=EXP07"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 505
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP08"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP08"
+}
+symbols {
+  0 "ENG=EXP08"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 538
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP09"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP09"
+}
+symbols {
+  0 "ENG=EXP09"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 571
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP10"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP10"
+}
+symbols {
+  0 "ENG=EXP10"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 604
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP11"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP11"
+}
+symbols {
+  0 "ENG=EXP11"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 414
+y 637
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP12"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP12"
+}
+symbols {
+  0 "ENG=EXP12"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 414
+y 670
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP13"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP13"
+}
+symbols {
+  0 "ENG=EXP13"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 414
+y 703
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP14"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP14"
+}
+symbols {
+  0 "ENG=EXP14"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 414
+y 736
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP15"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP15"
+}
+symbols {
+  0 "ENG=EXP15"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 481
+y 505
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+font "helvetica-medium-r-12.0"
+buttonLabel "EXP16"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "expEngine"
+}
+menuLabel {
+  0 "EXP16"
+}
+symbols {
+  0 "ENG=EXP16"
+}
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 707
+y 141
+w 101
+h 39
+fgColor index 14
+onColor index 5
+offColor index 8
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FORCESYNC"
+indicatorPv "$(DEVICE):FORCESYNC"
+onLabel "FORCE SYNC"
+offLabel "Force Sync"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 630
+y 278
+w 166
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Clear Fault buffer (buffer#)"
+}
+autoSize
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 1228
+y 22
+w 140
+h 38
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+label "EXIT"
+font "helvetica-medium-r-18.0"
+3d
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 473
+y 277
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSTAG3"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 473
+y 255
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSTAG2"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 473
+y 234
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSTAG1"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 473
+y 212
+w 93
+h 16
+controlPv "$(DEVICE):FLTBUFMPSTAG0"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 471
+y 192
+w 60
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS Tag"
+}
+autoSize
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 575
+y 213
+w 53
+h 19
+fgColor index 14
+onColor index 0
+offColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FLTBUFCLR0"
+onLabel "CLEAR"
+offLabel "Clear"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 575
+y 235
+w 53
+h 19
+fgColor index 14
+onColor index 0
+offColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FLTBUFCLR1"
+onLabel "CLEAR"
+offLabel "Clear"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 575
+y 256
+w 53
+h 19
+fgColor index 14
+onColor index 0
+offColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FLTBUFCLR2"
+onLabel "CLEAR"
+offLabel "Clear"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 575
+y 277
+w 53
+h 19
+fgColor index 14
+onColor index 0
+offColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FLTBUFCLR3"
+onLabel "CLEAR"
+offLabel "Clear"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 546
+y 856
+w 93
+h 16
+controlPv "$(DEVICE):DIAG_NADDR"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 448
+y 857
+w 93
+h 16
+controlPv "$(DEVICE):DIAG_EADDR"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 349
+y 857
+w 93
+h 16
+controlPv "$(DEVICE):DIAG_SADDR"
+format "hex"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 348
+y 879
+w 93
+h 16
+controlPv "$(DEVICE):DIAG_LEN"
+format "decimal"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+nullColor index 0
+fastUpdate
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 357
+y 814
+w 64
+h 34
+fgColor index 14
+bgColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):DIAG_SELENG"
+font "helvetica-medium-r-12.0"
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 430
+y 810
+w 64
+h 36
+controlPv "$(DEVICE):DIAG_ENGIDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 530
+y 809
+w 83
+h 28
+fgColor index 14
+onColor index 0
+offColor index 0
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):DIAG_CTRL"
+3d
+font "helvetica-medium-r-12.0"
+objType "controls"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 314
+w 134
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "PLL Change Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 317
+w 97
+h 16
+controlPv "$(DEVICE):COUNTPLL"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 336
+w 109
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "186MHz Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 339
+w 97
+h 16
+controlPv "$(DEVICE):COUNT186M"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 355
+w 110
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Sync Err Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 358
+w 97
+h 16
+controlPv "$(DEVICE):COUNTSYNCERR"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 374
+w 104
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Interval Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 377
+w 97
+h 16
+controlPv "$(DEVICE):COUNTINTV"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 393
+w 150
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Base Rate Trig Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 396
+w 97
+h 16
+controlPv "$(DEVICE):COUNTBRT"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 342
+y 336
+w 104
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Physical Link Rx"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 502
+y 339
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:PHYREADYRX"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 342
+y 358
+w 104
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Physical Link Tx"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 502
+y 361
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:PHYREADYTX"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 342
+y 377
+w 65
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Local Link"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 502
+y 380
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:LOCLNKREADY"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 342
+y 396
+w 78
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Remote Link"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 502
+y 399
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:REMLNKREADY"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 342
+y 415
+w 129
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Rx Clock Frequency"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 502
+y 418
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:RXCLOCKFREQ"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 341
+y 435
+w 129
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Tx Clock Frequency"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 501
+y 438
+w 97
+h 16
+controlPv "$(DEVICE):MPSLNK:TXCLOCKFREQ"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 414
+y 311
+w 141
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS Link Diagnostics"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 24
+y 58
+w 34
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Skew"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 155
+y 96
+w 100
+h 16
+controlPv "$(DEVICE):CLKINTVADJ.EGU"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 62
+y 92
+w 90
+h 21
+controlPv "$(DEVICE):CLKINTVADJ"
+font "helvetica-medium-r-18.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 5
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 19
+y 84
+w 36
+h 32
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Clock"
+  "Intv"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 412
+w 114
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "TX Clock Counter"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 415
+w 97
+h 16
+controlPv "$(DEVICE):COUNTTXCLK"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+nullColor index 0
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 28
+y 431
+w 73
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Delta TxClk"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 434
+w 97
+h 16
+controlPv "$(DEVICE):DELTATXCLK"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+nullColor index 0
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x -1
+y 450
+w 192
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Tx Clock Rate (M counts/sec)"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 188
+y 453
+w 97
+h 16
+controlPv "$(DEVICE):RATETXCLK"
+font "helvetica-medium-r-14.0"
+fontAlign "right"
+fgColor index 14
+bgColor index 4
+autoHeight
+precision 3
+nullColor index 0
+newPos
+objType "monitors"
+endObjectProperties
+

@@ -1,0 +1,95 @@
+tag build-AmcCarrierTimingGenerator-0x0000000E-20170420000855-weaver
+Tagger: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Thu Apr 20 01:47:33 2017 -0700
+
+PROJECT: AmcCarrierTimingGenerator
+
+FW_VERSION: 0x0000000E
+
+BUILD_STRING: AmcCarrierTimingGenerator: Vivado v2016.4, x86_64, Built Thu Apr 20 00:08:55 PDT 2017 by weaver
+
+commit 3c7ed89393422fbd68618e4f49f376caa6bb3d13
+Author: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Thu Apr 20 00:08:49 2017 -0700
+
+    Fix order of mps latch register and associated yaml.
+
+diff --git a/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd b/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
+index c49b189..84ee880 100644
+--- a/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
++++ b/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
+@@ -244,7 +244,10 @@ begin
+   status.pulseId    <= frame.pulseId;
+   status.outOfSync  <= frame.syncStatus;
+   status.bcsFault   <= frame.bcsFault;
+-  status.mpsLatch   <= frame.mpsClass;
++  -- the order of these vectors are reversed
++  GEN_MPSL : for i in 0 to 15 generate
++    status.mpsLatch(i)   <= frame.mpsClass(i);
++  end generate;
+   status.pllChanged <= r.pllChanged;
+   status.count186M  <= r.count186M;
+   status.countSyncE <= r.countSyncE;
+diff --git a/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml b/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
+index ebc93fb..0988dfa 100644
+--- a/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
++++ b/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
+@@ -380,18 +380,6 @@ TPGControl: &TPGControl
+       mode: RW
+       description: Photon wavelength
+     #########################################################
+-    MpsLatch:
+-      at:
+-        offset: 0x0140
+-        stride: 1
+-        nelms: 16
+-      class: IntField
+-      name: MpsLatch
+-      sizeBits: 4
+-      lsBit: 0
+-      mode: RO
+-      description: Latched value of MPS class for 
+-    #########################################################
+     MpsState:
+       at:
+         offset: 0x0140
+@@ -399,8 +387,8 @@ TPGControl: &TPGControl
+         nelms: 16
+       class: IntField
+       name: MpsState
+-      sizeBits: 4
+-      lsBit: 4
++      sizeBits: 8
++      lsBit: 0
+       mode: RO
+       description: Current value of MPS class
+     #########################################################
+diff --git a/targets/AmcCarrierTimingGenerator/yaml/TPGSeqJump.yaml b/targets/AmcCarrierTimingGenerator/yaml/TPGSeqJump.yaml
+index 36e36ee..5acb8ab 100644
+--- a/targets/AmcCarrierTimingGenerator/yaml/TPGSeqJump.yaml
++++ b/targets/AmcCarrierTimingGenerator/yaml/TPGSeqJump.yaml
+@@ -24,23 +24,11 @@ TPGSeqJump: &TPGSeqJump
+         nelms: 1024
+       class: IntField
+       name: StartAddr
+-      sizeBits: 12
++      sizeBits: 16
+       lsbit: 0
+       mode: RW
+       description: Sequence start address; 16 per engine [0-13 MPS],BCS,MANUAL
+     #########################################################
+-    PowerClass:
+-      at:
+-        offset: 0x0001
+-        stride: 4
+-        nelms: 1024
+-      class: IntField
+-      name: PowerClass
+-      sizeBits: 4
+-      lsbit: 4
+-      mode: RW
+-      description: Sequence power class
+-    #########################################################
+     StartSync:
+       at:
+         offset: 0x003e

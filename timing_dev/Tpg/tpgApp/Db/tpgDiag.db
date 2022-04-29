@@ -1,0 +1,142 @@
+record(waveform, "$(DEV):DIAG_CLKCNT")
+{
+    field(DESC, "Clock Counter")
+    field(DTYP, "asynInt32ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_clock")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "ULONG")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+record(waveform, "$(DEV):DIAG_CLKDLT")
+{
+    field(DESC, "Clock Delta")
+    field(DTYP, "asynInt32ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_clock_delta")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "ULONG")
+    field(NELM, "$(MAX_LENGTH)")
+}
+ 
+
+record(waveform, "$(DEV):DIAG_INSTR")
+{
+    field(DESC, "Instruction Line")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_instruction")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+record(waveform, "$(DEV):DIAG_INSTR_RADDR")
+{
+    field(DESC, "Instruction Relative Location")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_instruction_raddr")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+
+record(waveform, "$(DEV):DIAG_BRCNT0")
+{
+    field(DESC, "Branch Counter0")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_branchCnt0")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+record(waveform, "$(DEV):DIAG_BRCNT1")
+{
+    field(DESC, "Branch Counter1")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_branchCnt1")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+record(waveform, "$(DEV):DIAG_BRCNT2")
+{
+    field(DESC, "Branch Counter2")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_branchCnt2")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+record(waveform, "$(DEV):DIAG_BRCNT3")
+{
+    field(DESC, "Branch Counter3")
+    field(DTYP, "asynInt16ArrayIn")
+    field(INP,  "@asyn($(PORT),0) dw_branchCnt3")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "USHORT")
+    field(NELM, "$(MAX_LENGTH)")
+}
+
+
+record(bi, "$(DEVICE):MPSLNK:PHYREADYRX")
+{
+    field(DESC, "MPS_DIAG PhyReadyRx")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) mpsDiag_PhyReadyRx")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "Fault")
+    field(ONAM, "Ready")
+}
+
+
+record(bi, "$(DEVICE):MPSLNK:PHYREADYTX")
+{
+    field(DESC, "MPS_DIAG PhyReadyTx")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) mpsDiag_PhyReadyTx")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "Fault")
+    field(ONAM, "Ready")
+}
+
+
+record(bi, "$(DEVICE):MPSLNK:LOCLNKREADY")
+{
+    field(DESC, "MPS_DIAG LocalLinkReady")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) mpsDiag_LocalLinkReady")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "Fault")
+    field(ONAM, "Ready")
+}
+
+
+record(bi, "$(DEVICE):MPSLNK:REMLNKREADY")
+{
+    field(DESC, "MPS_DIAG RemoteLinkReady")
+    field(DTYP, "asynInt32")
+    field(INP, "@asyn($(PORT),0) mpsDiag_RemoteLinkReady")
+    field(SCAN, "I/O Intr")
+    field(ZNAM, "Fault")
+    field(ONAM, "Ready")
+}
+
+
+record(longin, "$(DEVICE):MPSLNK:RXCLOCKFREQ")
+{
+    field(DESC, "MPS_DIAG Rx Clock Freq")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) mpsDiag_RxClockFreq")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):MPSLNK:TXCLOCKFREQ")
+{
+    field(DESC, "MPS_DIAG Tx Clock Freq")
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT),0) mpsDiag_TxClockFreq")
+    field(SCAN, "I/O Intr")
+}

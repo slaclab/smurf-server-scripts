@@ -1,0 +1,24 @@
+#==============================================================
+#
+#  Name: README
+#
+#  Rem:  
+#        EPICS IOC Application 
+#
+#  Side: None
+#
+#  Auth: XX-Mar-2012,          (XX)
+#  Rev:  dd-mmm-yyyy, Reviewer's Name (USERNAME)
+#--------------------------------------------------------------
+#  Mod:
+#        dd-mmm-yyyy, Reviewer's Name (USERNAME)
+#          coment
+#
+#==============================================================
+#
+# NOTE:
+# Please do not type make here !!
+# This module is only a template used by makeBaseApp.pl to create an EPICS IOC Application
+
+
+# End of file

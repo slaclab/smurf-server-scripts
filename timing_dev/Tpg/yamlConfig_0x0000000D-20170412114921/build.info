@@ -1,0 +1,132 @@
+tag build-AmcCarrierTimingGenerator-0x0000000D-20170324211400-weaver
+Tagger: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Fri Mar 24 22:56:05 2017 -0700
+
+PROJECT: AmcCarrierTimingGenerator
+
+FW_VERSION: 0x0000000D
+
+BUILD_STRING: AmcCarrierTimingGenerator: Vivado v2016.4, x86_64, Built Fri Mar 24 21:14:00 PDT 2017 by weaver
+
+commit 19aef7d622ed3c3f3572589f01f78978a63eb30a
+Author: Matt Weaver <weaver@slac.stanford.edu>
+Date:   Fri Mar 24 21:10:41 2017 -0700
+
+    Added photon wavelength to beam meta data
+
+diff --git a/targets/AmcCarrierTimingGenerator/hdl/AxiTPGControlReg.vhd b/targets/AmcCarrierTimingGenerator/hdl/AxiTPGControlReg.vhd
+index f4588ed..ea023c0 100644
+--- a/targets/AmcCarrierTimingGenerator/hdl/AxiTPGControlReg.vhd
++++ b/targets/AmcCarrierTimingGenerator/hdl/AxiTPGControlReg.vhd
+@@ -5,7 +5,7 @@
+ -- Author     : Matt Weaver  <weaver@slac.stanford.edu>
+ -- Company    : SLAC National Accelerator Laboratory
+ -- Created    : 2015-09-25
+--- Last update: 2017-02-21
++-- Last update: 2017-03-24
+ -- Platform   : 
+ -- Standard   : VHDL'93/02
+ -------------------------------------------------------------------------------
+@@ -294,6 +294,9 @@ begin
+             when ENERGY0 to ENERGY3 =>
+               iseq      := conv_integer(regAddr(3 downto 2));
+               v.config.beamEnergy(iseq) := regWrData(15 downto 0);
++            when WAVELEN0 to WAVELEN1 =>
++              iseq      := conv_integer(regAddr(2));
++              v.config.photonWavelen(iseq) := regWrData(15 downto 0);
+             when CTRLOCK =>
+               v.config.ctrlock := regWrData(0);
+             when CTRDEF to CTRDEF_END =>
+@@ -404,6 +407,9 @@ begin
+             when ENERGY0 to ENERGY3 =>
+               iseq      := conv_integer(regAddr(3 downto 2));
+               tmpRdData(15 downto 0) := r.config.beamEnergy(iseq);
++            when WAVELEN0 to WAVELEN1 =>
++              iseq      := conv_integer(regAddr(2));
++              tmpRdData(15 downto 0) := r.config.photonWavelen(iseq);
+             when CTRLOCK =>
+               tmpRdData(0) := r.config.ctrlock;
+             when CTRDEF to CTRDEF_END =>
+diff --git a/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd b/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
+index c5ce325..4a3122d 100644
+--- a/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
++++ b/targets/AmcCarrierTimingGenerator/hdl/TPGCore.vhd
+@@ -228,9 +228,9 @@ begin
+ 
+   frame.bcsFault(0)               <= bcsLatch(0);
+   frame.beamEnergy                <= config.beamEnergy;
++  frame.photonWavelen             <= config.photonWavelen;
+   
+-  -- Dont know about these inputs yet
+-  frame.calibrationGap            <= '0';
++  frame.mpsValid                  <= '0';
+ 
+   txPolarity                      <= config.txPolarity;
+   
+diff --git a/targets/AmcCarrierTimingGenerator/hdl/TPGRegPkg.vhd b/targets/AmcCarrierTimingGenerator/hdl/TPGRegPkg.vhd
+index fce6420..819b100 100644
+--- a/targets/AmcCarrierTimingGenerator/hdl/TPGRegPkg.vhd
++++ b/targets/AmcCarrierTimingGenerator/hdl/TPGRegPkg.vhd
+@@ -46,7 +46,9 @@ package TPGRegPkg is
+   constant ENERGY1    : integer := 73;
+   constant ENERGY2    : integer := 74;
+   constant ENERGY3    : integer := 75;
+-  -- (empty 76-94)
++  constant WAVELEN0   : integer := 76;
++  constant WAVELEN1   : integer := 77;
++  -- (empty 78-94)
+   constant CTRLOCK    : integer := 95;
+   constant CTRDEF     : integer := 96;
+   constant CTRDEF_END : integer := 120;
+diff --git a/targets/AmcCarrierTimingGenerator/ruckus.tcl b/targets/AmcCarrierTimingGenerator/ruckus.tcl
+index 5ff4b42..04f0409 100644
+--- a/targets/AmcCarrierTimingGenerator/ruckus.tcl
++++ b/targets/AmcCarrierTimingGenerator/ruckus.tcl
+@@ -6,7 +6,10 @@
+ source -quiet $::env(RUCKUS_DIR)/vivado_proc.tcl
+ 
+ # Load submodules' code and constraints
+-loadRuckusTcl $::env(TOP_DIR)/submodules
++#loadRuckusTcl $::env(TOP_DIR)/submodules
++loadRuckusTcl $::env(TOP_DIR)/submodules/surf
++loadRuckusTcl "/u1/weaver/lcls-timing-core"
++loadRuckusTcl "/u1/weaver/amc-carrier-core"
+ 
+ # Load target's source code and constraints
+ loadSource      -dir  "$::DIR_PATH/hdl/"
+diff --git a/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml b/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
+index 2db866e..840f1ec 100644
+--- a/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
++++ b/targets/AmcCarrierTimingGenerator/yaml/TPGControl.yaml
+@@ -211,11 +211,11 @@ TPGControl: &TPGControl
+       mode: RW
+       description: Sequence engine streamed to diagnostics
+     #########################################################
+-    Sync:
++    GenStatus:
+       at:
+         offset: 0x0070
+       class: IntField
+-      name: Sync
++      name: GenStatus
+       sizeBits: 1
+       lsBit: 0
+       mode: RW
+@@ -369,6 +369,17 @@ TPGControl: &TPGControl
+       mode: RW
+       description: Beam energy meta data
+     #########################################################
++    PhotonWavelen:
++      at:
++        offset: 0x0130
++        stride: 4
++        nelms: 2
++      class: IntField
++      name: PhotonWavelen
++      sizeBits: 16
++      mode: RW
++      description: Photon wavelength
++    #########################################################
+     CounterLock:
+       at:
+         offset: 0x017C

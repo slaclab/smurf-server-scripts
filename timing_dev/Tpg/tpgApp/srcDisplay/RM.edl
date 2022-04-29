@@ -1,0 +1,462 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 2275
+y 74
+w 1000
+h 300
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+endScreenProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 112
+y 13
+w 97
+h 16
+controlPv "$(DEVICE):$(RM):IDX"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 13
+w 99
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Rate Measure#"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 137
+y 113
+w 69
+h 32
+controlPv "$(DEVICE):$(RM):EXPSEQ"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 339
+y 128
+w 69
+h 32
+controlPv "$(DEVICE):$(RM):EXPSEQBIT"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 41
+y 45
+w 70
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Rate Mode"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 257
+y 65
+w 76
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Fixed Rate#"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 259
+y 104
+w 62
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "AC Rate#"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 258
+y 138
+w 77
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "ExptSeqBit#"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 421
+y 74
+w 69
+h 32
+controlPv "$(DEVICE):$(RM):TSLOTMASK"
+displayMode "hex"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 424
+y 59
+w 137
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Timeslot Mask (HEX)"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 581
+y 6
+w 117
+h 64
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Destination Mode"
+  "0: disable, no care"
+  "1: exclusion"
+  "2: inclusion"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 723
+y 46
+w 155
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Destination Mask (HEX)"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 738
+y 79
+w 69
+h 32
+controlPv "$(DEVICE):$(RM):DESTMASK"
+displayMode "hex"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-10.0"
+lineWidth 0
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 573
+y 81
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(RM):DESTMODE"
+indicatorPv "$(DEVICE):$(RM):DESTMODE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 137
+y 43
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(RM):RATEMODE"
+indicatorPv "$(DEVICE):$(RM):RATEMODE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 16
+y 119
+w 111
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Expt Seq Number"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 553
+y 215
+w 97
+h 16
+controlPv "$(DEVICE):$(RM):CNT"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 448
+y 215
+w 94
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Counter (Rate)"
+}
+autoSize
+endObjectProperties
+
+# (Choice Button)
+object activeChoiceButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 572
+y 144
+w 104
+h 59
+fgColor index 14
+bgColor index 6
+selectColor index 4
+inconsistentColor index 14
+topShadowColor index 2
+botShadowColor index 10
+controlPv "$(DEVICE):$(RM):CTRL"
+indicatorPv "$(DEVICE):$(RM):CTRL"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 894
+y 9
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+label "EXIT"
+font "helvetica-medium-r-12.0"
+3d
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 336
+y 55
+w 72
+h 32
+fgColor index 14
+bgColor index 4
+inconsistentColor index 6
+topShadowColor index 0
+botShadowColor index 10
+controlPv "$(DEVICE):$(RM):FIXEDRATE"
+indicatorPv "$(DEVICE):$(RM):FIXEDRATE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 336
+y 98
+w 72
+h 32
+fgColor index 14
+bgColor index 4
+inconsistentColor index 6
+topShadowColor index 0
+botShadowColor index 10
+controlPv "$(DEVICE):$(RM):ACRATE"
+indicatorPv "$(DEVICE):$(RM):ACRATE"
+font "helvetica-medium-r-10.0"
+endObjectProperties
+

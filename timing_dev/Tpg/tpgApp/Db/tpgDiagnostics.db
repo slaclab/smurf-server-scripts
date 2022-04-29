@@ -1,0 +1,66 @@
+record(longin, "$(DEVICE):COUNTPLL")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "PLL Change Counter")
+  field(INP,  "@asyn($(PORT),0) countPLL")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):COUNT186M")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "186MHz Counter")
+  field(INP,  "@asyn($(PORT),0) count186M")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):COUNTSYNCERR")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "Sync Error Counter")
+  field(INP,  "@asyn($(PORT),0) countSyncE")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):COUNTINTV")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "Interval Counter")
+  field(INP,  "@asyn($(PORT),0) countIntv")
+  field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):COUNTBRT")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "Base Rate Trigger Counter")
+  field(INP,  "@asyn($(PORT),0) countBRT")
+  field(SCAN, "I/O Intr")
+}
+
+
+record(longin, "$(DEVICE):COUNTTXCLK")
+{
+   field(DTYP, "asynInt32")
+   field(DESC, "TxClockCounter in TimingFrameRx")
+   field(INP,  "@asyn($(PORT),0) countTxClk")
+   field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(DEVICE):DELTATXCLK")
+{
+    field(DTYP, "asynInt32")
+    field(DESC, "Delta for TxClkCounter")
+    field(INP,  "@asyn($(PORT),0) deltaTxClk")
+    field(SCAN, "I/O Intr")
+}
+
+record(ai, "$(DEVICE):RATETXCLK")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT),0) rateTxClk")
+    field(EGU,  "M counts/s")
+    field(PREC, "6")
+    field(SCAN, "I/O Intr")
+}
+

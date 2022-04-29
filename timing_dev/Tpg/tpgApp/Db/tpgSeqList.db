@@ -1,0 +1,15 @@
+record(longin, "$(DEVICE):$(INST):$(SEQ_INST)IDX")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynInt32")
+  field(INP,  "@asyn($(PORT),0) engine$(ENG)_list$(L)_idxSeq")
+  field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(DEVICE):$(INST):$(SEQ_INST)DESC")
+{
+  field(PINI, "YES")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT),0) engine$(ENG)_list$(L)_descSeq")
+  field(SCAN, "I/O Intr")
+}

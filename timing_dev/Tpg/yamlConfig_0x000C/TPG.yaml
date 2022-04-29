@@ -1,0 +1,52 @@
+##############################################################################
+## This file is part of 'SLAC Firmware Standard Library'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'SLAC Firmware Standard Library', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once TPG.yaml
+#include TPGControl.yaml
+#include TPGStatus.yaml
+#include TPGSeqState.yaml
+#include TPGSeqJump.yaml
+#include TPGSeqMem.yaml
+
+TPG: &TPG 
+  class: MMIODev
+  description: Timing generator module for AMC Carrier
+  size: 0x01000000
+  ########
+  children:
+  ########
+    TPGControl:
+      <<: *TPGControl
+      at:
+        offset: 0x00000000
+    ##################################################
+    TPGStatus:
+      <<: *TPGStatus
+      at:
+        offset: 0x00000400
+    ##################################################
+    TPGSeqState:
+      <<: *TPGSeqState
+      at:
+        offset: 0x00000800
+    ##################################################
+    TPGSeqJump:
+      <<: *TPGSeqJump
+      at:
+        offset: 0x00001000
+    ##################################################
+    TPGSeqMem:
+      <<: *TPGSeqMem
+      at:
+        offset: 0x00002000
+    ##################################################
+    ##- <<: *AxiLiteRingBuffer
+    ##  offset: 0x01000000
+    ##################################################

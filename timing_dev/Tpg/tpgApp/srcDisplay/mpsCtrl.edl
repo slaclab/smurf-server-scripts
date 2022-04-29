@@ -1,0 +1,1488 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 1315
+y 204
+w 500
+h 800
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+endScreenProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 195
+y 3
+w 210
+h 35
+controlPv "$(DEVICE):$(ENG):DESCENG"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 106
+y 6
+w 88
+h 32
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Description"
+  "for the Engine"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 8
+y 56
+w 93
+h 16
+controlPv "$(DEVICE):$(ENG):IDX"
+format "string"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 4
+y 35
+w 98
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Engine Number"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 15
+y 9
+w 60
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "$(ENG)"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 87
+y 121
+w 93
+h 16
+controlPv "$(DEVICE):$(ENG):MPSLATCH"
+format "string"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 184
+y 121
+w 93
+h 16
+controlPv "$(DEVICE):$(ENG):MPSSTATE"
+format "string"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 4
+autoHeight
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 283
+y 110
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPSSETSTATE"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 87
+y 99
+w 89
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Latched State"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 184
+y 99
+w 85
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Current State"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 296
+y 95
+w 58
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Set State"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 168
+y 73
+w 41
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 206
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS00IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 206
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS00STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 206
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS00PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 216
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS00"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 235
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS01IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 235
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS01STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 235
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS01PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 245
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS01"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 267
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS02IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 267
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS02STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 267
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS02PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 277
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS02"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 296
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS03IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 296
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS03STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 296
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS03PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 306
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS03"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 327
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS04IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 327
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS04STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 327
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS04PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 337
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS04"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 356
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS05IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 356
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS05STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 356
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS05PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 366
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS05"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 76
+y 388
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS06IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 210
+y 388
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS06STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 340
+y 388
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS06PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 6
+y 398
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS06"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 76
+y 417
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS07IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 210
+y 417
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS07STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 340
+y 417
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS07PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 6
+y 427
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS07"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 79
+y 452
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS08IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 213
+y 452
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS08STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 343
+y 452
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS08PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 9
+y 462
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS08"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 79
+y 481
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS09IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 213
+y 481
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS09STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 343
+y 481
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS09PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 9
+y 491
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS09"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 513
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS10IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 513
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS10STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 513
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS10PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 523
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS10"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 542
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS11IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 542
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS11STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 542
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS11PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 552
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS11"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 573
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS12IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 573
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS12STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 573
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS12PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 583
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS12"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 78
+y 602
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS13IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 212
+y 602
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS13STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 342
+y 602
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS13PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 8
+y 612
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS13"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 634
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS14IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 634
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS14STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 634
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS14PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 644
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS14"
+}
+autoSize
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 77
+y 663
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS15IDX"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 211
+y 663
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS15STARTADDR"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Text Entry)
+object TextentryClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 341
+y 663
+w 117
+h 35
+controlPv "$(DEVICE):$(ENG):MPS15PCLASS"
+fgColor index 14
+bgColor index 5
+font "helvetica-medium-r-14.0"
+lineWidth 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 7
+y 673
+w 47
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "MPS15"
+}
+autoSize
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 431
+y 6
+w 64
+h 32
+fgColor index 14
+bgColor index 0
+topShadowColor index 0
+botShadowColor index 14
+label "EXIT"
+font "helvetica-medium-r-18.0"
+3d
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 65
+y 188
+w 134
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Sub-sequence Index"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 226
+y 190
+w 90
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Start Address"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 356
+y 191
+w 81
+h 16
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Power Class"
+}
+autoSize
+endObjectProperties
+

@@ -5,6 +5,10 @@
 FROM tidair/smurf-rogue:R2.8.8
 
 # Get the firmware files locally.
+# /tmp/fw/ contains:
+# - smurf_cfg: Clone of https://github.com/slaclab/smurf_cfg
+# - .mcs.gz file: File from 'make' from https://github.com/slaclab/cryo-det
+# - .zip file: File from 'make release' from https://github.com/slaclab/cryo-det
 RUN mkdir -p /tmp/fw/ && chmod -R a+rw /tmp/fw/
 COPY fw /tmp/fw/
 

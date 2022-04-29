@@ -1,4 +1,4 @@
-version: '3.4'
+version: '2.2'
 
 services:
   # The SMuRF timing docker container, which contains the EPICS IOC
@@ -11,7 +11,7 @@ services:
   timing_prod:
     container_name: timing_prod
     # Bash substitution.
-    image: tidair/smurf-tpg-ioc:${version}
+    image: tidair/smurf-tpg-ioc:v2
     # Need to access:
     # - 10.0.0.0 network
     # - shm-smrf-sp01 (192 network)

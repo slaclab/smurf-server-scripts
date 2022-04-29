@@ -1,0 +1,64 @@
+##############################################################################
+## This file is part of 'LCLS2 Common Carrier Core'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'LCLS2 Common Carrier Core', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once ApplicationCore.yaml
+#include TPG.yaml
+#include AmcGenericAdcDacCore.yaml
+#include AppTopJesd.yaml
+#include TPGMps.yaml
+
+ApplicationCore: &ApplicationCore 
+  class: MMIODev
+  description: Application Core
+  size: 0x80000000
+  ########
+  children:
+  ########
+    ##################################################
+    # Add your memory mapped devices here
+    ##################################################   
+    TPG:
+      <<: *TPG
+      instantiate: true
+      at:
+        offset: 0x00000000
+    ##################################################
+    AmcGenericAdcDacCore:
+      <<: *AmcGenericAdcDacCore
+      instantiate: true
+      at:
+        offset: 0x01000000
+    ##################################################
+    TPGMps:
+      <<: *TPGMps
+      instantiate: true
+      at:
+        offset: 0x02000000
+    ##################################################
+    AppTopJesd:
+      <<: *AppTopJesd
+      instantiate: true
+      at:
+        offset: 0x10000000
+      children: 
+        JesdRx:
+          instantiate: true
+          metadata:
+            numRxLanes: &numRxLanes 4
+        JesdTx:
+          instantiate: true
+          metadata:
+            numTxLanes: &numTxLanes 2
+  #########
+  Commands:
+  #########
+    ##################################################
+    # Add your top level commands here
+    ##################################################

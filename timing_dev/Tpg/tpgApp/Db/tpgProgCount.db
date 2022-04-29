@@ -1,0 +1,9 @@
+record(longin, "$(DEVICE):PROGCOUNT$(N)")
+{
+  field(DTYP, "asynInt32")
+  field(DESC, "Program Counter $(N)")
+  field(INP,  "@asyn($(PORT),0) progCounter$(N)")
+  field(SCAN, "I/O Intr")
+}
+
+

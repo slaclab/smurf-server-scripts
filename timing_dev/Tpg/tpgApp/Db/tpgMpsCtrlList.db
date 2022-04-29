@@ -1,0 +1,29 @@
+record(longout, "$(DEVICE):$(INST):$(MPSCTRL_INST)IDX")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) engine$(ENG)_mpsJump$(MPSCTRL)_idxSeq")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):$(MPSCTRL_INST)STARTADDR")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) engine$(ENG)_mpsJump$(MPSCTRL)_jumpAddr")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(DEVICE):$(INST):$(MPSCTRL_INST)PCLASS")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynInt32")
+    field(OUT,  "@asyn($(PORT),0) engine$(ENG)_mpsJump$(MPSCTRL)_powerClass")
+    field(OMSL, "supervisory")
+    field(SCAN, "Passive")
+    info(autosaveFields, "VAL")
+}
