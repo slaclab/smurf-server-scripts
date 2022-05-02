@@ -1,9 +1,12 @@
 version: '2.2'
 
+# Previously hosted at
+# https://github.com/slaclab/smurf-rogue-docker/blob/main/scripts/connect_remote_gui.py
+
 services:
   # Image that connects you to the space of low-level SMuRF variables.
   gui:
-    container_name: gui
+    container_name: gui_s${slot}
     network_mode: "host"
     user: ${USER}
     environment:
@@ -20,3 +23,4 @@ services:
     stdin_open: true  
     image: tidair/smurf-rogue:R2.8.8
     entrypoint: connect_remote_gui.py
+    command: --slot ${slot}

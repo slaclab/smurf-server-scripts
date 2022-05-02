@@ -1,6 +1,6 @@
 version: '2.2'
 
-# Assume you have run build.sh.
+# Assume you have run setup.sh.
 
 services:
   # The SMuRF timing docker container, which contains the EPICS IOC

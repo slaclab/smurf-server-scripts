@@ -1,0 +1,7 @@
+{
+  "log-driver": "journald",
+  "log-opts":
+  {
+    "env": "DISPLAY,location"
+  }
+}

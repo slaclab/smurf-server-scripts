@@ -6,7 +6,6 @@ version: '2.2'
 services:
   server_dev:
     container_name: ${server_prefix}${slot}
-    
     # Build using this Dockerfile. Remove this line, replace it
     # with image: tidair/smurf-server:version and you esesntially
     # have the production verison.
@@ -24,11 +23,12 @@ services:
     volumes:
       # Data saved here!
       - /data:/data
-      # Forward X to the container.
+      # Forward everything
+      # - /home/${USER}:/home/${USER}
       - /home/${USER}/.Xauthority:/home/${USER}/.Xauthority
 
     # The server is started via start_server.sh, which then determines
     # if its on PCIe or Ethernet, then finally calls cmb_pcie.py or
     # cmb_eth.py. These are arguments to start_server.sh.
     # start_server.sh: 
-    command: -g -w ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -e ${server_prefix}${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    command: -w ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -e ${server_prefix}${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml

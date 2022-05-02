@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2.2'
 
 services:
   jupyter:
@@ -23,17 +23,14 @@ services:
       - EPICS_CA_AUTO_ADDR_LIST=NO
       - EPICS_CA_ADDR_LIST=127.255.255.255
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
-      
       # Python will use PYTHONPATH to find pysmurf.client.
       - PYTHONPATH=${docker_pysmurf_dir}/python
       
     volumes:
       # Data from SMuRF is conventionally saved to /data.
       - /data:/data
-
-      # Finally, put the host's pysmurf into this container's filesystem.
       - ${host_pysmurf_dir}:${docker_pysmurf_dir}
-
+      
       # For convenience also just throw the home directory in
       # Jupyter. Jupyter will put its config into ~/.jupyter by
       # default. Note this could break things, because the OS will

@@ -1,32 +1,25 @@
-version: '3.7'
-
-x-smurf-generic:
-  &smurf-generic
-  network_mode: "host"
-  user: ${USER}
-  environment:
-    - location=${PWD}
-    - DISPLAY
-    - EPICS_CA_AUTO_ADDR_LIST=NO
-    - EPICS_CA_ADDR_LIST=127.255.255.255
-    - EPICS_CA_MAX_ARRAY_BYTES=80000000
-  volumes:
-    - /data:/data
-    # Forward X to the container.
-    - /home/${USER}/.Xauthority:/home/${USER}/.Xauthority
-  tty: true
-  stdin_open: true  
+version: '2.2'
 
 services:
-  # Unfortunately the next line needs to be hardcoded, I can't use
-  # bash substitution like ${USER}. This is why the folder is named
-  # specifically server_prod.
   server_prod:
-    <<: *smurf-generic
-    image: tidair/pysmurf-server:${version}
+    network_mode: "host"
+    user: ${USER}
+    environment:
+      - location=${PWD}
+      - DISPLAY
+      - EPICS_CA_AUTO_ADDR_LIST=NO
+      - EPICS_CA_ADDR_LIST=127.255.255.255
+      - EPICS_CA_MAX_ARRAY_BYTES=80000000
+    volumes:
+      - /data:/data
+      # Forward X to the container.
+      - /home/${USER}:/home/${USER}
+    tty: true
+    stdin_open: true  
+    image: tidair/pysmurf-server:v6.0.0
     # Load the image from the internet.  The server Dockerfile is
     # located in pysmurf/docker/server.
-    container_name: ${prefix}${slot}
+    container_name: ${server_prefix}${slot}
     # The server will listen for local EPICS connections.
     # The container name is the same as the EPICS "root."
     # The container name is different from the crate hostname.
@@ -45,4 +38,4 @@ services:
     # - Use --disable-hw-detect and --defaults, where you specify the defaults file.
     # The defaults files are from github.com/slaclab/smurf_cfg.
     # They are embedded as /tmp/fw/smurf_cfg in this docker container.
-    command: -e ${prefix}${slot} -S ${crate_hostname} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    command: -e ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml

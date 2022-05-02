@@ -10,6 +10,11 @@
 version: '2.2'
 
 services:
+  server_prod:
+    extends:
+      file: server_prod/docker-compose.yml
+      service: server_prod
+      
   server_dev:
     extends:
       file: server_dev/docker-compose.yml
@@ -25,7 +30,17 @@ services:
       file: timing_prod/docker-compose.yml
       service: timing_prod
 
-  util:
+  base_prod:
     extends:
-      file: util/docker-compose.yml
-      service: util
+      file: base_prod/docker-compose.yml
+      service: base_prod
+      
+  jupyter:
+    extends:
+      file: jupyter/docker-compose.yml
+      service: jupyter
+
+  gui:
+    extends:
+      file: gui/docker-compose.yml
+      service: gui

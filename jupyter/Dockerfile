@@ -27,9 +27,6 @@ ENV MPLBACKEND GTK3Agg
 WORKDIR /
 ENTRYPOINT ["jupyter", "lab", "--ip=*"]
 
-# How does this docker image find pysmurf? It searches PYTHONPATH,
-# then import pysmurf can run correctly. In this docker container
-# PYTHONPATH is set to ${docker_pysmurf_dir}, and
-# ${docker_pysmurf_dir} maps to ${host_pysmurf_dir} on the host via
-# the docker-compose.yml file. This should make it very easy to move
-# around the pysmurf directory on the host to whatever you want.
+# How does this docker image find pysmurf? Python uses PYTHONPATH.  In
+# docker-compose.yml should set PYTHONPATH to wherever pysmurf should
+# be.
