@@ -32,12 +32,16 @@ if __name__ == '__main__':
     
     instrset = []
     #  Insert global sync instruction (1Hz?), wo do not have slower rate :(
+    # Wait for this global sync marker
     instrset.append(FixedRateSync(marker=global_sync_marker, occ=1))
 
     b0 = len(instrset)
+    # Insert some bits into the timing stream, ctrl_marker.
     instrset.append(ControlRequest(word = ctrl_marker))
+    # Wait for fix2u_sync_marker to occur occ times.
     instrset.append(FixedRateSync(marker=fix2u_sync_marker, occ = occurence[args.rate])) 
 
+    # Goto b0 
     instrset.append(Branch.unconditional(line = b0)) 
 
     # Sequencer Never reach this point, Safty Bound 

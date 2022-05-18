@@ -20,6 +20,6 @@ services:
     volumes:
       - /data:/data
       # Note: Be careful if conda is installed.
-      # - /home/${USER}:/home/${USER}
+      - /home/${USER}:/home/${USER}
     tty: true
     stdin_open: true

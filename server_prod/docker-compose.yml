@@ -38,4 +38,5 @@ services:
     # - Use --disable-hw-detect and --defaults, where you specify the defaults file.
     # The defaults files are from github.com/slaclab/smurf_cfg.
     # They are embedded as /tmp/fw/smurf_cfg in this docker container.
-    command: -e ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    command: -e ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -c ${comm_type} 
+    # --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml

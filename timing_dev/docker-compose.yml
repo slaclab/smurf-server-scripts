@@ -13,7 +13,6 @@ services:
   timing_prod:
     build:
       context: .      
-    image: tidair/smurf-tpg-ioc:v2
     # Need to access:
     # - 10.0.0.0 network
     # - shm-smrf-sp01 (192 network)

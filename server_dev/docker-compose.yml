@@ -31,4 +31,4 @@ services:
     # if its on PCIe or Ethernet, then finally calls cmb_pcie.py or
     # cmb_eth.py. These are arguments to start_server.sh.
     # start_server.sh: 
-    command: -w ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -e ${server_prefix}${slot} -c ${comm_type} --disable-hw-detect --defaults /tmp/fw/smurf_cfg/defaults/defaults_c02_lb_hb.yml
+    command: -w ${server_prefix}${slot} -S ${crate_hostname} -N ${slot} -e ${server_prefix}${slot} -c ${comm_type} 

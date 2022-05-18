@@ -11,7 +11,7 @@ RUN mkdir -p ${APP_TOP}
 WORKDIR ${APP_TOP}
 # Copy files from the repo.
 ADD Tpg .
-ADD scripts/start_ioc.sh .
+ADD scripts .
 ADD config config
 # Build the application
 RUN make distclean && make
@@ -42,5 +42,4 @@ COPY --from=builder /usr/bin/ipmitool /usr/bin/ipmitool
 # Go to the application top level
 WORKDIR $APP_TOP
 # Start the IOC using the default shelfmanager name and slot number
-ENTRYPOINT ["./start_ioc.sh","-S", "shm-smrf-sp01", "-N", "2"]
-
+ENTRYPOINT ["./start.sh"]
