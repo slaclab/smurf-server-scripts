@@ -8,8 +8,7 @@ services:
     # This lets us build using the local Dockerfile. Docker typically
     # wants to run in the same directory as Dockerfile and
     # docker-compose.yml. There are no remotely hosted images for
-    # client_jupter, we only worry about the production images,
-    # pysmurf-server, pysmurf-client having remotely hosted images.
+    # jupyter, because it can be built anywhere.
     build:
       context: .
 
@@ -23,7 +22,8 @@ services:
       - EPICS_CA_AUTO_ADDR_LIST=NO
       - EPICS_CA_ADDR_LIST=127.255.255.255
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
-      # Python will use PYTHONPATH to find pysmurf.client.
+        # host_pysmurf_dir maps to docker_pysmurf_dir. PYTHONPATH is
+        # used by Python to find modules.
       - PYTHONPATH=${docker_pysmurf_dir}/python
       
     volumes:
@@ -31,13 +31,6 @@ services:
       - /data:/data
       - ${host_pysmurf_dir}:${docker_pysmurf_dir}
       
-      # For convenience also just throw the home directory in
-      # Jupyter. Jupyter will put its config into ~/.jupyter by
-      # default. Note this could break things, because the OS will
-      # look into ~/.local/ for binaries, which might overlap with
-      # this container's Python. If in doubt delete this.
-      - /home/${USER}:/home/${USER}
-
     # Open 8888 on the host to connect locally and also remotely.
     # Example: http://smurf-srv01:8888/lab is the Jupyter lab.
     ports:
