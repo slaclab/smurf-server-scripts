@@ -18,7 +18,7 @@ def compose(arg_list, service):
     docker-compose will find the .env file in the current directory.
     """
     proc_list = ['docker-compose'] + arg_list + [service]
-    subprocess.call(proc_list)
+    subprocess.check_call(proc_list)
 
 def stop(service):
     """
@@ -31,14 +31,9 @@ def start(service):
     """
     Start.
     """
+    compose(['stop'], service)
+    compose(['rm', '-f'], service)
     compose(['up', '--build', '-d'], service)
-
-def restart(service):
-    """
-    Restart the given service. Add --build to always rebuild the image. -d is detatch.
-    """
-    stop(service)
-    start(service)
 
 def attach(service):
     """

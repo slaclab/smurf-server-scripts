@@ -1,10 +1,9 @@
 #! /usr/bin/env python3
 
 """
-This is the main executable, a simple frontend to call docker.
+This is the main executable, which just calls docker.
 """
 
-import sys
 import os
 import argparse
 import smurf_docker
@@ -20,24 +19,25 @@ def list_dirs():
 
 parser = argparse.ArgumentParser()
 parser.add_argument('command', choices = ['start', 'stop', 'restart', 'logs', 'attach', 'build'])
-parser.add_argument('service', choices = list_dirs(), type = str)
+parser.add_argument('service', choices = list_dirs())
 
 args = parser.parse_args()
+service = args.service
 
 if args.command == 'start':
-    smurf_docker.start(args.service)
+    smurf_docker.start(service)
 
 elif args.command == 'stop':
-    smurf_docker.stop(args.service)
+    smurf_docker.stop(service)
 
 elif args.command == 'restart':
-    smurf_docker.restart(args.service)
+    smurf_docker.restart(service)
 
 elif args.command == 'attach':
-    smurf_docker.attach(args.service)
+    smurf_docker.attach(service)
 
 elif args.command == 'logs':
-    smurf_docker.logs(args.service)
+    smurf_docker.logs(service)
 
 elif args.command == 'build':
-    smurf_docker.build(args.service)
+    smurf_docker.build(service)

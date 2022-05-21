@@ -1,7 +1,11 @@
 # smurf-server-scripts/docker-compose.yml
-# This calls the docker-compose.yml files for each service. For convenience. Otherwise just
-# call docker-compose in each folder individually. 
+
+# This calls the docker-compose.yml files for each service. For
+# convenience. Otherwise just call docker-compose in each folder
+# individually.
+
 # Docs: https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+software
+
 # Usage:
 # docker-compose up server_dev to start the development server.
 # docker-compose config to see the current config taken from the .env file.
@@ -24,6 +28,11 @@ services:
     extends:
       file: client_dev/docker-compose.yml
       service: client_dev
+
+  client_prod:
+    extends:
+      file: client_prod/docker-compose.yml
+      service: client_prod  
 
   timing_prod:
     extends:

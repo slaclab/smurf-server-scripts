@@ -1,4 +1,4 @@
-version: '3.7'
+version: '2.2'
   
 services:
   client_prod:
@@ -34,13 +34,13 @@ services:
     # Load the image from the internet. The server Dockerfile is
     # located in pysmurf/docker/client. The Dockerfile is based off
     # tidair/pysmurf-base and many utilities come from there.
-    image: tidair/pysmurf-client:${version}
+    image: tidair/pysmurf-client:v6.0.0
 
     # Name this container specific to the slot. While you can use one
     # client for interacting with multiple slots by setting the EPICS
     # prefix, most users like to have one client running for each
     # slot.
-    container_name: ${prefix}${slot}
+    container_name: ${client_prefix}${slot}
     
     # The client will now run ipython and the startup script
     # /usr/local/src/pysmurf_utilities/pysmurf_startup.
