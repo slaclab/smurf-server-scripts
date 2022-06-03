@@ -39,6 +39,11 @@ services:
       file: timing_prod/docker-compose.yml
       service: timing_prod
 
+  timing_dev:
+    extends:
+      file: timing_dev/docker-compose.yml
+      service: timing_dev
+
   base_prod:
     extends:
       file: base_prod/docker-compose.yml

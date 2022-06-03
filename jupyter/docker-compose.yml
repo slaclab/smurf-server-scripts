@@ -29,7 +29,12 @@ services:
     volumes:
       # Data from SMuRF is conventionally saved to /data.
       - /data:/data
+
+      # This connects the python module.
       - ${host_pysmurf_dir}:${docker_pysmurf_dir}
+
+      # This connects the Jupyter config and password info.
+      - /home/${USER}/.jupyter:/home/${USER}/.jupyter
       
     # Open 8888 on the host to connect locally and also remotely.
     # Example: http://smurf-srv01:8888/lab is the Jupyter lab.

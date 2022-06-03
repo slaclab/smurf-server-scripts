@@ -30,3 +30,7 @@ ENTRYPOINT ["jupyter", "lab", "--ip=*"]
 # How does this docker image find pysmurf? Python uses PYTHONPATH.  In
 # docker-compose.yml should set PYTHONPATH to wherever pysmurf should
 # be.
+
+# This docker image does not use any C++ code at all. Only the server
+# is what compiles and runs the C++ code. This client just sends
+# commands to the server.

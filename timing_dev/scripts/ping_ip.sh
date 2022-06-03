@@ -1,4 +1,4 @@
-# That you can ping the IP address.
+# Check that you can ping the IP address.
 # $1 IP Address
 
 if ping -c 1 $1 &> /dev/null

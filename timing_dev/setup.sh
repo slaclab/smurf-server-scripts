@@ -1,19 +1,24 @@
 #!/usr/bin/env bash
 
 # timing_dev/build.sh
-# Get all files necessary to build the timing image. 
+
+# The Dockerfile needs several files not available publicly or in this
+# repo. This uses the SLAC filesystem to get all files necessary to
+# build the timing image.
+
 # Assumptions:
-# - On SLAC filesystem
+# - On SLAC filesystem, i.e. /afs/slac/ is available.
 # - 2 GB available space
 
-release_site_partRELEASE_SITE_parttemp_files_dir=temp_files
+release_site_template=RELEASE_SITE_template
+temp_files_dir=temp_files
 git_repos=/afs/slac/g/cd/swe/git/repos/package/epics
 package_dir=/afs/slac/g/lcls/package
 
 # $1 is the EPICS base version
 function base_version_in_files() {
     sed -i -e "s/*TAG_BASE_VERSION/$1/g" Dockerfile
-    cp -f $release_site_part$temp_files_dir/modules/RELEASE_SITE
+    cp -f $release_site_template $temp_files_dir/modules/RELEASE_SITE
     sed -i -e "s/*TAG_BASE_VERSION/$1/g" $temp_files_dir/modules/RELEASE_SITE
 }
 
@@ -101,4 +106,4 @@ get_packages
 get_epics
 cat Dockerfile_part2 >> Dockerfile
 
-echo "Dockerfile is ready."
+echo "Dockerfile is ready. Run ./smurf start timing_dev to build and run it."
