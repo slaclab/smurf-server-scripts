@@ -1,14 +1,15 @@
 # smurf-server-scripts/docker-compose.yml
 
-# This calls the docker-compose.yml files for each service. For
-# convenience. Otherwise just call docker-compose in each folder
-# individually.
+# This calls the docker-compose.yml files for each service. This conveinetly
+# lets docker use the .env in this folder. Otherwise we would design this to
+# call docker-compose in each folder individually.
 
-# Docs: https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+software
-
-# Usage:
+# Usage
 # docker-compose up server_dev to start the development server.
 # docker-compose config to see the current config taken from the .env file.
+
+# See Also
+# https://confluence.slac.stanford.edu/display/SMuRF/SMuRF+software
 
 # Only 2.X and >3.8 support extends. 
 version: '2.2'
@@ -48,6 +49,11 @@ services:
     extends:
       file: base_prod/docker-compose.yml
       service: base_prod
+
+  base_dev:
+    extends:
+      file: base_dev/docker-compose.yml
+      service: base_dev
       
   jupyter:
     extends:

@@ -22,27 +22,28 @@ def compose(arg_list, service):
 
 def stop(service):
     """
-    Stop.
+    Stop and also remove the container.
     """
     compose(['stop'], service)
     compose(['rm', '-f'], service)
 
 def start(service):
     """
-    Start.
+    Start the given docker service string. If it's a Dockerfile
+    always rebuild it.
     """
     compose(['stop'], service)
     compose(['rm', '-f'], service)
-    compose(['up', '--build', '-d'], service)
+    compose(['up', '-d', '--build'], service)
 
 def attach(service):
     """
-    Attach.
+    Attach to the given docker service string.
     """
     subprocess.call(['docker', 'attach', service])
 
 def logs(service):
-    compose(['logs'], service)
+    compose(['logs', '-f'], service)
 
 def build(service):
     compose(['build'], service)

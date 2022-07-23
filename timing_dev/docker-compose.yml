@@ -12,18 +12,21 @@ services:
   # anymore.
   timing_dev:
     build:
-      context: .      
+      context: .
+      
     # Need to access:
     # - 10.0.0.0 network
     # - shm-smrf-sp01 (192 network)
     # - 127.0.0.0 network
     # - 172.0.0.0 network
     network_mode: "host"
+    
     environment:
     - EPICS_CA_ADDR_LIST=172.17.255.255
     # Append to the ENTRYPOINT the IP address of the carrier FPGA.
     # 10.0.1.102 is the SMuRF crate itself, slot 2. Not typical.
     # Typically should be 10.0.2.10N, so timing crate, slot N. Any slot works.
-    command: -a 10.0.2.102
+    command: -a 10.0.1.102
+      
     tty: true
     stdin_open: true

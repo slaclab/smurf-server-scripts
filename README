@@ -1,0 +1,17 @@
+smurf.sh
+
+Requirements
+
+Description
+
+See Also
+https://confluence.slac.stanford.edu/display/SMuRF/SLAC+microresonator+RF+electronics+home
+
+Examples
+1. Start one slot
+./smurf start server_prod
+
+2. Stop one slot
+./smurf stop server_prod
+
+

@@ -9,6 +9,13 @@ import argparse
 import smurf_docker
 
 def list_dirs():
+    """
+    List this directory ignoring some files. Each folder should have a
+    docker-compose.yml file with one service in it, and that service should
+    have the same name as the folder. This should make starting services
+    more convenient.
+    """
+
     ignore = ['__pycache__', '.git', 'setup']
     services = []
     for f in os.listdir('.'):
@@ -17,7 +24,9 @@ def list_dirs():
 
     return services
 
-parser = argparse.ArgumentParser()
+desc = "Script for interacting with one SMuRF carrier at a time. Each SMuRF carrier typically has one cryocard, and two RF cards associated with it. SLAC documentation: https://confluence.slac.stanford.edu/display/SMuRF/SLAC+microresonator+RF+electronics+home. SO documentation: http://simonsobservatory.wikidot.com"
+
+parser = argparse.ArgumentParser(description=desc)
 parser.add_argument('command', choices = ['start', 'stop', 'restart', 'logs', 'attach', 'build'])
 parser.add_argument('service', choices = list_dirs())
 

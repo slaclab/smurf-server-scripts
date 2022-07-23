@@ -12,6 +12,9 @@
 # -a fpga_ip FPGA IP address. If defined, -S and -N are ignored.
 # -p prefix PV name prefix. Default 'TPG:SMRF:1'
 
+prefix="TPG:SMRF:1"
+shelfmanager='shm-smrf-sp01'
+slot=2
 top_pid=$$
 
 # This script name
@@ -56,10 +59,6 @@ getFpgaIp() {
 
     echo ${fpga_ip}
 }
-
-prefix="TPG:SMRF:1"
-shelfmanager='shm-smrf-sp01'
-slot=2
 
 while [[ $# -gt 0 ]]; do
     key="$1"
@@ -115,8 +114,6 @@ if [ -z ${fpga_ip+x} ]; then
 else
     echo "IP address was defined. Ignoring shelfmanager and slot number."
 fi
-
-. ./ping_ip.sh $fpga_ip
 
 echo "Starting IOC..."
 cd iocBoot/sioc-smrf-ts01/

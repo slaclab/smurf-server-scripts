@@ -1,4 +1,4 @@
-# dockerfile_template_2
+# Dockerfile_part2
 
 # Application top directory
 ARG APP_TOP=/root/Tpg
@@ -16,6 +16,7 @@ ADD config config
 # Build the application
 RUN make distclean && make
 # Next, extract the data.tar.gz file and put it into $APP_TOP/sioc-smrf-ts01.
+# 
 COPY data.tar.gz .
 RUN mkdir sioc-smrf-ts01
 RUN tar -xf data.tar.gz -C sioc-smrf-ts01/

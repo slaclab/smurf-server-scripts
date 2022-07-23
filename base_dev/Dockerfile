@@ -1,8 +1,11 @@
 FROM ubuntu:18.04
 
-# Intall system utilities
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update && \
+# Someone should always have knowledge of the time zones in saved SMuRF data.
+ARG TZ=Etc/UTC
+ARG DEBIAN_FRONTEND=noninteractive
+
+# This hangs without TZ.
+RUN apt-get update && \
     apt-get install -y \
     wget \
     curl \

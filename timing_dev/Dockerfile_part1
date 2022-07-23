@@ -1,15 +1,16 @@
-# Assume you have run build.sh.
-# Assume temp_files contains:
-# - ...
+# Dockerfile_part1
+
+# This file is used to construct the actual timing Dockerfile, because there are several unknown variables that
+# need to be gathered. It is wise to keep the Dockerfile in version control anyway.
 
 # Use this image for compiling. Then throw it out later.
 FROM centos:6.10 as builder
 
-#curl sets up the correct website for yum -y update
+# Set up the correct website for yum -y update
 RUN curl https://www.getpagespeed.com/files/centos6-eol.repo --output /etc/yum.repos.d/CentOS-Base.repo; \
 
 # Install packages
-    yum -y update && yum install -y wget gcc gcc-c++ readline-devel perl && yum clean all -y; \
+yum -y update && yum install -y wget gcc gcc-c++ readline-devel perl && yum clean all -y; \
 
 # Add epel repo
 # epel-release has been archived, new link
