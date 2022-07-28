@@ -13,37 +13,71 @@ specific container names.
 import subprocess
 import os
 
-def compose(arg_list, service):
+def docker_command(arg_list, service, env):
     """
-    docker-compose will find the .env file in the current directory.
+    Run a docker command. Used to stop docker containers by their
+    name.
     """
-    proc_list = ['docker-compose'] + arg_list + [service]
-    subprocess.check_call(proc_list)
+    proc_list = ['docker'] + arg_list
+    subprocess.check_call(proc_list, env = env, cwd = service)
 
-def stop(service):
+def compose(arg_list, service, env):
     """
-    Stop and also remove the container.
+    Given the arguments, service name, and environment variables, call
+    docker-compose for that service. docker-compose will run in the
+    services folder, and use that folder's docker-compose.yml file,
+    and the environment variables will populate the yml file. Used to
+    stop docker container by their service name. This function
+    usescheck_call, which uses popen. popen args include env, cwd.
     """
-    compose(['stop'], service)
-    compose(['rm', '-f'], service)
+    proc_list = ['docker-compose'] + arg_list
+    subprocess.check_call(proc_list, env = env, cwd = service)
 
-def start(service):
+def stop(service, env):
     """
-    Start the given docker service string. If it's a Dockerfile
-    always rebuild it.
+    Stop and also remove the container. If stopping the server or
+    client, call the container name, not the service name, because
+    multiple containers run for the same service.
     """
-    compose(['stop'], service)
-    compose(['rm', '-f'], service)
-    compose(['up', '-d', '--build'], service)
 
-def attach(service):
+    name = service
+    
+    if service == 'server_dev' or service == 'server_prod':
+        name = env['server_prefix'] + env['slot']
+        docker_command(['stop', name], service, env)
+        docker_command(['rm', '-f', name], service, env)
+        
+    elif service == 'client_dev' or service == 'client_prod':
+        name = env['client_prefix'] + env['slot']
+        docker_command(['stop', name], service, env)
+        docker_command(['rm', '-f', name], service, env)
+        
+    else:
+        compose(['stop', service], service, env)
+        compose(['rm', '-f', service], service, env)
+
+def start(service, env):
+    """
+    Start the given docker service string. If it uses a Dockerfile
+    always rebuild it, which uses the cache anyway, so it shouldn't
+    take too long. Docker is incapable of starting one service into
+    two containers without adding the -p flag, sorry.
+    """
+    compose(['-p', env['slot'], 'up', service], service, env)
+
+def attach(service, env):
     """
     Attach to the given docker service string.
     """
-    subprocess.call(['docker', 'attach', service])
+    subprocess.call(['docker', 'attach', service], service, env)
 
-def logs(service):
-    compose(['logs', '-f'], service)
+def logs(service, env):
+    compose(['logs', '-f', service], service, env)
 
-def build(service):
-    compose(['build'], service)
+def build(folder, env):
+    """
+    Build the service. The docker-compose.yml file has one service
+    with the same name as its folder. The image will be named
+    identically.
+    """
+    compose(['build', folder], folder, env)

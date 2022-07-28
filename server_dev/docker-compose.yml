@@ -1,7 +1,7 @@
 # server_dev/docker-compose.yml
 # Most commonly you want to modify the command: section below.
 
-version: '2.2'
+version: '3.4'
 
 services:
   server_dev:

@@ -279,10 +279,9 @@ RUN if [ -f configure/CONFIG_SITE ]; then sed -i -e 's|^RE2C =.*|RE2C = /usr/bin
     make
 # dockerfile_template_2
 
-# Application top directory
+# Enter DOCKER_DIR, the initial directory.
 ARG DOCKER_DIR=/root/Tpg
-# Add ipmitool to the image
-RUN yum -y update && yum install -y ipmitool && yum clean all -y
+
 # Set some EPICS env vars
 ENV BASE_MODULE_VERSION R3.15.5-1.1
 # Prepare the build directory
@@ -290,7 +289,7 @@ RUN mkdir -p ${DOCKER_DIR}
 WORKDIR ${DOCKER_DIR}
 # Copy files from the repo.
 ADD Tpg .
-ADD scripts/start_ioc.sh .
+ADD scripts/ .
 ADD config config
 # Build the application
 RUN make distclean && make
@@ -303,26 +302,20 @@ RUN mv sioc-smrf-ts01/data/* sioc-smrf-ts01
 RUN rmdir sioc-smrf-ts01/data
 RUN rm data.tar.gz
 
-# Extract tpg.tar.gz, which is a compiled version of /afs/slac/g/cd/swe/git/repos/package/timing/tpg.git, which contains the scripts hps_peek. Useful for debugging.
+# Extract tpg.tar.gz, which is a compiled version of /afs/slac/g/cd/swe/git/repos/package/timing/tpg.git, which contains the scripts hps_peek. This is only to be used for manual debugging.
 COPY tpg.tar.gz .
 RUN mkdir tpg
 RUN tar -xf tpg.tar.gz -C tpg/
 RUN rm tpg.tar.gz
 
-COPY lcls2-timing-patterns.tar .
-RUN tar -xf lcls2-timing-patterns.tar
-RUN rm lcls2-timing-patterns.tar
-
 # Go to the output image
 FROM centos:7
 
-# Get python3 to run lcls2-timing-patterns/smurf/patterngeneratory.py
-RUN yum -y update
-RUN yum -y install python3
-RUN python3 -m pip install numpy pyqtgraph
+# Need to run lcls2-timing-patterns/.
+RUN yum -y update && yum install -y python3
+RUN python3 -m pip install pyepics
 
 # ARG and ENV do not persist after FROM, set them again.
-
 ARG DOCKER_DIR=/root/Tpg
 ENV EPICS_CA_REPEATER_PORT 5065
 ENV EPICS_CA_AUTO_ADDR_LIST YES
@@ -331,8 +324,6 @@ ENV IOC_DATA $DOCKER_DIR
 
 # Copy the IOC produced during the building stage
 COPY --from=builder $DOCKER_DIR $DOCKER_DIR
-# Copy the ipmitool binary
-COPY --from=builder /usr/bin/ipmitool /usr/bin/ipmitool
 # Go to the application top level
 WORKDIR $DOCKER_DIR
 # Start the IOC using the default shelfmanager name and slot number

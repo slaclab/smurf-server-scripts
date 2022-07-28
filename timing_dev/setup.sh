@@ -2,8 +2,10 @@
 
 # timing_dev/build.sh
 
-# The Dockerfile needs several files not available publicly or in this
-# repo. This uses the SLAC filesystem to get all files necessary to
+# This script creates the timing_dev Dockerfile, however the current Dockerfile
+# in this folder may be different due to extra hacks. The reason we need this
+# script is because the Dockerfile needs several files not available publicly
+# or in this repo. This uses the SLAC filesystem to get all files necessary to
 # build the timing image.
 
 # Assumptions:

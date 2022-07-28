@@ -271,3 +271,8 @@ cd ("${IOC_DATA}/sioc-smrf-ts01/yamlConfig")
 #cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore/AmcGenericAdcDacCore" , "")
 #cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore", "")
 
+
+# The sequence engine is not programmed yet. Call patternprogrammery.py.
+
+#system("cd lcls2-timing-patterns; python tools/patternprogrammer.py --pattern /home/cryo/smurf-server-scripts/timing_dev/lcls2-timing-patterns/patterns/mode.pattern --charge 0 --pv TPG:SMRF:1")
+system("echo $PWD; which python3")

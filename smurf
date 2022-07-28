@@ -4,9 +4,42 @@
 This is the main executable, which just calls docker.
 """
 
-import os
 import argparse
+import json
+import os
 import smurf_docker
+
+def get_smurf_dict():
+    """
+    Return smurf.json as key-value pairs in a dictionary.
+    """
+    
+    main_dict = {}
+
+    json_path = 'smurf.json'
+
+    if not os.path.isfile(json_path):
+        print('No JSON found.')
+    else:
+        with open(json_path) as json_object:
+            main_dict = json.loads(json_object.read())
+
+    return main_dict
+
+def get_env():
+    """
+    Get the user's environment, add to it the keys and values listed
+    in the JSON file, smurf.json, and return the environment.
+    """
+    
+    smurf_dict = get_smurf_dict()
+    env = os.environ.copy()
+
+    for key in smurf_dict:
+        val = smurf_dict[key]
+        env[key] = str(val)
+
+    return env
 
 def list_dirs():
     """
@@ -34,19 +67,19 @@ args = parser.parse_args()
 service = args.service
 
 if args.command == 'start':
-    smurf_docker.start(service)
+    smurf_docker.start(service, get_env())
 
 elif args.command == 'stop':
-    smurf_docker.stop(service)
+    smurf_docker.stop(service, get_env())
 
 elif args.command == 'restart':
-    smurf_docker.restart(service)
+    smurf_docker.restart(service, get_env())
 
 elif args.command == 'attach':
-    smurf_docker.attach(service)
+    smurf_docker.attach(service, get_env())
 
 elif args.command == 'logs':
-    smurf_docker.logs(service)
+    smurf_docker.logs(service, get_env())
 
 elif args.command == 'build':
-    smurf_docker.build(service)
+    smurf_docker.build(service, get_env())

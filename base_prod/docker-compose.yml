@@ -1,5 +1,3 @@
-version: '2.2'
-
 # base_prod/docker-compose.yml
 # The base container for other SMuRF images. Also called "utils."
 # See Also:
@@ -10,7 +8,6 @@ services:
   base_prod:
     container_name: base_prod
     image: tidair/smurf-base:R1.1.3
-    env_file: ../.env
     user: ${USER}
     network_mode: "host"
     environment:
