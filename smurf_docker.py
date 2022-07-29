@@ -63,7 +63,7 @@ def start(service, env):
     take too long. Docker is incapable of starting one service into
     two containers without adding the -p flag, sorry.
     """
-    compose(['-p', env['slot'], 'up', service], service, env)
+    compose(['up', '-d', service], service, env)
 
 def attach(service, env):
     """

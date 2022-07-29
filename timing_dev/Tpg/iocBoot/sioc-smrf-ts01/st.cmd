@@ -1,5 +1,6 @@
 #!../../bin/rhel6-x86_64/tpg
 
+# Start of timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 ## You may have to change tpg to something else
 ## everywhere it appears in this file
 
@@ -267,12 +268,13 @@ create_monitor_set("info_settings.req",30,"")
 # Dump ADC configuration into YAML file
 # : ioc engineer can uncomment the followings on demenad
 # ======================================================
-cd ("${IOC_DATA}/sioc-smrf-ts01/yamlConfig")
-#cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore/AmcGenericAdcDacCore" , "")
-#cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore", "")
-
+# cd ("${IOC_DATA}/sioc-smrf-ts01/yamlConfig")
+# cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore/AmcGenericAdcDacCore" , "")
+# cpswDumpConfigFile("dump.yaml", "mmio/AmcCarrierTimingGenerator/ApplicationCore", "")
 
 # The sequence engine is not programmed yet. Call patternprogrammery.py.
-
-#system("cd lcls2-timing-patterns; python tools/patternprogrammer.py --pattern /home/cryo/smurf-server-scripts/timing_dev/lcls2-timing-patterns/patterns/mode.pattern --charge 0 --pv TPG:SMRF:1")
-system("echo $PWD; which python3")
+cd ("${IOC_DATA}/lcls2-timing-patterns")
+# Program the rates. Charge is useless, TPG:SMRF:1 is the EPICS root. Test connection with caget TPG:SMRF:1:CLKST.
+# You need . in PYTHONPATH to import the other modules in there.
+system("export PYTHONPATH=.; python3 tools/patternprogrammer.py --pattern /${IOC_DATA}/lcls2-timing-patterns/patterns/mode.pattern --charge 0 --pv TPG:SMRF:1")
+# End of timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd.
