@@ -4,8 +4,6 @@
 ## You may have to change tpg to something else
 ## everywhere it appears in this file
 
-# Shawn adding this text to make sure he's properly generating smurf-tpg-ioc releases.
-
 < envPaths
 
 
