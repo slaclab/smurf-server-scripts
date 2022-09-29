@@ -60,8 +60,8 @@ def start(service, env):
     """
     Start the given docker service string. If it uses a Dockerfile
     always rebuild it, which uses the cache anyway, so it shouldn't
-    take too long. Docker is incapable of starting one service into
-    two containers without adding the -p flag, sorry.
+    take too long. Docker is incapable of starting one service into 
+    two containers without adding the -p flag.
     """
     compose(['up', '-d', service], service, env)
 
@@ -69,7 +69,7 @@ def attach(service, env):
     """
     Attach to the given docker service string.
     """
-    subprocess.call(['docker', 'attach', service], service, env)
+    subprocess.call(['docker', 'attach', service], env = env, cwd = service)
 
 def logs(service, env):
     compose(['logs', '-f', service], service, env)

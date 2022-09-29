@@ -1,5 +1,5 @@
 {
-    "slot": 6,
+    "slot": 4,
     "comm_type": "eth",
     "host_pysmurf_dir": "/home/cryo/smurf-server-scripts/server_dev/pysmurf",
     "docker_pysmurf_dir": "/pysmurf",

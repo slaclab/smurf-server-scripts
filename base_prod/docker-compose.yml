@@ -4,6 +4,8 @@
 # https://confluence.slac.stanford.edu/display/SMuRF/Software+Versions
 # https://github.com/slaclab/smurf-base-docker
 
+version: '2.2'
+
 services:
   base_prod:
     container_name: base_prod
@@ -17,7 +19,7 @@ services:
       - EPICS_CA_MAX_ARRAY_BYTES=80000000
     volumes:
       - /data:/data
-      # Note: Be careful if conda is installed.
+      # Be careful if conda is installed.
       - /home/${USER}:/home/${USER}
     tty: true
     stdin_open: true

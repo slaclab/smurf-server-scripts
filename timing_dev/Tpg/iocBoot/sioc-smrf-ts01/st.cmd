@@ -277,4 +277,5 @@ cd ("${IOC_DATA}/lcls2-timing-patterns")
 # Program the rates. Charge is useless, TPG:SMRF:1 is the EPICS root. Test connection with caget TPG:SMRF:1:CLKST.
 # You need . in PYTHONPATH to import the other modules in there.
 system("export PYTHONPATH=.; python3 tools/patternprogrammer.py --pattern /${IOC_DATA}/lcls2-timing-patterns/patterns/mode.pattern --charge 0 --pv TPG:SMRF:1")
-# End of timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd.
+# End of Tpg/iocBoot/sioc-smrf-ts01/st.cmd. If the python script above crashed, not all periods will be programmed.
+# Ready.
