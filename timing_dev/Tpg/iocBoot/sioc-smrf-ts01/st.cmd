@@ -9,7 +9,7 @@
 ## SMuRF tpg-ioc versions packaged into this release
 # LCLS2_TIMING_PATTERNS_HASH=4675ab7
 # LCLS2_TIMING_PATTERNS_BRANCH=ESCRYODET-472
-# TIMING_DEV_HASH=b3259cc
+# TIMING_DEV_HASH=5c38c7f
 # TIMING_DEV_BRANCH=dev
 
 < envPaths
