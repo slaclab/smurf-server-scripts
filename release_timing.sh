@@ -35,7 +35,7 @@ cd timing_dev/Tpg/lcls2-timing-patterns
 git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
     echo "!!! There are local unstaged or uncommited changes in lcls2-timing-patterns!!!  Check them in before releasing!!!  ABORT!"
-#    exit 1
+    exit 1
 fi
 
 echo "SMURF_TPG_IOC_RELEASE=${rev}"
@@ -51,7 +51,7 @@ cd ../../../
 git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
     echo "!!! There are local unstaged of uncommited changes in timing_dev!!!  Check them in before releasing!!!  ABORT!"
-#    exit 1
+    exit 1
 fi
 
 # Get branch and hash of lcls2-timing-patterns
