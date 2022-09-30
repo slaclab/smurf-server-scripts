@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # [$1 == version to tag release with.  Use semantic versioning ; vX.Y.Z.
 rev=$1
-
+#
 if [ "$1" = "" ]
 then
   echo "Usage: $0 REV TO TAG RELEASE WITH.  USE SEMANTIC VERSIONING IE vX.Y.Z"
@@ -32,9 +32,9 @@ fi
 
 # Make sure no local unstaged changes in lcls2-timing-patterns
 cd timing_dev/Tpg/lcls2-timing-patterns
-git diff --exit-code --quiet
+git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
-    echo "!!! There are local unstaged changes in lcls2-timing-patterns!!!  Check them in before releasing!!!  ABORT!"
+    echo "!!! There are local unstaged or uncommited changes in lcls2-timing-patterns!!!  Check them in before releasing!!!  ABORT!"
     exit 1
 fi
 
@@ -48,9 +48,9 @@ echo "LCLS2_TIMING_PATTERNS_BRANCH=${LCLS2_TIMING_PATTERNS_BRANCH}"
 
 # Now check for uncommited timing_dev changes
 cd ../../../
-git diff --exit-code --quiet
+git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
-    echo "!!! There are local unstaged changes in timing_dev!!!  Check them in before releasing!!!  ABORT!"
+    echo "!!! There are local unstaged of uncommited changes in timing_dev!!!  Check them in before releasing!!!  ABORT!"
     exit 1
 fi
 
