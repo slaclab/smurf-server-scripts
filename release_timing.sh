@@ -71,3 +71,5 @@ sed -i "s/^# TIMING_DEV_BRANCH=.*/# TIMING_DEV_BRANCH=${TIMING_DEV_BRANCH}/" tim
 git add timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 git commit -m "Committing versioned timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd for new timing_dev version ${rev}."
 
+git tag -a timing_dev-${rev}
+git push origin timing_dev-${rev}
