@@ -35,7 +35,7 @@ cd timing_dev/Tpg/lcls2-timing-patterns
 git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
     echo "!!! There are local unstaged or uncommited changes in lcls2-timing-patterns!!!  Check them in before releasing!!!  ABORT!"
-    exit 1
+#    exit 1
 fi
 
 echo "SMURF_TPG_IOC_RELEASE=${rev}"
@@ -51,7 +51,7 @@ cd ../../../
 git diff --exit-code --quiet HEAD
 if [ $? == 1 ]; then
     echo "!!! There are local unstaged of uncommited changes in timing_dev!!!  Check them in before releasing!!!  ABORT!"
-    exit 1
+#    exit 1
 fi
 
 # Get branch and hash of lcls2-timing-patterns
@@ -60,7 +60,12 @@ echo "TIMING_DEV_HASH=${TIMING_DEV_HASH}"
 TIMING_DEV_BRANCH=`git rev-parse --abbrev-ref HEAD`
 echo "TIMING_DEV_BRANCH=${TIMING_DEV_BRANCH}"
 
-
+# Put version numbers in timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd;
+sed -i "s/^# SMURF_TPG_IOC_RELEASE=.*/# SMURF_TPG_IOC_RELEASE=${rev}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
+sed -i "s/^# LCLS2_TIMING_PATTERNS_HASH=.*/# LCLS2_TIMING_PATTERNS_HASH=${LCLS2_TIMING_PATTERNS_HASH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
+sed -i "s/^# LCLS2_TIMING_PATTERNS_BRANCH=.*/# LCLS2_TIMING_PATTERNS_BRANCH=${LCLS2_TIMING_PATTERNS_BRANCH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
+sed -i "s/^# TIMING_DEV_HASH=.*/# TIMING_DEV_HASH=${TIMING_DEV_HASH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
+sed -i "s/^# TIMING_DEV_BRANCH=.*/# TIMING_DEV_BRANCH=${TIMING_DEV_BRANCH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 
 
     
