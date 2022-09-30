@@ -68,5 +68,6 @@ sed -i "s/^# TIMING_DEV_HASH=.*/# TIMING_DEV_HASH=${TIMING_DEV_HASH}/" timing_de
 sed -i "s/^# TIMING_DEV_BRANCH=.*/# TIMING_DEV_BRANCH=${TIMING_DEV_BRANCH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 
 # Re-commit
-git commit -m "Committing new timing_dev version ${rev}."
+git add timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
+git commit -m "Committing versioned timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd for new timing_dev version ${rev}."
 
