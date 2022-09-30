@@ -67,5 +67,6 @@ sed -i "s/^# LCLS2_TIMING_PATTERNS_BRANCH=.*/# LCLS2_TIMING_PATTERNS_BRANCH=${LC
 sed -i "s/^# TIMING_DEV_HASH=.*/# TIMING_DEV_HASH=${TIMING_DEV_HASH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 sed -i "s/^# TIMING_DEV_BRANCH=.*/# TIMING_DEV_BRANCH=${TIMING_DEV_BRANCH}/" timing_dev/Tpg/iocBoot/sioc-smrf-ts01/st.cmd
 
+# Re-commit
+git commit -m "Committing new timing_dev version ${rev}."
 
-    
