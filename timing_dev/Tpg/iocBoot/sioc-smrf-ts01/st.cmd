@@ -5,11 +5,11 @@
 ## everywhere it appears in this file
 
 ## tidair/smurf-tpg-ioc release version
-# SMURF_TPG_IOC_RELEASE=v4.0.0
+# SMURF_TPG_IOC_RELEASE=v5.0.0
 ## SMuRF tpg-ioc versions packaged into this release
-# LCLS2_TIMING_PATTERNS_HASH=4675ab7
+# LCLS2_TIMING_PATTERNS_HASH=11dd43b
 # LCLS2_TIMING_PATTERNS_BRANCH=ESCRYODET-472
-# TIMING_DEV_HASH=5c38c7f
+# TIMING_DEV_HASH=e0a5b36
 # TIMING_DEV_BRANCH=dev
 
 < envPaths
