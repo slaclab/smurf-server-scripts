@@ -1,0 +1,41 @@
+##############################################################################
+## This file is part of 'LCLS2 Common Carrier Core'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'LCLS2 Common Carrier Core', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once TPGMps.yaml
+#include MpsSim.yaml
+#include Pgp2bAxi.yaml
+
+TPGMps: &TPGMps 
+  class: MMIODev
+  description: TPG MPS interface
+  size: 0x01000000
+  ########
+  children:
+  ########
+    ##################################################
+    # Add your memory mapped devices here
+    ##################################################   
+    MpsSim:
+      <<: *MpsSim
+      instantiate: true
+      at:
+        offset: 0x00000000
+    ##################################################
+    Pgp2bAxi:
+      <<: *Pgp2bAxi
+      instantiate: true
+      at:
+        offset: 0x00000400
+  #########
+  Commands:
+  #########
+    ##################################################
+    # Add your top level commands here
+    ##################################################

@@ -1,0 +1,57 @@
+##############################################################################
+## This file is part of 'SLAC Firmware Standard Library'.
+## It is subject to the license terms in the LICENSE.txt file found in the
+## top-level directory of this distribution and at:
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html.
+## No part of 'SLAC Firmware Standard Library', including this file,
+## may be copied, modified, propagated, or distributed except according to
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+
+TPGDiag: &TPGDiag
+  class: MMIODev
+  description: Timing pattern generator diagnostics
+  size: 0x400
+  #########
+  children:
+  #########
+    #########################################################
+    ResetCounts:
+      at:
+        offset: 0x0000
+      class: IntField
+      name: ResetCounts
+      sizeBits: 32
+      lsBit: 0
+      mode: RO
+      description: Count of TxClk resets
+    #########################################################
+    ClkFreq:
+      at:
+        offset: 0x0004
+      class: IntField
+      name: ClkFreq
+      sizeBits: 32
+      lsBit: 4
+      mode: RO
+      description: TxClk frequency in Hz
+    #########################################################
+    TimeStampL:
+      at:
+        offset: 0x0008
+      class: IntField
+      name: TimeStampL
+      sizeBits: 32
+      mode: RO
+      description: Timestamp lower word
+    #########################################################
+    TimeStampU:
+      at:
+        offset: 0x000c
+      class: IntField
+      name: TimeStampU
+      sizeBits: 32
+      mode: RO
+      description: Timestamp upper word
+    #########################################################
