@@ -4,6 +4,14 @@
 ## You may have to change tpg to something else
 ## everywhere it appears in this file
 
+## tidair/smurf-tpg-ioc release version
+# SMURF_TPG_IOC_RELEASE=v5.0.1
+## SMuRF tpg-ioc versions packaged into this release
+# LCLS2_TIMING_PATTERNS_HASH=3d2437f
+# LCLS2_TIMING_PATTERNS_BRANCH=ESCRYODET-472
+# TIMING_DEV_HASH=0ef6f57
+# TIMING_DEV_BRANCH=dev
+
 < envPaths
 
 
@@ -117,6 +125,7 @@ dbLoadRecords("db/save_restoreStatus.db", "P=${IOC_PV}:")
 # =================================
 #cd yamlConfig_0x000C
 cd yamlConfig_0x0000000E-20170420000855
+#cd yamlConfig_0x03090000
 cpswLoadYamlFile("000TopLevel.yaml", "NetIODev", "", "${FPGA_IP}")
 
 # ===================================

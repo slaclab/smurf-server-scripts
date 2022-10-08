@@ -1,0 +1,260 @@
+##############################################################################
+## This file is part of 'SLAC Firmware Standard Library'.
+## It is subject to the license terms in the LICENSE.txt file found in the 
+## top-level directory of this distribution and at: 
+##    https://confluence.slac.stanford.edu/display/ppareg/LICENSE.html. 
+## No part of 'SLAC Firmware Standard Library', including this file, 
+## may be copied, modified, propagated, or distributed except according to 
+## the terms contained in the LICENSE.txt file.
+##############################################################################
+#schemaversion 3.0.0
+#once PhaseComp.yaml
+
+PhaseComp: &PhaseComp
+  class: MMIODev
+  configPrio: 1
+  description: AC phase computation
+  size: 0x80
+  children:
+    #########################################################
+    BsaSrc:
+      at:
+        offset: 0x000
+      class: IntField
+      name: BsaSrc
+      sizeBits: 2
+      mode: RW
+      enums:
+        - name: RawADC
+          class: Enum
+          value: 0
+        - name: SumADC
+          class: Enum
+          value: 1
+        - name: FTerm
+          class: Enum
+          value: 2
+        - name: FilteredADC
+          class: Enum
+          value: 3
+      description: BSA source data
+    #########################################################
+    ResetState:
+      at:
+        offset: 0x003
+      class: IntField
+      name: ResetState
+      sizeBits: 1
+      lsBit: 7
+      mode: RW
+      description: Reset state machine
+    #########################################################
+    ResetStateCmd:
+      at:
+        offset: 0
+      class: SequenceCommand
+      name: ResetStateCmd
+      description: Reset state machine
+      sequence:
+      - entry: ResetState
+        value: 1
+      - entry: ResetState
+        value: 0
+    #########################################################
+    CntMax:
+      at:
+        offset: 0x004
+      class: IntField
+      name: CntMax
+      sizeBits: 8
+      mode: RW
+      description: Number of summed samples
+    #########################################################
+    InvCnt:
+      at:
+        offset: 0x008
+      class: IntField
+      name: InvCnt
+      sizeBits: 18
+      mode: RW
+      description: Inverse multiplier for CntMax (1<<24/CntMax)
+    #########################################################
+    FbReset:
+      at:
+        offset: 0x00C
+      class: IntField
+      name: FbReset
+      sizeBits: 17
+      mode: RW
+      description: Initialization cycles for training (FB_RESET phase)
+    #########################################################
+    FbScale:
+      at:
+        offset: 0x010
+      class: IntField
+      name: FbScale
+      sizeBits: 3
+      mode: RW
+      description: Cycles in FB_IDLE phase
+    #########################################################
+    value:
+      at:
+        offset: 0x014
+      class: IntField
+      name: value
+      sizeBits: 17
+      mode: RO
+      description: Latest ADC value (sum of two samples)
+    #########################################################
+    valid:
+      at:
+        offset: 0x017
+      class: IntField
+      name: value
+      sizeBits: 1
+      lsBit: 7
+      mode: RO
+      description: Validity of last ADC value
+    #########################################################
+    Sum:
+      at:
+        offset: 0x018
+      class: IntField
+      name: Sum
+      sizeBits: 25
+      mode: RO
+      description: ADC sum in CntMax interval
+    #########################################################
+    FTerm:
+      at:
+        offset: 0x01C
+      class: IntField
+      name: FTerm
+      sizeBits: 17
+      mode: RO
+      description: Rolling average (CntMax period)
+    #########################################################
+    ValueO:
+      at:
+        offset: 0x020
+      class: IntField
+      name: ValueO
+      sizeBits: 17
+      mode: RO
+      description: Normalized ADC sum over CntMax (input to roll)
+    #########################################################
+    Zero:
+      at:
+        offset: 0x024
+      class: IntField
+      name: Zero
+      sizeBits: 17
+      mode: RO
+      description: Zero value for crossing
+    #########################################################
+    ZMin:
+      at:
+        offset: 0x028
+      class: IntField
+      name: ZMin
+      sizeBits: 17
+      mode: RO
+      description: Minimum ValueO
+    #########################################################
+    ZMax:
+      at:
+        offset: 0x02C
+      class: IntField
+      name: ZMax
+      sizeBits: 17
+      mode: RO
+      description: Maximum ValueO
+    #########################################################
+    ZAmpl:
+      at:
+        offset: 0x030
+      class: IntField
+      name: ZAmpl
+      sizeBits: 17
+      mode: RO
+      description: Cycle number in FB_RESET phase
+    #########################################################
+    ZCorr:
+      at:
+        offset: 0x034
+      class: IntField
+      name: ZCorr
+      sizeBits: 17
+      mode: RO
+      description: Cycles under minus cycles over zero
+    #########################################################
+    FbScale:
+      at:
+        offset: 0x038
+      class: IntField
+      name: FbScale
+      sizeBits: 17
+      mode: RO
+      description: Cycle number if FB_IDLE state
+    #########################################################
+    State:
+      at:
+        offset: 0x039
+      class: IntField
+      name: State
+      sizeBits: 3
+      mode: RO
+      enums:
+        - name: FB_RESET
+          class: Enum
+          value: 0
+        - name: FB_IDLE
+          class: Enum
+          value: 1
+        - name: FB_DIFF
+          class: Enum
+          value: 2
+        - name: FB_MULT
+          class: Enum
+          value: 3
+        - name: FB_APPLY
+          class: Enum
+          value: 4
+      description: Processing state
+    #########################################################
+    IntvUp:
+      at:
+        offset: 0x03C
+      class: IntField
+      name: IntvUp
+      sizeBits: 16
+      mode: RO
+      description: Latest up interval count
+    #########################################################
+    IntvDn:
+      at:
+        offset: 0x03E
+      class: IntField
+      name: IntvDn
+      sizeBits: 16
+      mode: RO
+      description: Latest down interval count
+    #########################################################
+    CountComing:
+      at:
+        offset: 0x040
+      class: IntField
+      name: CountComing
+      sizeBits: 16
+      mode: RO
+      description: Count of 120Hz triggers
+    #########################################################
+    CountCrossed:
+      at:
+        offset: 0x042
+      class: IntField
+      name: CountCrossed
+      sizeBits: 16
+      mode: RO
+      description: Count of 120Hz crossings
+    #########################################################
