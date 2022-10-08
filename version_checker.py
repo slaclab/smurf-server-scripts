@@ -20,7 +20,7 @@ def command(command,errmsg):
 
 # Start utils docker instance for version checking
 docker_id = command(command='./run_version_check_utils.sh',
-                    errmsg='Could not create docker, sorry :(')[0]
+                    errmsg='Could not create docker, sorry :(')
 docker_id = docker_id[0]
 
 # Resolve utils docker's name ; sometimes takes a few seconds for it to come up
