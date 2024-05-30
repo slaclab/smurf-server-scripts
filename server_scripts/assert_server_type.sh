@@ -11,6 +11,11 @@ then
     echo "This is a Dell R330 server"
     echo
     dell_r330=1
+elif dmidecode | grep -Fq R650
+then
+    echo "This is a Dell R650 server"
+    echo
+    dell_r650=1
 else
     echo "Unsupported server"
     echo "Aborting..."

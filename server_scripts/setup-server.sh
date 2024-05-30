@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "This script will setup an SMuRF server right after the OS installation."
-echo "This script should be run juts once, and right after the the OS is installed."
+echo "This script should be run just once, and right after the the OS is installed."
 echo "Note: You must execute this script with root privileges."
 
 read -p "Are you sure you want to continue? [Y/N]" -r
@@ -288,6 +288,8 @@ if [ ${dell_r440+x} ]; then
     . r440_network.sh
 elif [ ${dell_r330+x} ]; then
     . r330_network.sh
+elif [ ${dell_r650+x} ]; then
+    . r650_network.sh    
 fi
 
 echo
@@ -413,8 +415,8 @@ echo
 ############################
 # INSTALL PCIE CARD DRIVER #
 ############################
-# Install the kernel driver only on R440 servers
-if [ ${dell_r440+x} ]; then
+# Install the kernel driver only on R440 and R650 servers
+if [ ${dell_r440+x} ] || [ ${dell_r650+x} ]; then
     echo "###############################################################"
     echo "### Installing PCIe KCU1500 card kernel driver (datadev)... ###"
     echo "###############################################################"
@@ -426,7 +428,7 @@ if [ ${dell_r440+x} ]; then
     datadev_name=datadev
 
     # Driver version
-    datadev_version=v5.7.0
+    datadev_version=5.19.2
 
     # Check if version exist in the repository
     if ! git ls-remote --refs --tag ${datadev_repo} | grep -q refs/tags/${datadev_version} > /dev/null ; then
