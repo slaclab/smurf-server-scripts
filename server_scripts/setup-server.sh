@@ -245,7 +245,7 @@ else
     systemctl enable docker
 
     # Install docker compose
-    curl -fsSL --retry-connrefused --retry 5 "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    curl -fsSL --retry-connrefused --retry 5 "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to install docker-compose!"
     else
