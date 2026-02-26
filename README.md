@@ -1,3 +1,5 @@
+[DOE Code](https://www.osti.gov/doecode/biblio/75850)
+
 # Scripts to setup SMuRF server
 
 ## Description
