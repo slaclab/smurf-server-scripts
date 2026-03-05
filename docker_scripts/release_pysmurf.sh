@@ -32,7 +32,7 @@ usage: ${script_name} -t pysmurf -v|--version <pysmurf_version>
 print_list_versions()
 {
     echo "List of available pysmurf_version:"
-    print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
+    print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.'
     echo
     exit 0
 }
@@ -73,7 +73,7 @@ if [ -z ${pysmurf_version+x} ]; then
 fi
 
 # Check if the pysmurf version exist (excluding version before v4.*)
-ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
+ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3\.\|v2\.\|v1\.\|v0\.')
 if [ -z ${ret} ]; then
     echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
     echo "You can use the '-l' option to list the available versions."

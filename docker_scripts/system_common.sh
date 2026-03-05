@@ -67,14 +67,15 @@ print_list_versions()
     if [ -z ${stable_release+x} ]; then
         # For development releases, print pysmurf versions (excluding version before v4.*)
         echo "List of available pysmurf_version:"
-        print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
+        print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.'
+	
     else
         # For stable releases, print stable pysmurf-server versions
         echo "List of available pysmurf_server_version:"
         print_git_tags ${pysmurf_stable_git_repo}
 
         # Starting on version v5.0.1, the stable versions come from the pysmurf repository
-        print_git_tags ${pysmurf_git_repo} 'v5.0.0\|v4.\|v3.\|v2.\|v1.\|v0.'
+        print_git_tags ${pysmurf_git_repo} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.'
     fi
 
     echo
@@ -150,7 +151,7 @@ if [ -z ${stable_release+x} ]; then
     fi
 
     # Check if the pysmurf_version exist (excluding version before v4.*)
-    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
+    ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3\.\|v2\.\|v1\.\|v0\.')
     if [ -z ${ret} ]; then
         echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
         echo "You can use the '-l' option to list the available versions."
@@ -163,7 +164,7 @@ if [ -z ${stable_release+x} ]; then
 
     # Check if the version is newer or equal than v5.0.0. Starting in this version, the
     # image comes from the pysmurf repository.
-    new_server_version=$(echo ${pysmurf_version} | grep -v 'v4.\|v3.\|v2.\|v1.\|v0.')
+    new_server_version=$(echo ${pysmurf_version} | grep -v 'v4\.\|v3\.\|v2\.\|v1\.\|v0\.')
 
     # Starting on version v5.0.0, we use the stable image for the development systems as well
     if [ ${new_server_version} ]; then
@@ -182,7 +183,7 @@ else
     # If it doesn't exit there, then look in the pysmurf repository considering only
     # versions starting at v5.0.0
     if [ -z ${ret} ]; then
-       ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${server_version} 'v4.\|v3.\|v2.\|v1.\|v0.')
+       ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${server_version} 'v4\.\|v3\.\|v2\.\|v1\.\|v0\.')
     fi
 
     if [ -z ${ret} ]; then
@@ -193,7 +194,7 @@ else
 
     # Check if the version is newer or equal than v5.0.0. Starting in this version, the
     # image comes from the pysmurf repository.
-    new_server_version=$(echo ${server_version} | grep -v 'v4.\|v3.\|v2.\|v1.\|v0.')
+    new_server_version=$(echo ${server_version} | grep -v 'v4\.\|v3\.\|v2\.\|v1\.\|v0\.')
 
     # Now we need to look for the corresponding pysmurf client version
     if [ ${new_server_version} ]; then
