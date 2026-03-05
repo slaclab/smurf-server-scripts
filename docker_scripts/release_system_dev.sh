@@ -15,7 +15,7 @@ the fw folder after running this script.
 Note: For older systems, the docker image used for the server is
 'tidair/pysmurf-server-base', for versions prior to 'v5.0.0', or
 'tidair/pysmurf-server' for versions starting at 'v5.0.0'. Starting at
-version 'v5.0.0', the 'tidait/pysmurf-server' image comes from the
+version 'v5.0.0', the 'tidair/pysmurf-server' image comes from the
 pysmurf repository.  On the other hand, the docker image used for the
 client is 'tidair/pysmurf-client'."
 }
@@ -36,11 +36,11 @@ get_rogue_version() {
 
     local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
-        | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
+				    | grep -Po '^FROM\s+(?:tidair\/smurf-rogue|ghcr.io\/slaclab\/smurf-rogue):\K.+') || exit 1
 
     local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
-        | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
+			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
 
     echo ${rogue_version}
 }
@@ -78,13 +78,21 @@ fi
 
 echo
 
+docker_image_host=tidair
+# Dockers moved after v9.0.0 and some were renamed.
+if semver_gt ${pysmurf_version} "v9.0.0"; then
+    docker_image_host=ghcr.io/slaclab
+    sed -i -e 's/tidair/ghcr.io\/slaclab/g' -e s/pysmurf\-server/pysmurf\-server\-base/g ${target_dir}/docker-compose.yml
+fi
+
+
 echo "Building rogue..."
 docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
-    tidair/pysmurf-server-base:${pysmurf_version} \
+    ${docker_image_host}/pysmurf-server-base:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
 
 if [ $? -ne 0 ]; then
@@ -97,7 +105,7 @@ docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
-    --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
+    --entrypoint="" ${docker_image_host}/pysmurf-server-base:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
 
 if [ $? -ne 0 ]; then
