@@ -119,6 +119,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Which container registry
+image_address=$(get_docker_image_address smurf-base ${smurf_base_version})
+escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
+
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh
 

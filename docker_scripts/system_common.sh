@@ -61,8 +61,6 @@ usage() {
     exit $1
 }
 
-function semver_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
-
 # Print a list of all available versions
 print_list_versions()
 {

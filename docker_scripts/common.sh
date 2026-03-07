@@ -1,5 +1,61 @@
 #!/usr/bin/env bash
 
+get_all_dockerhub_tags() {
+    local repo_name="$1"
+    local tags=()
+    local page=1
+
+    while true; do
+        local url="https://hub.docker.com/v2/repositories/$repo_name/tags/?page=$page"
+        local response=$(curl -s "$url")
+        local tag_names=$(echo "$response" | jq -r '.results[].name')
+
+        readarray -t tag_array <<< "$tag_names"
+        tags+=("${tag_array[@]}")
+
+        local next_url=$(echo "$response" | jq -r '.next')
+        if [ "$next_url" = "null" ]; then
+            break
+        fi
+
+        page=$((page + 1))
+    done
+
+    echo "${tags[@]}"
+}
+
+check_dockerhub_tag() {
+    local repo_name="$1"
+    local tag_to_check="$2"
+    local all_tags=($(get_all_dockerhub_tags "tidair/$repo_name"))
+
+    for tag in "${all_tags[@]}"; do
+	if [ "$tag" = "$tag_to_check" ]; then
+            #echo "Tag '$tag_to_check' found in DockerHub repository 'tidair/$repo_name'"
+            return 0
+        fi
+    done
+
+    #echo "Tag '$tag_to_check' not found in Dockerhub"
+    return 1
+}
+
+get_docker_image_address() {
+    local repo="$1"
+    local tag="$2"
+
+    if check_dockerhub_tag "$1" "$2"; then
+        echo "tidair/${repo}"
+    else
+        # currently, ghcr.io container registry repos are private, so                                                       
+        # assuming that if the image isn't in dockerhub, it's here.                                                         
+        echo "ghcr.io/slaclab/${repo}"
+    fi
+}
+
+# For comparing semantic versions.
+function semver_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+
 # Print all the available tags in a remote repository, pointed by passed argument ($1)
 # Only the tag names are printed, and they are sorted from high to low.
 # The second argument is optional, and defines string to be excluded (for example 'v1.' to exclude all v1.* versions)
