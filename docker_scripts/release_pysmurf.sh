@@ -32,7 +32,18 @@ usage: ${script_name} -t pysmurf -v|--version <pysmurf_version>
 print_list_versions()
 {
     echo "List of available pysmurf_version:"
-    print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.'
+    tags=$(print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.')
+
+    owner=$(echo "$pysmurf_git_repo" | cut -d'/' -f4)
+    repo=$(echo "$pysmurf_git_repo" | cut -d'/' -f5 | sed 's/\.git//')
+    # Construct the API endpoint URL
+    api_url="https://api.github.com/repos/$owner/$repo/releases/latest"
+    # Get latest version
+    latest=$(curl -s ${api_url} | grep -o '"tag_name": "[^"]*"' | head -n 1 | cut -d'"' -f4)
+
+    tags=$(echo "$tags" | sed "s/^$latest/*$latest/")
+    echo "$tags"
+    
     echo
     exit 0
 }

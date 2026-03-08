@@ -152,8 +152,6 @@ esac
 shift
 done
 
-echo "list_versions=${list_versions}"
-echo "list_all=${list_all}"
 # Now check if we should call print_list_versions
 if [[ $list_versions == true ]]; then
     print_list_versions  # Call the function to list versions

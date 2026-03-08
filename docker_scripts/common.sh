@@ -73,6 +73,8 @@ print_git_tags()
     local full=${2:-false}
     local exclude=$3
 
+    echo "repo=$repo"
+
     if [ ${exclude} ]; then
         git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep -v ${exclude} | sort --version-sort | (if [ "$full" = true ]; then cat; else grep -E '^[vR][0-9]+(\.[0-9]+){2}$'; fi)
     else
