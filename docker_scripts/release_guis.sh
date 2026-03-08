@@ -76,6 +76,8 @@ if [[ $list_versions == true ]]; then
     # This application type is supported starting at version R2.7.0, so exclude all previous versions    
     echo "List of available smurf-rogue_version:"
     print_list_versions ${smurf_rogue_git_repo} 'R0\.\|R1\.\|R2\.0\.\|R2\.1\|R2\.2\|R2\.3\|R2\.4\|R2\.5\|R2\.6' ${list_all}
+    echo
+    exit 0
 fi
 
 # Verify parameters

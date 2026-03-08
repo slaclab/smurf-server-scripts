@@ -68,26 +68,26 @@ usage() {
     exit $1
 }
 
-# Print a list of all available versions
-print_list_versions()
-{
-    if [ -z ${stable_release+x} ]; then
-        # For development releases, print pysmurf versions (excluding version before v4.*)
-        echo "List of available pysmurf_version:"
-        print_git_tags ${pysmurf_git_repo} ${list_all} 'v3\.\|v2\.\|v1\.\|v0\.'
-	
-    else
-        # For stable releases, print stable pysmurf-server versions
-        echo "List of available pysmurf_server_version:"
-        print_git_tags ${pysmurf_stable_git_repo} ${list_all}
-
-        # Starting on version v5.0.1, the stable versions come from the pysmurf repository
-        print_git_tags ${pysmurf_git_repo} ${list_all} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.'
-    fi
-
-    echo
-    exit 0
-}
+## Print a list of all available versions
+#print_list_versions()
+#{
+#    if [ -z ${stable_release+x} ]; then
+#        # For development releases, print pysmurf versions (excluding version before v4.*)
+#        echo "List of available pysmurf_version:"
+#        print_git_tags ${pysmurf_git_repo} ${list_all} 'v3\.\|v2\.\|v1\.\|v0\.'
+#	
+#    else
+#        # For stable releases, print stable pysmurf-server versions
+#        echo "List of available pysmurf_server_version:"
+#        print_git_tags ${pysmurf_stable_git_repo} ${list_all}
+#
+#        # Starting on version v5.0.1, the stable versions come from the pysmurf repository
+#        print_git_tags ${pysmurf_git_repo} ${list_all} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.'
+#    fi
+#
+#    echo
+#    exit 0
+#}
 
 get_pysmurf_version() {
     # pysmurf version
@@ -154,7 +154,13 @@ done
 
 # Now check if we should call print_list_versions
 if [[ $list_versions == true ]]; then
-    print_list_versions  # Call the function to list versions
+    echo "List of available pysmurf_server_version:"
+    # For stable releases, print stable pysmurf-server versions    
+    print_list_versions ${pysmurf_stable_git_repo} '^$' ${list_all} false
+    # Starting on version v5.0.1, the stable versions come from the pysmurf repository
+    print_list_versions ${pysmurf_git_repo} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.' ${list_all}
+    echo
+    exit 0
 fi
 
 # Verify parameters

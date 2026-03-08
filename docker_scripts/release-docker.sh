@@ -150,6 +150,8 @@ if [ -z ${app_type+x} ]; then
         if [ ! -z ${show_versions} ]; then
 	    echo "List of available versions of this script:"
             print_list_versions ${server_scripts_git_repo} 'R1\.\|R2\.\|R3\.0' ${list_all}
+	    echo
+	    exit 0
         fi
 
         usage 1

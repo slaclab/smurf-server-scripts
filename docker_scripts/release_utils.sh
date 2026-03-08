@@ -74,6 +74,8 @@ done
 if [[ $list_versions == true ]]; then
     echo "List of available smurf-base_version:"    
     print_list_versions  ${smurf_base_git_repo}
+    echo
+    exit 0
 fi
 
 # Verify parameters

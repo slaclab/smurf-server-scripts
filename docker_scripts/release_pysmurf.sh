@@ -70,6 +70,8 @@ done
 if [[ $list_versions == true ]]; then
     echo "List of available pysmurf versions:"
     print_list_versions ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.' ${list_all}
+    echo
+    exit 0
 fi
 
 # Verify parameters

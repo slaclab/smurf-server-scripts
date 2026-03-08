@@ -74,6 +74,8 @@ done
 if [[ $list_versions == true ]]; then
     echo "List of available pcie_version:"
     print_list_versions ${pcie_git_repo} '^$' ${list_all}
+    echo
+    exit 0
 fi
 
 # Verify parameters

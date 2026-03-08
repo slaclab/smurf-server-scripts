@@ -87,14 +87,11 @@ print_list_versions()
     
     tags=$(print_git_tags ${repo} ${full} ${exclude})
 
-    if [ ${highlight_latest} ]; then
+    if [ ${highlight_latest} = true ]; then
 	latest=$(get_latest_git_tag ${repo})
 	tags=$(echo "$tags" | sed "s/^$latest/*$latest/")
     fi
     echo "$tags"
-    
-    echo
-    exit 0
 }
 
 # Print all the available tags in a remote repository, pointed by passed argument ($1)
