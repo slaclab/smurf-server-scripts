@@ -21,6 +21,12 @@ script_name=$(basename $0)
 # Script version
 version=$(cd ${top_dir} && git describe --tags --always --dirty)
 
+# Whether to list versions
+list_versions=false
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 usage()
 {
@@ -31,16 +37,17 @@ version: $version
 usage: $(basename $0) -t|--type type [-h|--help]
 
   -t|--type type : Type of application to install. Options are:
-    - system       : SMuRF software with preinstalled pysmurf, rogue, and firmware.
-    - system-dev   : 'system' with modifiable pysmurf, rogue, and firmware files.
-    - pysmurf-dev  : The pysmurf client with modifiable pysmurf files.
-    - utils        : The utility software.
-    - tpg          : The timing software.
-    - pcie         : The PCIe software for 6-carrier operation. 
-    - atca-monitor : Interface to view ATCA crate information.
-    - guis         : Interface to modify running systems.
+    - system           : SMuRF software with preinstalled pysmurf, rogue, and firmware.
+    - system-dev       : 'system' with modifiable pysmurf, rogue, and firmware files.
+    - pysmurf-dev      : The pysmurf client with modifiable pysmurf files.
+    - utils            : The utility software.
+    - tpg              : The timing software.
+    - pcie             : The PCIe software for 6-carrier operation. 
+    - atca-monitor     : Interface to view ATCA crate information.
+    - guis             : Interface to modify running systems.
   -u|--upgrade version : Upgrade this script to another version.
-  -l|--list-versions : List this script's available versions.
+  -l|--list-versions   : List this script's available versions.
+  -a|--all-versions    : Include all versions, not just releases.
   -h|--help : Show help. Use with -t for type help.
 "
     exit $1
@@ -68,17 +75,6 @@ copy_template()
 
 	echo "Copied ${output_file} from ${template_file}."
 }
-
-# Print a list of all available versions
-#print_list_versions()
-#{
-#    # The version list and upgrade feature was added in version R3.1.0,
-#    # so exclude previous versions.
-#    echo "List of available versions of this script:"
-#    print_git_tags ${server_scripts_git_repo} 'R1\.\|R2\.\|R3\.0'
-#    echo
-#    exit 0
-#}
 
 # Update these scripts
 update_self()
@@ -118,6 +114,10 @@ case ${key} in
     app_type="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    app_options="${app_options} ${key}"	
+    ;;
     -l|--list-versions)
     show_versions=1
     app_options="${app_options} ${key}"
@@ -148,7 +148,8 @@ if [ -z ${app_type+x} ]; then
         # Print the available versions when option '-l'
         # was used without defining an application type.
         if [ ! -z ${show_versions} ]; then
-            print_list_versions
+	    echo "List of available versions of this script:"
+            print_list_versions ${server_scripts_git_repo} 'R1\.\|R2\.\|R3\.0' ${list_all}
         fi
 
         usage 1
