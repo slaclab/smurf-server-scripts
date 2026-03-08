@@ -12,6 +12,12 @@ release_top_default_dir="/home/cryo/docker/tpg"
 # Template directory for this application
 template_dir=${template_top_dir}/tpg
 
+# Whether to list versions
+list_versions=false
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 usage()
 {
@@ -23,18 +29,10 @@ usage()
     echo "  -o|--output-dir <output_dir>  : Directory where to release the scripts. Defaults to"
     echo "                                  ${release_top_default_dir}/<tpg_version>"
     echo "  -l|--list-versions            : Print a list of available versions."
+    echo "  -a|--all-versions                      : Include all versions, not just releases."    
     echo "  -h|--help                     : Show this message."
     echo
     exit $1
-}
-
-# Print a list of all available versions
-print_list_versions()
-{
-    echo "List of available tpg_version:"
-    print_git_tags ${tpg_git_repo}
-    echo
-    exit 0
 }
 
 #############
@@ -55,8 +53,11 @@ case ${key} in
     target_dir="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    ;;    
     -l|--list-versions)
-    print_list_versions
+    list_versions=true        
     ;;
     -h|--help)
     usage 0
@@ -69,6 +70,22 @@ esac
 shift
 done
 
+dockerhub_tpg_tags=$(get_all_dockerhub_tags "tidair/smurf-tpg-ioc" | sort --version-sort | cat)
+# Now check if we should call print_list_versions
+if [[ $list_versions == true ]]; then
+    #echo "List of available tpg_version:"
+    #print_list_versions ${tpg_git_repo} '^$' ${list_all}
+    #echo
+
+    # The TPG docker is a special case; releases were not properly done
+    # out of the git repo, and all currently live only in dockerhub.
+    # Print only those, for now.
+    dockerhub_tpg_tags=$(get_all_dockerhub_tags "tidair/smurf-tpg-ioc" | sort --version-sort | cat)
+    echo ${dockerhub_tpg_tags} | awk '{for(i=2;i<=NF-1;i++) if (i==2) printf "*%s\n", $i; else print $i}' | tac
+
+    exit 0
+fi
+
 # Verify parameters
 if [ -z ${tpg_version+x} ]; then
         echo "ERROR: smurf-tpg-ioc version not defined!"
@@ -77,8 +94,8 @@ if [ -z ${tpg_version+x} ]; then
 fi
 
 # Check if the smurf-tpg-ioc version exist
-ret=$(verify_git_tag_exist ${tpg_git_repo} ${tpg_version})
-if [ -z ${ret} ]; then
+echo "${dockerhub_tpg_tags}" | grep -q "${tpg_version}"
+if [ $? -eq 1 ]; then
     echo "ERROR: smurf-tpg-ioc version ${tpg_version} does not exist"
     echo "You can use the '-l' option to list the available versions."
     echo
@@ -120,6 +137,11 @@ if [ $? -ne 0 ]; then
 fi
 copy_template "run.sh"
 copy_template "stop.sh"
+
+# Which container registry for client
+image_address=$(get_docker_image_address smurf-tpg-ioc ${tpg_version})
+escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/docker-compose.yml
 
 # Mark the scripts as executable
 chmod +x ${target_dir}/run.sh

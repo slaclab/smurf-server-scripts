@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   tpg_ioc:
-    image: tidair/smurf-tpg-ioc:%%TPG_VERSION%%
+    image: %%DOCKER_IMAGE_ADDRESS%%:%%TPG_VERSION%%
     container_name: tpg_ioc
     volumes:
     - /data:/data
