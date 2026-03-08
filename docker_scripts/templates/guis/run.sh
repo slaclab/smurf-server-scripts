@@ -11,4 +11,4 @@ docker run -it --rm  \
   -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
   -v /home/${user}/.bash_history:/home/${user}/.bash_history \
   --entrypoint connect_remote_gui.py \
-  tidair/smurf-rogue:%%SMURF_ROGUE_VERSION%% $@
+  %%DOCKER_IMAGE_ADDRESS%%:%%SMURF_ROGUE_VERSION%% $@
