@@ -31,7 +31,7 @@ pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 release_top_default_dir="/home/cryo/docker/smurf"
 
 # Whether to list versions
-list_versions=true
+list_versions=false
 
 # Whether or not to list all versions, or just releases.
 list_all=false

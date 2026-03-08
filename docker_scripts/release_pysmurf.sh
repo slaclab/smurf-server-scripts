@@ -9,6 +9,12 @@ release_top_default_dir="/home/cryo/docker/pysmurf/dev"
 # Template directory for this application
 template_dir=${template_top_dir}/pysmurf-dev
 
+# Whether to list versions
+list_versions=false
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 usage()
 {
@@ -23,29 +29,10 @@ usage: ${script_name} -t pysmurf -v|--version <pysmurf_version>
   -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to
                                       ${release_top_default_dir}/<pysmurf_version>
   -l|--list-versions                : Print a list of available versions.
+  -a|--all-versions                 : Include all versions, not just releases.
   -h|--help                         : Show this message."
     
     exit $1
-}
-
-# Print a list of all available versions (excluding version before v4.*)
-print_list_versions()
-{
-    echo "List of available pysmurf_version:"
-    tags=$(print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.')
-
-    owner=$(echo "$pysmurf_git_repo" | cut -d'/' -f4)
-    repo=$(echo "$pysmurf_git_repo" | cut -d'/' -f5 | sed 's/\.git//')
-    # Construct the API endpoint URL
-    api_url="https://api.github.com/repos/$owner/$repo/releases/latest"
-    # Get latest version
-    latest=$(curl -s ${api_url} | grep -o '"tag_name": "[^"]*"' | head -n 1 | cut -d'"' -f4)
-
-    tags=$(echo "$tags" | sed "s/^$latest/*$latest/")
-    echo "$tags"
-    
-    echo
-    exit 0
 }
 
 # Verify inputs arguments
@@ -62,9 +49,12 @@ case ${key} in
     target_dir="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    ;;    
     -l|--list-versions)
-    print_list_versions
-    ;;
+    list_versions=true
+    ;;    
     -h|--help)
     usage 0
     ;;
@@ -75,6 +65,12 @@ case ${key} in
 esac
 shift
 done
+
+# Now check if we should call print_list_versions
+if [[ $list_versions == true ]]; then
+    echo "List of available pysmurf versions:"
+    print_list_versions ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.'    
+fi
 
 # Verify parameters
 if [ -z ${pysmurf_version+x} ]; then

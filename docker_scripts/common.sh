@@ -64,6 +64,39 @@ function semver_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" =
 function semver_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
 function semver_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
+get_latest_git_tag()
+{
+    local repo=$1
+
+    owner=$(echo "$repo" | cut -d'/' -f4)
+    repo=$(echo "$repo" | cut -d'/' -f5 | sed 's/\.git//')
+    # Construct the API endpoint URL
+    api_url="https://api.github.com/repos/$owner/$repo/releases/latest"
+    # Get latest version
+    latest=$(curl -s ${api_url} | grep -o '"tag_name": "[^"]*"' | head -n 1 | cut -d'"' -f4)
+    echo "$latest"
+}
+
+# Print a list of all available versions.
+print_list_versions()
+{
+    local repo=$1
+    local exclude=${2:-'^$'}
+    local full=${3:-false}
+    local highlight_latest=${4:-true}
+    
+    tags=$(print_git_tags ${repo} ${full} ${exclude})
+
+    if [ ${highlight_latest} ]; then
+	latest=$(get_latest_git_tag ${repo})
+	tags=$(echo "$tags" | sed "s/^$latest/*$latest/")
+    fi
+    echo "$tags"
+    
+    echo
+    exit 0
+}
+
 # Print all the available tags in a remote repository, pointed by passed argument ($1)
 # Only the tag names are printed, and they are sorted from high to low.
 # The second argument is optional, and defines string to be excluded (for example 'v1.' to exclude all v1.* versions)
@@ -72,8 +105,6 @@ print_git_tags()
     local repo=$1
     local full=${2:-false}
     local exclude=$3
-
-    echo "repo=$repo"
 
     if [ ${exclude} ]; then
         git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep -v ${exclude} | sort --version-sort | (if [ "$full" = true ]; then cat; else grep -E '^[vR][0-9]+(\.[0-9]+){2}$'; fi)

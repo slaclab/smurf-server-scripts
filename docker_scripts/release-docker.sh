@@ -70,15 +70,15 @@ copy_template()
 }
 
 # Print a list of all available versions
-print_list_versions()
-{
-    # The version list and upgrade feature was added in version R3.1.0,
-    # so exclude previous versions.
-    echo "List of available versions of this script:"
-    print_git_tags ${server_scripts_git_repo} 'R1\.\|R2\.\|R3\.0'
-    echo
-    exit 0
-}
+#print_list_versions()
+#{
+#    # The version list and upgrade feature was added in version R3.1.0,
+#    # so exclude previous versions.
+#    echo "List of available versions of this script:"
+#    print_git_tags ${server_scripts_git_repo} 'R1\.\|R2\.\|R3\.0'
+#    echo
+#    exit 0
+#}
 
 # Update these scripts
 update_self()
