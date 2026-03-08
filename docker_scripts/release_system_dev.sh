@@ -19,7 +19,6 @@ version 'v5.0.0', the 'tidair/pysmurf-server' image comes from the
 pysmurf repository.  On the other hand, the docker image used for the
 client is 'tidair/pysmurf-client'."
 }
-
 # Do exactly the system release, except without stable_release=1.
 . ${top_dir}/system_common.sh
 
@@ -77,14 +76,6 @@ if [ $? -ne 0 ]; then
 fi
 
 echo
-
-docker_image_host=tidair
-# Dockers moved after v9.0.0 and some were renamed.
-if semver_gt ${pysmurf_version} "v9.0.0"; then
-    docker_image_host=ghcr.io/slaclab
-    sed -i -e 's/tidair/ghcr.io\/slaclab/g' -e s/pysmurf\-server/pysmurf\-server\-base/g ${target_dir}/docker-compose.yml
-fi
-
 
 echo "Building rogue..."
 docker run -ti --rm \

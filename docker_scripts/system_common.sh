@@ -30,6 +30,12 @@ pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 # Default release output directory
 release_top_default_dir="/home/cryo/docker/smurf"
 
+# Whether to list versions
+list_versions=true
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 # Development releases need only 1 version, while stable
 # releases need 2 version, the server and the client.
@@ -57,6 +63,7 @@ usage() {
     echo "  -o|--output-dir     <output_dir>             : Top directory where to release the scripts. Defaults to"
     echo "                                                 ${release_top_default_dir}/${target_dir_prefix}/<pysmurf_version>"
     echo "  -l|--list-versions                           : Print a list of available versions."
+    echo "  -a|--all-versions                            : Include all versions, not just releases."
     echo "  -h|--help                                    : Show this message."
     exit $1
 }
@@ -67,15 +74,15 @@ print_list_versions()
     if [ -z ${stable_release+x} ]; then
         # For development releases, print pysmurf versions (excluding version before v4.*)
         echo "List of available pysmurf_version:"
-        print_git_tags ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.'
+        print_git_tags ${pysmurf_git_repo} ${list_all} 'v3\.\|v2\.\|v1\.\|v0\.'
 	
     else
         # For stable releases, print stable pysmurf-server versions
         echo "List of available pysmurf_server_version:"
-        print_git_tags ${pysmurf_stable_git_repo}
+        print_git_tags ${pysmurf_stable_git_repo} ${list_all}
 
         # Starting on version v5.0.1, the stable versions come from the pysmurf repository
-        print_git_tags ${pysmurf_git_repo} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.'
+        print_git_tags ${pysmurf_git_repo} ${list_all} 'v5\.0\.0\|v4\.\|v3\.\|v2\.\|v1\.\|v0\.'
     fi
 
     echo
@@ -128,8 +135,11 @@ case ${key} in
     comm_type="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    ;;    
     -l|--list-versions)
-    print_list_versions
+    list_versions=true
     ;;
     -h|--help)
     usage 0
@@ -141,6 +151,13 @@ case ${key} in
 esac
 shift
 done
+
+echo "list_versions=${list_versions}"
+echo "list_all=${list_all}"
+# Now check if we should call print_list_versions
+if [[ $list_versions == true ]]; then
+    print_list_versions  # Call the function to list versions
+fi
 
 # Verify parameters
 if [ -z ${stable_release+x} ]; then
@@ -257,10 +274,8 @@ echo ""
 # Generate file specific to this type of application, and for an specific slot number
 template_dir=${template_top_dir}/${app_type}
 
-
 cat ${template_dir}/docker-compose.yml \
         | sed s/%%SLOT_NUMBER%%/${slot_number}/g \
-        | sed s/%%SERVER_NAME%%/${server_name}/g \
         | sed s/%%SERVER_VERSION%%/${server_version}/g \
         | sed s/%%CLIENT_VERSION%%/${client_version}/g \
         | sed s/%%COMM_ARGS%%/"${comm_args}"/g \
@@ -270,6 +285,16 @@ if [ $? -ne 0 ]; then
     echo "ERROR: Could not create ${target_dir}/docker-compose.yml"
     exit 1
 fi
+
+# Which container registry for client
+client_image_address=$(get_docker_image_address pysmurf-client ${client_version})
+escaped_client_image_address=$(printf '%s' "$client_image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%CLIENT_DOCKER_IMAGE_ADDRESS\%\%/${escaped_client_image_address}/g" ${target_dir}/docker-compose.yml
+
+# Which container registry for server
+server_image_address=$(get_docker_image_address pysmurf-server ${server_version})
+escaped_server_image_address=$(printf '%s' "$server_image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%SERVER_DOCKER_IMAGE_ADDRESS\%\%/${escaped_server_image_address}/g" ${target_dir}/docker-compose.yml
 
 # Generate file common to other type of application
 template_dir=${template_top_dir}/common

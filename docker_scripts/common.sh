@@ -47,14 +47,22 @@ get_docker_image_address() {
     if check_dockerhub_tag "$1" "$2"; then
         echo "tidair/${repo}"
     else
-        # currently, ghcr.io container registry repos are private, so                                                       
-        # assuming that if the image isn't in dockerhub, it's here.                                                         
-        echo "ghcr.io/slaclab/${repo}"
+        # Currently, ghcr.io container registry repos are private, so
+        # assuming that if the image isn't in dockerhub, it's in the
+        # GitHub Container Registry.
+	if [ "$repo" == "pysmurf-server" ]; then # renamed in ghcr.io
+            echo "ghcr.io/slaclab/${repo}-base"
+	else # same name
+            echo "ghcr.io/slaclab/${repo}"
+	fi
     fi
 }
 
 # For comparing semantic versions.
 function semver_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function semver_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+function semver_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+function semver_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
 # Print all the available tags in a remote repository, pointed by passed argument ($1)
 # Only the tag names are printed, and they are sorted from high to low.
@@ -62,12 +70,13 @@ function semver_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" !
 print_git_tags()
 {
     local repo=$1
-    local exclude=$2
+    local full=${2:-false}
+    local exclude=$3
 
     if [ ${exclude} ]; then
-        git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep -v ${exclude} | sort --version-sort
+        git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | grep -v ${exclude} | sort --version-sort | (if [ "$full" = true ]; then cat; else grep -E '^[vR][0-9]+(\.[0-9]+){2}$'; fi)
     else
-        git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | sort --version-sort
+        git ls-remote --tags --refs ${repo} | sed -E 's/^[[:xdigit:]]+[[:space:]]+refs\/tags\/(.+)/\1/g' | sort --version-sort | (if [ "$full" = true ]; then cat; else grep -E '^[vR][0-9]+(\.[0-9]+){2}$'; fi)
     fi
 }
 
