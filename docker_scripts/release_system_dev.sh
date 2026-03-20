@@ -75,6 +75,8 @@ if [ $? -ne 0 ]; then
     return 1
 fi
 
+docker_image_address=$(get_docker_image_address pysmurf-server-base ${pysmurf_version})
+
 echo
 
 echo "Building rogue..."
@@ -83,7 +85,7 @@ docker run -ti --rm \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
-    ${docker_image_host}/pysmurf-server-base:${pysmurf_version} \
+    ${docker_image_address}:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
 
 if [ $? -ne 0 ]; then
@@ -96,7 +98,7 @@ docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
-    --entrypoint="" ${docker_image_host}/pysmurf-server-base:${pysmurf_version} \
+    --entrypoint="" ${docker_image_address}:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
 
 if [ $? -ne 0 ]; then
