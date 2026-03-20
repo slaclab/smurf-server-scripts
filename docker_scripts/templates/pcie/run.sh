@@ -14,4 +14,4 @@ docker run -it --rm  \
   -v /data:/data \
   -v ${PWD}/shared:/shared \
   --device /dev/datadev_0 \
-  tidair/smurf-pcie:%%VERSION%% $1
+  %%DOCKER_IMAGE_ADDRESS%%:%%VERSION%% $1

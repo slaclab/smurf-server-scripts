@@ -12,4 +12,4 @@ docker run -it --rm  \
   -v /home/${user}/.Xauthority:/home/${user}/.Xauthority \
   -v /home/${user}/.bash_history:/home/${user}/.bash_history \
   -v /data:/data \
-  tidair/smurf-atca-monitor:%%VERSION%% -g -S shm-smrf-sp01
+  %%DOCKER_IMAGE_ADDRESS%%:%%VERSION%% -g -S shm-smrf-sp01

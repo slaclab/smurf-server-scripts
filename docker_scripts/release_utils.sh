@@ -12,6 +12,12 @@ release_top_default_dir="/home/cryo/docker/utils"
 # Template directory for this application
 template_dir=${template_top_dir}/utils
 
+# Whether to list versions
+list_versions=false
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 usage()
 {
@@ -23,18 +29,10 @@ usage()
     echo "  -o|--output-dir <output_dir>         : Directory where to release the scripts. Defaults to"
     echo "                                         ${release_top_default_dir}/<smurf-base_version>"
     echo "  -l|--list-versions                   : Print a list of available versions."
+    echo "  -a|--all-versions                    : Include all versions, not just releases."    
     echo "  -h|--help                            : Show this message."
     echo
     exit $1
-}
-
-# Print a list of all available versions
-print_list_versions()
-{
-    echo "List of available smurf-base_version:"
-    print_git_tags ${smurf_base_git_repo}
-    echo
-    exit 0
 }
 
 #############
@@ -55,9 +53,12 @@ case ${key} in
     target_dir="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    ;;    
     -l|--list-versions)
-    print_list_versions
-    ;;
+    list_versions=true
+    ;;    
     -h|--help)
     usage 0
     ;;
@@ -68,6 +69,14 @@ case ${key} in
 esac
 shift
 done
+
+# Now check if we should call print_list_versions
+if [[ $list_versions == true ]]; then
+    echo "List of available smurf-base_version:"    
+    print_list_versions  ${smurf_base_git_repo}
+    echo
+    exit 0
+fi
 
 # Verify parameters
 if [ -z ${smurf_base_version+x} ]; then
@@ -118,6 +127,11 @@ if [ $? -ne 0 ]; then
     echo "ERROR: Could not create ${target_dir}/run.sh"
     exit 1
 fi
+
+# Which container registry
+image_address=$(get_docker_image_address smurf-base ${smurf_base_version})
+escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
 
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh

@@ -15,11 +15,10 @@ the fw folder after running this script.
 Note: For older systems, the docker image used for the server is
 'tidair/pysmurf-server-base', for versions prior to 'v5.0.0', or
 'tidair/pysmurf-server' for versions starting at 'v5.0.0'. Starting at
-version 'v5.0.0', the 'tidait/pysmurf-server' image comes from the
+version 'v5.0.0', the 'tidair/pysmurf-server' image comes from the
 pysmurf repository.  On the other hand, the docker image used for the
 client is 'tidair/pysmurf-client'."
 }
-
 # Do exactly the system release, except without stable_release=1.
 . ${top_dir}/system_common.sh
 
@@ -36,11 +35,11 @@ get_rogue_version() {
 
     local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
-        | grep -Po '^FROM\s+tidair\/smurf-rogue:\K.+') || exit 1
+				    | grep -Po '^FROM\s+(?:tidair\/smurf-rogue|ghcr.io\/slaclab\/smurf-rogue):\K.+') || exit 1
 
     local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
-        | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
+			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
 
     echo ${rogue_version}
 }
@@ -76,6 +75,8 @@ if [ $? -ne 0 ]; then
     return 1
 fi
 
+docker_image_address=$(get_docker_image_address pysmurf-server-base ${pysmurf_version})
+
 echo
 
 echo "Building rogue..."
@@ -84,7 +85,7 @@ docker run -ti --rm \
     -v ${target_dir}/rogue:/usr/local/src/rogue \
     --workdir /usr/local/src/rogue \
     --entrypoint="" \
-    tidair/pysmurf-server-base:${pysmurf_version} \
+    ${docker_image_address}:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DROGUE_INSTALL=local .. && make -j4 install"
 
 if [ $? -ne 0 ]; then
@@ -97,7 +98,7 @@ docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
-    --entrypoint="" tidair/pysmurf-server-base:${pysmurf_version} \
+    --entrypoint="" ${docker_image_address}:${pysmurf_version} \
     /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
 
 if [ $? -ne 0 ]; then

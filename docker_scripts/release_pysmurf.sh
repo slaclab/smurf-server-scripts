@@ -9,6 +9,12 @@ release_top_default_dir="/home/cryo/docker/pysmurf/dev"
 # Template directory for this application
 template_dir=${template_top_dir}/pysmurf-dev
 
+# Whether to list versions
+list_versions=false
+
+# Whether or not to list all versions, or just releases.
+list_all=false
+
 # Usage message
 usage()
 {
@@ -23,18 +29,10 @@ usage: ${script_name} -t pysmurf -v|--version <pysmurf_version>
   -o|--output-dir <output_dir>      : Directory where to release the scripts. Defaults to
                                       ${release_top_default_dir}/<pysmurf_version>
   -l|--list-versions                : Print a list of available versions.
+  -a|--all-versions                 : Include all versions, not just releases.
   -h|--help                         : Show this message."
     
     exit $1
-}
-
-# Print a list of all available versions (excluding version before v4.*)
-print_list_versions()
-{
-    echo "List of available pysmurf_version:"
-    print_git_tags ${pysmurf_git_repo} 'v3.\|v2.\|v1.\|v0.'
-    echo
-    exit 0
 }
 
 # Verify inputs arguments
@@ -51,9 +49,12 @@ case ${key} in
     target_dir="$2"
     shift
     ;;
+    -a|--all-versions)
+    list_all=true
+    ;;    
     -l|--list-versions)
-    print_list_versions
-    ;;
+    list_versions=true
+    ;;    
     -h|--help)
     usage 0
     ;;
@@ -65,6 +66,14 @@ esac
 shift
 done
 
+# Now check if we should call print_list_versions
+if [[ $list_versions == true ]]; then
+    echo "List of available pysmurf versions:"
+    print_list_versions ${pysmurf_git_repo} 'v3\.\|v2\.\|v1\.\|v0\.' ${list_all}
+    echo
+    exit 0
+fi
+
 # Verify parameters
 if [ -z ${pysmurf_version+x} ]; then
         echo "ERROR: pysmurf version not defined!"
@@ -73,7 +82,7 @@ if [ -z ${pysmurf_version+x} ]; then
 fi
 
 # Check if the pysmurf version exist (excluding version before v4.*)
-ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3.\|v2.\|v1.\|v0.')
+ret=$(verify_git_tag_exist ${pysmurf_git_repo} ${pysmurf_version} 'v3\.\|v2\.\|v1\.\|v0\.')
 if [ -z ${ret} ]; then
     echo "ERROR: pysmurf version ${pysmurf_version} does not exist"
     echo "You can use the '-l' option to list the available versions."
@@ -114,6 +123,11 @@ if [ $? -ne 0 ]; then
     echo "ERROR: Could not create ${target_dir}/run.sh"
     exit 1
 fi
+
+# Which container registry
+image_address=$(get_docker_image_address pysmurf-client ${pysmurf_version})
+escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
+sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
 
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh
