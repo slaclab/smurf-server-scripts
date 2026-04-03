@@ -1,15 +1,21 @@
 # Add label 'docker-script' to any change within
 # 'docker_scripts' folder or any subfolders
 docker-scripts:
-  - docker_scripts/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - docker_scripts/**/*
 
 # Add label 'server-scripts' to any change within
 # 'server_scripts' folder or any subfolders
 server-scripts:
-  - server_scripts/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - server_scripts/**/*
 
-# Add label 'repo' to any change to all other files
+# Add label 'repo' to any change to all other files    
 repo:
-  - ./*
-  - ./.*
-  - .github/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - ./*
+      - ./.?*
+      - .github/**/*
