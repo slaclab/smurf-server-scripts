@@ -39,7 +39,7 @@ get_rogue_version() {
 
     local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
         https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
-			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
+			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K[^[:space:]]*') || exit 1
 
     echo ${rogue_version}
 }
@@ -93,13 +93,18 @@ if [ $? -ne 0 ]; then
     return 1
 fi
 
+PYSMURF_BUILD_STRING="rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+if semver_ge "$rogue_version" "v6.0.0"; then
+    PYSMURF_BUILD_STRING="rm -rf build && mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local/lib -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+fi
+
 echo "Building pysmurf..."
 docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
     --entrypoint="" ${docker_image_address}:${pysmurf_version} \
-    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+    /bin/bash -c "${PYSMURF_BUILD_STRING}"
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build pysmurf"
