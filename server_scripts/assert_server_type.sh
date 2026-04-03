@@ -6,6 +6,11 @@ then
     echo "This is as Dell R440 server"
     echo
     dell_r440=1
+elif dmidecode | grep -Fq R450
+then
+    echo "This is a Dell R450 server"
+    echo
+    dell_r450=1
 elif dmidecode | grep -Fq R330
 then
     echo "This is a Dell R330 server"

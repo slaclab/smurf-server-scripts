@@ -288,6 +288,8 @@ if [ ${dell_r440+x} ]; then
     . r440_network.sh
 elif [ ${dell_r330+x} ]; then
     . r330_network.sh
+elif [ ${dell_r450+x} ]; then
+    . r450_network.sh
 elif [ ${dell_r650+x} ]; then
     . r650_network.sh    
 fi
