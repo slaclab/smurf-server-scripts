@@ -23,35 +23,6 @@ client is 'tidair/pysmurf-client'."
 . ${top_dir}/system_common.sh
 
 # Now clone rogue, pysmurf, compile them, and make the custom fw folder.
-
-get_rogue_version() {
-    # Get the Rogue version used by the given pysmurf
-    # version. Practically this means digging into pysmurf to get the
-    # smurf-rogue-docker version, then digging into smurf-rogue-docker
-    # to get the version of Rogue it uses. I know.
-    # $1 : Version of pysmurf
-
-    local pysmurf_version=$1
-
-    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
-        https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
-				    | grep -Po '^FROM\s+(?:tidair\/smurf-rogue|ghcr.io\/slaclab\/smurf-rogue):\K.+') || exit 1
-
-    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
-        https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
-			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K.+') || exit 1
-
-    echo ${rogue_version}
-}
-
-rogue_version=$(get_rogue_version ${pysmurf_version})
-
-if [ ! ${rogue_version} ]; then
-    echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
-    echo
-    return 1
-fi
-
 mkdir -p ${target_dir}/fw
 
 echo "Cloning rogue..."
@@ -93,13 +64,18 @@ if [ $? -ne 0 ]; then
     return 1
 fi
 
+PYSMURF_BUILD_STRING="rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+if semver_ge "$rogue_version" "v6.0.0"; then
+    PYSMURF_BUILD_STRING="rm -rf build && mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local/lib -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+fi
+
 echo "Building pysmurf..."
 docker run -ti --rm \
     --user cryo:smurf \
     -v ${target_dir}/pysmurf:/usr/local/src/pysmurf \
     --workdir /usr/local/src/pysmurf \
     --entrypoint="" ${docker_image_address}:${pysmurf_version} \
-    /bin/bash -c "rm -rf build && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .. && make -j4"
+    /bin/bash -c "${PYSMURF_BUILD_STRING}"
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to build pysmurf"

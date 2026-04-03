@@ -68,6 +68,26 @@ usage() {
     exit $1
 }
 
+get_rogue_version() {
+    # Get the Rogue version used by the given pysmurf
+    # version. Practically this means digging into pysmurf to get the
+    # smurf-rogue-docker version, then digging into smurf-rogue-docker
+    # to get the version of Rogue it uses. I know.
+    # $1 : Version of pysmurf
+
+    local pysmurf_version=$1
+
+    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
+				    | grep -Po '^FROM\s+(?:tidair\/smurf-rogue|ghcr.io\/slaclab\/smurf-rogue):\K.+') || exit 1
+
+    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
+        https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
+			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K[^[:space:]]*') || exit 1
+
+    echo ${rogue_version}
+}
+
 ## Print a list of all available versions
 #print_list_versions()
 #{
@@ -275,6 +295,13 @@ fi
 echo "Done!"
 echo ""
 
+rogue_version=$(get_rogue_version ${server_version})
+if [ ! ${rogue_version} ]; then
+    echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
+    echo
+    return 1
+fi
+
 # Generate file specific to this type of application, and for an specific slot number
 template_dir=${template_top_dir}/${app_type}
 
@@ -288,6 +315,10 @@ if [ $? -ne 0 ]; then
     echo ""
     echo "ERROR: Could not create ${target_dir}/docker-compose.yml"
     exit 1
+fi
+
+if semver_ge "$rogue_version" "v6.0.0"; then
+    sed -i 's/-e smurf_server_s${slot} //g' ${target_dir}/docker-compose.yml
 fi
 
 # Which container registry for client
