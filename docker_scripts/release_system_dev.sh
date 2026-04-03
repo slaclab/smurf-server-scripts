@@ -23,35 +23,6 @@ client is 'tidair/pysmurf-client'."
 . ${top_dir}/system_common.sh
 
 # Now clone rogue, pysmurf, compile them, and make the custom fw folder.
-
-get_rogue_version() {
-    # Get the Rogue version used by the given pysmurf
-    # version. Practically this means digging into pysmurf to get the
-    # smurf-rogue-docker version, then digging into smurf-rogue-docker
-    # to get the version of Rogue it uses. I know.
-    # $1 : Version of pysmurf
-
-    local pysmurf_version=$1
-
-    local smurf_rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
-        https://raw.githubusercontent.com/slaclab/pysmurf/${pysmurf_version}/docker/server/Dockerfile 2>/dev/null \
-				    | grep -Po '^FROM\s+(?:tidair\/smurf-rogue|ghcr.io\/slaclab\/smurf-rogue):\K.+') || exit 1
-
-    local rogue_version=$(curl -fsSL --retry-connrefused --retry 5 \
-        https://raw.githubusercontent.com/slaclab/smurf-rogue-docker/${smurf_rogue_version}/Dockerfile  2>/dev/null \
-			      | grep -Po '^RUN\s+git\s+clone\s+https:\/\/github.com\/slaclab\/rogue\.git\s+-b\s+\K[^[:space:]]*') || exit 1
-
-    echo ${rogue_version}
-}
-
-rogue_version=$(get_rogue_version ${pysmurf_version})
-
-if [ ! ${rogue_version} ]; then
-    echo "Error: Rogue version not found for pysmurf version ${pysmurf_version}"
-    echo
-    return 1
-fi
-
 mkdir -p ${target_dir}/fw
 
 echo "Cloning rogue..."
