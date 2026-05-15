@@ -71,17 +71,30 @@ class Config:
         self.tmux_session = raw.get("tmux_session", "smurf")
         self.pysmurf_dir = raw.get("pysmurf", "/home/cryo/docker/pysmurf/current")
 
+        # AMC carrier slots (require ethernet check + reboot)
         self.slots = {}
         for slot_num, slot_cfg in raw.get("slots", {}).items():
             self.slots[int(slot_num)] = {
                 "pyrogue": slot_cfg["pyrogue"],
                 "pysmurf_cfg": slot_cfg.get("pysmurf_cfg"),
+                "type": "amc",
+            }
+
+        # RFSoC slots (skip ethernet check and carrier reboot)
+        for slot_num, slot_cfg in raw.get("rfsoc_slots", {}).items():
+            self.slots[int(slot_num)] = {
+                "pyrogue": slot_cfg["pyrogue"],
+                "pysmurf_cfg": slot_cfg.get("pysmurf_cfg"),
+                "type": "rfsoc",
             }
 
         startup = raw.get("startup", {})
         self.reboot = startup.get("reboot", False)
         self.timing_master = startup.get("timing_master", False)
         self.setup = startup.get("setup", True)
+
+    def is_rfsoc(self, slot):
+        return self.slots.get(slot, {}).get("type") == "rfsoc"
 
     def carrier_ip(self, slot):
         return f"10.0.{self.crate_id}.{slot + 100}"
@@ -309,9 +322,15 @@ class SlotState:
     def __init__(self, slot, config):
         self.slot = slot
         self.config = config
-        self.stage = self.CARRIER
-        self.status = "working"  # current stage status
         self._server_check_start = None
+
+        # RFSoC slots skip the carrier ethernet check
+        if config.is_rfsoc(slot):
+            self.stage = self.PYROGUE
+            self.status = "working"
+        else:
+            self.stage = self.CARRIER
+            self.status = "working"
 
     @property
     def is_done(self):
@@ -474,13 +493,14 @@ def cmd_up(args, config):
         ssh(config.shelfmanager,
             f"clia minfanlevel {level}; clia setfanlevel all {level}")
 
-    # 4. Reboot carriers
-    if reboot:
-        print("  Rebooting carriers...")
-        for slot in slots:
+    # 4. Reboot AMC carriers (not RFSoCs)
+    amc_slots = [s for s in slots if not config.is_rfsoc(s)]
+    if reboot and amc_slots:
+        print(f"  Rebooting AMC carriers {amc_slots}...")
+        for slot in amc_slots:
             ssh(config.shelfmanager, f"clia deactivate board {slot}")
         time.sleep(5)
-        for slot in slots:
+        for slot in amc_slots:
             ssh(config.shelfmanager, f"clia activate board {slot}")
         print("  Waiting for carriers to come online...")
         time.sleep(10)
@@ -498,7 +518,11 @@ def cmd_up(args, config):
 
     # Initial display
     for slot in slots:
-        display.update(slot, SlotState.CARRIER, "working")
+        if config.is_rfsoc(slot):
+            display.update(slot, SlotState.CARRIER, "done")
+            display.update(slot, SlotState.PYROGUE, "working")
+        else:
+            display.update(slot, SlotState.CARRIER, "working")
     display.render()
 
     try:

@@ -1,26 +1,33 @@
-# smurfhammer example configuration
-# Copy this to /data/smurf_startup_cfg/smurf_startup.yml and edit for your system.
+# smurfhammer configuration
+# Merged config supporting both AMC carrier and RFSoC systems.
+# Copy to /data/smurf_startup_cfg/smurf_startup.yml and edit for your system.
 
 crate:
   shelfmanager: shm-smrf-sp01   # Shelf manager hostname
   id: 1                          # Crate number (carrier IP = 10.0.<id>.<slot+100>)
-  fans: full                     # Fan level: "full" (=15), or integer 1-15
+  fans: 8                        # Max fan level. COMTEL=100, ASIS/ELMA=15.
 
 tmux_session: smurf              # Name of the tmux session to create
 
 # Path to pysmurf docker (contains run.sh)
-pysmurf: /home/cryo/docker/pysmurf/dev/v4.1.0
+pysmurf: /home/cryo/docker/pysmurf/dev/v11.0.3
 
-# Slot configurations — one entry per carrier slot
+# ─── AMC carrier slots ────────────────────────────────────────────────────────
+# One entry per ATCA carrier. Remove this section if not using AMC carriers.
 slots:
-  2:
-    pyrogue: /home/cryo/docker/smurf/current       # Path to pyrogue docker (has run.sh, stop.sh)
-    pysmurf_cfg: cfg_files/b33/experiment_b33.cfg  # Experiment config (relative to pysmurf dir)
+  4:
+    pyrogue: /home/cryo/docker/smurf/stable/v11.0.3
+    pysmurf_cfg: cfg_files/b33/experiment_b33_rfc1-2_C05-40_s4_2xLB_extref.cfg
+
+# ─── RFSoC slots ─────────────────────────────────────────────────────────────
+# One entry per RFSoC. These skip the carrier ethernet/reboot steps.
+# Remove this section if not using RFSoCs.
+rfsoc_slots:
   3:
-    pyrogue: /home/cryo/docker/smurf/current
-    pysmurf_cfg: cfg_files/b33/experiment_b33.cfg
+    pyrogue: /home/cryo/docker/smurf/dev/v8.0.0-rc3_rfsoc
+    pysmurf_cfg: cfg_files/b33/experiment_b33_rfc1-2_C05-40_s4_rfsoc_fiber.cfg
 
 startup:
-  reboot: true           # Deactivate/reactivate carriers before starting
-  timing_master: false   # Require tpg_ioc docker to be running
+  reboot: true           # Deactivate/reactivate AMC carriers before starting
   setup: true            # Run S.setup() after pysmurf connects
+  timing_master: false   # Require tpg_ioc docker to be running
