@@ -848,6 +848,12 @@ Examples:
 
 
 def main():
+    # Intercept 'release' before argparse — it passes raw args to release-docker.sh
+    if len(sys.argv) > 1 and sys.argv[1] == "release":
+        args = argparse.Namespace(release_args=sys.argv[2:])
+        cmd_release(args, None)
+        return
+
     parser = argparse.ArgumentParser(
         description=DESCRIPTION,
         formatter_class=argparse.RawDescriptionHelpFormatter,
