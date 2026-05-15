@@ -567,20 +567,29 @@ def cmd_status(args, config):
 
         # Carrier ping
         carrier_up = ping_carrier(config, slot)
-        carrier_str = f"{GREEN}✓{RESET} {ip}" if carrier_up else f"{RED}✗{RESET} {ip}"
+        if carrier_up:
+            carrier_str = f"{GREEN}✓{RESET} {ip:<13}"
+        else:
+            carrier_str = f"{RED}✗{RESET} {ip:<13}"
 
         # Pyrogue docker
         pyrogue_up = is_pyrogue_up(slot)
-        pyrogue_str = f"{GREEN}✓ running{RESET}" if pyrogue_up else f"{DIM}· down{RESET}   "
+        if pyrogue_up:
+            pyrogue_str = f"{GREEN}✓{RESET} running"
+        else:
+            pyrogue_str = f"{DIM}·{RESET} down   "
 
         # Server EPICS
         if pyrogue_up:
             server_up = is_server_ready(slot)
-            server_str = f"{GREEN}✓ ready{RESET} " if server_up else f"{YELLOW}◔ wait{RESET}  "
+            if server_up:
+                server_str = f"{GREEN}✓{RESET} ready  "
+            else:
+                server_str = f"{YELLOW}◔{RESET} wait   "
         else:
-            server_str = f"{DIM}· down{RESET}   "
+            server_str = f"{DIM}·{RESET} down   "
 
-        print(f" │  {slot:<3} │ {carrier_str:<24}│ {pyrogue_str} │ {server_str} │")
+        print(f" │  {slot:<3} │ {carrier_str} │ {pyrogue_str} │ {server_str} │")
 
     print(f" └──────┴─────────────────┴──────────┴──────────┘")
 
