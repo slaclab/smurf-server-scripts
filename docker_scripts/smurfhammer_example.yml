@@ -1,0 +1,26 @@
+# smurfhammer example configuration
+# Copy this to /data/smurf_startup_cfg/smurf_startup.yml and edit for your system.
+
+crate:
+  shelfmanager: shm-smrf-sp01   # Shelf manager hostname
+  id: 1                          # Crate number (carrier IP = 10.0.<id>.<slot+100>)
+  fans: full                     # Fan level: "full" (=15), or integer 1-15
+
+tmux_session: smurf              # Name of the tmux session to create
+
+# Path to pysmurf docker (contains run.sh)
+pysmurf: /home/cryo/docker/pysmurf/dev/v4.1.0
+
+# Slot configurations — one entry per carrier slot
+slots:
+  2:
+    pyrogue: /home/cryo/docker/smurf/current       # Path to pyrogue docker (has run.sh, stop.sh)
+    pysmurf_cfg: cfg_files/b33/experiment_b33.cfg  # Experiment config (relative to pysmurf dir)
+  3:
+    pyrogue: /home/cryo/docker/smurf/current
+    pysmurf_cfg: cfg_files/b33/experiment_b33.cfg
+
+startup:
+  reboot: true           # Deactivate/reactivate carriers before starting
+  timing_master: false   # Require tpg_ioc docker to be running
+  setup: true            # Run S.setup() after pysmurf connects

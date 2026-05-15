@@ -49,3 +49,64 @@ $ smurf-server-scripts-version
 ## Docker System Release Scripts
 
 As part of the system initialization described above, scripts to release SMuRF docker-based systems are installed in the server. For more information about these scripts, please refer to [this documentation](docker_scripts/README.md).
+
+## smurfhammer (the `smurf` CLI)
+
+`smurfhammer.py` is a Python orchestration tool for starting, managing, and inspecting running SMuRF systems. It replaces the legacy `shawnhammer.sh` bash script with a cleaner interface and live progress display.
+
+The tool is invoked as `smurf` on the command line (via symlink).
+
+### Quick start
+
+```bash
+smurf up                    # Start the full system (parallel, live progress table)
+smurf status                # Check what's running right now
+smurf attach 2              # Jump into an ipython session on slot 2
+smurf down                  # Tear everything down
+smurf restart 3             # Restart pyrogue on slot 3
+smurf logs 2                # Tail pyrogue server logs
+smurf release -t system     # Install a docker release (wraps release-docker.sh)
+```
+
+Run `smurf --help` or `smurf <command> --help` for full documentation on any command.
+
+### Configuration
+
+`smurf` uses a YAML config file (default: `/data/smurf_startup_cfg/smurf_startup.yml`). An example is provided at [docker_scripts/smurfhammer_example.yml](docker_scripts/smurfhammer_example.yml).
+
+```yaml
+crate:
+  shelfmanager: shm-smrf-sp01
+  id: 1
+  fans: full
+
+tmux_session: smurf
+pysmurf: /home/cryo/docker/pysmurf/dev/v4.1.0
+
+slots:
+  2:
+    pyrogue: /home/cryo/docker/smurf/current
+    pysmurf_cfg: cfg_files/experiment.cfg
+  3:
+    pyrogue: /home/cryo/docker/smurf/current
+    pysmurf_cfg: cfg_files/experiment.cfg
+
+startup:
+  reboot: true
+  setup: true
+```
+
+### Installation
+
+On deployment servers where `docker_scripts/` is already in PATH, `smurf` is available immediately.
+
+For other machines (e.g. a local checkout of this repo):
+```bash
+export PATH=/path/to/smurf-server-scripts/docker_scripts:$PATH
+```
+
+### Requirements
+
+- Python 3.6+
+- PyYAML (`pip install pyyaml`) — already present on all SMuRF servers
+- tmux, docker (for system management commands)
