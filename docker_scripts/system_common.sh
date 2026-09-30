@@ -349,5 +349,12 @@ copy_template "functions.sh"
 copy_template "env" ".env"
 sed -i "s/%%USER_NAME%%/$(whoami)/g" ${target_dir}/.env
 
+# Strip apparmor security_opt if apparmor is not available on this host
+if ! which apparmor_parser > /dev/null 2>&1; then
+    echo "AppArmor not available, removing security_opt from compose files."
+    sed -i '/security_opt:/d; /apparmor=/d' ${target_dir}/docker-compose.yml
+    sed -i '/security_opt:/d; /apparmor=/d' ${target_dir}/docker-compose.pcie.yml 2>/dev/null || true
+fi
+
 chmod +x ${target_dir}/run.sh
 chmod +x ${target_dir}/stop.sh

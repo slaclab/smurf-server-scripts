@@ -176,15 +176,19 @@ else
     script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     cp "${script_dir}/templates/daemon.json" /etc/docker/daemon.json
 
-    # Setup apparmor profile for smurf containers
-    cp "${script_dir}/templates/smurf-apparmor-profile" /etc/apparmor.d/docker-smurf
-    apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+    # Setup apparmor profile for smurf containers if apparmor is available
+    if which apparmor_parser > /dev/null 2>&1; then
+        cp "${script_dir}/templates/smurf-apparmor-profile" /etc/apparmor.d/docker-smurf
+        apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+    else
+        echo "AppArmor not available, skipping docker-smurf profile."
+    fi
 fi
 
 # The smurf run/stop scripts invoke "docker-compose" (v1 standalone).
 # Ensure it is available: if the v2 plugin works but the standalone
 # command doesn't, install a shim wrapper.
-if which docker-compose > /dev/null 2>&1; then
+if docker-compose --version > /dev/null 2>&1; then
     echo "docker-compose is available:"
     docker-compose --version
 elif docker compose version > /dev/null 2>&1; then
