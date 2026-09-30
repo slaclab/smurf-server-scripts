@@ -7,7 +7,7 @@
 smurf_rogue_git_repo=https://github.com/slaclab/smurf-rogue-docker.git
 
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/guis"
+release_top_default_dir="${HOME}/docker/guis"
 
 # Template directory for this application
 template_dir=${template_top_dir}/guis

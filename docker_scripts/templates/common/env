@@ -3,5 +3,5 @@
 # https://docs.docker.com/compose/env-file/.
 
 user_uid=1000:1001
-user_name=cryo
+user_name=%%USER_NAME%%
 shelfmanager=shm-smrf-sp01

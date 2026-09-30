@@ -7,7 +7,7 @@
 atca_monitor_git_repo=https://github.com/slaclab/smurf-atca-monitor.git
 
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/atca_monitor"
+release_top_default_dir="${HOME}/docker/atca_monitor"
 
 # Template directory for this application
 template_dir=${template_top_dir}/atca-monitor

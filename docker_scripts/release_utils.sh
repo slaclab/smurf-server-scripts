@@ -7,7 +7,7 @@
 smurf_base_git_repo=https://github.com/slaclab/smurf-base-docker.git
 
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/utils"
+release_top_default_dir="${HOME}/docker/utils"
 
 # Template directory for this application
 template_dir=${template_top_dir}/utils

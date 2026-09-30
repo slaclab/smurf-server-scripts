@@ -7,7 +7,7 @@
 pcie_git_repo=https://github.com/slaclab/smurf-pcie-docker.git
 
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/pcie"
+release_top_default_dir="${HOME}/docker/pcie"
 
 # Template directory for this application
 template_dir=${template_top_dir}/pcie

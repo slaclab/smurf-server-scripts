@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 echo "This script will setup a generic server for running SMuRF dockers."
-echo "This script should be run once, right after the OS is installed."
 echo "Note: You must execute this script with root privileges (via sudo)."
 echo
 
@@ -56,7 +55,8 @@ apt-get -y install \
     screen \
     tmux \
     python3-pip \
-    ipython3
+    ipython3 \
+    jq
 
 # Install git lfs
 curl -fsSL --retry-connrefused --retry 5 https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
@@ -131,6 +131,10 @@ chmod -R g+rwX /data
 find /data -type d -exec chmod g+s {} \;
 
 echo "Created /data directories (owned 1000:1001, setgid, group-writable)."
+echo
+echo "NOTE: release-docker.sh defaults to /home/cryo/docker/smurf/ which does"
+echo "not exist on this machine. Use the -o flag to specify an output directory, e.g.:"
+echo "  release-docker.sh -t system -v <version> -o /home/${SUDO_USER}/docker/smurf/stable/<version>"
 
 echo
 echo "#########################################"
@@ -146,7 +150,6 @@ echo
 if which docker > /dev/null 2>&1; then
     echo "Docker is already installed in the system:"
     docker --version
-    docker-compose --version || true
 else
     # Add Docker's official GPG key
     curl -fsSL --retry-connrefused --retry 5 https://download.docker.com/linux/ubuntu/gpg | apt-key add -
@@ -169,7 +172,31 @@ else
 
     systemctl enable docker
 
-    # Install docker-compose
+    # Setup the docker daemon logging configuration
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    cp "${script_dir}/templates/daemon.json" /etc/docker/daemon.json
+
+    # Setup apparmor profile for smurf containers
+    cp "${script_dir}/templates/smurf-apparmor-profile" /etc/apparmor.d/docker-smurf
+    apparmor_parser -r -W /etc/apparmor.d/docker-smurf
+fi
+
+# The smurf run/stop scripts invoke "docker-compose" (v1 standalone).
+# Ensure it is available: if the v2 plugin works but the standalone
+# command doesn't, install a shim wrapper.
+if which docker-compose > /dev/null 2>&1; then
+    echo "docker-compose is available:"
+    docker-compose --version
+elif docker compose version > /dev/null 2>&1; then
+    echo "docker-compose (standalone) not found, but docker compose (v2 plugin) is available."
+    echo "Installing shim at /usr/local/bin/docker-compose..."
+    cat << 'SHIM' > /usr/local/bin/docker-compose
+#!/bin/sh
+exec docker compose "$@"
+SHIM
+    chmod +x /usr/local/bin/docker-compose
+else
+    echo "Installing docker-compose standalone..."
     curl -fsSL --retry-connrefused --retry 5 \
         "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose
@@ -178,14 +205,6 @@ else
     else
         chmod +x /usr/local/bin/docker-compose
     fi
-
-    # Setup the docker daemon logging configuration
-    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    cp "${script_dir}/templates/daemon.json" /etc/docker/daemon.json
-
-    # Setup apparmor profile for smurf containers
-    cp "${script_dir}/templates/smurf-apparmor-profile" /etc/apparmor.d/docker-smurf
-    apparmor_parser -r -W /etc/apparmor.d/docker-smurf
 fi
 
 # Add user to docker group (do this regardless, in case docker was
@@ -236,6 +255,11 @@ repo_dir="$(dirname "${script_dir}")"
 rm -rf /usr/local/src/smurf-server-scripts
 mkdir -p /usr/local/src/smurf-server-scripts
 cp -r "${repo_dir}/." /usr/local/src/smurf-server-scripts
+
+# Mark as a git safe directory so release-docker.sh -u (self-update) works
+# for non-root users. This is a system-level setting since the install is
+# system-wide.
+git config --system --add safe.directory /usr/local/src/smurf-server-scripts
 
 # Add docker_scripts to PATH for all users
 if ! grep -q "^export PATH=\${PATH}:/usr/local/src/smurf-server-scripts/docker_scripts\s*$" /etc/profile.d/smurf_config.sh 2>/dev/null; then
