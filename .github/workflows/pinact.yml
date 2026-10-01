@@ -19,4 +19,5 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
       - uses: suzuki-shunsuke/pinact-action@2a42f29b3397967439ed46e7650f3045f49699f9 # v3.0.1
         with:
+          pinact_version: v5.0.0
           verify: true
