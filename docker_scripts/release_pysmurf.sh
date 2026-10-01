@@ -4,7 +4,7 @@
 pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
 
 # Default release output directory
-release_top_default_dir="${HOME}/docker/pysmurf/dev"
+release_top_default_dir="$(eval echo ~$(whoami))/docker/pysmurf/dev"
 
 # Template directory for this application
 template_dir=${template_top_dir}/pysmurf-dev
@@ -128,6 +128,12 @@ fi
 image_address=$(get_docker_image_address pysmurf-client ${pysmurf_version})
 escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
 sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
+sed -i "s/%%USER_NAME%%/$(whoami)/g" ${target_dir}/run.sh
+
+# Strip apparmor if not available on this host
+if ! which apparmor_parser > /dev/null 2>&1; then
+    sed -i '/apparmor/d' ${target_dir}/run.sh 2>/dev/null || true
+fi
 
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh

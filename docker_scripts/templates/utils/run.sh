@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-user="cryo"
+user="%%USER_NAME%%"
 
 docker run -it --rm  \
   --log-opt tag=utils \

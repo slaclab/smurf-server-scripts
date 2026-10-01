@@ -381,7 +381,7 @@ start_slot_pysmurf() {
     fi
 
     if [ "$enable_tmux_logging" = true ] ; then
-	tmux run-shell -t ${tmux_session_name}:${slot_number} /home/cryo/tmux-logging/scripts/toggle_logging.sh
+	tmux run-shell -t ${tmux_session_name}:${slot_number} ${HOME}/tmux-logging/scripts/toggle_logging.sh
     fi
     pysmurf_init ${slot_number} ${pysmurf_cfg}
 }

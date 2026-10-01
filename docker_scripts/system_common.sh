@@ -28,7 +28,7 @@ pysmurf_git_repo=https://github.com/slaclab/pysmurf.git
 pysmurf_stable_git_repo=https://github.com/slaclab/pysmurf-stable-docker.git
 
 # Default release output directory
-release_top_default_dir="${HOME}/docker/smurf"
+release_top_default_dir="$(eval echo ~$(whoami))/docker/smurf"
 
 # Whether to list versions
 list_versions=false

@@ -128,8 +128,8 @@ printf "  ${DIM}Config:${RESET}  %s\n" "$startup_cfg"
 header "CONFIGURATION"
 
 # if enable-tmux-logging, check that the tmux-logging plugin is installed
-if [[ "$enable_tmux_logging" = true && ! -d "/home/cryo/tmux-logging" ]] ; then
-    warn "tmux logging enabled but plugin not found at /home/cryo/tmux-logging"
+if [[ "$enable_tmux_logging" = true && ! -d "${HOME}/tmux-logging" ]] ; then
+    warn "tmux logging enabled but plugin not found at ${HOME}/tmux-logging"
     warn "Disabling tmux logging"
     enable_tmux_logging=false
 fi
@@ -137,12 +137,12 @@ fi
 # Load AMC carrier configurations
 if [ -z "$slot_cfgs" ]; then
     if [ -v "slots_in_configure_order" ]; then
-	if [ -L /home/cryo/docker/smurf/current ]; then
-	    info "Using slots_in_configure_order → /home/cryo/docker/smurf/current"
+	if [ -L ${HOME}/docker/smurf/current ]; then
+	    info "Using slots_in_configure_order → ${HOME}/docker/smurf/current"
 	    slots=("${slots_in_configure_order[@]}")
-	    pyrogues=(`seq ${#slots_in_configure_order[@]} | awk '{print "/home/cryo/docker/smurf/current"}' | tr '\n' ' '`)
+	    pyrogues=(`seq ${#slots_in_configure_order[@]} | awk '{print "${HOME}/docker/smurf/current"}' | tr '\n' ' '`)
 	else
-	    error "slots_in_configure_order defined but /home/cryo/docker/smurf/current missing"
+	    error "slots_in_configure_order defined but ${HOME}/docker/smurf/current missing"
 	    exit 1
 	fi
     else
@@ -371,5 +371,5 @@ fi
 if [ "$screenshot_signal_analyzer" = true ] ; then
     wid=`wmctrl -l | grep 171.64.108.28 | awk '{print $1}'`
     wmctrl -a 171.64.108.28
-    import -window ${wid} /home/cryo/shawn/${ctime}_signal_analyzer.png
+    import -window ${wid} ${HOME}/${ctime}_signal_analyzer.png
 fi

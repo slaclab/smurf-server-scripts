@@ -7,7 +7,7 @@
 tpg_git_repo=https://github.com/slaclab/smurf-tpg-ioc-docker.git
 
 # Default release output directory
-release_top_default_dir="${HOME}/docker/tpg"
+release_top_default_dir="$(eval echo ~$(whoami))/docker/tpg"
 
 # Template directory for this application
 template_dir=${template_top_dir}/tpg

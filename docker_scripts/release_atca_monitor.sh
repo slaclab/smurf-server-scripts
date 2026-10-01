@@ -7,7 +7,7 @@
 atca_monitor_git_repo=https://github.com/slaclab/smurf-atca-monitor.git
 
 # Default release output directory
-release_top_default_dir="${HOME}/docker/atca_monitor"
+release_top_default_dir="$(eval echo ~$(whoami))/docker/atca_monitor"
 
 # Template directory for this application
 template_dir=${template_top_dir}/atca-monitor
@@ -132,6 +132,7 @@ fi
 image_address=$(get_docker_image_address smurf-atca-monitor ${atca_monitor_version})
 escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
 sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
+sed -i "s/%%USER_NAME%%/$(whoami)/g" ${target_dir}/run.sh
 
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh
