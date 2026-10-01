@@ -7,7 +7,7 @@
 smurf_rogue_git_repo=https://github.com/slaclab/smurf-rogue-docker.git
 
 # Default release output directory
-release_top_default_dir="/home/cryo/docker/guis"
+release_top_default_dir="$(eval echo ~$(whoami))/docker/guis"
 
 # Template directory for this application
 template_dir=${template_top_dir}/guis
@@ -134,6 +134,7 @@ fi
 image_address=$(get_docker_image_address smurf-rogue ${smurf_rogue_version})
 escaped_image_address=$(printf '%s' "$image_address" | sed 's/\//\\\//g')
 sed -i -e "s/\%\%DOCKER_IMAGE_ADDRESS\%\%/${escaped_image_address}/g" ${target_dir}/run.sh
+sed -i "s/%%USER_NAME%%/$(whoami)/g" ${target_dir}/run.sh
 
 # Mark the script as executable
 chmod +x ${target_dir}/run.sh
